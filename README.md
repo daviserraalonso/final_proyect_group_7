@@ -71,6 +71,13 @@ git merge develop
 
 
 
+# TO DEPLOY IN RENDER
+
+1º acedemos a https://dashboard.render.com/ con el nombre de usuario y contraseña que dejé anteriormente. Una vez dentro, accedemos abajo a final_proyect_group_7-1
+2º navegamos hasta settings, bajamos hacia abajo un poco y buscamos branch, hacemos click en edit y seleccionamos nuestra rama de funcionalidad. la seleccionamos y se queda guardado ya. Automáticamente empezará el despliegue, para ver el progreso navegamos a la izquierda hasta logs y ahí vemos todo. Si surge cualquier problema, tendremos que solucionarlo
+
+
+
 # description:
 
 Proyecto final: TeacherApp.
