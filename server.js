@@ -1,15 +1,13 @@
 const express = require('express');
-const cors = require('cors');
+const path = require('path');
 const app = express();
-const PORT = 3000;
 
-app.use(cors());  // Asegúrate de que esta línea esté presente
-app.use(express.json());
+app.use(express.static(path.join(__dirname, 'dist/front-end')));  // Asegúrate de que 'front-end' esté bien escrito
 
-app.get('/api/node-version', (req, res) => {
-  res.json({ version: process.version });
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist/front-end/index.html'));  // Usa 'front-end'
 });
 
-app.listen(PORT, () => {
-  console.log(`Servidor corriendo en http://localhost:${PORT}`);
+app.listen(process.env.PORT || 3000, () => {
+  console.log(`Servidor corriendo en http://localhost:${process.env.PORT || 3000}`);
 });
