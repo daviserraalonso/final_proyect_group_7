@@ -2,12 +2,18 @@ const express = require('express');
 const path = require('path');
 const app = express();
 
-app.use(express.static(path.join(__dirname, 'dist/front-end')));  // Asegúrate de que 'front-end' esté bien escrito
+// Usa el puerto proporcionado por Render o el puerto 3000 como fallback en local
+const PORT = process.env.PORT || 3000;
 
+// Servir archivos estáticos de Angular
+app.use(express.static(path.join(__dirname, 'dist/front-end')));
+
+// Todas las rutas deben servir el index.html de Angular
 app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist/front-end/index.html'));  // Usa 'front-end'
+  res.sendFile(path.join(__dirname, 'dist/front-end/index.html'));
 });
 
-app.listen(process.env.PORT || 3000, () => {
-  console.log(`Servidor corriendo en http://localhost:${process.env.PORT || 3000}`);
+// Iniciar el servidor en el puerto asignado por Render
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
