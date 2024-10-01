@@ -2,11 +2,12 @@ const express = require('express');
 const path = require('path');
 const app = express();
 
-// Asegúrate de que la ruta estática se ajuste a la nueva ubicación
-app.use(express.static(path.join(__dirname, 'dist/front-end')));
+// Cambia la ruta estática para incluir el subdirectorio 'browser'
+app.use(express.static(path.join(__dirname, 'dist/front-end/browser')));
 
+// Cambia la ruta del archivo index.html
 app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist/front-end/index.html'));
+  res.sendFile(path.join(__dirname, 'dist/front-end/browser/index.html'));
 });
 
 const PORT = process.env.PORT || 3000;
