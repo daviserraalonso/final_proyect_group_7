@@ -58,6 +58,11 @@ contraseña grupo_7_unir
 ******* PULL branch develop
 git pull origin develop
 
+****** ACTUALIZAR TODAS LAS RAMAS LOCALES
+git fetch
+
+Este comando actualiza todas las ramas locales a todas las ramas remotas, esto quiere decir, que sabremos en todo momento, las ramas en git que tendremos disponibles.
+
 ******* CREATE branch from develop
 git checkout -b myFeature develop
 
