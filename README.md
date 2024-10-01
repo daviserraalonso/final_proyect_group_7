@@ -44,6 +44,10 @@ La plataforma a usar es: https://dashboard.render.com/
 Email es: grupo7unir@yahoo.com 
 contraseña grupo_7_unir
 
+***** TODO EL CÓDIGO SE DEBE HACER EN INGLÉS, definición de variables, definición de métodos o funciones, definición de objetos, definición de modelos... etc. Todo. ¿Porqué? porque programación es una metodología a nivel global y el idioma global es el inglés, así cualquer persona puede entender lo que se está haciendo.
+
+**** TODO EL CÓDIGO DEBE IR CON COMENTARIOS, SOBRE TODO LA DEFINICIÓN DE LAS FUNCIONES O MÉTODOS. SE DEBE EXPLICAR BREVEMENTE QUE HACE DICHA FUNCIÓN. SE ESTABLECERÁN SIEMPRE COMENTARIOS DE BLOQUE, EVITANDO ASÍ COMENTARIOS DE LÍNEAS. SI FUERA NECESARIO UN COMENTARIO DE LÍNEA SE HARÁ JUSTO EN LA LÍNEA SUPERIOR Y HACIENDO REFERENCIA A LA LÍNEA INMEDIATAMENTE SIGUIENTE.
+
 
 ----------- Los comandos básicos de git o de uso diario son.
 
