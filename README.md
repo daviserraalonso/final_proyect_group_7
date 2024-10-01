@@ -82,7 +82,7 @@ git merge develop
 
 1º acedemos a https://dashboard.render.com/ con el nombre de usuario y contraseña que dejé anteriormente. Una vez dentro, accedemos abajo al link con texto final_proyect_group_7-1
 
-2º navegamos hasta settings, bajamos hacia abajo un poco y buscamos branch, hacemos click en edit y seleccionamos nuestra rama de funcionalidad. Al seleccionarla guardada. Automáticamente empezará el despliegue, para ver el progreso navegamos a la izquierda hasta logs y ahí vemos todo (si no empezara el despliegue, dentro del dashborad y dentro de final_proyect_group_7-1, arriba a la derecha veremos el botón manual deploy, hacemos click y entre las opciones que aparecen, seleccionamos clear build cache & deploy). Si surge cualquier problema, tendremos que intentar solucionarlo.
+2º navegamos hasta settings, bajamos hacia abajo un poco y buscamos branch, hacemos click en edit y seleccionamos nuestra rama de funcionalidad. Al seleccionarla queda  guardada. Automáticamente empezará el despliegue, para ver el progreso navegamos a la izquierda hasta logs y ahí vemos todo (si no empezara el despliegue, dentro del dashborad y dentro de final_proyect_group_7-1, arriba a la derecha veremos el botón manual deploy, hacemos click y entre las opciones que aparecen, seleccionamos clear build cache & deploy). Si surge cualquier problema, tendremos que intentar solucionarlo.
 
 
 
