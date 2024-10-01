@@ -6,11 +6,12 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ApiService {
-  private apiUrl = 'http://localhost:3000';  // URL del servidor Node.js
+  // url to server nodejs
+  private apiUrl = 'http://localhost:3000';
 
   constructor(private http: HttpClient) {}
 
-  // Método para obtener la versión de Node.js
+  // method to get nodeVersion
   getNodeVersion(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/api/node-version`);
   }
