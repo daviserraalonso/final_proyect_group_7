@@ -22,7 +22,9 @@ De esta manera, evitaremos hacer merge de cosas que puedan provocar error en la 
 
 Inicialmente deberemos hacer un pull request del repositorio de trabajo que tendrá ya la estructura básica para empezar, DE LA RAMA MAIN, con las tecnologías a usar en el proyecto, Angular en la versión 17, ya que la versión 18, a día 01/10/2024 aún tiene incompatibilidades con paquetes. También el proyecto inicial contará con Node 22.0 ya preinstalado y expressJS.
 
-Todas las ramas que se hagan nuevas (feature, fix) se deberán hacer desde la rama develop
+Todas las ramas que se hagan nuevas (feature, fix) se deberán hacer desde la rama develop.
+
+Vamos a usar Trello, para organizar el trabajo de cada uno y así llevar un historíco y un progreso de cada tarea, también es una manera de que os habituéis a como se trabaja en un grupo de trabajo con tareas desiganadas por un Team leader o jefe de producto.
 
 Deberemos de configurar nuestros entornos de trabajo para que nos permita poder hacer pull y push a este repositorio. Este punto se deja un poco a comodidad de cada desarrollador, si se desea usar la GUI del entorno de desarrollo o bien por consola de comandos.
 
