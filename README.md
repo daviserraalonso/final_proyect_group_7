@@ -20,9 +20,11 @@ De esta manera, evitaremos hacer merge de cosas que puedan provocar error en la 
 
 # work methodology
 
-Inicialmente deberemos hacer un pull request del repositorio de trabajo que tendrá ya la estructura básica para empezar, con las tecnologías a usar en el proyecto, Angular en la versión 17, ya que la versión 18, a día 01/10/2024 aún tiene incompatibilidades con paquetes. También el proyecto inicial contará con Node 22.0 ya preinstalado.
+Inicialmente deberemos hacer un pull request del repositorio de trabajo que tendrá ya la estructura básica para empezar, DE LA RAMA MAIN, con las tecnologías a usar en el proyecto, Angular en la versión 17, ya que la versión 18, a día 01/10/2024 aún tiene incompatibilidades con paquetes. También el proyecto inicial contará con Node 22.0 ya preinstalado y expressJS.
 
-Todas las ramas que se hagan nuevas (feature, fix) se deberán hacer desde la rama develop
+Todas las ramas que se hagan nuevas (feature, fix) se deberán hacer desde la rama develop.
+
+Vamos a usar Trello, para organizar el trabajo de cada uno y así llevar un historíco y un progreso de cada tarea, también es una manera de que os habituéis a como se trabaja en un grupo de trabajo con tareas desiganadas por un Team leader o jefe de producto.
 
 Deberemos de configurar nuestros entornos de trabajo para que nos permita poder hacer pull y push a este repositorio. Este punto se deja un poco a comodidad de cada desarrollador, si se desea usar la GUI del entorno de desarrollo o bien por consola de comandos.
 
@@ -43,6 +45,10 @@ La plataforma a usar es: https://dashboard.render.com/
 
 Email es: grupo7unir@yahoo.com 
 contraseña grupo_7_unir
+
+***** TODO EL CÓDIGO SE DEBE HACER EN INGLÉS, definición de variables, definición de métodos o funciones, definición de objetos, definición de modelos... etc. Todo. ¿Porqué? porque programación es una metodología a nivel global y el idioma global es el inglés, así cualquer persona puede entender lo que se está haciendo.
+
+**** TODO EL CÓDIGO DEBE IR CON COMENTARIOS, SOBRE TODO LA DEFINICIÓN DE LAS FUNCIONES O MÉTODOS. SE DEBE EXPLICAR BREVEMENTE QUE HACE DICHA FUNCIÓN. SE ESTABLECERÁN SIEMPRE COMENTARIOS DE BLOQUE, EVITANDO ASÍ COMENTARIOS DE LÍNEAS. SI FUERA NECESARIO UN COMENTARIO DE LÍNEA SE HARÁ JUSTO EN LA LÍNEA SUPERIOR Y HACIENDO REFERENCIA A LA LÍNEA INMEDIATAMENTE SIGUIENTE.
 
 
 ----------- Los comandos básicos de git o de uso diario son.
