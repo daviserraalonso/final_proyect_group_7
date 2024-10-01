@@ -20,22 +20,22 @@ De esta manera, evitaremos hacer merge de cosas que puedan provocar error en la 
 
 # work methodology
 
-Inicialmente deberemos hacer un pull request del repositorio de trabajo que tendrá ya la estructura básica para empezar, DE LA RAMA MAIN, con las tecnologías a usar en el proyecto, Angular en la versión 17, ya que la versión 18, a día 01/10/2024 aún tiene incompatibilidades con paquetes. También el proyecto inicial contará con Node 22.0 ya preinstalado y expressJS.
+Inicialmente deberemos hacer un pull request del repositorio de trabajo que tendrá ya la estructura básica para empezar, DE LA RAMA MAIN, con las tecnologías a usar en el proyecto, Angular en la versión 18.2.6. También el proyecto inicial contará con Node 22.0 ya preinstalado y expressJS.
 
 Todas las ramas que se hagan nuevas (feature, fix) se deberán hacer desde la rama develop.
 
-Vamos a usar Trello, para organizar el trabajo de cada uno y así llevar un historíco y un progreso de cada tarea, también es una manera de que os habituéis a como se trabaja en un grupo de trabajo con tareas desiganadas por un Team leader o jefe de producto.
+Vamos a usar Trello, para organizar el trabajo de cada uno y así llevar un historíco y un progreso de cada tarea, también es una manera de que os habituéis a como se trabaja en un grupo de trabajo con tareas designadas por un Team leader o jefe de producto.
 
 Deberemos de configurar nuestros entornos de trabajo para que nos permita poder hacer pull y push a este repositorio. Este punto se deja un poco a comodidad de cada desarrollador, si se desea usar la GUI del entorno de desarrollo o bien por consola de comandos.
 
-Todos los días deberemos hacer un pull de la rama develop a nuestra rama feature, de esta manera siempre tendremos actualizada nuestra rama de funcionalidad y evitaremos posibles conflictos, cuando se haga merge.
+Todos los días deberemos hacer un pull de la rama develop a nuestra rama feature (antes de empezar a modificar nuestra feature), de esta manera siempre tendremos actualizada nuestra rama de funcionalidad y evitaremos posibles conflictos, cuando se haga merge.
 
 CUANDO ESTEMOS SEGUROS 100% DE QUE NUESTRO TRABAJO ESTÁ FUNCIONANDO COMO SE ESPERA, HAREMOS UN MERGE DE LA RAMA DE FUNCIONALIDAD SOBRE LA RAMA DEVELOP, para hacer esto, se siguen estos pasos:
 
   * PREGUNTAR SIEMPRE SI ALGUIEN ESTÁ HACIENDO UN PUSH A LA RAMA DEVELOP. (ESTO ES INDISCUTIBLE, YA QUE SI NO SURGIRÁN CONFLICTOS).
   * POSTERIORMENTE, 1º git checkout develop, 2º git pull origin feature/nombre_funcionalidad_nº_tarea, 3º git push origin develop (seguramente se haya creado un commit merge, si no, escribir el commit)
 
-Con los pasos anteriores, habremos realizado un merge de nuestro trabajo a la rama de desarrollo para que todos tengamos el trabajo actualizado.
+Con los pasos anteriores, habremos realizado un merge de nuestro trabajo a la rama de develop para que todos tengamos el trabajo actualizado.
 
 
 ****** Una vez finalizado el proyecto, haremos un merge de la rama develop a la rama main y esta rama será la que se entregue a UNIR.
@@ -45,6 +45,8 @@ La plataforma a usar es: https://dashboard.render.com/
 
 Email es: grupo7unir@yahoo.com 
 contraseña grupo_7_unir
+
+************* INDISPENSABLE! Antes de hacer un despliegue, se debe de preguntar si alguien está usando render o haciendo un despliegue, ya que si no, podremos pisarnos el trabajo unos a los otros!!
 
 ***** TODO EL CÓDIGO SE DEBE HACER EN INGLÉS, definición de variables, definición de métodos o funciones, definición de objetos, definición de modelos... etc. Todo. ¿Porqué? porque programación es una metodología a nivel global y el idioma global es el inglés, así cualquer persona puede entender lo que se está haciendo.
 
@@ -73,8 +75,9 @@ git merge develop
 
 # TO DEPLOY IN RENDER
 
-1º acedemos a https://dashboard.render.com/ con el nombre de usuario y contraseña que dejé anteriormente. Una vez dentro, accedemos abajo a final_proyect_group_7-1
-2º navegamos hasta settings, bajamos hacia abajo un poco y buscamos branch, hacemos click en edit y seleccionamos nuestra rama de funcionalidad. la seleccionamos y se queda guardado ya. Automáticamente empezará el despliegue, para ver el progreso navegamos a la izquierda hasta logs y ahí vemos todo. Si surge cualquier problema, tendremos que solucionarlo
+1º acedemos a https://dashboard.render.com/ con el nombre de usuario y contraseña que dejé anteriormente. Una vez dentro, accedemos abajo al link con texto final_proyect_group_7-1
+
+2º navegamos hasta settings, bajamos hacia abajo un poco y buscamos branch, hacemos click en edit y seleccionamos nuestra rama de funcionalidad. Al seleccionarla guardada. Automáticamente empezará el despliegue, para ver el progreso navegamos a la izquierda hasta logs y ahí vemos todo (si no empezara el despliegue, dentro del dashborad y dentro de final_proyect_group_7-1, arriba a la derecha veremos el botón manual deploy, hacemos click y entre las opciones que aparecen, seleccionamos clear build cache & deploy). Si surge cualquier problema, tendremos que intentar solucionarlo.
 
 
 
