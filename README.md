@@ -1,11 +1,75 @@
 # final_proyect_group_7
 This repository, it´s used for final proyect UNIR MASTER Fullstack
 
+# STANDAR TO THIS REPOSITORY:
+ se van a seguir unas pequeñas reglas para este repositorio y el desarrollo de la aplicación solicitada.
+
+1º: Todos los desarrollos que se hagan se harán mediante ramas difrentes unas de otras. El nombre que se establecerá será feature/nombre_funcionalidad_nº_tarea
+
+2º: No se hará merge de las ramas de funcionalidad a la rama de desarrollo, en adelante develop, hasta que no se haya probado 100% dicha funcionalidad y estemos seguros de que hace lo que tiene que hacer.
+De esta manera, evitaremos hacer merge de cosas que puedan provocar error en la aplicación.
+
+3º: Las ramas del proyecto serán:
+  * main (rama principal y usada solo y exclusivamente para entorno de producción).
+  * develop (rama de desarrollo, de la cual que harán los pull request y a donde se harán los merges de las funcionalidades)-
+  * ramas features (ramas para las funcionalidades).
+
+4º Cada integrante del grupo de trabajo, se hará cargo del desarrollo en el cual esté implicado y será totalmente responsable de lo que pueda suceder (Si al hacer un merge de la funcionalidad y provocara un error en develop, el desarrollador que hiciera dicha funcionalidad deberá solventarlo).
+
+5º Intentaremos evitar crear excesivas ramas fix. Estas ramas, se usan para solventar los problemas anteriormente comentados, tendrán la siguiente nomenclatura: fix/nombre_funcionalidad_nº_tarea, una vez se haya solventado el problema y probado al 100% se hará merge con develop.
+
+# work methodology
+
+Inicialmente deberemos hacer un pull request del repositorio de trabajo que tendrá ya la estructura básica para empezar, con las tecnologías a usar en el proyecto, Angular en la versión 17, ya que la versión 18, a día 01/10/2024 aún tiene incompatibilidades con paquetes. También el proyecto inicial contará con Node 22.0 ya preinstalado.
+
+Todas las ramas que se hagan nuevas (feature, fix) se deberán hacer desde la rama develop
+
+Deberemos de configurar nuestros entornos de trabajo para que nos permita poder hacer pull y push a este repositorio. Este punto se deja un poco a comodidad de cada desarrollador, si se desea usar la GUI del entorno de desarrollo o bien por consola de comandos.
+
+Todos los días deberemos hacer un pull de la rama develop a nuestra rama feature, de esta manera siempre tendremos actualizada nuestra rama de funcionalidad y evitaremos posibles conflictos, cuando se haga merge.
+
+CUANDO ESTEMOS SEGUROS 100% DE QUE NUESTRO TRABAJO ESTÁ FUNCIONANDO COMO SE ESPERA, HAREMOS UN MERGE DE LA RAMA DE FUNCIONALIDAD SOBRE LA RAMA DEVELOP, para hacer esto, se siguen estos pasos:
+
+  * PREGUNTAR SIEMPRE SI ALGUIEN ESTÁ HACIENDO UN PUSH A LA RAMA DEVELOP. (ESTO ES INDISCUTIBLE, YA QUE SI NO SURGIRÁN CONFLICTOS).
+  * POSTERIORMENTE, 1º git checkout develop, 2º git pull origin feature/nombre_funcionalidad_nº_tarea, 3º git push origin develop (seguramente se haya creado un commit merge, si no, escribir el commit)
+
+Con los pasos anteriores, habremos realizado un merge de nuestro trabajo a la rama de desarrollo para que todos tengamos el trabajo actualizado.
+
+
+****** Una vez finalizado el proyecto, haremos un merge de la rama develop a la rama main y esta rama será la que se entregue a UNIR.
+****** Se creará un subdominio en un hosting, para simular un entorno productivo para así hacer los despligues y poder probar las tareas. 
+
+La plataforma a usar es: https://dashboard.render.com/
+
+Email es: grupo7unir@yahoo.com 
+contraseña grupo_7_unir
+
+
+----------- Los comandos básicos de git o de uso diario son.
+
+******* PULL branch develop
+git pull origin develop
+
+******* CREATE branch from develop
+git checkout -b myFeature develop
+
+****** PUSH branch feature.
+git push origin feature/nombre_funcionalidad_nº_tarea
+
+***** MERGE branch
+Cuando estemos situados en nuestra rama local feature/nombre_funcionalidad_nº_tarea, y a diario hagamos un pull de develop, se nos creará por defecto una solicitud de merge, es decir, develop se va a unificar con nuestra rama, se creará un commit automático de merge y solo tendremos que hacer push a nuestra rama feature.
+
+***** Para hacer merge manualmente:
+Siempre situados en nuestra rama feature, se ejecutaría: 
+git merge develop
+
+
+
 # description:
 
-Proyecto final: TeacherApp: WebApp para la
-gestión y localización de profesores de clases
-particulares categorizados.🌡️
+Proyecto final: TeacherApp.
+
+WebApp para la gestión y localización de profesores de clases particulares categorizados.🌡️
 
 🌡️Objetivos
 
