@@ -8,6 +8,7 @@ import { VersionService } from './services/version.service';
 })
 export class AppComponent implements OnInit {
   angularVersion: string = '';
+  title = 'front-end';
 
   constructor(private versionService: VersionService) {}
 

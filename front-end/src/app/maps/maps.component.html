@@ -1,0 +1,19 @@
+
+<div id="map" style="height: 500px; width: 100%;">
+<section class="container mt-3">
+    <div class="card p-3">
+      <div class="d-flex justify-content-between">
+        <h1>Encuentra profesores cerca de ti</h1>
+      </div>
+      <hr>
+      
+      <!-- Mapa interactivo -->
+      <div id="map" style="height: 500px;"></div>
+      
+      <!-- Filtro de distancia -->
+      <div class="mt-3">
+        <label for="distanceRange" class="form-label">Distancia máxima (km): <span id="rangeValue">{{ maxDistance }}</span></label>
+        <input type="range" class="form-range" id="distanceRange" min="1" max="50" step="1" (input)="applyDistanceFilter()">
+      </div>
+    </div>
+  </section></div>

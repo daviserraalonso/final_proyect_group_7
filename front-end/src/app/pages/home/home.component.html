@@ -1,0 +1,74 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">TeacherApp</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link" href="#">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Buscar Profesores</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Cómo Funciona</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Contacto</a></li>
+        </ul>
+        <div>
+          <a href="login.html" class="btn btn-outline-primary me-2">Iniciar Sesión</a>
+          <a href="register.html" class="btn btn-primary">Registrarse</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ---------------------------------------------- -->
+
+
+  <section class="container text-center my-5">
+    <h1>Encuentra tu profesor ideal</h1>
+    <p>Busca profesores por ciudad, rama de conocimiento, precio y más.</p>
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <input type="text" class="form-control" placeholder="Buscar profesores...">
+      </div>
+    </div>
+  </section>
+
+  
+  <section class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <h5>Filtrar por:</h5>
+        <select class="form-select mb-3" aria-label="Rama de conocimiento">
+          <option selected>Seleccionar Rama</option>
+          <option value="1">Matemáticas</option>
+          <option value="2">Idiomas</option>
+          <option value="3">Ciencias</option>
+        </select>
+        
+        <button class="btn btn-secondary">Filtrar</button>
+      </div>
+
+      <!-- ------------------------ -->
+      <div class="col-md-8">
+        <h5>Profesores disponibles cerca de ti</h5>
+        
+        <div class="card mb-3">
+          <div class="row g-0">
+            <div class="col-md-4">
+              <img src="https://via.placeholder.com/150" class="img-fluid rounded-start" alt="Profesor 1">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title">Profesor 1</h5>
+                <p class="card-text">Precio: 20€/hora</p>
+                <p class="card-text">Experiencia: 5 años</p>
+                <a href="#" class="btn btn-primary">Ver Perfil</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  
+
