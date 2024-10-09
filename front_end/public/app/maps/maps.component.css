@@ -1,0 +1,5 @@
+#map {
+    height: 500px; /* Ajustar la altura para que sea visible */
+    width: 100%; /* Ocupa todo el ancho */
+    margin: 0 auto;
+  }
