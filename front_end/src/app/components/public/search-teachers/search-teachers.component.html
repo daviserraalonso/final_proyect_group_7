@@ -1,0 +1,18 @@
+<section class="container text-center my-5">
+    <h1>Encuentra tu profesor ideal</h1>
+    <p>Busca profesores por ciudad, rama de conocimiento, precio y más.</p>
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <input type="text" class="form-control" placeholder="Buscar profesores..." [(ngModel)]="searchQuery">
+      </div>
+    </div>
+    <div class="row justify-content-center mt-4">
+      @for (category of categories; track $index) {
+      <div class="col-md-2">
+        <div class="icon-container" (click)="selectCategory(category)">
+          <i [class]="category.icon"></i>
+          <p>{{ category.name }}</p>
+        </div>
+      </div>}
+    </div>
+  </section>
