@@ -1,0 +1,22 @@
+.card {
+    background-color: #fff;
+    border-radius: 1rem;
+  }
+  .card h4 {
+    font-weight: 700;
+  }
+  .card p {
+    margin-bottom: 0.5rem;
+  }
+  .card :hover .card-img-top {
+    transform: scale(1.4);
+  }
+
+  .card {
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  }
+  
+  .card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  }
