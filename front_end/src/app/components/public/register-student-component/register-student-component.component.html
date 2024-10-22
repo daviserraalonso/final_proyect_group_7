@@ -1,1 +1,66 @@
-<p>register-student-component works!</p>
+<section class="card-container">
+    <div class="container">
+      <h4>{{headerForm}}</h4>
+  
+      <form class="card" [formGroup]="registerStudent" (ngSubmit)="getdataForm()">
+      
+          <mat-form-field> 
+              <mat-label>Introduce tu nombre</mat-label>
+              <input matInput formControlName="name">
+              @if(inputControl('name', 'required')){
+                  <p class="text-danger">El campo es requerido</p>
+                  }
+              @if(inputControl('name', 'minlength')){
+                  <p class="text-danger">La longitud minima de un nombre tiene que ser 3 caracteres</p>
+                  }
+              <mat-icon matSuffix>person</mat-icon>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Introduce tu email</mat-label>
+              <input matInput formControlName="mail">
+              @if(inputControl('mail', 'required')){
+                <p class="text-danger">El campo es requerido</p>
+                }
+              @if(inputControl('mail', 'pattern')){
+                <p class="text-danger">El email es incorrecto</p>
+                }
+               <mat-icon matSuffix>mail</mat-icon>
+            </mat-form-field>
+  
+            <mat-form-field>
+              <mat-label>Introduce tu password</mat-label>
+              <input matInput formControlName="password" [type]="hide() ? 'password' : 'text'" />
+              @if(inputControl('password', 'required')){
+                <p class="text-danger">El campo es requerido</p>
+              }
+              @if(inputControl('password', 'pattern')) {
+                <p class="text-danger">La constraseña debe contener mínimo una letra, una mayuscula, un número y un carácter especial</p>
+              }
+              <button mat-icon-button matSuffix (click)="clickEvent($event)" type="button">
+                <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Repite tu password</mat-label>
+              <input matInput formControlName="repeatPassword" [type]="hide2() ? 'password' : 'text'" />
+              @if(registerStudent.hasError('checkpassword')){
+                  <p class="text-danger">Los campos de password debe coincidir</p>
+                  }
+              <button
+                mat-icon-button
+                matSuffix
+                (click)="clickEvent2($event)"
+                [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide2()"
+                type="button">
+                <mat-icon>{{hide2() ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+            </mat-form-field>
+            <input type="submit" [value]="textButton" [disabled]="!registerStudent.valid">
+      </form>
+    </div>
+    </section>
+  
+
