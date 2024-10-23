@@ -59,6 +59,7 @@ export class RegisterTeacherComponentComponent {
 ngOnInit() {
   this.activateRoute.params.subscribe(async (params: any) => {
   if (params.id) {
+    //if user exists change text of header and button
   this.headerForm = 'Actualizar el usuario'
   this.textButton = 'Actualizar datos'
   const user: Iuser = await this.userServices.getById(params.id)
