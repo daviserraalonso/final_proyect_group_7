@@ -1,12 +1,9 @@
-import { Imodality } from "./imodality.interface";
-
 export interface ICourse {
     id: number;
     name: string;
-    idProfessor: number;
     price: number;
-    category: string; // Example: 'mathematics', 'languages', etc.
-    modality: Imodality;
-    startDate: string;
-    endDate: string;
+    category_id: number;
+    modality_id: number;
+    startDate: Date;
+    endDate: Date;
 }

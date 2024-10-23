@@ -5,7 +5,9 @@ export interface Iuser {
     password: string;
     roleId: number;
     phone?: string;
-    isValidated?: boolean; // Solo para profesores
+    isValidated: boolean;
     lat?: number;
     lng?: number;
+    createdAt: Date;
+    updatedAt: Date;
 }

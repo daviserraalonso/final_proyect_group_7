@@ -3,5 +3,5 @@ export interface Isubject {
     name: string;
     idCourse: number;
     description?: string;
-    finalGrade?: number; // Nota final
+    finalGrade?: number;
 }
