@@ -1,5 +1,5 @@
 -- Crear la base de datos
-CREATE DATABASE TeacherAppDB;
+CREATE DATABASE teacherAppDB;
 
 -- Usar la base de datos
 USE TeacherAppDB;
@@ -109,10 +109,61 @@ CREATE TABLE tasks (
     idSubject INT NOT NULL,         
     idUser INT NOT NULL,            
     comments TEXT,                  
-    punctuation DECIMAL(3, 2) CHECK (punctuation >= 1 AND punctuation <= 10),  
+    score DECIMAL(3, 2) CHECK (score >= 1 AND score <= 10),  
     creationDate DATETIME DEFAULT CURRENT_TIMESTAMP, 
     deadline DATE,                  
     FOREIGN KEY (idSubject) REFERENCES subject(id),
     FOREIGN KEY (idUser) REFERENCES user(id),
     UNIQUE (idSubject, idUser)      
 );
+
+-- Tabla de chats (conversaciones)
+CREATE TABLE chat (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    courseId INT NOT NULL,           
+    professorId INT NOT NULL,       
+    studentId INT NOT NULL,          
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (courseId) REFERENCES course(id) ON DELETE CASCADE,
+    FOREIGN KEY (professorId) REFERENCES user(id) ON DELETE CASCADE,
+    FOREIGN KEY (studentId) REFERENCES user(id) ON DELETE CASCADE
+);
+
+--Tabla de mensaje
+CREATE TABLE message (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    chatId INT NOT NULL,            
+    senderId INT NOT NULL,           
+    content TEXT NOT NULL,           
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (chatId) REFERENCES chat(id) ON DELETE CASCADE,
+    FOREIGN KEY (senderId) REFERENCES user(id) 
+);
+
+
+--Tabla de notas finales
+CREATE TABLE final_grades (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    idCourse INT NOT NULL,            
+    idStudent INT NOT NULL,          
+    finalGrade DECIMAL(3, 2) CHECK (finalGrade >= 1 AND finalGrade <= 10), 
+    comments TEXT,              
+    creationDate DATETIME DEFAULT CURRENT_TIMESTAMP, 
+    FOREIGN KEY (idCourse) REFERENCES course(id),
+    FOREIGN KEY (idStudent) REFERENCES user(id),
+    UNIQUE (idCourse, idStudent)      
+);
+
+
+-- Tabla de inscripciones de estudiantes a cursos
+CREATE TABLE student_course (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    idStudent INT NOT NULL,
+    idCourse INT NOT NULL,
+    enrollmentDate DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (idStudent) REFERENCES user(id),
+    FOREIGN KEY (idCourse) REFERENCES course(id),
+    UNIQUE (idStudent, idCourse)  
+);
+
