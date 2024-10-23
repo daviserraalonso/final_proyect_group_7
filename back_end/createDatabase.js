@@ -2,9 +2,9 @@ const mysql = require('mysql2/promise');
 
 const database = 'teacherappdb';
 const username = 'root';
-const password = ''; // edit with your credential
+const password = '123456'; // edit with your credential
 const host = 'localhost';
-const port = 3307; // edit with your configuration
+const port = 3308; // edit with your configuration
 
 mysql.createConnection({ host, port, user: username, password })
   .then(connection => {
