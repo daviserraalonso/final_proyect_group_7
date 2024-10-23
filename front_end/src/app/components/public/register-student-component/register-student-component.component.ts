@@ -37,7 +37,7 @@ export class RegisterStudentComponentComponent {
         Validators.required,
         Validators.minLength(3)
       ]),
-      email: new FormControl(null, [ // Cambiado 'mail' a 'email'
+      email: new FormControl(null, [
         Validators.required,
         Validators.pattern(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/)
       ]),
@@ -68,7 +68,7 @@ export class RegisterStudentComponentComponent {
             Validators.required,
             Validators.minLength(3)
           ]),
-          email: new FormControl(user.email, [ // Cambiado 'mail' a 'email'
+          email: new FormControl(user.email, [
             Validators.required,
             Validators.pattern(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/)
           ]),
@@ -116,9 +116,9 @@ export class RegisterStudentComponentComponent {
   }
 
   async getdataForm() {
-    console.log('Datos del formulario:', this.registerStudent.value); // Agregado para depuración
+    console.log('Datos del formulario:', this.registerStudent.value);
     if (this.registerStudent.value.id) {
-      // Actualizar usuario
+      // update user
       try {
         const user: Iuser = await this.userServices.update(this.registerStudent.value);
         if (user.id) {
@@ -129,7 +129,7 @@ export class RegisterStudentComponentComponent {
         console.log(error);
       }
     } else {
-      // Crear nuevo usuario
+      // create new user
       try {
         const user: Iuser = await this.userServices.insert(this.registerStudent.value);
         if (user.id) {

@@ -11,9 +11,9 @@ const __dirname = dirname(__filename);
 const app = express();
 const port = process.env['PORT'] || 4000;
 
-// Configura CORS para permitir solicitudes desde tu frontend
+// Configure cors from front
 app.use(cors({
-  origin: 'http://localhost:4200', // URL de tu frontend Angular
+  origin: 'http://localhost:4200', // url front-end
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
