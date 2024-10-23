@@ -21,7 +21,7 @@ export class RegisterStudentComponentComponent {
   router = inject(Router);
   activateRoute = inject(ActivatedRoute);
   userServices = inject(UserServiceService)
-  headerForm: string = 'Registar un nuevo usuario' // header of form
+  headerForm: string = 'Registarse como Alumno' // header of form
   textButton: string = 'Enviar' // text of button submit
   registerStudent: FormGroup;
 
