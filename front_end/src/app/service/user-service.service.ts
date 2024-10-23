@@ -8,17 +8,17 @@ import { HttpClient } from '@angular/common/http';
 })
 export class UserServiceService {
 
-  private baseUrl: string = "" // pending to put the final url
+  private baseUrl: string = "http://localhost:4000/api/users/register" // pending to put the final url
   private http = inject(HttpClient)
 
   constructor() { }
 
 
-// function to get user by Id, url no complete
+  // function to get user by Id, url no complete
   getById(id: string): Promise<Iuser> {
     return firstValueFrom(this.http.get<Iuser>(this.baseUrl))
   }
-//function to update user, url no complete
+  //function to update user, url no complete
   update(body: Iuser): Promise<Iuser> {
     return firstValueFrom(this.http.put<Iuser>(this.baseUrl, body));
   }
@@ -27,4 +27,5 @@ export class UserServiceService {
   insert(body: Iuser): Promise<Iuser> {
     return firstValueFrom(this.http.post<Iuser>(this.baseUrl, body));
   }
+
 }
