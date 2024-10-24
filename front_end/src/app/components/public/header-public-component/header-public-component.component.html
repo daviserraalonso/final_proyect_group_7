@@ -1,22 +1,22 @@
-<p>header-public-component works!</p>
-<div class="container text-center my-3">
+<div class="container-flex text-center">
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark w-100">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">TeacherApp</a>
+        <a class="navbar-brand" routerLink="/index">TeacherApp</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item"><a class="nav-link" [routerLink]="['/student']" >Inicio</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Buscar Profesores</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Cómo Funciona</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Contacto</a></li>
+            <li class="nav-item"><a class="nav-link" [routerLink]="['/index']">Inicio</a></li>
+            <li class="nav-item"><a class="nav-link" [routerLink]="['/looking-teachers']">Buscar Profesores</a></li>
+            <li class="nav-item"><a class="nav-link" [routerLink]="['/how-works']">Cómo Funciona</a></li>
+            <li class="nav-item"><a class="nav-link" [routerLink]="['/contact']">Contacto</a></li>
           </ul>
           <div>
-            <a href="login.html" class="btn btn-outline-light me-2">Iniciar Sesión</a>
-            <a href="register.html" class="btn btn-primary">Registrarse</a>
+            <a [routerLink]="['/login']" class="btn btn-success me-2">Iniciar Sesión</a>
+            <a [routerLink]="['/register-student']" class="btn btn-outline-info m-2">Registrarse como alumno</a>
+            <a [routerLink]="['/register-teacher']" class="btn btn-outline-warning">Registrarse como profesor</a>
           </div>
         </div>
       </div>

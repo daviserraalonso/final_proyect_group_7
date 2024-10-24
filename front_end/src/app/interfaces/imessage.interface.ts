@@ -1,8 +1,7 @@
 export interface Imessage {
     id: number;
-    idStudent: number;
-    idProfessor: number;
+    chatId: number;
+    senderId: number;
     content: string;
-    sentDate: string;
-    read?: boolean;
+    createdAt: Date;
 }

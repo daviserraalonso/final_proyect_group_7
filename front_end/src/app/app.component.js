@@ -1,4 +1,3 @@
-"use strict";
 var __esDecorate = (this && this.__esDecorate) || function (ctor, descriptorIn, decorators, contextIn, initializers, extraInitializers) {
     function accept(f) { if (f !== void 0 && typeof f !== "function") throw new TypeError("Function expected"); return f; }
     var kind = contextIn.kind, key = kind === "getter" ? "get" : kind === "setter" ? "set" : "value";
@@ -33,39 +32,38 @@ var __runInitializers = (this && this.__runInitializers) || function (thisArg, i
     }
     return useValue ? value : void 0;
 };
-var __setFunctionName = (this && this.__setFunctionName) || function (f, name, prefix) {
-    if (typeof name === "symbol") name = name.description ? "[".concat(name.description, "]") : "";
-    return Object.defineProperty(f, "name", { configurable: true, value: prefix ? "".concat(prefix, " ", name) : name });
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppComponent = void 0;
-var core_1 = require("@angular/core");
-var router_1 = require("@angular/router");
-var AppComponent = function () {
-    var _classDecorators = [(0, core_1.Component)({
+import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
+import { HeaderPublicComponentComponent } from "./components/public/header-public-component/header-public-component.component";
+import { FooterPublicComponentComponent } from "./components/public/footer-public-component/footer-public-component.component";
+import { IndexComponent } from "./pages/public/home/index.component";
+import { SearchTeachersComponent } from "./components/public/search-teachers/search-teachers.component"; // Importa el módulo del botón
+let AppComponent = (() => {
+    let _classDecorators = [Component({
             selector: 'app-root',
             standalone: true,
-            imports: [router_1.RouterOutlet],
+            imports: [RouterOutlet, MatButtonModule, HeaderPublicComponentComponent, FooterPublicComponentComponent, IndexComponent, SearchTeachersComponent],
+            template: `
+    <button mat-raised-button color="primary">¡Angular Material funciona!</button>
+  `,
             templateUrl: './app.component.html',
             styleUrl: './app.component.css'
         })];
-    var _classDescriptor;
-    var _classExtraInitializers = [];
-    var _classThis;
-    var AppComponent = _classThis = /** @class */ (function () {
-        function AppComponent_1() {
-            this.title = 'front_end';
+    let _classDescriptor;
+    let _classExtraInitializers = [];
+    let _classThis;
+    var AppComponent = class {
+        static { _classThis = this; }
+        static {
+            const _metadata = typeof Symbol === "function" && Symbol.metadata ? Object.create(null) : void 0;
+            __esDecorate(null, _classDescriptor = { value: _classThis }, _classDecorators, { kind: "class", name: _classThis.name, metadata: _metadata }, null, _classExtraInitializers);
+            AppComponent = _classThis = _classDescriptor.value;
+            if (_metadata) Object.defineProperty(_classThis, Symbol.metadata, { enumerable: true, configurable: true, writable: true, value: _metadata });
+            __runInitializers(_classThis, _classExtraInitializers);
         }
-        return AppComponent_1;
-    }());
-    __setFunctionName(_classThis, "AppComponent");
-    (function () {
-        var _metadata = typeof Symbol === "function" && Symbol.metadata ? Object.create(null) : void 0;
-        __esDecorate(null, _classDescriptor = { value: _classThis }, _classDecorators, { kind: "class", name: _classThis.name, metadata: _metadata }, null, _classExtraInitializers);
-        AppComponent = _classThis = _classDescriptor.value;
-        if (_metadata) Object.defineProperty(_classThis, Symbol.metadata, { enumerable: true, configurable: true, writable: true, value: _metadata });
-        __runInitializers(_classThis, _classExtraInitializers);
-    })();
+        title = 'front_end';
+    };
     return AppComponent = _classThis;
-}();
-exports.AppComponent = AppComponent;
+})();
+export { AppComponent };

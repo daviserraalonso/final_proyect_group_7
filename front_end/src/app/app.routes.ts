@@ -1,9 +1,23 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './pages/public/home/home.component';
-import { StudentProfileComponentComponent } from './components/dashboard/student/student-profile-component/student-profile-component.component';
+
+
+import { IndexComponent } from './pages/public/home/index.component'
+import { SearchTeachersComponent } from './components/public/search-teachers/search-teachers.component'
+import { HowWorkComponentComponent } from './components/public/how-work-component/how-work-component.component'
+import { ContactComponentComponent } from './components/public/contact-component/contact-component.component'
+import { LoginComponent } from './pages/public/login/login.component';
+import { RegisterStudentComponentComponent } from './components/public/register-student-component/register-student-component.component';
+import { RegisterTeacherComponentComponent } from './components/public/register-teacher-component/register-teacher-component.component';
+
 
 export const routes: Routes = [
-    { path: '', pathMatch: 'full', redirectTo: 'home' },
-    { path: 'home', component: HomeComponent },
-    { path: 'student', component: StudentProfileComponentComponent },
+    { path: '', redirectTo: '/index', pathMatch: 'full' },
+    { path: 'index', component: IndexComponent },
+    { path: 'looking-teachers', component: SearchTeachersComponent },
+    { path: 'how-works', component: HowWorkComponentComponent },
+    { path: 'contact', component: ContactComponentComponent },
+    { path: 'login', component: LoginComponent },
+    { path: 'register-student', component: RegisterStudentComponentComponent },
+    { path: 'register-teacher', component: RegisterTeacherComponentComponent },
+    { path: '**', redirectTo: '/index' } // route to 404
 ];

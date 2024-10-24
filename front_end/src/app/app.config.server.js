@@ -1,12 +1,9 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.config = void 0;
-var core_1 = require("@angular/core");
-var platform_server_1 = require("@angular/platform-server");
-var app_config_1 = require("./app.config");
-var serverConfig = {
+import { mergeApplicationConfig } from '@angular/core';
+import { provideServerRendering } from '@angular/platform-server';
+import { appConfig } from './app.config';
+const serverConfig = {
     providers: [
-        (0, platform_server_1.provideServerRendering)()
+        provideServerRendering()
     ]
 };
-exports.config = (0, core_1.mergeApplicationConfig)(app_config_1.appConfig, serverConfig);
+export const config = mergeApplicationConfig(appConfig, serverConfig);
