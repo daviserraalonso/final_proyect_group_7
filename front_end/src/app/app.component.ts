@@ -4,13 +4,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { HeaderPublicComponentComponent } from "./components/public/header-public-component/header-public-component.component";
 import { FooterPublicComponentComponent } from "./components/public/footer-public-component/footer-public-component.component";
 import { HomeComponent } from "./pages/public/home/home.component";
-import { SearchTeachersComponent } from "./components/public/search-teachers/search-teachers.component";  // Importa el módulo del botón
+import { SearchTeachersComponent } from "./components/public/search-teachers/search-teachers.component";
+import { SideBarComponent } from "./components/common/side-bar/side-bar.component";  // Importa el módulo del botón
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, MatButtonModule, HeaderPublicComponentComponent, FooterPublicComponentComponent, HomeComponent, SearchTeachersComponent],
+  imports: [RouterOutlet, MatButtonModule, HeaderPublicComponentComponent, FooterPublicComponentComponent, HomeComponent, SearchTeachersComponent, SideBarComponent],
   template: `
     <button mat-raised-button color="primary">¡Angular Material funciona!</button>
   `,
