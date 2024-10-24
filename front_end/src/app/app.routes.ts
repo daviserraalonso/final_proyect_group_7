@@ -8,6 +8,7 @@ import { ContactComponentComponent } from './components/public/contact-component
 import { LoginComponent } from './pages/public/login/login.component';
 import { RegisterStudentComponentComponent } from './components/public/register-student-component/register-student-component.component';
 import { RegisterTeacherComponentComponent } from './components/public/register-teacher-component/register-teacher-component.component';
+import { StudentProfileComponentComponent } from './components/dashboard/student/student-profile-component/student-profile-component.component';
 
 
 export const routes: Routes = [
@@ -19,5 +20,6 @@ export const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'register-student', component: RegisterStudentComponentComponent },
     { path: 'register-teacher', component: RegisterTeacherComponentComponent },
+    { path: 'dash', component: StudentProfileComponentComponent },
     { path: '**', redirectTo: '/index' } // route to 404
 ];
