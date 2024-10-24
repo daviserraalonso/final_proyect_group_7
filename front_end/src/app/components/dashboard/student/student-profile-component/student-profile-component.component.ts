@@ -1,31 +1,14 @@
 import { AfterViewInit, Component } from '@angular/core';
-
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 @Component({
   selector: 'app-student-profile-component',
   standalone: true,
-  imports: [],
+  imports: [MatProgressBarModule],
   templateUrl: './student-profile-component.component.html',
   styleUrls: ['./student-profile-component.component.css']
 })
-export class StudentProfileComponentComponent implements AfterViewInit {
-  ngAfterViewInit(): void {
-    if (typeof window !== 'undefined') {
-      // Importar Bootstrap dinámicamente solo en el navegador
-      import('bootstrap').then(bootstrap => {
-        // Inicializar Tooltips
-        const tooltipTriggerList = Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-        tooltipTriggerList.forEach(tooltipTriggerEl => {
-          new bootstrap.Tooltip(tooltipTriggerEl);
-        });
-
-        // Inicializar Dropdowns
-        const dropdownElementList = Array.from(document.querySelectorAll('.dropdown-toggle'));
-        dropdownElementList.forEach(dropdownTriggerEl => {
-          new bootstrap.Dropdown(dropdownTriggerEl);
-        });
-      });
-    }
-  }
+export class StudentProfileComponentComponent  {
+  
 
   studentProfile = {
     name: 'Juan Pérez',
