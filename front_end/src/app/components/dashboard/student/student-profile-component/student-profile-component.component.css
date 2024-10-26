@@ -11,3 +11,8 @@
 .progress-bar {
   line-height: 1.5rem; 
 }
+
+.large-title {
+  font-size: 2.5rem; /* Ajusta el tamaño del texto según tus necesidades */
+  font-weight: bold;
+}

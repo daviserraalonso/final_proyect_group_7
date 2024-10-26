@@ -1,9 +1,29 @@
-import {  Component } from '@angular/core';
+import { Component } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatCardModule } from '@angular/material/card';
+import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
+import { MatListModule } from '@angular/material/list';
+import { MatGridListModule, MatGridTileText } from '@angular/material/grid-list';
 @Component({
   selector: 'app-student-profile-component',
   standalone: true,
-  imports: [MatProgressBarModule],
+  imports: [MatIconModule,
+    MatTooltipModule,
+    MatMenuModule,
+    MatDividerModule,
+    MatProgressBarModule,
+    MatCardModule,
+    MatTableModule,
+    MatButtonModule,
+    MatListModule,
+    MatGridListModule,
+
+    ],
   templateUrl: './student-profile-component.component.html',
   styleUrls: ['./student-profile-component.component.css']
 })
