@@ -4,6 +4,9 @@ const userRoutes = require('./routes/user');
 const { fileURLToPath } = require('url');
 const { dirname } = require('path');
 
+import dotenv from 'dotenv';
+dotenv.config();
+
 
 const app = express();
 const port = process.env['PORT'] || 4000;

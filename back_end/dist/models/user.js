@@ -15,9 +15,6 @@ class User extends sequelize_1.Model {
     isValidated;
     lat;
     lng;
-    // Timestamps
-    createdAt;
-    updatedAt;
 }
 User.init({
     id: {
@@ -47,8 +44,9 @@ User.init({
         allowNull: true,
     },
     isValidated: {
-        type: sequelize_1.DataTypes.BOOLEAN,
-        defaultValue: false,
+        type: sequelize_1.DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0,
     },
     lat: {
         type: sequelize_1.DataTypes.DECIMAL(9, 6),

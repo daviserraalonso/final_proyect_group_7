@@ -5,7 +5,7 @@ export interface UserAttributes {
     password: string;
     roleId: number;
     phone?: string;
-    isValidated?: boolean;
+    isValidated?: number;
     lat?: number;
     lng?: number;
     createdAt?: Date;

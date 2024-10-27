@@ -9,7 +9,7 @@ class User extends Model<UserAttributes, UserCreationAttributes> implements User
   public password!: string;
   public roleId!: number;
   public phone?: string;
-  public isValidated?: boolean;
+  public isValidated?: number;
   public lat?: number;
   public lng?: number;
 
@@ -47,8 +47,9 @@ User.init(
       allowNull: true,
     },
     isValidated: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false,
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0,
     },
     lat: {
       type: DataTypes.DECIMAL(9, 6),
@@ -61,7 +62,7 @@ User.init(
   },
   {
     tableName: 'user',
-    sequelize, // instancia de sequelize
+    sequelize, // sequalize instance
     timestamps: true,
   }
 );

@@ -91,8 +91,32 @@ Revisar el fichero createDatabase.cjs, establecer las credenciales del usuario l
 2º revisar que tenemos instalado sequalice, usamos npm install --save-dev sequelize-cli
 hay que asegurarse de que en back_end\package.json tenemos "type": "commonjs", no module, si no habría que transformar todas las migraciones a .cjs
 3º npx sequelize-cli db:migrate; npx sequelize-cli db:seed:all debe de crear todas las tablas y además insertar los valores básicos proporcionados en los seeders.
-4º asegurarse de que tenemos esto en package.json: "start": "node dist/server.mjs" y el archivo server tiene como extensión .mjs
+4º una vez creada la DB y los seeders, ejecutar npm start. debe aparecer:
 
+Configuración de la base de datos: {
+  username: 'root',
+  password: '',
+  database: 'TeacherAppDB',
+  host: '127.0.0.1',
+  port: 3306,
+  dialect: 'mysql'
+}
+Servidor Node escuchando en http://localhost:4000
+
+Ya podemos acceder a la web publica y registrar un usuario.
+
+para el registro de usuarios se hace lógica para añadir nodemailer y se usa como servidor de correo y usaremos SendGrid para el envio
+
+Este es el email: grupo7unir@yahoo.com
+Este es el password: Grupo_7_unir_1234567
+
+esta es la pass de gmail para la app: yygf wmzy isvo lllr
+
+generamos un token usando el fichero generateSecret.js y el comando node generateSecret.js, el token generado lo establecemos en el .env en la variable JWT_SECRET
+
+instalamos la libreria jwt (jsonwebtoken)
+
+configuramos un servicio para el email.
 
 
 
