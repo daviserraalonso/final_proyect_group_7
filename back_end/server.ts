@@ -1,31 +1,28 @@
-import express from 'express';
-import cors from 'cors'; // cors import
-import userRoutes from './routes/user.js';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
+const express = require('express');
+const cors = require('cors');
+const userRoutes = require('./routes/user');
+const { fileURLToPath } = require('url');
+const { dirname } = require('path');
 
-// Definir __dirname en ES Modules
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 const app = express();
 const port = process.env['PORT'] || 4000;
 
-// Configure cors from front
+// CORS config
 app.use(cors({
-  origin: 'http://localhost:4200', // url front-end
+  origin: 'http://localhost:4200',
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true
+  credentials: true,
 }));
 
-// Middleware to analize json
+// middleware to use json
 app.use(express.json());
 
-// user routes
+// userss routes
 app.use('/api/users', userRoutes);
 
-// insit server
+// init server
 app.listen(port, () => {
   console.log(`Servidor Node escuchando en http://localhost:${port}`);
 });

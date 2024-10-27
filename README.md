@@ -87,10 +87,11 @@ git merge develop
 # IN BACK-END FIRST TIME
 
 Revisar el fichero createDatabase.cjs, establecer las credenciales del usuario local de bases de datos.
-ejecutar node createDatabase.cjs debe aparecer en consola Bases de datos teacherappdb creada.
-revisar que tenemos instalado sequalice, usamos npm install --save-dev sequelize-cli
+1º node createDatabase.cjs debe aparecer en consola Bases de datos teacherappdb creada.
+2º revisar que tenemos instalado sequalice, usamos npm install --save-dev sequelize-cli
 hay que asegurarse de que en back_end\package.json tenemos "type": "commonjs", no module, si no habría que transformar todas las migraciones a .cjs
-ejecutamos npx sequelize-cli db:migrate debe de crear todas las tablas
+3º npx sequelize-cli db:migrate; npx sequelize-cli db:seed:all debe de crear todas las tablas y además insertar los valores básicos proporcionados en los seeders.
+4º asegurarse de que tenemos esto en package.json: "start": "node dist/server.mjs" y el archivo server tiene como extensión .mjs
 
 
 

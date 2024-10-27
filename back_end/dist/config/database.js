@@ -1,13 +1,15 @@
-import { Sequelize } from 'sequelize';
-import { readFileSync } from 'fs';
-import { join } from 'path';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const sequelize_1 = require("sequelize");
+const fs_1 = require("fs");
+const path_1 = require("path");
 // ajust to get config.json
-const configPath = join(process.cwd(), 'config', 'config.json');
-const config = JSON.parse(readFileSync(configPath, 'utf-8'));
+const configPath = (0, path_1.join)(process.cwd(), 'config', 'config.json');
+const config = JSON.parse((0, fs_1.readFileSync)(configPath, 'utf-8'));
 const env = process.env['NODE_ENV'] || 'development';
 const dbConfig = config[env];
 console.log('Configuración de la base de datos:', dbConfig);
-const sequelize = new Sequelize(dbConfig.database, // database name
+const sequelize = new sequelize_1.Sequelize(dbConfig.database, // database name
 dbConfig.username, // unserName
 dbConfig.password, // pass
 {
@@ -22,4 +24,4 @@ sequelize.authenticate()
     .catch((err) => {
     console.error('No se pudo conectar a la base de datos:', err);
 });
-export default sequelize;
+exports.default = sequelize;

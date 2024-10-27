@@ -1,25 +1,23 @@
-import express from 'express';
-import cors from 'cors'; // cors import
-import userRoutes from './routes/user.js';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
-// Definir __dirname en ES Modules
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+"use strict";
+const express = require('express');
+const cors = require('cors');
+const userRoutes = require('./routes/user');
+const { fileURLToPath } = require('url');
+const { dirname } = require('path');
 const app = express();
 const port = process.env['PORT'] || 4000;
-// Configura CORS para permitir solicitudes desde tu frontend
+// CORS config
 app.use(cors({
-    origin: 'http://localhost:4200', // URL de tu frontend Angular
+    origin: 'http://localhost:4200',
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true
+    credentials: true,
 }));
-// Middleware to analize json
+// middleware to use json
 app.use(express.json());
-// user routes
+// userss routes
 app.use('/api/users', userRoutes);
-// insit server
+// init server
 app.listen(port, () => {
     console.log(`Servidor Node escuchando en http://localhost:${port}`);
 });
