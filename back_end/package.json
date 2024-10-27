@@ -2,21 +2,32 @@
   "name": "back_end",
   "version": "1.0.0",
   "main": "dist/server.js",
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
     "start": "node dist/server.js",
     "build": "tsc && copyfiles -u 1 config/config.json dist/config/"
   },
   "dependencies": {
     "@angular/platform-server": "^18.2.8",
+    "@sendgrid/mail": "^8.1.4",
+    "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
     "express": "^4.21.1",
+    "jsonwebtoken": "^9.0.2",
     "mysql2": "^2.3.3",
-    "sequelize": "^6.37.4"
+    "nodemailer": "^6.9.15",
+    "sequelize": "^6.37.4",
+    "typescript": "^5.6.3"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/cors": "^2.8.17",
-    "copyfiles": "^2.4.1"
+    "@types/dotenv": "^6.1.1",
+    "@types/jsonwebtoken": "^9.0.7",
+    "@types/nodemailer": "^6.4.16",
+    "copyfiles": "^2.4.1",
+    "sequelize-cli": "^6.6.2"
   },
   "keywords": [],
   "author": "",

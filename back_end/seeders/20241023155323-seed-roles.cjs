@@ -11,7 +11,7 @@ module.exports = {
 
     console.log('Insertando roles:', roles);
 
-    await queryInterface.bulkInsert('role', roles, {}); // Asegúrate de usar 'role' como nombre de la tabla
+    await queryInterface.bulkInsert('role', roles, {});
   },
 
   down: async (queryInterface, Sequelize) => {

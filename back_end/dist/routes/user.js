@@ -1,33 +1,9 @@
-import { Router } from 'express';
-import User from '../models/user.js'; // import user model
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const { Router } = require('express');
+const UserController_1 = require("../controllers/UserController");
 const router = Router();
-router.post('/register', async (req, res) => {
-    try {
-        const { name, email, password, roleId, phone, isValidated, lat, lng } = req.body;
-        // check if user exists
-        const existingUser = await User.findOne({ where: { email } });
-        if (existingUser) {
-            res.status(400).json({ message: 'This email exists in our database' });
-            return;
-        }
-        // create new user
-        const user = await User.create({
-            name,
-            email,
-            password, // hash password
-            roleId,
-            phone,
-            isValidated,
-            lat,
-            lng
-        });
-        // return response user created
-        res.status(201).json(user);
-    }
-    catch (error) {
-        console.error('We have a error generate user:', error);
-        res.status(500).json({ message: 'Internal server error' });
-    }
-});
-// Exportación por defecto
-export default router;
+// use controller in route
+router.post('/register', UserController_1.registerUser);
+router.get('/confirm/:token', UserController_1.confirmEmail); // route to call function confirm in controller pass token
+module.exports = router;
