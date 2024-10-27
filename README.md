@@ -84,6 +84,15 @@ git merge develop
 
 2º navegamos hasta settings, bajamos hacia abajo un poco y buscamos branch, hacemos click en edit y seleccionamos nuestra rama de funcionalidad. Al seleccionarla queda  guardada. Automáticamente empezará el despliegue, para ver el progreso navegamos a la izquierda hasta logs y ahí vemos todo (si no empezara el despliegue, dentro del dashborad y dentro de final_proyect_group_7-1, arriba a la derecha veremos el botón manual deploy, hacemos click y entre las opciones que aparecen, seleccionamos clear build cache & deploy). Si surge cualquier problema, tendremos que intentar solucionarlo.
 
+# IN BACK-END FIRST TIME
+
+Revisar el fichero createDatabase.cjs, establecer las credenciales del usuario local de bases de datos.
+ejecutar node createDatabase.cjs debe aparecer en consola Bases de datos teacherappdb creada.
+revisar que tenemos instalado sequalice, usamos npm install --save-dev sequelize-cli
+hay que asegurarse de que en back_end\package.json tenemos "type": "commonjs", no module, si no habría que transformar todas las migraciones a .cjs
+ejecutamos npx sequelize-cli db:migrate debe de crear todas las tablas
+
+
 
 
 # description:
