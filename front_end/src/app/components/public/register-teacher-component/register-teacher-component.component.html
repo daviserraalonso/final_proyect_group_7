@@ -31,8 +31,20 @@
             </mat-form-field>
 
             <mat-form-field>
+              <mat-label>Introduce tu poblacion</mat-label>
+              <input matInput formControlName="city" id="city" (input)="autocomplet()" #cityInput>
+              @if(inputControl('mail', 'required')){
+              <p class="text-danger">El campo es requerido</p>
+              }
+              @if(inputControl('mail', 'pattern')){
+              <p class="text-danger">El email es incorrecto</p>
+              }
+              <mat-icon matSuffix>mail</mat-icon>
+            </mat-form-field>
+
+            <mat-form-field>
               <mat-label>Introduce tu telefono</mat-label>
-              <input matInput formControlName="phone">
+              <input matInput formControlName="phone" >
               @if(inputControl('phone', 'required')){
               <p class="text-danger">El campo es requerido</p>
               }

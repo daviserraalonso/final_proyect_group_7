@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, ElementRef, inject, signal, ViewChild } from '@angular/core';
 import {MatSelectModule} from '@angular/material/select';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -25,6 +25,9 @@ export class RegisterTeacherComponentComponent {
   textButton: string = 'Enviar' // text of button submit
   registerTeacher: FormGroup;
 
+  @ViewChild('cityInput') cityInput!: ElementRef
+
+
 
   // initialize form
   constructor() {
@@ -41,6 +44,9 @@ export class RegisterTeacherComponentComponent {
       phone: new FormControl(null, [
         Validators.required
       ]),
+      city: new FormControl(null, []),
+      lat: new FormControl(null, []),
+      lng: new FormControl(null, []),
       password: new FormControl(null, [
         Validators.required,
         Validators.minLength(8),
@@ -56,7 +62,14 @@ export class RegisterTeacherComponentComponent {
   }
 
   // recovery user data to update
+
+ngAfterViewInit() {
+  this.autocomplet()
+
+}
+
 ngOnInit() {
+
   this.activateRoute.params.subscribe(async (params: any) => {
   if (params.id) {
     //if user exists change text of header and button
@@ -128,6 +141,7 @@ clickEvent2(event: MouseEvent) {
 
 // sending form data to the service
 async getdataForm() {
+  console.log(this.registerTeacher.value)
   if (this.registerTeacher.value._id) {
     try {
       const user: Iuser = await this.userServices.update(this.registerTeacher.value)     
@@ -148,7 +162,33 @@ async getdataForm() {
     }
   }
   }
+
+
+  selectedPlace: any;
+
+autocomplet() {
+  const autocomplete = new google.maps.places.Autocomplete(this.cityInput.nativeElement);
+  autocomplete.setTypes(['(cities)']); // Limita a las ciudades
+
+  autocomplete.addListener('place_changed', () => {
+    this.selectedPlace = autocomplete.getPlace();
+    console.log(this.selectedPlace.geometry.location.lat());
+    console.log(this.selectedPlace.geometry.location.lng());
+    console.log(this.selectedPlace.name);
+
+    this.registerTeacher.patchValue({
+      lat: this.selectedPlace.geometry.location.lat(),
+      lng: this.selectedPlace.geometry.location.lng(),
+      city: this.selectedPlace.name
+
+    })
+
+  });
+
+
 }
 
+}
 
+// https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=Barcelona&inputtype=textquery&fields=geometry,name&key=AIzaSyD9ErOXkaVuLQK0YRsUrZ__RSI1hTjqGgs
 
