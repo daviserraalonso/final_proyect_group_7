@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
+import { MapComponentComponent } from '../map-component/map-component.component';
 
 @Component({
   selector: 'app-search-teachers',
   standalone: true,
-  imports: [RouterOutlet,FormsModule],
+  imports: [RouterOutlet,FormsModule, MapComponentComponent],
   templateUrl: './search-teachers.component.html',
   styleUrl: './search-teachers.component.css'
 })
