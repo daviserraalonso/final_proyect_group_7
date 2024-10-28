@@ -58,7 +58,7 @@ User.init({
     },
 }, {
     tableName: 'user',
-    sequelize: database_1.default, // instancia de sequelize
+    sequelize: database_1.default, // sequalize instance
     timestamps: true,
 });
 exports.default = User;
