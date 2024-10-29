@@ -1,1 +1,23 @@
-<p>message-component works!</p>
+<h1 mat-dialog-title>Enviar Nuevo Mensaje</h1>
+<div mat-dialog-content>
+  <mat-form-field class="full-width">
+    <mat-label>Alumno</mat-label>
+    <mat-select [(ngModel)]="selectedStudent">
+      <mat-option *ngFor="let student of data.students" [value]="student">
+        {{ student }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field class="full-width">
+    <mat-label>Asunto</mat-label>
+    <input matInput [(ngModel)]="subject">
+  </mat-form-field>
+  <mat-form-field class="full-width">
+    <mat-label>Contenido</mat-label>
+    <textarea matInput [(ngModel)]="content"></textarea>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancelar</button>
+  <button mat-button color="primary" (click)="onSend()">Enviar</button>
+</div>

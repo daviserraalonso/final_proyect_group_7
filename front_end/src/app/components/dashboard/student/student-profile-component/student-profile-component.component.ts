@@ -22,7 +22,8 @@ import { MatGridListModule, MatGridTileText } from '@angular/material/grid-list'
     MatButtonModule,
     MatListModule,
     MatGridListModule,
-
+    MatGridTileText,
+    
     ],
   templateUrl: './student-profile-component.component.html',
   styleUrls: ['./student-profile-component.component.css']

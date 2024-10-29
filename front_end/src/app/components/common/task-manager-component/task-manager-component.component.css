@@ -1,0 +1,18 @@
+.task-form {
+    width: 100%;
+  }
+  
+  .full-width {
+    width: 100%;
+  }
+  
+  .mt-3 {
+    margin-top: 16px;
+  }
+  
+  mat-dialog-actions {
+    margin-top: 16px;
+  }
+  mat-form-field.mat-form-field-appearance-outline .mat-form-field-label {
+    color: #000; /* Cambia el color a negro o cualquier color que contraste con el fondo */
+  }
