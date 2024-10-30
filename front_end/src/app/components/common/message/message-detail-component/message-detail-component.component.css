@@ -1,0 +1,13 @@
+.container {
+    padding: 16px;
+  }
+  
+  .message-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  mat-list-item {
+    padding: 16px 0;
+  }

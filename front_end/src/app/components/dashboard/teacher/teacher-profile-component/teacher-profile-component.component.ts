@@ -45,7 +45,8 @@ import { TaskManagerComponentComponent } from '../../../common/task-manager-comp
     MatNativeDateModule,
     MatFormFieldModule,
     MatDatepickerModule,
-    FormsModule
+    FormsModule,
+    
 
     
   ],
@@ -135,7 +136,7 @@ export class TeacherProfileComponentComponent {
     });
   }
 
-  showCustomSnackBar(message: string): void {
+  showCustomSnackBar(message: string): void { 
     // Abre la snackbar con el componente personalizado
     this.snackBar.openFromComponent(CustomSnackbarComponent, {
       duration: 3000,

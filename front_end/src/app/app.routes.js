@@ -14,5 +14,6 @@ export const routes = [
     { path: 'login', component: LoginComponent },
     { path: 'register-student', component: RegisterStudentComponentComponent },
     { path: 'register-teacher', component: RegisterTeacherComponentComponent },
+    
     { path: '**', redirectTo: '/index' } // route to 404
 ];

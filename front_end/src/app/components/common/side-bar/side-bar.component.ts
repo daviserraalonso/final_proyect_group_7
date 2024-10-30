@@ -3,12 +3,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { MatDividerModule } from '@angular/material/divider';
+import { RouterLink } from '@angular/router';
 
 
 @Component({
   selector: 'app-side-bar',
   standalone: true,
-  imports: [MatIconModule,MatTooltipModule,MatMenuModule,MatDividerModule],
+  imports: [MatIconModule,MatTooltipModule,MatMenuModule,MatDividerModule,RouterLink],
   templateUrl: './side-bar.component.html',
   styleUrl: './side-bar.component.css'
 })

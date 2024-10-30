@@ -7,27 +7,27 @@
       </a>
     </li>
     <li class="nav-item mb-3">
-      <a href="#" class="nav-link active py-2 border-bottom" aria-current="page" matTooltip="Home" matTooltipPosition="right">
+      <a routerLink="/" routerLinkActive="router-link-active" class="nav-link active py-2 border-bottom" aria-current="page" matTooltip="Home" matTooltipPosition="right">
         <mat-icon>home</mat-icon>
       </a>
     </li>
     <li class="nav-item mb-3">
-      <a href="#" class="nav-link py-2 border-bottom" matTooltip="Dashboard" matTooltipPosition="right">
+      <a routerLink="/dashboard" routerLinkActive="router-link-active" class="nav-link py-2 border-bottom" matTooltip="Dashboard" matTooltipPosition="right">
         <mat-icon>dashboard</mat-icon>
       </a>
     </li>
     <li class="nav-item mb-3">
-      <a href="#" class="nav-link py-2 border-bottom" matTooltip="Calendario" matTooltipPosition="right">
+      <a routerLink="/calendario" routerLinkActive="router-link-active" class="nav-link py-2 border-bottom" matTooltip="Calendario" matTooltipPosition="right">
         <mat-icon>event</mat-icon>
       </a>
     </li>
     <li class="nav-item mb-3">
-      <a href="#" class="nav-link py-2 border-bottom" matTooltip="Bandeja de entrada" matTooltipPosition="right">
+      <a [routerLink]="['/inbox']" class="nav-link py-2 border-bottom" matTooltip="Bandeja de entrada" matTooltipPosition="right">
         <mat-icon>email</mat-icon>
       </a>
     </li>
     <li class="nav-item mb-3">
-      <a href="#" class="nav-link py-2 border-bottom" matTooltip="Soporte tecnico" matTooltipPosition="right">
+      <a routerLink="/soporte-tecnico" routerLinkActive="router-link-active" class="nav-link py-2 border-bottom" matTooltip="Soporte técnico" matTooltipPosition="right">
         <mat-icon>contact_support</mat-icon>
       </a>
     </li>

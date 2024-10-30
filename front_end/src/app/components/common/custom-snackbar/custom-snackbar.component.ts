@@ -3,7 +3,9 @@ import { MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-custom-snackbar',
-  template: `<span class="custom-snackbar">{{ data }}</span>`,
+  template: ` <span class="custom-snackbar">
+  👍 {{ data }}
+</span>`,
   styles: [`
     .custom-snackbar {
       background-color: #4caf50 !important; /* Fondo verde */
