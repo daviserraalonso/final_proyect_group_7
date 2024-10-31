@@ -43,6 +43,18 @@
             </mat-form-field>
 
             <mat-form-field>
+              <mat-label>Introduce tu poblacion</mat-label>
+              <input matInput formControlName="city" id="city" (input)="autocomplet()" #cityInput>
+              @if(inputControl('city', 'required')){
+              <p class="text-danger">El campo es requerido</p>
+              }
+              @if(inputControl('city', 'minlength')){
+              <p class="text-danger">El campo debe tener mínimo 3 caracteres</p>
+              }
+              <mat-icon matSuffix>location_city</mat-icon>
+            </mat-form-field>
+            
+            <mat-form-field>
               <mat-label>Introduce tu password</mat-label>
               <input matInput formControlName="password" [type]="hide() ? 'password' : 'text'" />
               @if(inputControl('password', 'required')){
