@@ -7,7 +7,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserServiceService } from '../../../service/user-service.service';
-import { Iuser } from '../../../interfaces/iuser.interface';
+import { UserAttributes } from '../../../interfaces/userAttributes';
+
 
 
 @Component({
@@ -62,7 +63,7 @@ ngOnInit() {
     //if user exists change text of header and button
   this.headerForm = 'Actualizar el usuario'
   this.textButton = 'Actualizar datos'
-  const user: Iuser = await this.userServices.getById(params.id)
+  const user: UserAttributes = await this.userServices.getById(params.id)
 
   this.registerTeacher = new FormGroup({
     id: new FormControl(user.id, []),
@@ -130,7 +131,7 @@ clickEvent2(event: MouseEvent) {
 async getdataForm() {
   if (this.registerTeacher.value._id) {
     try {
-      const user: Iuser = await this.userServices.update(this.registerTeacher.value)     
+      const user: UserAttributes = await this.userServices.update(this.registerTeacher.value)     
       if (user.id) {
         alert('Usuario actualizado')
       this.router.navigate([''])
@@ -140,7 +141,7 @@ async getdataForm() {
     }
   } else {
     try {
-      const user: Iuser = await this.userServices.insert(this.registerTeacher.value)
+      const user: UserAttributes = await this.userServices.insert(this.registerTeacher.value)
       if(user.id) {
         this.router.navigate([''])
       }
