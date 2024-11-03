@@ -1,68 +1,83 @@
 'use strict';
 
-/** @type {import('sequelize-cli').Migration} */
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('course_event', {
       id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
-        primaryKey: true
+        primaryKey: true,
       },
-      idCourse: {
+      courseId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'course',
-          key: 'id'
-        }
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
       },
-      idSubject: {
+      subjectId: {
         type: Sequelize.INTEGER,
         references: {
           model: 'subject',
-          key: 'id'
-        }
+          key: 'id',
+        },
+        onDelete: 'SET NULL',
       },
       eventType: {
         type: Sequelize.ENUM('class', 'task'),
-        allowNull: false
+        allowNull: false,
       },
       title: {
-        type: Sequelize.STRING(255),
-        allowNull: false
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       description: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       startDateTime: {
         type: Sequelize.DATE,
-        allowNull: false
+        allowNull: false,
       },
       endDateTime: {
         type: Sequelize.DATE,
-        allowNull: false
+        allowNull: false,
       },
       locationType: {
         type: Sequelize.ENUM('physical', 'online'),
-        allowNull: false
+        allowNull: false,
       },
       locationId: {
         type: Sequelize.INTEGER,
         references: {
           model: 'course_location',
-          key: 'id'
-        }
+          key: 'id',
+        },
+        onDelete: 'SET NULL',
       },
       onlineLink: {
-        type: Sequelize.STRING(255)
+        type: Sequelize.STRING,
       },
       deadline: {
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATEONLY,
+      },
+      isRead: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+      },
+      createdAt: {
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn('NOW'),
+      },
+      updatedAt: {
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn('NOW'),
+      },
     });
   },
+
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('course_event');
-  }
+  },
 };

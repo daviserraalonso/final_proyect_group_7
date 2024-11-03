@@ -4,4 +4,5 @@ export interface Imessage {
     senderId: number;
     content: string;
     createdAt: Date;
+    isRead?: boolean;
 }

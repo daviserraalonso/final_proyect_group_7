@@ -1,6 +1,6 @@
-export interface ICourseLocation {
+export interface IcourseLocation {
     id: number;
-    idCourse: number;
+    courseId: number;
     lat?: number;
     lng?: number;
     address?: string;

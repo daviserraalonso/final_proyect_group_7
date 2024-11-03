@@ -6,8 +6,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Iuser } from '../../../interfaces/iuser.interface';
 import { UserServiceService } from '../../../service/user-service.service';
+import { UserAttributes } from '../../../interfaces/userAttributes';
 
 @Component({
   selector: 'app-register-student-component',
@@ -60,7 +60,7 @@ export class RegisterStudentComponentComponent {
       if (params.id) {
         this.headerForm = 'Actualizar el usuario'
         this.textButton = 'Actualizar datos'
-        const user: Iuser = await this.userServices.getById(params.id)
+        const user: UserAttributes = await this.userServices.getById(params.id)
 
         this.registerStudent = new FormGroup({
           id: new FormControl(user.id, []),
@@ -120,7 +120,7 @@ export class RegisterStudentComponentComponent {
     if (this.registerStudent.value.id) {
       // update user
       try {
-        const user: Iuser = await this.userServices.update(this.registerStudent.value);
+        const user: UserAttributes = await this.userServices.update(this.registerStudent.value);
         if (user.id) {
           alert('Usuario actualizado correctamente');
           this.router.navigate(['']);
@@ -131,7 +131,7 @@ export class RegisterStudentComponentComponent {
     } else {
       // create new user
       try {
-        const user: Iuser = await this.userServices.insert(this.registerStudent.value);
+        const user: UserAttributes = await this.userServices.insert(this.registerStudent.value);
         if (user.id) {
           alert('Usuario creado correctamente');
           this.router.navigate(['']);

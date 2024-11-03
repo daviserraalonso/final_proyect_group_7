@@ -1,37 +1,46 @@
 'use strict';
 
-/** @type {import('sequelize-cli').Migration} */
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('course_location', {
       id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
-        primaryKey: true
+        primaryKey: true,
       },
-      idCourse: {
+      courseId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'course',
-          key: 'id'
-        }
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
       },
       lat: {
-        type: Sequelize.DECIMAL(9, 6)
+        type: Sequelize.DECIMAL(9, 6),
       },
       lng: {
-        type: Sequelize.DECIMAL(9, 6)
+        type: Sequelize.DECIMAL(9, 6),
       },
       address: {
-        type: Sequelize.STRING(255)
+        type: Sequelize.STRING,
       },
       onlineLink: {
-        type: Sequelize.STRING(255)
-      }
+        type: Sequelize.STRING,
+      },
+      createdAt: {
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn('NOW'),
+      },
+      updatedAt: {
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn('NOW'),
+      },
     });
   },
+
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('course_location');
-  }
+  },
 };

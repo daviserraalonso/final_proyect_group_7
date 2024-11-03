@@ -1,9 +1,9 @@
 export interface Itask {
     id: number;
-    idSubject: number;
-    idUser: number;
+    subjectId: number;
+    userId: number;
     comments?: string;
-    score?: number;
+    punctuation?: number;
     creationDate: Date;
     deadline?: Date;
 }

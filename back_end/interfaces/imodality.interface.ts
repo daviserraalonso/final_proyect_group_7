@@ -1,5 +1,5 @@
 export interface Imodality {
     id: number;
-    type: 'presencial' | 'online'; // Modalidad del curso
+    type: 'in-person' | 'online';
     description?: string;
 }

@@ -1,7 +1,7 @@
 export interface Isubject {
     id: number;
     name: string;
-    idCourse: number;
+    courseId: number;
     description?: string;
     finalGrade?: number;
 }

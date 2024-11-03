@@ -4,10 +4,7 @@ export interface Iuser {
     email: string;
     password: string;
     roleId: number;
-    phone?: string;
-    isValidated: boolean;
-    lat?: number;
-    lng?: number;
+    isValidated?: boolean;
     createdAt: Date;
     updatedAt: Date;
 }

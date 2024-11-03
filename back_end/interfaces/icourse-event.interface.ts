@@ -1,7 +1,7 @@
 export interface IcourseEvent {
     id: number;
-    idCourse: number;
-    idSubject?: number;
+    courseId: number;
+    subjectId?: number;
     eventType: 'class' | 'task';
     title: string;
     description?: string;
@@ -11,4 +11,5 @@ export interface IcourseEvent {
     locationId?: number;
     onlineLink?: string;
     deadline?: Date;
+    isRead?: boolean;
 }
