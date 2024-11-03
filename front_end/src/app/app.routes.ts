@@ -11,6 +11,7 @@ import { RegisterTeacherComponentComponent } from './components/public/register-
 import { StudentProfileComponentComponent } from './components/dashboard/student/student-profile-component/student-profile-component.component';
 import { TeacherProfileComponentComponent } from './components/dashboard/teacher/teacher-profile-component/teacher-profile-component.component';
 import { InboxComponent } from './components/common/inbox/inbox.component';
+import { CalendarComponent } from './components/common/calendar/calendar.component';
 
 
 export const routes: Routes = [
@@ -24,5 +25,7 @@ export const routes: Routes = [
     { path: 'register-teacher', component: RegisterTeacherComponentComponent },
     { path: 'dash', component: TeacherProfileComponentComponent },
     { path: 'inbox', component: InboxComponent },
+    { path: 'calendar', component: CalendarComponent },
+
     { path: '**', redirectTo: '/index' } // route to 404
 ];
