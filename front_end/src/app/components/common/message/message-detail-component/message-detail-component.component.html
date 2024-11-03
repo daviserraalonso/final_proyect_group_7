@@ -1,1 +1,11 @@
-<p>message-detail-component works!</p>
+
+<h1 mat-dialog-title>Detalle del Mensaje</h1>
+<div mat-dialog-content>
+  <p><strong>Asunto:</strong> {{ data.subject }}</p>
+  <p><strong>Remitente:</strong> {{ data.sender }}</p>
+  <p><strong>Contenido:</strong></p>
+  <p>{{ data.content }}</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="closeDialog()">Cerrar</button>
+</div>

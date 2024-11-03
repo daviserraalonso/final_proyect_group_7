@@ -1,18 +1,30 @@
-<section class="container text-center my-5">
-    <h1>Encuentra tu profesor ideal</h1>
-    <p>Busca profesores por ciudad, rama de conocimiento, precio y más.</p>
-    <div class="row justify-content-center">
-      <div class="col-md-6">
-        <input type="text" class="form-control" placeholder="Buscar profesores..." [(ngModel)]="searchQuery">
-      </div>
+
+
+  <mat-card-subtitle class="no-border-bottom mb-5">
+  <div class="search-section text-center py-5">
+  <h1 class="display-4 mb-4">Encuentra tu profe ideal</h1>
+  <div class="search-bar-wrapper d-flex justify-content-center align-items-center">
+    <div class="input-group search-input-group">
+      <span class="input-group-text">
+        <mat-icon>search</mat-icon>
+      </span>
+      <input type="text" class="form-control" placeholder="Buscar profesores..." [(ngModel)]="searchQuery">
+      <span class="input-group-text location-input">
+        <mat-icon>location_on</mat-icon>
+      </span>
+      <input type="text" class="form-control location-search" placeholder="Lugar de las clases">
+      <button mat-button color="primary" class="btn  search-button">Buscar</button>
     </div>
-    <div class="row justify-content-center mt-4">
-      @for (category of categories; track $index) {
-      <div class="col-md-2">
-        <div class="icon-container" (click)="selectCategory(category)">
-          <i [class]="category.icon"></i>
-          <p>{{ category.name }}</p>
-        </div>
-      </div>}
-    </div>
-  </section>
+  </div>
+
+  <!-- Categorías Populares -->
+  <div class="popular-categories d-flex justify-content-center flex-wrap mt-4">
+    @for (categoria of categories; track $index) {<button mat-raised-button color="" class="category-item me-3 d-flex align-items-center"  (click)="selectCategory(categoria)">
+      <mat-icon class="icon-accent" >{{ categoria.icon }}</mat-icon> {{ categoria.name }}
+    </button>}
+    <button mat-flat-button>
+      <mat-icon>arrow_forward</mat-icon>
+    </button>
+  </div>
+</div>
+</mat-card-subtitle>

@@ -1,0 +1,36 @@
+<h1 mat-dialog-title>Gestionar Tarea</h1>
+<div mat-dialog-content>
+  <!-- Selección del Alumno -->
+  <mat-form-field class="full-width">
+    <mat-label>Alumno</mat-label>
+    <mat-select [(ngModel)]="selectedStudent">
+      <mat-option *ngFor="let student of data.students" [value]="student">
+        {{ student }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <!-- Título de la Tarea -->
+  <mat-form-field class="full-width">
+    <mat-label>Tarea</mat-label>
+    <input matInput [(ngModel)]="taskTitle">
+  </mat-form-field>
+
+  <!-- Descripción de la Tarea -->
+  <mat-form-field class="full-width">
+    <mat-label>Descripción</mat-label>
+    <textarea matInput [(ngModel)]="taskDescription"></textarea>
+  </mat-form-field>
+
+  <!-- Enviar Documentos -->
+  <div class="upload-documents mt-4">
+    <label for="fileInput">Subir Documento:</label>
+    <input type="file" id="fileInput" (change)="onFileSelected($event)">
+  </div>
+</div>
+
+<!-- Botones de Acciones -->
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancelar</button>
+  <button mat-button color="primary" (click)="onSave()">Guardar</button>
+</div>

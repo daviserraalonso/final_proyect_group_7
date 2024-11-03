@@ -1,0 +1,13 @@
+.custom-snackbar {
+    background-color: #4caf50;
+    color: white;
+    font-size: 16px;
+  }
+
+  .full-width {
+    width: 100%;
+  }
+  
+  .mt-3 {
+    margin-top: 16px;
+  }

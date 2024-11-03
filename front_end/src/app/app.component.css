@@ -1,0 +1,21 @@
+body{
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+}
+.container-fluid {
+    display: flex;
+    flex-wrap: nowrap;
+  }
+  
+  aside {
+    flex: 0 0 100px; /* Ajusta el ancho del sidebar */
+    background-color: #f8f9fa;
+    height: 100vh; /* Asegura que el sidebar ocupe toda la altura de la pantalla */
+    padding: 0;
+  }
+  
+  main {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto; /* Permite el desplazamiento vertical si el contenido es largo */
+  }

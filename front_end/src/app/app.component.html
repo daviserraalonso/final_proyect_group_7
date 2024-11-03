@@ -1,11 +1,16 @@
 <header>
-  <app-header-public-component/>
+  <app-header-public-component></app-header-public-component>
 </header>
-
-<main>
-  <router-outlet></router-outlet>
-</main>
-
+<div class="container">
+  <div class="row">
+    <aside class="col-md-3 col-lg-2 mb-5 mt-5">
+      <app-side-bar/>
+    </aside>
+    <main class="col-md-9 col-lg-10">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>
 <footer>
-  <app-footer-public-component/>
+  <app-footer-public-component></app-footer-public-component>
 </footer>
