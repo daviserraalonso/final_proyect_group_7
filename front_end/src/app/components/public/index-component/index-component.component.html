@@ -1,34 +1,52 @@
 <section>
-    <div class="container text-center my-3">
-      <h2 class="display-6 mb-3">+ de 10 mil tutores</h2>
-      <div class="row justify-content-center">
-        <div class="col-md-4 col-sm-6 mb-3">
-          <div class="card border-0 shadow-sm">
-            <div class="card-body">
-              <h5 class="card-title">Tutores por el mundo</h5>
-              <p class="card-text display-6 text-primary">29K+</p>
-              <p class="card-text">Contamos con tutores en todo el mundo, listos para ayudar a los estudiantes a tener éxito.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4 col-sm-6 mb-3">
-          <div class="card border-0 shadow-sm">
-            <div class="card-body">
-              <h5 class="card-title">Opiniones verificadas</h5>
-              <p class="card-text display-6 text-primary">1k+</p>
-              <p class="card-text">Reseñas reales de estudiantes que han encontrado a sus profesores ideales para cumplir sus metas.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4 col-sm-6 mb-3">
-          <div class="card border-0 shadow-sm">
-            <div class="card-body">
-              <h5 class="card-title">Áreas</h5>
-              <p class="card-text display-6 text-primary">100+</p>
-              <p class="card-text">Ofrecemos una amplia gama de temas desde lo académico hasta el desarrollo personal.</p>
-            </div>
-          </div>
-        </div>
+  <div class="stats-container">
+    <h2 class="stats-title">¡Forma parte de nuestra comunidad global de aprendizaje!</h2>
+    <p class="stats-subtitle">
+      Únete a más de <strong>30,000 profesores</strong> y <strong>100,000 estudiantes</strong> que confían en nosotros para alcanzar sus metas.
+    </p>
+  
+    <div class="stats-grid">
+      <div class="stat-item">
+        <img src="assets/profe.jpg" alt="Icono de tutor" class="stat-icon" />
+        <h3 class="stat-value">30,000+</h3>
+        <p class="stat-description">
+          <strong>Profesores certificados</strong> de diferentes países, listos para ayudarte en cualquier tema.
+        </p>
+      </div>
+      
+      <div class="stat-item">
+        <img src="assets/rese.png" alt="Icono de reseñas" class="stat-icon" />
+        <h3 class="stat-value">1,500+</h3>
+        <p class="stat-description">
+          <strong>Reseñas de estudiantes</strong> satisfechos que lograron alcanzar sus objetivos con nuestros tutores.
+        </p>
+      </div>
+      
+      <div class="stat-item">
+        <img src="assets/areas.png" alt="Icono de áreas" class="stat-icon" />
+        <h3 class="stat-value">100+</h3>
+        <p class="stat-description">
+          <strong>Áreas de aprendizaje</strong> desde matemáticas y ciencias hasta habilidades de vida y desarrollo personal.
+        </p>
+      </div>
+      
+      <div class="stat-item">
+        <img src="assets/24.7.png" alt="Icono de disponibilidad" class="stat-icon" />
+        <h3 class="stat-value">24/7</h3>
+        <p class="stat-description">
+          <strong>Disponibilidad global</strong> para que puedas estudiar o enseñar en el horario que más te convenga.
+        </p>
       </div>
     </div>
+  
+    <div class="call-to-action">
+      <p>¿Eres estudiante o tutor? ¡Únete y forma parte de nuestra comunidad!</p>
+      <div class="action-buttons">
+        <button [routerLink]="['/register-student']" class="btn btn-student">Registrarse como Estudiante</button>
+        <button [routerLink]="['/register-teacher']" class="btn btn-teacher">Registrarse como Profesor</button>
+      </div>
+    </div>
+  </div>
+  
+  
   </section>
