@@ -3,49 +3,40 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+// models/chat.ts
 const sequelize_1 = require("sequelize");
 const database_1 = __importDefault(require("../config/database"));
-class User extends sequelize_1.Model {
+class Chat extends sequelize_1.Model {
     id;
-    name;
-    email;
-    password;
-    roleId;
-    isValidated;
-    lat;
-    lng;
+    courseId;
+    professorId;
+    studentId;
 }
-User.init({
+Chat.init({
     id: {
         type: sequelize_1.DataTypes.INTEGER,
-        autoIncrement: true,
         primaryKey: true,
+        autoIncrement: false,
     },
-    name: {
-        type: sequelize_1.DataTypes.STRING,
-        allowNull: false,
-    },
-    email: {
-        type: sequelize_1.DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-    },
-    password: {
-        type: sequelize_1.DataTypes.STRING,
-        allowNull: false,
-    },
-    roleId: {
+    courseId: {
         type: sequelize_1.DataTypes.INTEGER,
         allowNull: false,
+        field: 'courseId',
     },
-    isValidated: {
+    professorId: {
         type: sequelize_1.DataTypes.INTEGER,
         allowNull: false,
-        defaultValue: 0,
+        field: 'professorId',
+    },
+    studentId: {
+        type: sequelize_1.DataTypes.INTEGER,
+        allowNull: false,
+        field: 'studentId',
     },
 }, {
-    tableName: 'user',
-    sequelize: database_1.default, // sequalize instance
+    sequelize: database_1.default,
+    modelName: 'Chat',
+    tableName: 'chat',
     timestamps: true,
 });
-exports.default = User;
+exports.default = Chat;

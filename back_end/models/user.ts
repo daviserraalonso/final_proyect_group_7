@@ -8,7 +8,6 @@ class User extends Model<UserAttributes, UserCreationAttributes> implements User
   public email!: string;
   public password!: string;
   public roleId!: number;
-  public phone?: string;
   public isValidated?: number;
   public lat?: number;
   public lng?: number;
@@ -42,22 +41,10 @@ User.init(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    phone: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
     isValidated: {
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0,
-    },
-    lat: {
-      type: DataTypes.DECIMAL(9, 6),
-      allowNull: true,
-    },
-    lng: {
-      type: DataTypes.DECIMAL(9, 6),
-      allowNull: true,
     },
   },
   {

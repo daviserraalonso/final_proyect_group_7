@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
-import User from '../models/user';
+import User from '../models/User';
 import { sendConfirmationEmail } from '../services/emailService';
 const jwt = require('jsonwebtoken');
 
@@ -12,7 +12,7 @@ const jwt = require('jsonwebtoken');
  */
 export const registerUser = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { name, email, password, roleId, phone, isValidated, lat, lng } = req.body;
+    const { name, email, password, roleId, isValidated, lat, lng } = req.body;
 
     // Verificar si el usuario ya existe
     const existingUser = await User.findOne({ where: { email } });
@@ -31,10 +31,7 @@ export const registerUser = async (req: Request, res: Response): Promise<void> =
       email,
       password: hashedPassword,
       roleId,
-      phone,
       isValidated,
-      lat,
-      lng,
     });
 
     // not return password in response

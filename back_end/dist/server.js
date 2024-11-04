@@ -11,7 +11,7 @@ const { dirname } = require('path');
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const app = express();
-const port = process.env['PORT'] || 4000;
+const port = process.env['PORT'] || 3000;
 // CORS config
 app.use(cors({
     origin: 'http://localhost:4200',

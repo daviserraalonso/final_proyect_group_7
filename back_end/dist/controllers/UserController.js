@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.confirmEmail = exports.registerUser = void 0;
+exports.deleteUser = exports.modifyUser = exports.createUser = exports.confirmEmail = exports.registerUser = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const User_1 = __importDefault(require("../models/User"));
 const emailService_1 = require("../services/emailService");
@@ -16,7 +16,7 @@ const jwt = require('jsonwebtoken');
  */
 const registerUser = async (req, res) => {
     try {
-        const { name, email, password, roleId, phone, isValidated, lat, lng } = req.body;
+        const { name, email, password, roleId, isValidated, lat, lng } = req.body;
         // Verificar si el usuario ya existe
         const existingUser = await User_1.default.findOne({ where: { email } });
         if (existingUser) {
@@ -32,10 +32,7 @@ const registerUser = async (req, res) => {
             email,
             password: hashedPassword,
             roleId,
-            phone,
             isValidated,
-            lat,
-            lng,
         });
         // not return password in response
         const { password: _, ...userWithoutPassword } = user.get({ plain: true });
@@ -87,3 +84,42 @@ const confirmEmail = async (req, res) => {
     }
 };
 exports.confirmEmail = confirmEmail;
+/**
+ * create new user from dashboard function
+ * @param req
+ * @param res
+ * @returns
+ */
+const createUser = async (req, res) => {
+    try {
+    }
+    catch (error) {
+    }
+};
+exports.createUser = createUser;
+/**
+ * modify user from dashboard function
+ * @param req
+ * @param res
+ * @returns
+ */
+const modifyUser = async (req, res) => {
+    try {
+    }
+    catch (error) {
+    }
+};
+exports.modifyUser = modifyUser;
+/**
+ * delete user from dashboard function
+ * @param req
+ * @param res
+ * @returns
+ */
+const deleteUser = async (req, res) => {
+    try {
+    }
+    catch (error) {
+    }
+};
+exports.deleteUser = deleteUser;
