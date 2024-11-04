@@ -1,8 +1,11 @@
-// models/role.js
+// models/role.ts
 import { Model, DataTypes } from 'sequelize';
-import sequelize from '../config/database.js';
+import sequelize from '../config/database';
 
-class Role extends Model {}
+class Role extends Model {
+  public id!: number;
+  public name!: string;
+}
 
 Role.init(
   {
@@ -21,7 +24,7 @@ Role.init(
     sequelize,
     modelName: 'Role',
     tableName: 'role',
-    timestamps: false,
+    timestamps: true,
   }
 );
 
