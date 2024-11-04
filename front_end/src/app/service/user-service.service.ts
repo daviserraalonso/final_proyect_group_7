@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
-import { Iuser } from '../interfaces/iuser.interface';
 import { firstValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { UserAttributes } from '../interfaces/userAttributes';
 
 @Injectable({
   providedIn: 'root'
@@ -15,17 +15,17 @@ export class UserServiceService {
 
 
   // function to get user by Id, url no complete
-  getById(id: string): Promise<Iuser> {
-    return firstValueFrom(this.http.get<Iuser>(this.baseUrl))
+  getById(id: string): Promise<UserAttributes> {
+    return firstValueFrom(this.http.get<UserAttributes>(this.baseUrl))
   }
   //function to update user, url no complete
-  update(body: Iuser): Promise<Iuser> {
-    return firstValueFrom(this.http.put<Iuser>(this.baseUrl, body));
+  update(body: UserAttributes): Promise<UserAttributes> {
+    return firstValueFrom(this.http.put<UserAttributes>(this.baseUrl, body));
   }
 
   // function to create a new user, url no complete
-  insert(body: Iuser): Promise<Iuser> {
-    return firstValueFrom(this.http.post<Iuser>(this.baseUrl, body));
+  insert(body: UserAttributes): Promise<UserAttributes> {
+    return firstValueFrom(this.http.post<UserAttributes>(this.baseUrl, body));
   }
 
 }

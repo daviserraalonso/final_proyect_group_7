@@ -84,6 +84,37 @@ git merge develop
 
 2º navegamos hasta settings, bajamos hacia abajo un poco y buscamos branch, hacemos click en edit y seleccionamos nuestra rama de funcionalidad. Al seleccionarla queda  guardada. Automáticamente empezará el despliegue, para ver el progreso navegamos a la izquierda hasta logs y ahí vemos todo (si no empezara el despliegue, dentro del dashborad y dentro de final_proyect_group_7-1, arriba a la derecha veremos el botón manual deploy, hacemos click y entre las opciones que aparecen, seleccionamos clear build cache & deploy). Si surge cualquier problema, tendremos que intentar solucionarlo.
 
+# IN BACK-END FIRST TIME
+
+Revisar el fichero createDatabase.cjs, establecer las credenciales del usuario local de bases de datos.
+1º node createDatabase.cjs debe aparecer en consola Bases de datos teacherappdb creada.
+2º revisar que tenemos instalado sequalice, usamos npm install --save-dev sequelize-cli
+hay que asegurarse de que en back_end\package.json tenemos "type": "commonjs", no module, si no habría que transformar todas las migraciones a .cjs
+3º npx sequelize-cli db:migrate; npx sequelize-cli db:seed:all debe de crear todas las tablas y además insertar los valores básicos proporcionados en los seeders.
+4º una vez creada la DB y los seeders, ejecutar npm start. debe aparecer:
+
+Configuración de la base de datos: {
+  username: 'root',
+  password: '',
+  database: 'TeacherAppDB',
+  host: '127.0.0.1',
+  port: 3306,
+  dialect: 'mysql'
+}
+Servidor Node escuchando en http://localhost:4000
+
+Ya podemos acceder a la web publica y registrar un usuario.
+
+para el registro de usuarios se hace lógica para añadir nodemailer y se usa como servidor de correo y usaremos api de google para el envio
+
+esta es la pass de gmail para la app: yygf wmzy isvo lllr
+
+generamos un token usando el fichero generateSecret.js y el comando node generateSecret.js, el token generado lo establecemos en el .env en la variable JWT_SECRET
+
+instalamos la libreria jwt (jsonwebtoken)
+
+configuramos un servicio para el email.
+
 
 
 # description:
