@@ -15,6 +15,9 @@ interface Teacher {
   selector: 'app-favorite-teachers',
   templateUrl: './favorite-teachers.component.html',
   styleUrls: ['./favorite-teachers.component.css'],
+  standalone: true,
+  imports: [CommonModule
+  ],
   animations: [
     trigger('cardHover', [
       transition(':hover', [
@@ -23,6 +26,7 @@ interface Teacher {
     ])
   ]
 })
+
 export class FavoriteTeachersComponent {
   // Añadir Math como propiedad de la clase
   

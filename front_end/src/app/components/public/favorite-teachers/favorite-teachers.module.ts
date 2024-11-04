@@ -5,14 +5,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
-    FavoriteTeachersComponent
+    
   ],
   imports: [
+    FavoriteTeachersComponent,
     CommonModule,
     BrowserAnimationsModule
   ],
   exports: [
-    FavoriteTeachersComponent
+    
   ]
 })
 export class FavoriteTeachersModule { }
