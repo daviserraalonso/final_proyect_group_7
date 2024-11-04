@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
-import User from '../models/User';
+import User from '../models/user';
 import { sendConfirmationEmail } from '../services/emailService';
 const jwt = require('jsonwebtoken');
 
@@ -92,5 +92,50 @@ export const confirmEmail = async (req: Request, res: Response): Promise<void> =
   } catch (error) {
     console.error('Error al confirmar el correo electrónico:', error);
     res.status(400).json({ message: 'Token inválido o expirado' });
+  }
+};
+
+/**
+ * create new user from dashboard function
+ * @param req 
+ * @param res 
+ * @returns 
+ */
+
+export const createUser = async (req: Request, res: Response): Promise<void> => {
+  try {
+
+  }catch(error){
+
+  }
+};
+
+/**
+ * modify user from dashboard function
+ * @param req 
+ * @param res 
+ * @returns 
+ */
+
+export const modifyUser = async (req: Request, res: Response): Promise<void> => {
+  try {
+
+  }catch(error){
+
+  }
+};
+
+/**
+ * delete user from dashboard function
+ * @param req 
+ * @param res 
+ * @returns 
+ */
+
+export const deleteUser = async (req: Request, res: Response): Promise<void> => {
+  try {
+
+  }catch(error){
+
   }
 };

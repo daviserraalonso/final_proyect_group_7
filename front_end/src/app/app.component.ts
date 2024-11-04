@@ -11,7 +11,7 @@ import { SideBarComponent } from './components/common/side-bar/side-bar.componen
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, MatButtonModule, HeaderPublicComponentComponent, FooterPublicComponentComponent, IndexComponent, SearchTeachersComponent, SideBarComponent],
+  imports: [RouterOutlet, MatButtonModule, HeaderPublicComponentComponent, FooterPublicComponentComponent, IndexComponent, SearchTeachersComponent],
   template: `
     <button mat-raised-button color="primary">¡Angular Material funciona!</button>
   `,
