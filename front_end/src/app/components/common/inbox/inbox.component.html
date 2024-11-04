@@ -1,0 +1,28 @@
+<mat-card class="mt-5">
+  <mat-card-header>
+    <mat-icon class="m-3">inbox</mat-icon>
+    <mat-card-title class="m-3">Bandeja de Entrada</mat-card-title>
+  </mat-card-header>
+  <mat-divider></mat-divider>
+
+  <mat-card-content>
+    <div *ngFor="let message of messages">
+      <mat-card class="mb-3">
+        <mat-card-content class="d-flex align-items-center">
+          <mat-icon color="primary" class="me-3">email</mat-icon>
+          <div class="flex-grow-1">
+            <h5 class="mb-1 fw-bold">{{ message.subject }}</h5>
+            <p class="mb-0 text-muted">{{ message.sender }}</p>
+          </div>
+          <button mat-raised-button color="accent" (click)="openMessageDialog(message)">Ver Mensaje</button>
+          <button mat-raised-button color="accent" (click)="replyMessage(message)">Responder</button>
+        </mat-card-content>
+      </mat-card>
+      <mat-divider></mat-divider>
+    </div>
+  </mat-card-content>
+
+  <mat-card-actions class="d-flex justify-content-end m-3">
+    <button mat-raised-button color="accent" (click)="newMessage()">Nuevo Mensaje</button>
+  </mat-card-actions>
+</mat-card>

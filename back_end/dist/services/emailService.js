@@ -10,8 +10,8 @@ dotenv_1.default.config();
 const transporter = nodemailer_1.default.createTransport({
     service: 'gmail',
     auth: {
-        user: process.env.GMAIL_USER, // Tu correo de Gmail
-        pass: process.env.GMAIL_PASS, // Tu contraseña de aplicación
+        user: process.env.GMAIL_USER, // gmail email
+        pass: process.env.GMAIL_PASS, // application password
     },
 });
 const sendConfirmationEmail = async (to, subject, html) => {

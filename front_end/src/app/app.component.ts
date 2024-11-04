@@ -5,6 +5,7 @@ import { HeaderPublicComponentComponent } from "./components/public/header-publi
 import { FooterPublicComponentComponent } from "./components/public/footer-public-component/footer-public-component.component";
 import { IndexComponent } from "./pages/public/home/index.component";
 import { SearchTeachersComponent } from "./components/public/search-teachers/search-teachers.component";  // Importa el módulo del botón
+import { SideBarComponent } from './components/common/side-bar/side-bar.component';
 
 
 @Component({

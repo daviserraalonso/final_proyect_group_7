@@ -1,0 +1,61 @@
+<div class="d-flex flex-column flex-shrink-0 bg-light sidebar mt-5 mb-5">
+  <ul class="nav nav-pills nav-flush flex-column mb-auto text-center mt-5">
+    <li class="nav-item mb-3">
+      <a href="/" class="d-block p-2 link-dark text-decoration-none" matTooltip="TeacherAPP" matTooltipPosition="right">
+        <mat-icon>school</mat-icon>
+        <span class="visually-hidden">TeacherAPP</span>
+      </a>
+    </li>
+    <li class="nav-item mb-3">
+      <p routerLink="/" routerLinkActive="router-link-active" class="nav-link  py-2 border-bottom" aria-current="page" >
+        <img src="https://github.com/mdo.png" alt="mdo" width="24" height="24" class="rounded-circle">
+      </p>
+    </li>
+    <li class="nav-item mb-3">
+      <a routerLink="/" routerLinkActive="router-link-active" class="nav-link  py-2 border-bottom" aria-current="page" matTooltip="Home" matTooltipPosition="right">
+        <mat-icon>home</mat-icon>
+      </a>
+    </li>
+    <li class="nav-item mb-3">
+      <a routerLink="/dash" routerLinkActive="router-link-active" class="nav-link py-2 border-bottom" matTooltip="Dashboard" matTooltipPosition="right">
+        <mat-icon>dashboard</mat-icon>
+      </a>
+    </li>
+    <li class="nav-item mb-3">
+      <a routerLink="/calendar" routerLinkActive="router-link-active" class="nav-link py-2 border-bottom" matTooltip="Calendario" matTooltipPosition="right">
+        <mat-icon>event</mat-icon>
+      </a>
+    </li>
+    <li class="nav-item mb-3">
+      <a [routerLink]="['/inbox']" class="nav-link py-2 border-bottom" matTooltip="Bandeja de entrada" matTooltipPosition="right">
+        <mat-icon>email</mat-icon>
+      </a>
+    </li>
+    <li class="nav-item mb-3">
+      <a routerLink="/soporte-tecnico" routerLinkActive="router-link-active" class="nav-link py-2 border-bottom" matTooltip="Salir" matTooltipPosition="right">
+        <mat-icon>logout</mat-icon>
+      </a>
+    </li>
+  </ul>
+  <!-- dropdown -->
+  <div class="nav-link py-2 border-bottom" (mouseenter)="openMenu()">
+    <div mat-icon-button [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger" class="d-flex align-items-center justify-content-center p-2 link-dark text-decoration-none">
+      <img src="https://github.com/mdo.png" alt="mdo" width="24" height="24" class="rounded-circle">
+    </div>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>
+        <span>Mensajes</span>
+      </button>
+      <button mat-menu-item>
+        <span>Configuraciones</span>
+      </button>
+      <button mat-menu-item>
+        <span>Perfil</span>
+      </button>
+      <mat-divider></mat-divider>
+      <button mat-menu-item>
+        <span>Salir</span>
+      </button>
+    </mat-menu>
+  </div>
+</div>

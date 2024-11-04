@@ -65,15 +65,15 @@ exports.registerUser = registerUser;
  */
 const confirmEmail = async (req, res) => {
     try {
-        // Extraer el token de los parámetros de la URL
+        // extrack from URL token
         const token = req.params.token;
-        // Verificar y decodificar el token para obtener el userId
+        // check and verify userID from token
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         const userId = decoded.userId;
-        // Actualizar isValidated directamente en la base de datos solo si el token es válido
-        const [updatedRows] = await User_1.default.update({ isValidated: 1 }, { where: { id: userId, isValidated: 0 } } // Solo actualizar si el usuario no está validado aún
+        // update user to validated a 1 if token is valid
+        const [updatedRows] = await User_1.default.update({ isValidated: 1 }, { where: { id: userId, isValidated: 0 } } // only if user is not validated
         );
-        // Verificar si se ha actualizado alguna fila
+        // check if email it´s validated
         if (updatedRows > 0) {
             res.status(200).json({ message: 'Correo electrónico confirmado exitosamente' });
         }

@@ -105,10 +105,7 @@ Servidor Node escuchando en http://localhost:4000
 
 Ya podemos acceder a la web publica y registrar un usuario.
 
-para el registro de usuarios se hace lógica para añadir nodemailer y se usa como servidor de correo y usaremos SendGrid para el envio
-
-Este es el email: grupo7unir@yahoo.com
-Este es el password: Grupo_7_unir_1234567
+para el registro de usuarios se hace lógica para añadir nodemailer y se usa como servidor de correo y usaremos api de google para el envio
 
 esta es la pass de gmail para la app: yygf wmzy isvo lllr
 

@@ -1,0 +1,50 @@
+<h1 mat-dialog-title>Enviar Mensaje</h1>
+<div mat-dialog-content>
+  <form [formGroup]="messageForm" class="message-form">
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Para</mat-label>
+      <input matInput formControlName="recipient" readonly>
+      @if ("messageForm.get('recipient')?.hasError('required')") {
+        <mat-error>
+          El destinatario es obligatorio
+        </mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Asunto</mat-label>
+      <input matInput formControlName="subject">
+      @if ("messageForm.get('subject')?.hasError('required')") {
+        <mat-error>
+          El asunto es obligatorio
+        </mat-error>
+      }
+      @if ("messageForm.get('subject')?.hasError('minlength')") {
+        <mat-error>
+          El asunto debe tener al menos 3 caracteres
+        </mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Mensaje</mat-label>
+      <textarea matInput formControlName="content" placeholder="Escribe tu mensaje aquí..." rows="10" mat-autosize matAutosizeMinRows="5" matAutosizeMaxRows="15"></textarea>
+      @if ("messageForm.get('content')?.hasError('required')") {
+        <mat-error>
+          El contenido del mensaje es obligatorio
+        </mat-error>
+      }
+      @if ("messageForm.get('content')?.hasError('maxlength')") {
+        <mat-error>
+          El contenido del mensaje no puede exceder los 500 caracteres
+        </mat-error>
+      }
+    </mat-form-field>
+    <div class="file-input-container">
+      <label for="file-upload" class="file-input-label">Adjuntar Archivo</label>
+      <input id="file-upload" type="file" (change)="onFileSelected($event)" class="file-input">
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions class="dialog-actions">
+  <button mat-button (click)="onCancel()">Cancelar</button>
+  <button mat-button color="primary" (click)="onSend()">Enviar</button>
+</div>
