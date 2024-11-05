@@ -23,7 +23,9 @@ export const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'register-student', component: RegisterStudentComponentComponent },
     { path: 'register-teacher', component: RegisterTeacherComponentComponent },
-    { path: 'dash', component: TeacherProfileComponentComponent },
+    { path: 'admin', component: TeacherProfileComponentComponent },
+    { path: 'teacher', component: TeacherProfileComponentComponent },
+    { path: 'student', component: TeacherProfileComponentComponent },
     { path: 'inbox', component: InboxComponent },
     { path: 'calendar', component: CalendarComponent },
 

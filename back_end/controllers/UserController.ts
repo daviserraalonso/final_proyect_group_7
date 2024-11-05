@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
-import User from '../models/User';
 import { sendConfirmationEmail } from '../services/emailService';
+import User from '../models/user';
 const jwt = require('jsonwebtoken');
 
 /**

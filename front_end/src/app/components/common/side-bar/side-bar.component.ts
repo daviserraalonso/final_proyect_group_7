@@ -1,28 +1,21 @@
-import {  Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { MatDividerModule } from '@angular/material/divider';
 import { RouterLink } from '@angular/router';
-
-
+import { AuthService } from '../../../service/auth-service.service';
 @Component({
   selector: 'app-side-bar',
   standalone: true,
-  imports: [MatIconModule,MatTooltipModule,MatMenuModule,MatDividerModule,RouterLink],
+  imports: [MatIconModule, MatTooltipModule, MatMenuModule, MatDividerModule, RouterLink],
   templateUrl: './side-bar.component.html',
-  styleUrl: './side-bar.component.css'
+  styleUrls: ['./side-bar.component.css']
 })
-
-export class SideBarComponent {
+export class SideBarComponent implements OnInit {
   @ViewChild(MatMenuTrigger) menuTrigger!: MatMenuTrigger;
 
-  openMenu() {
-    this.menuTrigger.openMenu();
-  }
-
-  
-  
+  isAuthenticated: boolean = false;
 
   studentProfile = {
     name: 'Juan Pérez',
@@ -58,9 +51,18 @@ export class SideBarComponent {
     'Tu progreso en Ciencias Naturales ha sido actualizado.'
   ];
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
+    // Nos suscribimos al estado de autenticación
+    this.authService.isAuthenticated$.subscribe(
+      isAuthenticated => {
+        this.isAuthenticated = isAuthenticated;
+      }
+    );
+  }
+
+  openMenu() {
+    this.menuTrigger.openMenu();
   }
 }
-
