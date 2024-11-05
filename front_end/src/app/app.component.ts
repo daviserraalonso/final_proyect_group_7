@@ -22,9 +22,9 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     // Nos suscribimos al observable de autenticación del servicio
-    this.authService.isAuthenticated$.subscribe(
+    this.authService.isAuthenticated$.subscribe( // isAuthenticated$ es un observable que se suscribe al BehaviorSubject isAuthenticatedSubject del servicio AuthService
       isAuthenticated => {
-        this.isAuthenticated = isAuthenticated;
+        this.isAuthenticated = isAuthenticated; // Actualizamos el estado de autenticación
         
       }
     );

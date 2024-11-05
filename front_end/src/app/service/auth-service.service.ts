@@ -11,7 +11,7 @@ export class AuthService {
 
   // BehaviorSubject para el estado de autenticación
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(this.hasToken());
-  isAuthenticated$ = this.isAuthenticatedSubject.asObservable(); // Observable público
+  isAuthenticated$ = this.isAuthenticatedSubject.asObservable(); // esto hace que el BehaviorSubject sea observable y la funcion isAuthenticated$ es la que se va a suscribir en el componente para saber si el usuario esta autenticado o no
 
   constructor(private http: HttpClient) {}
 
@@ -36,10 +36,10 @@ export class AuthService {
   }
 
   // Método para establecer la sesión
-  private setSession(authResult: any): void {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('token', authResult.token);
-      localStorage.setItem('user', JSON.stringify(authResult.user));
+  private setSession(authResult: any): void {  // authResult es la respuesta del servidor
+    if (typeof window !== 'undefined') { // Verificar si estamos en el navegador
+      localStorage.setItem('token', authResult.token); // Almacenar el token en localStorage
+      localStorage.setItem('user', JSON.stringify(authResult.user)); // Almacenar la información del usuario en localStorage
       this.isAuthenticatedSubject.next(true); // Actualizar el estado de autenticación
     }
   }
