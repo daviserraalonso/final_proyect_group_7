@@ -1,71 +1,43 @@
-import { Component } from '@angular/core';
-import { trigger, transition, style, animate } from '@angular/animations';
+// favorite-teachers.component.ts
 import { CommonModule } from '@angular/common';
-
-interface Teacher {
-  name: string;
-  area: string;
-  rating: number;
-  totalRatings: number;
-  description?: string;
-  imageUrl: string;
-}
+import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-favorite-teachers',
-  templateUrl: './favorite-teachers.component.html',
-  styleUrls: ['./favorite-teachers.component.css'],
   standalone: true,
-  imports: [CommonModule
-  ],
-  animations: [
-    trigger('cardHover', [
-      transition(':hover', [
-        animate('200ms ease-in', style({ transform: 'translateY(-5px)', boxShadow: '0 10px 20px rgba(0,0,0,0.2)' }))
-      ])
-    ])
-  ]
+  imports: [FavoriteTeachersComponent, CommonModule, RouterLink],
+  templateUrl: './favorite-teachers.component.html',
+  styleUrls: ['./favorite-teachers.component.css']
 })
-
 export class FavoriteTeachersComponent {
-  // Añadir Math como propiedad de la clase
-  
-  
-  teachers: Teacher[] = [
+  teachers = [
     {
-      name: 'Gohan',
-      area: 'Matematicas',
-      rating: 4.9,
-      totalRatings: 100,
-      imageUrl: 'assets/gohan.jpg'
+      nombre: 'Gohan',
+      area: 'Matemáticas',
+      areaLink: '/area/matematicas',
+      puntuacion: 4.9,
+      calificaciones: 100,
+      descripcion: 'Gohan es un profesor apasionado por las matemáticas con más de 10 años de experiencia.',
+      img: 'assets/gohan.jpg'
     },
     {
-      name: 'Goku',
-      area: 'Ingles',
-      rating: 5.0,
-      totalRatings: 200,
-      description: 'Goku es un experto en inglés con un enfoque dinámico y divertido para el aprendizaje.',
-      imageUrl: 'assets/goku.jpg'
+      nombre: 'Goku',
+      area: 'Inglés',
+      areaLink: '/area/ingles',
+      puntuacion: 5.0,
+      calificaciones: 200,
+      descripcion: 'Goku es un profesor dedicado y entusiasta, perfecto para aprender inglés.',
+      img: 'assets/goku.jpg'
     },
     {
-      name: 'Vegeta',
+      nombre: 'Vegeta',
       area: 'Ciencias',
-      rating: 4.8,
-      totalRatings: 150,
-      imageUrl: 'assets/vegeta.jpg'
+      areaLink: '/area/ciencias',
+      puntuacion: 4.8,
+      calificaciones: 150,
+      descripcion: 'Vegeta tiene una gran pasión por las ciencias y una manera única de enseñar.',
+      img: 'assets/vegeta.jpg'
     }
   ];
-
-  // Opcionalmente, podemos crear métodos helper para manejar la lógica de las estrellas
-  getFullStars(rating: number): number[] {
-    return Array(Math.floor(rating));
-  }
-
-  hasHalfStar(rating: number): boolean {
-    return rating % 1 >= 0.5;
-  }
-
-  getEmptyStars(rating: number): number[] {
-    return Array(5 - Math.ceil(rating));
-  }
 }

@@ -1,45 +1,12 @@
-<section class="favorite-section">
-  <h1 class="title">Profesores destacados</h1>
-  
-  <div class="teachers-grid">
-    <div *ngFor="let teacher of teachers" 
-         class="teacher-card"
-         [@cardHover]>
-      
-      <div class="profile-image-container">
-        <img [src]="teacher.imageUrl" 
-             [alt]="teacher.name"
-             class="profile-image">
-        <div class="hover-effect"></div>
-      </div>
-
-      <div class="teacher-info">
-        <h2>{{teacher.name}}</h2>
-        <div class="area">
-          <i class="fas fa-book"></i>
-          Area: {{teacher.area}}
-        </div>
-        
-        <div class="rating">
-          <div class="stars">
-            <i class="fas fa-star" *ngFor="let star of getFullStars(teacher.rating)"></i>
-            <i class="fas fa-star-half-alt" *ngIf="hasHalfStar(teacher.rating)"></i>
-            <i class="far fa-star" *ngFor="let star of getEmptyStars(teacher.rating)"></i>
-          </div>
-          <span class="rating-text">
-            {{teacher.rating}}/5 ({{teacher.totalRatings}}+ calificaciones)
-          </span>
-        </div>
-
-        <p *ngIf="teacher.description" class="description">
-          {{teacher.description}}
-        </p>
-
-        <button class="contact-btn">
-          <i class="fas fa-envelope"></i>
-          Contactar Profesor
-        </button>
-      </div>
+<div class="teachers-container">
+  <h2>Profesores Destacados</h2>
+  <div class="cards-container">
+    <div class="card" *ngFor="let teacher of teachers">
+      <img [src]="teacher.img" alt="Foto de {{ teacher.nombre }}" class="teacher-img">
+      <h3>{{ teacher.nombre }}</h3>
+      <a [routerLink]="teacher.areaLink" class="teacher-area">{{ teacher.area }}</a>
+      <p class="teacher-rating">Puntuación: {{ teacher.puntuacion }}/5 ({{ teacher.calificaciones }}+ calificaciones)</p>
+      <p class="teacher-description">{{ teacher.descripcion }}</p>
     </div>
   </div>
-</section>
+</div>
