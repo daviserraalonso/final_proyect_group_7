@@ -5,8 +5,6 @@
       <img [src]="teacher.img" alt="Foto de {{ teacher.nombre }}" class="teacher-img">
       <h3>{{ teacher.nombre }}</h3>
       <a [routerLink]="teacher.areaLink" class="teacher-area">{{ teacher.area }}</a>
-      
-      <!-- Rating Section with Stars -->
       <div class="rating-stars">
         <span *ngFor="let star of getStarsArray(teacher.puntuacion)" class="star">★</span>
         <span class="rating-text">({{ teacher.puntuacion }}/5)</span>

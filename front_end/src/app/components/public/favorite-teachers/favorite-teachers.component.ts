@@ -40,7 +40,7 @@ export class FavoriteTeachersComponent {
     }
   ];
 
-  // Method to create an array based on the rating (5 stars maximum)
+
   getStarsArray(rating: number): string[] {
     const fullStars = Math.floor(rating);
     const starsArray = Array(fullStars).fill('★');
