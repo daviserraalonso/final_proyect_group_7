@@ -84,4 +84,11 @@ h3 {
 .teacher-description {
   font-size: 1rem;
   color: #666;
+  
 }
+
+
+.teacher-img:hover{
+  transform: scale(1.2);
+}
+
