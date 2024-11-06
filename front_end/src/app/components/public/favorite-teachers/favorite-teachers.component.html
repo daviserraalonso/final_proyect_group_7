@@ -13,7 +13,7 @@
       </div>
       
       <p class="teacher-rating">({{ teacher.calificaciones }}+ calificaciones)</p>
-      <p class="teacher-description">{{ teacher.descripcion }}</p>
+      <p class="teacher-description">{{ truncateDescription(teacher.descripcion, 100) }}</p>
     </div>
   </div>
 </div>

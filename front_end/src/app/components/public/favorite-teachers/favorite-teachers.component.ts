@@ -46,4 +46,10 @@ export class FavoriteTeachersComponent {
     const starsArray = Array(fullStars).fill('★');
     return starsArray;
   }
+
+
+  truncateDescription(description: string, limit: number): string {
+    return description.length > limit ? description.substring(0, limit) + '...' : description;
+  }
 }
+
