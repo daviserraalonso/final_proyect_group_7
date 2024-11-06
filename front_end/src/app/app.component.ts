@@ -17,15 +17,18 @@ import { AuthService } from './service/auth-service.service';
 })
 export class AppComponent implements OnInit {
   isAuthenticated: boolean = false;
+  userRole: string | null = null;
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService) {}
 
   ngOnInit() {
-    // Nos suscribimos al observable de autenticación del servicio
-    this.authService.isAuthenticated$.subscribe( // isAuthenticated$ es un observable que se suscribe al BehaviorSubject isAuthenticatedSubject del servicio AuthService
+    this.isAuthenticated = this.authService.isAuthenticated(); // Obtiene el estado de autenticación actual
+    this.userRole = this.authService.getRole(); // Obtiene el rol del usuario// Obtiene el rol del usuario
+
+    // Opcionalmente, suscríbete a cambios de autenticación
+    this.authService.isAuthenticated$.subscribe(
       isAuthenticated => {
-        this.isAuthenticated = isAuthenticated; // Actualizamos el estado de autenticación
-        
+        this.isAuthenticated = isAuthenticated;
       }
     );
   }

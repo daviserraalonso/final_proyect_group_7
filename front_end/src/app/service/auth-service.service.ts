@@ -7,49 +7,68 @@ import { tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:3000/api/users/login'; // Ruta al backend
+  private apiUrl = 'http://localhost:3000/api/users/login';
 
   // BehaviorSubject para el estado de autenticación
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(this.hasToken());
-  isAuthenticated$ = this.isAuthenticatedSubject.asObservable(); // esto hace que el BehaviorSubject sea observable y la funcion isAuthenticated$ es la que se va a suscribir en el componente para saber si el usuario esta autenticado o no
+  isAuthenticated$ = this.isAuthenticatedSubject.asObservable(); 
 
   constructor(private http: HttpClient) {}
 
-  // Método para verificar si hay un token en localStorage
+  // Método para verificar si localStorage está disponible
+  private isBrowser(): boolean {
+    return typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';
+  }
+
+  // Verifica si hay un token en localStorage
   private hasToken(): boolean {
-    const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
-     
-    return !!token;
+    if (this.isBrowser()) {
+      return !!localStorage.getItem('token');
+    }
+    return false;
+  }
+
+  // Devuelve el rol actual desde localStorage sin BehaviorSubject
+  getRole(): string | null {
+    if (this.isBrowser()) {
+      return localStorage.getItem('role');
+    }
+    return null;
   }
 
   // Método para iniciar sesión
   login(data: any): Observable<any> {
-    console.log('Enviando solicitud a:', this.apiUrl);
-    console.log('Datos de la solicitud:', data);
     return this.http.post<any>(this.apiUrl, data).pipe(
       tap(response => {
-        if (response && response.token) {
+        if (response && response.token && response.user && response.user.role) {
           this.setSession(response);
         }
       })
     );
   }
 
-  // Método para establecer la sesión
-  private setSession(authResult: any): void {  // authResult es la respuesta del servidor
-    if (typeof window !== 'undefined') { // Verificar si estamos en el navegador
-      localStorage.setItem('token', authResult.token); // Almacenar el token en localStorage
-      localStorage.setItem('user', JSON.stringify(authResult.user)); // Almacenar la información del usuario en localStorage
-      this.isAuthenticatedSubject.next(true); // Actualizar el estado de autenticación
+  // Método para establecer la sesión y actualizar el estado de autenticación
+  private setSession(authResult: any): void {
+    if (this.isBrowser()) { 
+      localStorage.setItem('token', authResult.token);
+      localStorage.setItem('user', JSON.stringify(authResult.user));
+      localStorage.setItem('role', authResult.user.role);
+      this.isAuthenticatedSubject.next(true); 
     }
   }
 
-  // Método para cerrar sesión
+  // Método para cerrar sesión y limpiar el estado de autenticación
   logout(): void {
-    if (typeof window !== 'undefined') {
+    if (this.isBrowser()) {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
-      this.isAuthenticatedSubject.next(false); // Actualizar el estado de autenticación
+      localStorage.removeItem('role');
+      this.isAuthenticatedSubject.next(false); 
     }
+  }
+
+  // Método público para verificar el estado de autenticación
+  isAuthenticated(): boolean {
+    return this.isAuthenticatedSubject.value;
   }
 }
