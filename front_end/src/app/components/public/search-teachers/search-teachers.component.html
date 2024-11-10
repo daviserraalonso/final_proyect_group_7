@@ -75,8 +75,32 @@
   <div [class.cardActive]="cardActive" class="row h-100 mt-3 mb-5 pb-5">
     @for (teacher of allTeachers; track $index) {
     <div class="col-6">
-      <!-- <app-teacher-card [oneTeacher]="teacher"></app-teacher-card> -->
+          <!-- ************* card de prueba ************* -->
+      <div class="card mb-3 w-100">
+        <div class="row g-0 align-items-center">
+          <div class="col-auto p-3">
+            <img
+              [src]=""
+              alt=""
+              class="rounded-circle"
+              style="width: 70px; height: 70px; object-fit: cover;"
+            />
+          </div>
+          <div class="col">
+            <div class="card-body">
+              <h5 class="card-title">{{ teacher.nombre }}</h5>
+              <p class="card-text mb-1">Materia: {{ teacher.materia }}</p>
+              <p class="card-text mb-1">Precio: ${{ teacher.precio }}</p>
+              <p class="card-text">
+                <small class="text-muted">Puntuación: {{ teacher.puntuacion }} ⭐</small>
+              </p>
+              <a [routerLink]="">Ver detalle</a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+    <!-- *************** -->
     }
   </div>
 </div>

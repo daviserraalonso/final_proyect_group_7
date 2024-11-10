@@ -1,5 +1,5 @@
 import { Component, inject, signal, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MapComponentComponent } from '../map-component/map-component.component';
 import { SearchServiceService } from '../../../service/search-service.service';
 import { map, Observable, startWith } from 'rxjs';
@@ -17,7 +17,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-search-teachers',
   standalone: true,
-  imports: [ReactiveFormsModule, MatButtonToggleModule, MatIconModule, MatAutocompleteModule, MatInputModule, MatFormFieldModule, MatSliderModule, MapComponentComponent, AsyncPipe, CommonModule],
+  imports: [ReactiveFormsModule, MatButtonToggleModule, MatIconModule, MatAutocompleteModule, MatInputModule, MatFormFieldModule, MatSliderModule, MapComponentComponent, AsyncPipe, CommonModule, RouterLink],
   templateUrl: './search-teachers.component.html',
   styleUrl: './search-teachers.component.css'
 })

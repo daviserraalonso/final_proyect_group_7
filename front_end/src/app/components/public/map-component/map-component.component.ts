@@ -1,18 +1,22 @@
 import { isPlatformBrowser } from '@angular/common';
-import { ChangeDetectorRef, Component, inject, Input, Output, PLATFORM_ID, signal, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, inject, Input, Output, PLATFORM_ID, signal, SimpleChanges, ViewChild } from '@angular/core';
 import { GoogleMap, GoogleMapsModule } from '@angular/google-maps';
-import { EventEmitter } from 'stream';
-import {MatIconModule} from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { TypeCheckShimGenerator } from '@angular/compiler-cli/src/ngtsc/typecheck';
 import { PROFESORES } from '../search-teachers/datos.pruebas';
+
+
 
 @Component({
   selector: 'app-map-component',
   standalone: true,
-  imports: [GoogleMapsModule, MatIconModule, GoogleMap],
+  imports: [GoogleMapsModule, MatIconModule, MatDialogModule],
   templateUrl: './map-component.component.html',
   styleUrl: './map-component.component.css'
 })
 export class MapComponentComponent {
+
 
   @ViewChild(GoogleMap) map!: GoogleMap
   cdr!: ChangeDetectorRef
@@ -24,7 +28,7 @@ export class MapComponentComponent {
 
 
 
-  @Output() zoom: EventEmitter<any> = new EventEmitter<any>()
+  @Output() zoom: EventEmitter<number> = new EventEmitter<number>()
   @Output() bounds: EventEmitter<any> = new EventEmitter<any>()
 
 
@@ -101,6 +105,9 @@ export class MapComponentComponent {
     this.zoom.emit(zoom)
     this.bounds.emit(this.boundsObject)
   }
+
+
+
 
 
 
