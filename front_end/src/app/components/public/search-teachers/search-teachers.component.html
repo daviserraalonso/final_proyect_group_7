@@ -1,30 +1,106 @@
+<div class="search-section text-center py-3">
+  <h2 class="display-4">Encuentra tu profe ideal</h2>
+  <form [formGroup]="searchForm" (ngSubmit)="getSearchForm()">
+    <div class="d-flex flex-column justify-content-center  mt-4">
+      <div>
+        <h4>Seleccionar materia </h4>
+      </div>
+      <mat-button-toggle-group name="categories" aria-label="Categories"
+        [hideMultipleSelectionIndicator]="hideMultipleSelectionIndicator()" multiple formControlName="selectedCategory">
 
-
-  <mat-card-subtitle class="no-border-bottom mb-5">
-  <div class="search-section text-center py-5">
-  <h1 class="display-4 mb-4">Encuentra tu profe ideal</h1>
-  <div class="search-bar-wrapper d-flex justify-content-center align-items-center">
-    <div class="input-group search-input-group">
-      <span class="input-group-text">
-        <mat-icon>search</mat-icon>
-      </span>
-      <input type="text" class="form-control" placeholder="Buscar profesores..." [(ngModel)]="searchQuery">
-      <span class="input-group-text location-input">
-        <mat-icon>location_on</mat-icon>
-      </span>
-      <input type="text" class="form-control location-search" placeholder="Lugar de las clases">
-      <button mat-button color="primary" class="btn  search-button">Buscar</button>
+        @for (categoria of categories; track $index) {<mat-button-toggle mat-raised-button color=""
+          class="category-item me-3 d-flex align-items-start" type="button" [value]="categoria.name"
+          [checked]="selectedCategory.includes(categoria.name)">
+          <mat-icon class="icon-accent">{{ categoria.icon }}</mat-icon> {{ categoria.name }}
+        </mat-button-toggle>}
+      </mat-button-toggle-group>
     </div>
-  </div>
 
-  <!-- Categorías Populares -->
-  <div class="popular-categories d-flex justify-content-center flex-wrap mt-4">
-    @for (categoria of categories; track $index) {<button mat-raised-button color="" class="category-item me-3 d-flex align-items-center"  (click)="selectCategory(categoria)">
-      <mat-icon class="icon-accent" >{{ categoria.icon }}</mat-icon> {{ categoria.name }}
-    </button>}
-    <button mat-flat-button>
-      <mat-icon>arrow_forward</mat-icon>
-    </button>
+    <div class="input-group mt-4 justify-content-around align-items-start">
+      <div>
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Nombre del profesor</mat-label>
+          <input type="text" matInput [matAutocomplete]="autoName" formControlName="inputName">
+          <mat-autocomplete #autoName="matAutocomplete">
+            @for (teacher of filterName | async; track $index) {
+            <mat-option [value]="teacher">{{teacher}}</mat-option>
+            }
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Nombre de la ciudad</mat-label>
+          <input type="text" matInput [matAutocomplete]="autoCity" formControlName="inputCity">
+          <mat-autocomplete #autoCity="matAutocomplete">
+            @for (city of filterCity | async; track $index) {
+            <mat-option [value]="city">{{city}}</mat-option>
+            }
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-4 align-self-start">
+        <label>Selecciona tu radio de busqueda</label>
+        <mat-slider min="1" max="15" step="1" showTickMarks discrete [displayWith]="formatLabel">
+          <input matSliderThumb type="range" [value]="radius" (input)="changeRadius($event)">
+        </mat-slider>
+        <label>{{radius}}</label>
+      </div>
+      <div class="col-4 align-self-start">
+        <label for="">Selecciona tu precio</label>
+        <mat-slider min="10" max="100" showTickMarks discrete>
+          <input value="30" formControlName="minPrice" matSliderStartThumb>
+          <input value="60" formControlName="maxPrice" matSliderEndThumb>
+        </mat-slider>
+      </div>
+      <div class="col-4 align-self-start">
+        <label for="">Selecciona la puntiacion</label>
+        <mat-slider min="0" max="10" [displayWith]="formatLabelScore">
+          <input value="5" formControlName="score" matSliderThumb>
+        </mat-slider>
+        <label>{{searchForm.value.score}}</label>
+      </div>
+    </div>
+    <button mat-raised-button>Buscar</button>
+  </form>
+</div>
+
+<div class="d-flex flex-column">
+  <div class="div map">
+    <app-map-component [AAteacherFilter]="teacherFilter" [radius]="radius" (zoom)="zoom($event)" (bounds)="getBounds($event)"></app-map-component>
+  </div>
+  <div [class.cardActive]="cardActive" class="row h-100 mt-3 mb-5 pb-5">
+    @for (teacher of allTeachers; track $index) {
+    <div class="col-6">
+          <!-- ************* card de prueba ************* -->
+      <div class="card mb-3 w-100">
+        <div class="row g-0 align-items-center">
+          <div class="col-auto p-3">
+            <img
+              [src]=""
+              alt=""
+              class="rounded-circle"
+              style="width: 70px; height: 70px; object-fit: cover;"
+            />
+          </div>
+          <div class="col">
+            <div class="card-body">
+              <h5 class="card-title">{{ teacher.nombre }}</h5>
+              <p class="card-text mb-1">Materia: {{ teacher.materia }}</p>
+              <p class="card-text mb-1">Precio: ${{ teacher.precio }}</p>
+              <p class="card-text">
+                <small class="text-muted">Puntuación: {{ teacher.puntuacion }} ⭐</small>
+              </p>
+              <a [routerLink]="">Ver detalle</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- *************** -->
+    }
   </div>
 </div>
-</mat-card-subtitle>

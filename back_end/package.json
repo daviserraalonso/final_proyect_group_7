@@ -16,8 +16,7 @@
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^2.3.3",
     "nodemailer": "^6.9.15",
-    "sequelize": "^6.37.4",
-    "typescript": "^5.6.3"
+    "sequelize": "^6.37.4"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
@@ -26,7 +25,8 @@
     "@types/jsonwebtoken": "^9.0.7",
     "@types/nodemailer": "^6.4.16",
     "copyfiles": "^2.4.1",
-    "sequelize-cli": "^6.6.2"
+    "sequelize-cli": "^6.6.2",
+    "typescript": "^5.6.3"
   },
   "keywords": [],
   "author": "",

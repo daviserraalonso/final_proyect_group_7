@@ -1,22 +1,112 @@
-.card {
-    background-color: #fff;
-    border-radius: 1rem;
-  }
-  .card h4 {
+.stats-container {
+  padding: 25px;
+  background: linear-gradient(to bottom,#e1bee7, #dce6f8);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  margin-bottom: 5px;
+
+  .stats-title {
+    font-size: 2rem;
+    color: #2e3d49;
     font-weight: 700;
-  }
-  .card p {
-    margin-bottom: 0.5rem;
-  }
-  .card :hover .card-img-top {
-    transform: scale(1.4);
+    margin-bottom: 10px;
   }
 
-  .card {
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  .stats-subtitle {
+    font-size: 1.2rem;
+    color: #546e7a;
+    margin-bottom: 20px;
   }
-  
-  .card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+
+  .stats-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+
+    .stat-item {
+      background-color: #ffffff;
+      border-radius: 8px;
+      padding: 20px;
+      width: 100%;
+      max-width: 220px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      transition: transform 0.3s;
+      position: relative;
+
+      &:hover {
+        transform: translateY(-5px);
+      }
+
+      .stat-icon {
+        width: 50px;
+        height: 50px;
+        margin-bottom: 10px;
+      }
+
+      .stat-value {
+        font-size: 1.6rem;
+        color: #00796b;
+        font-weight: bold;
+        margin: 5px 0;
+      }
+     
+
+      .stat-description {
+        font-size: 0.95rem;
+        color: #546e7a;
+        margin: 0;
+      }
+    }
   }
+
+  .call-to-action {
+    margin-top: 30px;
+    p {
+      font-size: 1.2rem;
+      color: #37474f;
+      margin-bottom: 15px;
+      font-weight: 500;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+
+      .btn {
+        padding: 10px 20px;
+        font-size: 1rem;
+        font-weight: bold;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s;
+
+        &:hover {
+          transform: scale(1.05);
+        }
+
+        &.btn-student {
+          background-color: #00796b;
+          color: #ffffff;
+
+          &:hover {
+            background-color: #004d40;
+          }
+        }
+
+        &.btn-teacher {
+          background-color: #6a1b9a;
+          color: #ffffff;
+
+          &:hover {
+            background-color: #4a148c;
+          }
+        }
+      }
+    }
+  }
+}
