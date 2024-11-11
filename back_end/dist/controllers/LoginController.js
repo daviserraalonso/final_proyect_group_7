@@ -5,23 +5,42 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const User_1 = __importDefault(require("../models/User"));
+const user_1 = __importDefault(require("../models/user"));
 async function findUserByEmail(email) {
-    return await User_1.default.findOne({ where: { email } });
+    return await user_1.default.findOne({ where: { email } });
 }
 class LoginController {
     async login(req, res) {
+        console.log("LLEGOOOOO");
         const { email, password } = req.body;
         try {
             const user = await findUserByEmail(email);
-            console.log('Usuario encontrado:', user?.get()); // Muestra los datos del usuario correctamente
+            console.log('Usuario encontrado:', user?.get()); // show user data
             if (!user || !user.get('password')) {
                 res.status(401).json({ message: 'Credenciales inválidas' });
                 return;
             }
             if (bcrypt_1.default.compareSync(password, user.get('password'))) {
                 const token = jsonwebtoken_1.default.sign({ id: user.get('id'), role: user.get('roleId') }, process.env.JWT_SECRET || 'default_secret', { expiresIn: '1h' });
-                res.json({ user: { id: user.get('id'), role: user.get('roleId') }, token });
+                // route to redirect user
+                let redirectTo = '/';
+                switch (user.get('roleId')) {
+                    case 1:
+                        redirectTo = '/admin';
+                        break;
+                    case 2:
+                        redirectTo = '/teacher';
+                        break;
+                    case 3:
+                        console.log("rol !!!!:" + user.get('roleId'));
+                        redirectTo = '/student';
+                        break;
+                }
+                res.json({
+                    user: { id: user.get('id'), role: user.get('roleId') },
+                    token,
+                    redirectTo
+                });
             }
             else {
                 res.status(401).json({ message: 'Credenciales inválidas' });

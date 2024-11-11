@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { Router } from '@angular/router';
 import { AuthService } from '../../../service/auth-service.service';
 
-
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -14,6 +13,7 @@ import { AuthService } from '../../../service/auth-service.service';
 export class LoginComponent {
   loginForm: FormGroup;
   errorMessage: string | null = null;
+
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
@@ -35,28 +35,14 @@ export class LoginComponent {
           console.log('Respuesta completa del servidor:', response);
 
           if (response && response.user) {
-            console.log('Usuario encontrado:', response.user);
-
             // Almacenar la información del usuario en el almacenamiento local
             localStorage.setItem('user', JSON.stringify(response.user));
             localStorage.setItem('token', response.token);
 
+            console.log(response.redirectTo)
 
-
-            // Redirigir según el rol del usuario
-            switch (response.user.role) {
-              case 1: // Admin
-                this.router.navigate(['/admin']);
-                break;
-              case 2: // Teacher
-                this.router.navigate(['/teacher']);
-                break;
-              case 3: // Student
-                this.router.navigate(['/student']);
-                break;
-              default:
-                this.router.navigate(['/']);
-            }
+            // Redirigir al usuario según la ruta indicada en el controlador
+            this.router.navigate([response.redirectTo || '/']);
           } else {
             console.error('La respuesta no contiene la propiedad user.');
           }

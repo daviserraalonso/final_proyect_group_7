@@ -9,6 +9,7 @@ async function findUserByEmail(email: string) {
 
 class LoginController {
   async login(req: Request, res: Response): Promise<void> {
+    console.log("LLEGOOOOO");
     const { email, password } = req.body;
 
     try {
@@ -27,7 +28,27 @@ class LoginController {
           { expiresIn: '1h' }
         );
 
-        res.json({ user: { id: user.get('id'), role: user.get('roleId') }, token });
+        // route to redirect user
+        let redirectTo = '/';
+        
+        switch (user.get('roleId')) {
+          case 1:
+            redirectTo = '/admin';
+            break;
+          case 2:
+            redirectTo = '/teacher';
+            break;
+          case 3:
+            console.log("rol !!!!:" +user.get('roleId'))
+            redirectTo = '/student';
+            break;
+        }
+
+        res.json({ 
+          user: { id: user.get('id'), role: user.get('roleId') }, 
+          token,
+          redirectTo
+        });
       } else {
         res.status(401).json({ message: 'Credenciales inválidas' });
       }
@@ -37,7 +58,5 @@ class LoginController {
     }
   }
 }
-
-
 
 export default new LoginController();
