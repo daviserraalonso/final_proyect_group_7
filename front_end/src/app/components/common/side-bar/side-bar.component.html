@@ -32,30 +32,11 @@
       </a>
     </li>
     <li class="nav-item mb-3">
-      <a routerLink="/soporte-tecnico" routerLinkActive="router-link-active" class="nav-link py-2 border-bottom" matTooltip="Salir" matTooltipPosition="right">
+      <span matTooltip="Cerrar sesión" matTooltipPosition="right" (click)="logout()" style="cursor: pointer;">
         <mat-icon>logout</mat-icon>
-      </a>
+      </span>
     </li>
   </ul>
   <!-- dropdown -->
-  <div class="nav-link py-2 border-bottom" (mouseenter)="openMenu()">
-    <div mat-icon-button [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger" class="d-flex align-items-center justify-content-center p-2 link-dark text-decoration-none">
-      <img src="https://github.com/mdo.png" alt="mdo" width="24" height="24" class="rounded-circle">
-    </div>
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item>
-        <span>Mensajes</span>
-      </button>
-      <button mat-menu-item>
-        <span>Configuraciones</span>
-      </button>
-      <button mat-menu-item>
-        <span>Perfil</span>
-      </button>
-      <mat-divider></mat-divider>
-      <button mat-menu-item>
-        <span>Salir</span>
-      </button>
-    </mat-menu>
-  </div>
+  
 </div>

@@ -8,14 +8,13 @@ body{
   }
   
   aside {
-    flex: 0 0 100px; /* Ajusta el ancho del sidebar */
-    background-color: #f8f9fa;
-    height: 100vh; /* Asegura que el sidebar ocupe toda la altura de la pantalla */
-    padding: 0;
+    position: sticky;
+    height: 100vh; /* Altura del viewport */
+    margin-bottom: 20px;
   }
   
+  /* Ajuste para el contenedor principal */
   main {
-    flex: 1;
-    padding: 20px;
-    overflow-y: auto; /* Permite el desplazamiento vertical si el contenido es largo */
+    padding-top: 20px;
+    padding-bottom: 20px;
   }

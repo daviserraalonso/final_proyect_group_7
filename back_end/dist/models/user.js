@@ -11,7 +11,6 @@ class User extends sequelize_1.Model {
     email;
     password;
     roleId;
-    phone;
     isValidated;
     lat;
     lng;
@@ -39,22 +38,10 @@ User.init({
         type: sequelize_1.DataTypes.INTEGER,
         allowNull: false,
     },
-    phone: {
-        type: sequelize_1.DataTypes.STRING,
-        allowNull: true,
-    },
     isValidated: {
         type: sequelize_1.DataTypes.INTEGER,
         allowNull: false,
         defaultValue: 0,
-    },
-    lat: {
-        type: sequelize_1.DataTypes.DECIMAL(9, 6),
-        allowNull: true,
-    },
-    lng: {
-        type: sequelize_1.DataTypes.DECIMAL(9, 6),
-        allowNull: true,
     },
 }, {
     tableName: 'user',

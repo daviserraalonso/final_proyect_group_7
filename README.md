@@ -101,7 +101,7 @@ Configuración de la base de datos: {
   port: 3306,
   dialect: 'mysql'
 }
-Servidor Node escuchando en http://localhost:4000
+Servidor Node escuchando en http://localhost:3000
 
 Ya podemos acceder a la web publica y registrar un usuario.
 

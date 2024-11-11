@@ -8,7 +8,7 @@ import { UserAttributes } from '../interfaces/userAttributes';
 })
 export class UserServiceService {
 
-  private baseUrl: string = "http://localhost:4000/api/users/register" // pending to put the final url
+  private baseUrl: string = "http://localhost:3000/api/users/register" // pending to put the final url
   private http = inject(HttpClient)
 
   constructor() { }
