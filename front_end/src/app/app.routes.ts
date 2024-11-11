@@ -10,7 +10,7 @@ import { RegisterStudentComponentComponent } from './components/public/register-
 import { RegisterTeacherComponentComponent } from './components/public/register-teacher-component/register-teacher-component.component';
 import { StudentProfileComponentComponent } from './components/dashboard/student/student-profile-component/student-profile-component.component';
 import { TeacherProfileComponentComponent } from './components/dashboard/teacher/teacher-profile-component/teacher-profile-component.component';
-import { AdminProfileComponentComponent } from './components/dashboard/admin/admin-menu-component/admin-menu-component.component';
+import { AdminProfileComponentComponent } from './components/dashboard/admin/admin-profile-component/admin-profile-component.component';
 import { InboxComponent } from './components/common/inbox/inbox.component';
 import { CalendarComponent } from './components/common/calendar/calendar.component';
 
