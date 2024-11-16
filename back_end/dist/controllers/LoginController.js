@@ -5,13 +5,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const user_1 = __importDefault(require("../models/user"));
+const User_1 = __importDefault(require("../models/User"));
 async function findUserByEmail(email) {
-    return await user_1.default.findOne({ where: { email } });
+    return await User_1.default.findOne({ where: { email } });
 }
 class LoginController {
     async login(req, res) {
-        console.log("LLEGOOOOO");
         const { email, password } = req.body;
         try {
             const user = await findUserByEmail(email);
@@ -24,6 +23,7 @@ class LoginController {
                 const token = jsonwebtoken_1.default.sign({ id: user.get('id'), role: user.get('roleId') }, process.env.JWT_SECRET || 'default_secret', { expiresIn: '1h' });
                 // route to redirect user
                 let redirectTo = '/';
+                console.log("llego role: " + user.get('roleId'));
                 switch (user.get('roleId')) {
                     case 1:
                         redirectTo = '/admin';
@@ -32,7 +32,6 @@ class LoginController {
                         redirectTo = '/teacher';
                         break;
                     case 3:
-                        console.log("rol !!!!:" + user.get('roleId'));
                         redirectTo = '/student';
                         break;
                 }

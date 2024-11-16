@@ -2,48 +2,35 @@
 import { Model, DataTypes } from 'sequelize';
 import sequelize from '../config/database';
 
-class Subject extends Model {
-    public id!: number;
-    public name!: string;
-    public courseId!: number;
-    public description?: string;
-    public finalGrade?: number;
-}
-
-Subject.init(
+const Subject = sequelize.define(
+  'Subject',
   {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      autoIncrement: false,
+      autoIncrement: true,
     },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
-      field: 'name',
     },
     courseId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      field: 'courseId',
     },
     description: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: true,
-      field: 'description',
     },
     finalGrade: {
-      type: DataTypes.FLOAT,
+      type: DataTypes.DECIMAL(3, 2),
       allowNull: true,
-      field: 'finalGrade',
     },
   },
   {
-    sequelize,
-    modelName: 'Subject',
-    tableName: 'subjects',
+    tableName: 'subject',
     timestamps: true,
   }
 );
 
-export default Subject;
+module.exports = Subject;

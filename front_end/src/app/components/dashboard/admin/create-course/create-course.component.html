@@ -1,0 +1,40 @@
+<h2 mat-dialog-title>Crear Curso</h2>
+
+<mat-dialog-content>
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Nombre del Curso</mat-label>
+    <input matInput [(ngModel)]="course.name" placeholder="Nombre del curso" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Categoría</mat-label>
+    <mat-select [(ngModel)]="course.categoryId">
+      <mat-option *ngFor="let category of categories" [value]="category.id">
+        {{ category.category_name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Modalidad</mat-label>
+    <mat-select [(ngModel)]="course.modalityId">
+      <mat-option *ngFor="let modality of modalities" [value]="modality.id">
+        {{ modality.type }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Profesor</mat-label>
+    <mat-select [(ngModel)]="course.teacherId">
+      <mat-option *ngFor="let teacher of teachers" [value]="teacher.id">
+        {{ teacher.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="close()">Cancelar</button>
+  <button mat-button color="primary" (click)="save()">Guardar</button>
+</mat-dialog-actions>

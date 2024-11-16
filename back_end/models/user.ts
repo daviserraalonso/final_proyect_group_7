@@ -1,20 +1,14 @@
-import { DataTypes, Model, Optional } from 'sequelize';
+import { DataTypes, Model } from 'sequelize';
 import sequelize from '../config/database';
-import { UserAttributes, UserCreationAttributes } from '../interfaces/iuser.interface';
+import UserDetails from './UserDetails';
 
-class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
+class User extends Model {
   public id!: number;
   public name!: string;
   public email!: string;
   public password!: string;
   public roleId!: number;
   public isValidated?: number;
-  public lat?: number;
-  public lng?: number;
-
-  // Timestamps
-  declare readonly createdAt: Date;
-  declare readonly updatedAt: Date;
 }
 
 User.init(
@@ -43,15 +37,18 @@ User.init(
     },
     isValidated: {
       type: DataTypes.INTEGER,
-      allowNull: false,
       defaultValue: 0,
     },
   },
   {
+    sequelize,
     tableName: 'user',
-    sequelize, // sequalize instance
-    timestamps: true,
   }
 );
+
+User.hasOne(UserDetails, {
+  foreignKey: 'userId',
+  as: 'details',
+});
 
 export default User;

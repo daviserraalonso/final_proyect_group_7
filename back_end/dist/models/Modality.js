@@ -7,9 +7,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = require("sequelize");
 const database_1 = __importDefault(require("../config/database"));
 class Modality extends sequelize_1.Model {
-    id;
-    type;
-    description;
 }
 Modality.init({
     id: {
@@ -18,7 +15,7 @@ Modality.init({
         autoIncrement: false,
     },
     type: {
-        type: sequelize_1.DataTypes.ENUM('in-person', 'online'),
+        type: sequelize_1.DataTypes.STRING,
         allowNull: false,
         field: 'type',
     },
@@ -30,7 +27,7 @@ Modality.init({
 }, {
     sequelize: database_1.default,
     modelName: 'Modality',
-    tableName: 'modalities',
+    tableName: 'Modality',
     timestamps: true,
 });
 exports.default = Modality;

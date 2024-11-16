@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = require("sequelize");
 const database_1 = __importDefault(require("../config/database"));
+const UserDetails_1 = __importDefault(require("./UserDetails"));
 class User extends sequelize_1.Model {
     id;
     name;
@@ -12,8 +13,6 @@ class User extends sequelize_1.Model {
     password;
     roleId;
     isValidated;
-    lat;
-    lng;
 }
 User.init({
     id: {
@@ -40,12 +39,14 @@ User.init({
     },
     isValidated: {
         type: sequelize_1.DataTypes.INTEGER,
-        allowNull: false,
         defaultValue: 0,
     },
 }, {
+    sequelize: database_1.default,
     tableName: 'user',
-    sequelize: database_1.default, // sequalize instance
-    timestamps: true,
+});
+User.hasOne(UserDetails_1.default, {
+    foreignKey: 'userId',
+    as: 'details',
 });
 exports.default = User;

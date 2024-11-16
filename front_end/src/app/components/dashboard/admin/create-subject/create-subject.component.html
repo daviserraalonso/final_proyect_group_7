@@ -1,0 +1,35 @@
+<h2 mat-dialog-title>Crear Nueva Asignatura</h2>
+<mat-dialog-content class="mat-typography">
+  <!-- name -->
+  <mat-form-field appearance="fill">
+    <mat-label>Nombre</mat-label>
+    <input matInput [(ngModel)]="subject.name" name="name" placeholder="Nombre de la asignatura" />
+  </mat-form-field>
+  
+  <!-- Course -->
+  <mat-form-field appearance="fill">
+    <mat-label>Curso</mat-label>
+    <mat-select [(ngModel)]="subject.courseId" name="course">
+      <mat-option *ngFor="let course of courses" [value]="course.id">
+        {{ course.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <!-- Description -->
+  <mat-form-field appearance="fill" style="width: 100%;">
+    <mat-label>Descripción</mat-label>
+    <textarea matInput [(ngModel)]="subject.description" placeholder="Descripción de la asignatura"></textarea>
+  </mat-form-field>
+
+  <!-- final note -->
+  <mat-form-field appearance="fill" style="width: 100%;">
+    <mat-label>Nota Final</mat-label>
+    <input matInput type="number" [(ngModel)]="subject.finalGrade" placeholder="Nota final (0-10)" />
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancelar</button>
+  <button mat-button color="primary" (click)="save()">Guardar</button>
+</mat-dialog-actions>

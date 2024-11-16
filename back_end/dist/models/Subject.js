@@ -6,43 +6,30 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // models/Subject.ts
 const sequelize_1 = require("sequelize");
 const database_1 = __importDefault(require("../config/database"));
-class Subject extends sequelize_1.Model {
-    id;
-    name;
-    courseId;
-    description;
-    finalGrade;
-}
-Subject.init({
+const Subject = database_1.default.define('Subject', {
     id: {
         type: sequelize_1.DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: false,
+        autoIncrement: true,
     },
     name: {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false,
-        field: 'name',
     },
     courseId: {
         type: sequelize_1.DataTypes.INTEGER,
         allowNull: false,
-        field: 'courseId',
     },
     description: {
-        type: sequelize_1.DataTypes.STRING,
+        type: sequelize_1.DataTypes.TEXT,
         allowNull: true,
-        field: 'description',
     },
     finalGrade: {
-        type: sequelize_1.DataTypes.FLOAT,
+        type: sequelize_1.DataTypes.DECIMAL(3, 2),
         allowNull: true,
-        field: 'finalGrade',
     },
 }, {
-    sequelize: database_1.default,
-    modelName: 'Subject',
-    tableName: 'subjects',
+    tableName: 'subject',
     timestamps: true,
 });
-exports.default = Subject;
+module.exports = Subject;

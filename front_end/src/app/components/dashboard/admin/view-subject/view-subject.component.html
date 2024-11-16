@@ -1,0 +1,12 @@
+<h2 mat-dialog-title>Información de la Asignatura</h2>
+
+<mat-dialog-content class="mat-typography">
+  <p><strong>Nombre:</strong> {{ data.name }}</p>
+  <p><strong>Curso:</strong> {{ data.course?.name }}</p>
+  <p><strong>Descripción:</strong> {{ data.description }}</p>
+  <p><strong>Nota Final:</strong> {{ data.finalGrade }}</p>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cerrar</button>
+</mat-dialog-actions>
