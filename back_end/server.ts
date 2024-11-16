@@ -1,29 +1,38 @@
 const express = require('express');
 const cors = require('cors');
+const dotenv = require('dotenv');
+
 const userRoutes = require('./routes/user');
-const { fileURLToPath } = require('url');
-const { dirname } = require('path');
+const subjectRoutes = require('./routes/subject');
+const courseRoutes = require('./routes/course');
+const categoriesRoutes = require('./routes/categories');
+const modalitiesRoutes = require('./routes/modalities');
 
-import dotenv from 'dotenv';
+// Configuración de dotenv
 dotenv.config();
-
 
 const app = express();
 const port = process.env['PORT'] || 3000;
 
-// CORS config
-app.use(cors({
-  origin: 'http://localhost:4200',
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true,
-}));
+// CORS
+app.use(
+  cors({
+    origin: 'http://localhost:4200',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
+  })
+);
 
-// middleware to use json
+// Middleware
 app.use(express.json());
 
-// users routes
+// routes
 app.use('/api/users', userRoutes);
+app.use('/api/subjects', subjectRoutes);
+app.use('/api/courses', courseRoutes);
+app.use('/api/categories', categoriesRoutes);
+app.use('/api/modalities', modalitiesRoutes);
 
 // init server
 app.listen(port, () => {

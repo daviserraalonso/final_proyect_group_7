@@ -3,6 +3,8 @@ import { firstValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { UserAttributes } from '../interfaces/userAttributes';
 import { MatDialog } from '@angular/material/dialog';
+import { Observable } from 'rxjs';
+
 
 
 @Injectable({
@@ -11,12 +13,18 @@ import { MatDialog } from '@angular/material/dialog';
 export class UserServiceService {
 
   private baseUrl: string = "http://localhost:3000/api/users";
+  private apiUrl = 'http://localhost:3000/api/users';
+
   private http = inject(HttpClient)
 
   constructor(private dialog: MatDialog) {}
 
   getAll(): Promise<UserAttributes[]> {
     return firstValueFrom(this.http.get<UserAttributes[]>(this.baseUrl));
+  }
+
+  getTeachers(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/teachers`);
   }
 
   getUserDetails(userId: number): Promise<any> {

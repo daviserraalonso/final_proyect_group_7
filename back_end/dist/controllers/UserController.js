@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteUser = exports.modifyUser = exports.getUserDetails = exports.getAllUsers = exports.createUser = exports.confirmEmail = exports.registerUser = void 0;
+exports.getTeachers = exports.deleteUser = exports.modifyUser = exports.getUserDetails = exports.getAllUsers = exports.createUser = exports.confirmEmail = exports.registerUser = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const emailService_1 = require("../services/emailService");
 const User_1 = __importDefault(require("../models/User"));
@@ -215,3 +215,20 @@ const deleteUser = async (req, res) => {
     }
 };
 exports.deleteUser = deleteUser;
+/**
+ * FUNCTION TO GETT ALL TEACHERS
+ * @param req
+ * @param res
+ */
+const getTeachers = async (req, res) => {
+    try {
+        const teachers = await User_1.default.findAll({
+            where: { roleId: 2 },
+        });
+        res.status(200).json(teachers);
+    }
+    catch (error) {
+        console.error('Error al obtener profesores:', error);
+    }
+};
+exports.getTeachers = getTeachers;

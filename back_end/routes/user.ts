@@ -5,11 +5,10 @@ import { getAllUsers } from '../controllers/UserController';
 import { modifyUser } from '../controllers/UserController';
 import { deleteUser } from '../controllers/UserController';
 import { getUserDetails } from '../controllers/UserController';
-
+import { getTeachers } from '../controllers/UserController';
 
 
 const router = Router();
-const userPrefix = '/api/users';
 
 // use controller in route
 router.post('/register', registerUser);
@@ -20,11 +19,12 @@ router.post('/login', LoginController.login); // login route
 router.get('/', getAllUsers);
 // show user
 router.get('/:id/details', getUserDetails);
-
-router.put('/:id', modifyUser); // route to modify_user
+// route to modify_user
+router.put('/:id', modifyUser); 
 // delete user
 router.delete('/:id', deleteUser);
-
+// get all users teacher
+router.get('/teachers', getTeachers);
 
 
 

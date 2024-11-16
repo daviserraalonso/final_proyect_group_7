@@ -235,3 +235,20 @@ export const deleteUser = async (req: Request, res: Response): Promise<void> => 
     res.status(500).json({ error: 'Error al eliminar usuario' });
   }
 };
+
+/**
+ * FUNCTION TO GETT ALL TEACHERS
+ * @param req 
+ * @param res 
+ */
+export const getTeachers = async (req: Request, res: Response) => {
+  try {
+    const teachers = await User.findAll({
+      where: { roleId: 2 },
+    });
+
+    res.status(200).json(teachers);
+  } catch (error) {
+    console.error('Error al obtener profesores:', error);
+  }
+};

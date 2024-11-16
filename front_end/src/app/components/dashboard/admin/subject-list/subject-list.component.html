@@ -1,0 +1,63 @@
+<button mat-button color="primary" (click)="openCreateSubjectModal()">Crear Asignatura</button>
+
+<div class="search-container">
+  <mat-form-field appearance="outline">
+    <mat-label>Buscar</mat-label>
+    <input
+      matInput
+      (keyup)="applyFilter(searchText)"
+      [(ngModel)]="searchText"
+      placeholder="Buscar asignaturas"
+    />
+  </mat-form-field>
+  
+  </div>
+  
+  <div class="table-container">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  
+      <!-- Nombre Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Nombre </th>
+        <td mat-cell *matCellDef="let subject"> {{ subject.name }} </td>
+      </ng-container>
+  
+      <!-- Curso Column -->
+      <ng-container matColumnDef="course">
+        <th mat-header-cell *matHeaderCellDef> Curso </th>
+        <td mat-cell *matCellDef="let subject"> {{ subject.course?.name }} </td>
+      </ng-container>
+  
+      <!-- Descripción Column -->
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef> Descripción </th>
+        <td mat-cell *matCellDef="let subject"> {{ subject.description }} </td>
+      </ng-container>
+  
+      <!-- Nota Final Column -->
+      <ng-container matColumnDef="finalGrade">
+        <th mat-header-cell *matHeaderCellDef> Nota Final </th>
+        <td mat-cell *matCellDef="let subject"> {{ subject.finalGrade }} </td>
+      </ng-container>
+  
+      <!-- Acciones Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Acciones </th>
+        <td mat-cell *matCellDef="let subject">
+          <button mat-icon-button color="primary" (click)="viewSubject(subject)">
+            <mat-icon>visibility</mat-icon>
+          </button>
+          <button mat-icon-button color="accent" (click)="editSubject(subject)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="deleteSubject(subject.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+  

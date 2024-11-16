@@ -10,8 +10,8 @@ const UserController_2 = require("../controllers/UserController");
 const UserController_3 = require("../controllers/UserController");
 const UserController_4 = require("../controllers/UserController");
 const UserController_5 = require("../controllers/UserController");
+const UserController_6 = require("../controllers/UserController");
 const router = (0, express_1.Router)();
-const userPrefix = '/api/users';
 // use controller in route
 router.post('/register', UserController_1.registerUser);
 router.get('/confirm/:token', UserController_1.confirmEmail); // route to call function confirm in controller pass token
@@ -20,7 +20,10 @@ router.post('/login', LoginController_1.default.login); // login route
 router.get('/', UserController_2.getAllUsers);
 // show user
 router.get('/:id/details', UserController_5.getUserDetails);
-router.put('/:id', UserController_3.modifyUser); // route to modify_user
+// route to modify_user
+router.put('/:id', UserController_3.modifyUser);
 // delete user
 router.delete('/:id', UserController_4.deleteUser);
+// get all users teacher
+router.get('/teachers', UserController_6.getTeachers);
 module.exports = router;

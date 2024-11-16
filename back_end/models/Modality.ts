@@ -2,11 +2,7 @@
 import { Model, DataTypes } from 'sequelize';
 import sequelize from '../config/database';
 
-class Modality extends Model {
-    public id!: number;
-    public type!: 'in-person' | 'online';
-    public description?: string;
-}
+class Modality extends Model {}
 
 Modality.init(
   {
@@ -16,7 +12,7 @@ Modality.init(
       autoIncrement: false,
     },
     type: {
-      type: DataTypes.ENUM('in-person', 'online'),
+      type: DataTypes.STRING,
       allowNull: false,
       field: 'type',
     },
@@ -29,7 +25,7 @@ Modality.init(
   {
     sequelize,
     modelName: 'Modality',
-    tableName: 'modalities',
+    tableName: 'Modality',
     timestamps: true,
   }
 );
