@@ -9,7 +9,6 @@ async function findUserByEmail(email: string) {
 
 class LoginController {
   async login(req: Request, res: Response): Promise<void> {
-    console.log("LLEGOOOOO");
     const { email, password } = req.body;
 
     try {
@@ -39,7 +38,6 @@ class LoginController {
             redirectTo = '/teacher';
             break;
           case 3:
-            console.log("rol !!!!:" +user.get('roleId'))
             redirectTo = '/student';
             break;
         }
