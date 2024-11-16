@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import User from '../models/user';
+import User from '../models/User';
 
 async function findUserByEmail(email: string) {
   return await User.findOne({ where: { email } });
@@ -29,7 +29,7 @@ class LoginController {
 
         // route to redirect user
         let redirectTo = '/';
-        
+        console.log("llego role: "+user.get('roleId'))
         switch (user.get('roleId')) {
           case 1:
             redirectTo = '/admin';

@@ -1,0 +1,15 @@
+<h2 mat-dialog-title>Detalles del Usuario</h2>
+<mat-dialog-content>
+  <p><strong>Nombre:</strong> {{ data.name }}</p>
+  <p><strong>Email:</strong> {{ data.email }}</p>
+  <ng-container *ngIf="data.details">
+    <p><strong>Teléfono:</strong> {{ data.details.phone || 'No disponible' }}</p>
+    <p><strong>Dirección:</strong> {{ data.details.address || 'No disponible' }}</p>
+    <p><strong>Descripción:</strong> {{ data.details.description || 'No disponible' }}</p>
+    <p><strong>Imagen de Perfil:</strong></p>
+    <img *ngIf="data.details.img_url" [src]="data.details.img_url" alt="Imagen de perfil" class="profile-img">
+  </ng-container>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="close()">Cerrar</button>
+</mat-dialog-actions>

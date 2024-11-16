@@ -15,7 +15,7 @@ module.exports = {
         name: 'Admin User',
         email: 'admin@example.com',
         password: hashedPassword,
-        roleId: 3,
+        roleId: 1, // this number it´s for role admin
         isValidated: true,
         createdAt: new Date(),
         updatedAt: new Date(),

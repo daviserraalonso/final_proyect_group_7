@@ -22,7 +22,7 @@ app.use(cors({
 // middleware to use json
 app.use(express.json());
 
-// userss routes
+// users routes
 app.use('/api/users', userRoutes);
 
 // init server

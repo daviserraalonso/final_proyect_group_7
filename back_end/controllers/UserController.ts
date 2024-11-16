@@ -1,8 +1,10 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import { sendConfirmationEmail } from '../services/emailService';
-import User from '../models/user';
+import User from '../models/User';
+import UserDetails from '../models/UserDetails';
 const jwt = require('jsonwebtoken');
+
 
 /**
  * Function to register user
@@ -107,6 +109,48 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
   }
 };
 
+export const getAllUsers = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const users = await User.findAll({
+      attributes: ['id', 'name', 'email', 'isValidated', 'roleId'],
+    });
+
+    res.json(users); // Envía los usuarios
+  } catch (error) {
+    console.error('Error fetching users:', error);
+    res.status(500).json({ error: 'Error fetching users' });
+  }
+};
+
+export const getUserDetails = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const userId = req.params.id;
+
+    const user = await User.findOne({
+      where: { id: userId },
+      attributes: ['id', 'name', 'email'],
+      include: [
+        {
+          model: UserDetails,
+          as: 'details',
+          attributes: ['phone', 'address', 'img_url', 'description'],
+        },
+      ],
+    });
+
+    if (!user) {
+      res.status(404).json({ message: 'Usuario no encontrado' }); // Envía la respuesta
+      return; // Finaliza la ejecución del método
+    }
+
+    res.json(user); // Envía los detalles del usuario si existe
+  } catch (error) {
+    console.error('Error al obtener detalles del usuario:', error);
+    res.status(500).json({ error: 'Error al obtener detalles del usuario' });
+  }
+};
+
+
 /**
  * modify user from dashboard function
  * @param req 
@@ -116,11 +160,56 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
 
 export const modifyUser = async (req: Request, res: Response): Promise<void> => {
   try {
+    const userId = req.params.id;
+    const { name, email, password, roleId, phone, address, description, img_url, lat, lng } = req.body;
 
-  }catch(error){
+    // Hash password if provided
+    const hashedPassword = password ? await bcrypt.hash(password, 10) : undefined;
 
+    // Actualizar datos del usuario
+    const userUpdateData = {
+      name,
+      email,
+      roleId,
+      ...(hashedPassword && { password: hashedPassword }), // Solo actualizar si se proporciona la contraseña
+    };
+
+    await User.update(userUpdateData, { where: { id: userId } });
+
+    // Manejar UserDetails
+    const existingDetails = await UserDetails.findOne({ where: { userId } });
+
+    if (existingDetails) {
+      // Actualizar si existen detalles
+      await existingDetails.update({
+        phone,
+        address,
+        description,
+        img_url,
+        lat,
+        lng,
+      });
+    } else if (phone || address || description || img_url || lat || lng) {
+      // Crear si no existen detalles y se proporcionan datos
+      await UserDetails.create({
+        userId,
+        phone,
+        address,
+        description,
+        img_url,
+        lat,
+        lng,
+      });
+    }
+
+    res.status(200).json({ message: 'Usuario actualizado correctamente' });
+  } catch (error) {
+    console.error('Error al actualizar usuario:', error);
+    res.status(500).json({ error: 'Error al actualizar usuario' });
   }
 };
+
+
 
 /**
  * delete user from dashboard function
@@ -131,8 +220,18 @@ export const modifyUser = async (req: Request, res: Response): Promise<void> => 
 
 export const deleteUser = async (req: Request, res: Response): Promise<void> => {
   try {
+    const userId = req.params.id;
+    const deleted = await User.destroy({
+      where: { id: userId }
+    });
 
-  }catch(error){
-
+    if (deleted) {
+      res.status(200).json({ message: 'Usuario eliminado correctamente' });
+    } else {
+      res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+  } catch (error) {
+    console.error('Error al eliminar usuario:', error);
+    res.status(500).json({ error: 'Error al eliminar usuario' });
   }
 };

@@ -5,11 +5,13 @@ import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { MatDividerModule } from '@angular/material/divider';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../service/auth-service.service';
+import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-side-bar',
   standalone: true,
-  imports: [MatIconModule, MatTooltipModule, MatMenuModule, MatDividerModule, RouterLink],
+  imports: [MatIconModule, MatTooltipModule, MatMenuModule, MatDividerModule, RouterLink, CommonModule],
   templateUrl: './side-bar.component.html',
   styleUrls: ['./side-bar.component.css']
 })
@@ -17,6 +19,7 @@ export class SideBarComponent implements OnInit {
   @ViewChild(MatMenuTrigger) menuTrigger!: MatMenuTrigger;
 
   isAuthenticated: boolean = false;
+  role: string = '';
 
   studentProfile = {
     name: 'Juan Pérez',
@@ -57,6 +60,13 @@ export class SideBarComponent implements OnInit {
   ngOnInit(): void {
     // Obtiene el estado de autenticación al cargar el componente
     this.isAuthenticated = this.authService.isAuthenticated();
+
+    if (this.isAuthenticated) {
+      const role = this.authService.getRole();
+      if (role) {
+        this.role = role; // Asigna el rol del usuario ('admin', 'teacher', 'student')
+      }
+    }
   }
 
   openMenu() {
