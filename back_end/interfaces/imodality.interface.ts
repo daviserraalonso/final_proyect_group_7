@@ -1,5 +1,5 @@
 export interface Imodality {
     id: number;
-    type: 'in-person' | 'online';
+    type: string;
     description?: string;
 }

@@ -32,32 +32,28 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       this.authService.login(this.loginForm.value).subscribe({
         next: (response: any) => {
-          console.log('Respuesta completa del servidor:', response);
+          console.log('response from server:', response);
 
           if (response && response.user) {
-            // Almacenar la información del usuario en el almacenamiento local
+
             localStorage.setItem('user', JSON.stringify(response.user));
             localStorage.setItem('token', response.token);
 
             console.log(response.redirectTo)
 
-            // Redirigir al usuario según la ruta indicada en el controlador
             this.router.navigate([response.redirectTo || '/']);
           } else {
-            console.error('La respuesta no contiene la propiedad user.');
+            console.error('response don´t have property.');
           }
         },
         error: (error: any) => {
-          console.error('Error en el inicio de sesión:', error);
+          console.error('wrong in login:', error);
           if (error.status === 401) {
-            this.errorMessage = 'Credenciales inválidas. Por favor, inténtelo de nuevo.';
+            this.errorMessage = 'Invalid credential. please try again.';
           } else {
-            this.errorMessage = 'Ocurrió un error inesperado. Por favor, inténtelo de nuevo más tarde.';
+            this.errorMessage = 'An unexpected error occurred. Please try again later.';
           }
         },
-        complete: () => {
-          console.log('Petición de inicio de sesión completada');
-        }
       });
     }
   }

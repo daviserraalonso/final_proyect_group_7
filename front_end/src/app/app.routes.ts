@@ -10,9 +10,14 @@ import { RegisterStudentComponentComponent } from './components/public/register-
 import { RegisterTeacherComponentComponent } from './components/public/register-teacher-component/register-teacher-component.component';
 import { StudentProfileComponentComponent } from './components/dashboard/student/student-profile-component/student-profile-component.component';
 import { TeacherProfileComponentComponent } from './components/dashboard/teacher/teacher-profile-component/teacher-profile-component.component';
-import { AdminProfileComponentComponent } from './components/dashboard/admin/admin-profile-component/admin-profile-component.component';
+import { AdminComponent } from './components/dashboard/admin/admin.component';
 import { InboxComponent } from './components/common/inbox/inbox.component';
 import { CalendarComponent } from './components/common/calendar/calendar.component';
+import { AllUsersComponent } from './components/dashboard/admin/all-users/all-users.component';
+import { SubjectListComponent } from './components/dashboard/admin/subject-list/subject-list.component';
+import { CourseListComponent } from './components/dashboard/admin/course-list/course-list.component';
+
+
 
 
 export const routes: Routes = [
@@ -24,11 +29,16 @@ export const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'register-student', component: RegisterStudentComponentComponent },
     { path: 'register-teacher', component: RegisterTeacherComponentComponent },
-    { path: 'admin', component: AdminProfileComponentComponent },
+    { path: 'admin', component: AdminComponent },
     { path: 'teacher', component: TeacherProfileComponentComponent },
     { path: 'student', component: StudentProfileComponentComponent },
     { path: 'inbox', component: InboxComponent },
     { path: 'calendar', component: CalendarComponent },
+    { path: 'all-users', component: AllUsersComponent },
+    { path: 'subjects', component: SubjectListComponent },
+    { path: 'courses', component: CourseListComponent },
+
+
 
     { path: '**', redirectTo: '/index' } // route to 404
 ];

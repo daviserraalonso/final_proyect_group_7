@@ -9,7 +9,7 @@ module.exports = {
         primaryKey: true,
       },
       type: {
-        type: Sequelize.ENUM('in-person', 'online'),
+        type: Sequelize.TEXT,
         allowNull: false,
       },
       description: {

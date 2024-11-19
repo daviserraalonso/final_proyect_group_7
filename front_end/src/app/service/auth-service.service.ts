@@ -31,7 +31,6 @@ export class AuthService {
   // Devuelve el rol actual desde localStorage sin BehaviorSubject
   getRole(): string | null {
     if (this.isBrowser()) {
-      console.log("Role: "+localStorage.getItem('role'))
       return localStorage.getItem('role');
     }
     return null;

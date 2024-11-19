@@ -1,0 +1,13 @@
+<h2 mat-dialog-title>Editar Curso</h2>
+
+<mat-dialog-content>
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Nombre del Curso</mat-label>
+    <input matInput [(ngModel)]="course.name" placeholder="Ingrese el nombre del curso" />
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button (click)="close()">Cancelar</button>
+  <button mat-button color="primary" (click)="save()">Guardar</button>
+</mat-dialog-actions>
