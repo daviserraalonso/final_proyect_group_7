@@ -8,10 +8,10 @@
       <mat-button-toggle-group name="categories" aria-label="Categories"
         [hideMultipleSelectionIndicator]="hideMultipleSelectionIndicator()" multiple formControlName="selectedCategory">
 
-        @for (categoria of categories; track $index) {<mat-button-toggle mat-raised-button color=""
-          class="category-item me-3 d-flex align-items-start" type="button" [value]="categoria.name"
-          [checked]="selectedCategory.includes(categoria.name)">
-          <mat-icon class="icon-accent">{{ categoria.icon }}</mat-icon> {{ categoria.name }}
+        @for (category of allCategories; track $index) {<mat-button-toggle mat-raised-button color=""
+          class="category-item me-3 d-flex align-items-start" type="button" [value]="category.id"
+          [checked]="selectedCategory.includes(category.category_name)">
+          <mat-icon class="icon-accent">{{category.description}}</mat-icon> {{ category.category_name }}
         </mat-button-toggle>}
       </mat-button-toggle-group>
     </div>
@@ -29,11 +29,13 @@
         </mat-form-field>
       </div>
       <div class=" d-flex align-self-center">
-        <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style" formControlName="type">
-          <mat-button-toggle value="1">Online</mat-button-toggle>
-          <mat-button-toggle value="2">Presencial</mat-button-toggle>
+        <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style" formControlName="type" multiple>
+          @for (modality of allModalities; track $index) {
+            <mat-button-toggle [value]="modality.id">{{modality.type}}</mat-button-toggle>
+          }
         </mat-button-toggle-group>
       </div>
+
       <div>
         <mat-form-field class="example-full-width" appearance="outline">
           <mat-label>Nombre de la ciudad</mat-label>
@@ -86,7 +88,7 @@
         <div class="d-flex flex-column pt-2 ps-2">
           <div class="d-flex flex-row gap-3">
             <img mat-card-avatar class="rounded-circle" src="https://material.angular.io/assets/img/examples/shiba2.jpg" >
-            <mat-card-title>Albert Martinez{{teacher.name}}</mat-card-title>
+            <mat-card-title>{{teacher.name}}</mat-card-title>
             
             
           </div>

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import User from '../models/User';
+import User from '../models/user';
 
 async function findUserByEmail(email: string) {
   return await User.findOne({ where: { email } });

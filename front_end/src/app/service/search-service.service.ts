@@ -7,31 +7,34 @@ import { firstValueFrom } from 'rxjs';
 })
 export class SearchServiceService {
 
-  private baseUrl: string = 'http://localhost:3000/api/users'
+  private baseUrl: string = 'http://localhost:3000/api'
   private http = inject(HttpClient)
 
   constructor() { }
 
   search(params: HttpParams): Promise<any> {
-    return firstValueFrom(this.http.get<any>(`${this.baseUrl}/search`, {params: params}))
-  }
-
-  getAllCategories(): Promise<any> {
-    return firstValueFrom(this.http.get<any>(this.baseUrl))
+    return firstValueFrom(this.http.get<any>(`${this.baseUrl}/users/search`, {params: params}))
   }
 
   getTeachersName(): Promise<any> {
-    return firstValueFrom(this.http.get<any>(`${this.baseUrl}/names`))
+    return firstValueFrom(this.http.get<any>(`${this.baseUrl}/users/names`))
   }
 
   getCitiesName(): Promise<any> {
-    return firstValueFrom(this.http.get<any>(`${this.baseUrl}/cities`))
+    return firstValueFrom(this.http.get<any>(`${this.baseUrl}/users/cities`))
   }
 
   getCityCords(city: string): Promise<any> {
-    return firstValueFrom(this.http.get<any>(`${this.baseUrl}/${city}`))
+    return firstValueFrom(this.http.get<any>(`${this.baseUrl}/users/${city}`))
   }
 
+  getAllCategories(): Promise<any> {
+    return firstValueFrom(this.http.get(`${this.baseUrl}/categories`))
+  }
+
+  getAllModalities(): Promise<any> {
+  return firstValueFrom(this.http.get(`${this.baseUrl}/modalities`))
+  }
 
 
 }

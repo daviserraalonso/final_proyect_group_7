@@ -8,8 +8,28 @@ module.exports = {
 
     const teachers = [
       {
-        id: 1,
+        id: 2,
         name: 'Professor John Doe',
+        email: 'teacher@example.com',
+        password: hashedPassword,
+        roleId: 2, // Role de profesor
+        isValidated: true,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: 3,
+        name: 'Professor John ',
+        email: 'teacher@example.com',
+        password: hashedPassword,
+        roleId: 2, // Role de profesor
+        isValidated: true,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: 4,
+        name: 'Professor Doe',
         email: 'teacher@example.com',
         password: hashedPassword,
         roleId: 2, // Role de profesor

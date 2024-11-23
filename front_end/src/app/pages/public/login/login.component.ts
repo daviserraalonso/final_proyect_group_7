@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../service/auth-service.service';
+import { MatDialogRef } from '@angular/material/dialog';
+import { SearchTeachersComponent } from '../../../components/public/search-teachers/search-teachers.component';
 
 @Component({
   selector: 'app-login',
@@ -11,6 +13,8 @@ import { AuthService } from '../../../service/auth-service.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
+
+  @Input() dialog = inject(MatDialogRef<SearchTeachersComponent>)
   loginForm: FormGroup;
   errorMessage: string | null = null;
 
@@ -40,8 +44,10 @@ export class LoginComponent {
             localStorage.setItem('token', response.token);
 
             console.log(response.redirectTo)
+            if(this.router.url.includes('looking-teachers')) return this.dialog.close()
 
             this.router.navigate([response.redirectTo || '/']);
+            this.dialog.close()
           } else {
             console.error('response don´t have property.');
           }

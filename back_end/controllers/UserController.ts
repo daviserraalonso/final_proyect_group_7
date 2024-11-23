@@ -278,25 +278,23 @@ export const searchTeachers = async (req: Request, res: Response) => {
     southWestLng,
     northEastLat,
     northEastLng,
+    type
   } = req.query
-  console.log(inputName)
+
   const filters = {
     roleId: 2,
-    [Op.or]:
-[    {'$course.modality_id$': 1},
-    {'$course.modality_id$': null},],
+    isValidated: 1,
+    ...(type && {
+      '$course.modality_id$': type,
+    }),
     ...(inputName && {name: inputName}),
     ...(inputCity && {
       '$details.address$': inputCity}),
     ...(selectedCategory && {
-      '$category.category_name$': selectedCategory,
+      '$course.category_id$': selectedCategory,
     }),
     ...(minPrice && { [Op.or]:[
-      {'$course.price$': {[Op.gt]: minPrice}},
-      {'$course.price$': null}
-    ]}),
-    ...(maxPrice && { [Op.or]:[
-      {'$course.price$': {[Op.lt]: maxPrice}},
+      {'$course.price$': {[Op.between]:[minPrice, maxPrice]}},
       {'$course.price$': null}
     ]}),
     ...(southWestLat && southWestLng && northEastLat && northEastLng && {
@@ -305,9 +303,10 @@ export const searchTeachers = async (req: Request, res: Response) => {
     })
     
   }
-  console.log(filters)
+  
 
   try {
+    console.log(filters)
     const teachers = await User.findAll({
       where: filters,
       include: [
@@ -319,7 +318,7 @@ export const searchTeachers = async (req: Request, res: Response) => {
         {
           model: Course,
           as: 'course',
-          attributes: ['price', 'modality_id'],
+          attributes: ['price', 'modality_id', 'category_id'],
         }
       ],
     });

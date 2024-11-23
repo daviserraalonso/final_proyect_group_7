@@ -27,7 +27,7 @@ module.exports = {
         startDate: new Date(),
         endDate: new Date(),
         requirements: 'nothing',
-        professor_id: 1,
+        professor_id: 2,
         createdAt: new Date(),
         updatedAt: new Date(),
       },

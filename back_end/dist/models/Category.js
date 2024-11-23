@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // models/category.ts
 const sequelize_1 = require("sequelize");
 const database_1 = __importDefault(require("../config/database"));
+const Course_1 = __importDefault(require("./Course"));
 class Category extends sequelize_1.Model {
 }
 Category.init({
@@ -29,5 +30,9 @@ Category.init({
     modelName: 'Category',
     tableName: 'category',
     timestamps: true,
+});
+Category.hasMany(Course_1.default, {
+    foreignKey: 'category_id',
+    as: 'course'
 });
 exports.default = Category;

@@ -176,6 +176,7 @@ async getdataForm() {
       const user: UserAttributes = await this.userServices.insert(this.registerTeacher.value)
       if(user.id) {
         this.router.navigate([''])
+        this.registerTeacher.reset()
       }
     } catch (error) {   
     }
@@ -193,7 +194,7 @@ async getdataForm() {
       this.registerTeacher.patchValue({
         lat: this.selectedPlace.geometry.location.lat(),
         lng: this.selectedPlace.geometry.location.lng(),
-        city: this.selectedPlace.name
+        address: this.selectedPlace.name
       }) 
     });
 

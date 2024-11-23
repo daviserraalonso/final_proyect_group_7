@@ -17,11 +17,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { LoginComponent } from '../../../pages/public/login/login.component';
 import { HttpParams } from '@angular/common/http';
 import {MatCardModule} from '@angular/material/card';
+import {MatButtonModule} from '@angular/material/button';
 
 @Component({
   selector: 'app-search-teachers',
   standalone: true,
-  imports: [ReactiveFormsModule, MatButtonToggleModule, MatIconModule, MatAutocompleteModule, MatInputModule, MatFormFieldModule, MatSliderModule, MapComponentComponent, AsyncPipe, CommonModule, MatCardModule],
+  imports: [ReactiveFormsModule, MatButtonToggleModule, MatIconModule, MatAutocompleteModule, MatInputModule, MatFormFieldModule, MatSliderModule, MapComponentComponent, AsyncPipe, CommonModule, MatCardModule, MatButtonModule],
   templateUrl: './search-teachers.component.html',
   styleUrl: './search-teachers.component.css'
 })
@@ -54,6 +55,7 @@ export class SearchTeachersComponent {
   teachersName: string[] = [] // Array to get list of teachers name
   citiesName: string[] = [] // Array to get list of cities name
   allCategories: any = [] // Array to get all categories
+  allModalities: any = [] // Array to get all categories
   teacherFilter!: any[] // Array to get filtered list teachers
   selectedCategory: string = ""
   radius!: number
@@ -109,6 +111,8 @@ export class SearchTeachersComponent {
 
   ngOnInit() {
     this.viewCard()
+    this.getCategories()
+    this.getModalities()
     this.getTeacherName()
     this.getCityName()
     this.filters()
@@ -125,7 +129,7 @@ export class SearchTeachersComponent {
   // Get list of cities name
   async getCityName() {
     const data =  await this.searchServices.getCitiesName()
-    this.citiesName = data.map((city: {details: {address: string}}) => city.details.address).filter((address: string): address is string => address !== null)
+    this.citiesName = data.map((city: {details?: {address?: string}}) => city.details?.address).filter((address: string): address is string => address !== null)
   }
 
 
@@ -133,12 +137,18 @@ export class SearchTeachersComponent {
   async getCategories() {
     this.allCategories = await this.searchServices.getAllCategories()
   }
+
+    // Get all modalities
+    async getModalities() {
+      this.allModalities = await this.searchServices.getAllModalities()
+    }
   
   // Get filtered list according to search fields
   async getSearchForm() {
     this.setBounds()
     const params = new HttpParams({fromObject: this.searchForm.value})
     const teachers = await this.searchServices.search(params)
+    console.log(teachers)
     this.teacherFilter  = [...teachers]
   }
 
@@ -180,12 +190,12 @@ export class SearchTeachersComponent {
   }
   filterAutoName(value: string): string[] {
     const filterValue = value.toLowerCase(); 
-    return this.teachersNameTest.filter(name => name.toLowerCase().includes(filterValue))
+    return this.teachersName.filter(name => name.toLowerCase().includes(filterValue))
   }
 
   filterAutoCity(value: string): string[] {
     const filterValue = value.toLowerCase(); 
-    return this.teachersCityTest.filter(city => city.toLowerCase().includes(filterValue));
+    return this.citiesName.filter(city => city.toLowerCase().includes(filterValue));
   }
 
 
@@ -221,5 +231,9 @@ async cityCenter() {
   this.latCity = Number(coords.lat)
   this.lngCity = Number(coords.lng)
 }
+
+
+
+
 
 }

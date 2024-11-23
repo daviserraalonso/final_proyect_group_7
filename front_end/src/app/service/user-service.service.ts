@@ -52,7 +52,7 @@ export class UserServiceService {
 
   // function to create a new user, url no complete
   insert(body: UserAttributes): Promise<UserAttributes> {
-    return firstValueFrom(this.http.post<UserAttributes>(this.baseUrl, body));
+    return firstValueFrom(this.http.post<UserAttributes>(`${this.baseUrl}/register`, body));
   }
 
 }
