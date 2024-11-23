@@ -1,6 +1,6 @@
 import { Model, DataTypes } from 'sequelize';
 import sequelize from '../config/database';
-import User from './User';
+import User from './user';
 
 class UserDetails extends Model {
   public id!: number;

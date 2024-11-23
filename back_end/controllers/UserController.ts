@@ -1,8 +1,10 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import { sendConfirmationEmail } from '../services/emailService';
-import User from '../models/User';
+import User from '../models/user';
 import UserDetails from '../models/UserDetails';
+import Course from '../models/Course';
+import { Op } from 'sequelize';
 const jwt = require('jsonwebtoken');
 
 
@@ -262,3 +264,117 @@ export const getTeachers = async (req: Request, res: Response) => {
     console.error('Error al obtener profesores:', error);
   }
 };
+
+export const searchTeachers = async (req: Request, res: Response) => {
+  console.log(req.query)
+  const {
+    inputName,
+    inputCity,
+    selectedCategory,
+    minPrice,
+    maxPrice,
+    score,
+    southWestLat,
+    southWestLng,
+    northEastLat,
+    northEastLng,
+  } = req.query
+  console.log(inputName)
+  const filters = {
+    roleId: 2,
+    [Op.or]:
+[    {'$course.modality_id$': 1},
+    {'$course.modality_id$': null},],
+    ...(inputName && {name: inputName}),
+    ...(inputCity && {
+      '$details.address$': inputCity}),
+    ...(selectedCategory && {
+      '$category.category_name$': selectedCategory,
+    }),
+    ...(minPrice && { [Op.or]:[
+      {'$course.price$': {[Op.gt]: minPrice}},
+      {'$course.price$': null}
+    ]}),
+    ...(maxPrice && { [Op.or]:[
+      {'$course.price$': {[Op.lt]: maxPrice}},
+      {'$course.price$': null}
+    ]}),
+    ...(southWestLat && southWestLng && northEastLat && northEastLng && {
+      '$details.lat$': { [Op.between]: [southWestLat, northEastLat] },
+      '$details.lng$': { [Op.between]: [southWestLng, northEastLng] },
+    })
+    
+  }
+  console.log(filters)
+
+  try {
+    const teachers = await User.findAll({
+      where: filters,
+      include: [
+        {
+          model: UserDetails,
+          as: 'details',
+          attributes: ['phone', 'address', 'img_url', 'description', 'lat', 'lng'],
+        },
+        {
+          model: Course,
+          as: 'course',
+          attributes: ['price', 'modality_id'],
+        }
+      ],
+    });
+
+    res.status(200).json(teachers);
+  } catch (error) {
+    console.error('Error al obtener profesores:', error);
+  }
+};
+
+export const names = async (req: any, res: any , next: any) => {
+  try {
+    const names = await User.findAll({
+      where: {roleId: 2},
+      attributes: ['name']
+    }
+      
+    )
+    res.status(200).json(names)
+  } catch (error) {
+    next(error)
+  }
+  
+}
+
+export const cities = async (req: Request, res: Response , next: any) => {
+  try {
+    const names = await User.findAll({
+      where: {roleId: 2},
+      attributes: [],
+      include: [{
+        model: UserDetails,
+        as: 'details',
+        attributes: ['address']
+      }]
+    }
+      
+    )
+    res.status(200).json(names)
+   
+  } catch (error) {
+    next(error)
+  }
+}
+
+export const cityCords = async (req: Request, res: Response, next: any) => {
+  const {city} = req.params
+  console.log(city)
+  try {
+    const coords = await UserDetails.findOne({
+      where: {address: city},
+      attributes: ['lat', 'lng']
+    })
+    res.status(200).json(coords)
+  } catch (error) {
+    next(error)
+  }
+}

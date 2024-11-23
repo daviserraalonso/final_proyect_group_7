@@ -1,6 +1,7 @@
 // models/category.ts
 import { Model, DataTypes } from 'sequelize';
 import sequelize from '../config/database';
+import Course from './Course';
 
 class Category extends Model {}
 
@@ -29,5 +30,10 @@ Category.init(
     timestamps: true,
   }
 );
+
+Category.hasMany(Course, {
+  foreignKey: 'category_id',
+  as: 'course'
+})
 
 export default Category;

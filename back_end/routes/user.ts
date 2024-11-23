@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express';
-import { registerUser, confirmEmail } from '../controllers/UserController';
+import { registerUser, confirmEmail, searchTeachers, names, cities, cityCords } from '../controllers/UserController';
 import LoginController from '../controllers/LoginController';
 import { getAllUsers } from '../controllers/UserController';
 import { modifyUser } from '../controllers/UserController';
@@ -25,6 +25,10 @@ router.put('/:id', modifyUser);
 router.delete('/:id', deleteUser);
 // get all users teacher
 router.get('/teachers', getTeachers);
+router.get('/search', searchTeachers)
+router.get('/names', names)
+router.get('/cities', cities)
+router.get('/:city', cityCords)
 
 
 

@@ -1,6 +1,7 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../config/database';
-import User from './User';
+import User from './user';
+import Modality from './Modality';
 
 
 const Course = sequelize.define('Course', {
@@ -20,6 +21,10 @@ const Course = sequelize.define('Course', {
   modality_id: {
     type: DataTypes.INTEGER,
     allowNull: false,
+    references: {
+      model: Modality,
+      key: 'id',
+    },
   },
   professor_id: {
     type: DataTypes.INTEGER,
