@@ -14,7 +14,7 @@ const jwt = require('jsonwebtoken');
  */
 export const registerUser = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { name, email, password, roleId, isValidated, lat, lng } = req.body;
+    const { name, email, password, roleId, isValidated, lat, lng, phone, address } = req.body;
 
     // Verificar si el usuario ya existe
     const existingUser = await User.findOne({ where: { email } });
@@ -35,6 +35,16 @@ export const registerUser = async (req: Request, res: Response): Promise<void> =
       roleId,
       isValidated,
     });
+
+    const userId = user.id
+
+    await UserDetails.create({
+      userId,
+      phone,
+      address,
+      lat,
+      lng
+    })
 
     // not return password in response
     const { password: _, ...userWithoutPassword } = user.get({ plain: true });

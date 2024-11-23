@@ -9,6 +9,8 @@ class UserDetails extends Model {
   public address?: string;
   public img_url?: string;
   public description?: string;
+  public lat?: number;
+  public lng?: number;
 }
 
 UserDetails.init(
@@ -37,6 +39,14 @@ UserDetails.init(
     description: {
       type: DataTypes.STRING,
       allowNull: true,
+    },
+    lat: {
+      type: DataTypes.NUMBER,
+      allowNull: true
+    },
+    lng: {
+      type: DataTypes.NUMBER,
+      allowNull: true
     },
   },
   {

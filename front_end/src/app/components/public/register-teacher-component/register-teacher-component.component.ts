@@ -40,14 +40,14 @@ export class RegisterTeacherComponentComponent {
         Validators.required,
         Validators.minLength(3)
       ]),
-      mail: new FormControl(null, [
+      email: new FormControl(null, [
         Validators.required,
         Validators.pattern(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/)
       ]),
       phone: new FormControl(null, [
         Validators.required
       ]),
-      city: new FormControl(null, [
+      address: new FormControl(null, [
         Validators.required,
         Validators.minLength(3)
       ]),
@@ -92,14 +92,14 @@ ngOnInit() {
       Validators.required,
       Validators.minLength(3)
     ]),
-    mail: new FormControl(user.email, [
+    email: new FormControl(user.email, [
       Validators.required,
       Validators.pattern(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/)
     ]),
     phone: new FormControl(user.phone, [
       Validators.required
     ]),
-    city: new FormControl(null, [ // city ​​field missing in interface
+    address: new FormControl(null, [ // city ​​field missing in interface
       Validators.required,
       Validators.minLength(3)
     ]),
