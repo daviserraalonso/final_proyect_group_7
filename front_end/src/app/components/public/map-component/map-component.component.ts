@@ -25,6 +25,8 @@ export class MapComponentComponent {
   teacherFilter: any[] = PROFESORES // Prueba
 
   @Input() radius!: number
+  @Input() latCity!: number
+  @Input() lngCity!: number
 
 
 
@@ -59,6 +61,12 @@ export class MapComponentComponent {
   }
 
   ngOnChanges() {
+    if (this.latCity != undefined) {
+      this.userPosition.set({lat: this.latCity, lng: this.lngCity})
+      this.mapOptions.set({
+        center: this.userPosition()
+      })
+    }
     this.mapOptions.set({
       zoom: this.radius,
       center: this.userPosition()

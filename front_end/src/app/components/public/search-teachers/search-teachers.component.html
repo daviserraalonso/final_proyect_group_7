@@ -28,11 +28,17 @@
           </mat-autocomplete>
         </mat-form-field>
       </div>
+      <div class=" d-flex align-self-center">
+        <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style" formControlName="type">
+          <mat-button-toggle value="1">Online</mat-button-toggle>
+          <mat-button-toggle value="2">Presencial</mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
       <div>
         <mat-form-field class="example-full-width" appearance="outline">
           <mat-label>Nombre de la ciudad</mat-label>
           <input type="text" matInput [matAutocomplete]="autoCity" formControlName="inputCity">
-          <mat-autocomplete #autoCity="matAutocomplete">
+          <mat-autocomplete #autoCity="matAutocomplete" (optionSelected)="cityCenter()">
             @for (city of filterCity | async; track $index) {
             <mat-option [value]="city">{{city}}</mat-option>
             }
@@ -51,9 +57,9 @@
       </div>
       <div class="col-4 align-self-start">
         <label for="">Selecciona tu precio</label>
-        <mat-slider min="10" max="100" showTickMarks discrete>
-          <input value="30" formControlName="minPrice" matSliderStartThumb>
-          <input value="60" formControlName="maxPrice" matSliderEndThumb>
+        <mat-slider min="100" max="1000" showTickMarks discrete>
+          <input value="300" formControlName="minPrice" matSliderStartThumb>
+          <input value="600" formControlName="maxPrice" matSliderEndThumb>
         </mat-slider>
       </div>
       <div class="col-4 align-self-start">
@@ -63,44 +69,46 @@
         </mat-slider>
         <label>{{searchForm.value.score}}</label>
       </div>
+
     </div>
     <button mat-raised-button>Buscar</button>
   </form>
 </div>
 
-<div class="d-flex flex-column">
-  <div class="div map">
-    <app-map-component [AAteacherFilter]="teacherFilter" [radius]="radius" (zoom)="zoom($event)" (bounds)="getBounds($event)"></app-map-component>
+<div class="row">
+  <div class="col">
+    <app-map-component [latCity]="latCity" [lngCity]="lngCity" [AAteacherFilter]="teacherFilter" [radius]="radius" (zoom)="zoom($event)" (bounds)="getBounds($event)"></app-map-component>
   </div>
-  <div [class.cardActive]="cardActive" class="row h-100 mt-3 mb-5 pb-5">
-    @for (teacher of allTeachers; track $index) {
-    <div class="col-6">
-          <!-- ************* card de prueba ************* -->
-      <div class="card mb-3 w-100">
-        <div class="row g-0 align-items-center">
-          <div class="col-auto p-3">
-            <img
-              [src]=""
-              alt=""
-              class="rounded-circle"
-              style="width: 70px; height: 70px; object-fit: cover;"
-            />
+  <div class="col d-flex flex-column test">
+  <div [class.cardActive]="cardActive" class="card_container">
+    @for (teacher of teacherFilter; track $index) {
+      <mat-card class="d-flex flex-row justify-content-between mb-2" appearance="outlined">
+        <div class="d-flex flex-column pt-2 ps-2">
+          <div class="d-flex flex-row gap-3">
+            <img mat-card-avatar class="rounded-circle" src="https://material.angular.io/assets/img/examples/shiba2.jpg" >
+            <mat-card-title>Albert Martinez{{teacher.name}}</mat-card-title>
+            
+            
           </div>
-          <div class="col">
-            <div class="card-body">
-              <h5 class="card-title">{{ teacher.nombre }}</h5>
-              <p class="card-text mb-1">Materia: {{ teacher.materia }}</p>
-              <p class="card-text mb-1">Precio: ${{ teacher.precio }}</p>
-              <p class="card-text">
-                <small class="text-muted">Puntuación: {{ teacher.puntuacion }} ⭐</small>
-              </p>
-              <a [routerLink]="">Ver detalle</a>
-            </div>
+          <div class="d-flex justify-content-start mt-auto">
+            <a (click)="openDialog($event, teacher)"><small class="text">Ver detalles</small></a>
+  
           </div>
+  
         </div>
-      </div>
-    </div>
-    <!-- *************** -->
+        <div class="p-2">
+          <p>Puntuacion: ⭐️</p>
+          <p class="m-0">Precio:</p>
+          <p class="m-0">Materia: matematicas, programacion</p>
+
+        </div>
+
+   
+      </mat-card>
     }
   </div>
+
+
+  </div>
+  
 </div>
