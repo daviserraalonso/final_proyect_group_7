@@ -1,6 +1,7 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../config/database';
-import User from './User';
+import User from './user';
+import Modality from './Modality';
 
 
 const Course = sequelize.define('Course', {

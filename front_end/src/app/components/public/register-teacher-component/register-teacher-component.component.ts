@@ -40,14 +40,14 @@ export class RegisterTeacherComponentComponent {
         Validators.required,
         Validators.minLength(3)
       ]),
-      mail: new FormControl(null, [
+      email: new FormControl(null, [
         Validators.required,
         Validators.pattern(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/)
       ]),
       phone: new FormControl(null, [
         Validators.required
       ]),
-      city: new FormControl(null, [
+      address: new FormControl(null, [
         Validators.required,
         Validators.minLength(3)
       ]),
@@ -92,14 +92,14 @@ ngOnInit() {
       Validators.required,
       Validators.minLength(3)
     ]),
-    mail: new FormControl(user.email, [
+    email: new FormControl(user.email, [
       Validators.required,
       Validators.pattern(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/)
     ]),
     phone: new FormControl(user.phone, [
       Validators.required
     ]),
-    city: new FormControl(null, [ // city ​​field missing in interface
+    address: new FormControl(null, [ // city ​​field missing in interface
       Validators.required,
       Validators.minLength(3)
     ]),
@@ -176,6 +176,7 @@ async getdataForm() {
       const user: UserAttributes = await this.userServices.insert(this.registerTeacher.value)
       if(user.id) {
         this.router.navigate([''])
+        this.registerTeacher.reset()
       }
     } catch (error) {   
     }
@@ -193,7 +194,7 @@ async getdataForm() {
       this.registerTeacher.patchValue({
         lat: this.selectedPlace.geometry.location.lat(),
         lng: this.selectedPlace.geometry.location.lng(),
-        city: this.selectedPlace.name
+        address: this.selectedPlace.name
       }) 
     });
 

@@ -26,4 +26,8 @@ router.put('/:id', UserController_3.modifyUser);
 router.delete('/:id', UserController_4.deleteUser);
 // get all users teacher
 router.get('/teachers', UserController_6.getTeachers);
+router.get('/search', UserController_1.searchTeachers);
+router.get('/names', UserController_1.names);
+router.get('/cities', UserController_1.cities);
+router.get('/:city', UserController_1.cityCords);
 module.exports = router;

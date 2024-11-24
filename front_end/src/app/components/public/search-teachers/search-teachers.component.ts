@@ -1,5 +1,5 @@
 import { Component, inject, signal, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MapComponentComponent } from '../map-component/map-component.component';
 import { SearchServiceService } from '../../../service/search-service.service';
 import { map, Observable, startWith } from 'rxjs';
@@ -13,11 +13,16 @@ import {MatSliderModule} from '@angular/material/slider';
 import {AsyncPipe} from '@angular/common';
 import { PROFESORES } from './datos.pruebas';
 import { CommonModule } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { LoginComponent } from '../../../pages/public/login/login.component';
+import { HttpParams } from '@angular/common/http';
+import {MatCardModule} from '@angular/material/card';
+import {MatButtonModule} from '@angular/material/button';
 
 @Component({
   selector: 'app-search-teachers',
   standalone: true,
-  imports: [ReactiveFormsModule, MatButtonToggleModule, MatIconModule, MatAutocompleteModule, MatInputModule, MatFormFieldModule, MatSliderModule, MapComponentComponent, AsyncPipe, CommonModule, RouterLink],
+  imports: [ReactiveFormsModule, MatButtonToggleModule, MatIconModule, MatAutocompleteModule, MatInputModule, MatFormFieldModule, MatSliderModule, MapComponentComponent, AsyncPipe, CommonModule, MatCardModule, MatButtonModule],
   templateUrl: './search-teachers.component.html',
   styleUrl: './search-teachers.component.css'
 })
@@ -29,6 +34,7 @@ export class SearchTeachersComponent {
   searchServices = inject(SearchServiceService)
   router = inject(Router)
   activatedRoute = inject(ActivatedRoute)
+  dialog = inject(MatDialog)
   hideMultipleSelectionIndicator = signal(false)
 
   teachersNameTest: string[] = ['Juan', 'Oscar', 'Pedro'] // Provisional para pruebas
@@ -49,9 +55,12 @@ export class SearchTeachersComponent {
   teachersName: string[] = [] // Array to get list of teachers name
   citiesName: string[] = [] // Array to get list of cities name
   allCategories: any = [] // Array to get all categories
+  allModalities: any = [] // Array to get all categories
   teacherFilter!: any[] // Array to get filtered list teachers
   selectedCategory: string = ""
   radius!: number
+  latCity!: number
+  lngCity!: number
 
   bounds = {
     southWestLat: 41.0040347326615,
@@ -78,13 +87,14 @@ export class SearchTeachersComponent {
       inputName: new FormControl("", []),
       inputCity: new FormControl("", []),
       selectedCategory: new FormControl([], []),
-      minPrice: new FormControl(10, []),
-      maxPrice: new FormControl(100, []),
+      minPrice: new FormControl(360, []),
+      maxPrice: new FormControl(600, []),
       score: new FormControl(8, []),
       southWestLat: new FormControl(null, []),
       southWestLng: new FormControl(null, []),
       northEastLat: new FormControl(null, []),
-      northEastLng: new FormControl(null, [])
+      northEastLng: new FormControl(null, []),
+      type: new FormControl(2, [])
     })
   }
 
@@ -101,6 +111,10 @@ export class SearchTeachersComponent {
 
   ngOnInit() {
     this.viewCard()
+    this.getCategories()
+    this.getModalities()
+    this.getTeacherName()
+    this.getCityName()
     this.filters()
   }
 
@@ -108,12 +122,14 @@ export class SearchTeachersComponent {
 
   // Get list of teachers name
   async getTeacherName() {
-    this.teachersName = await this.searchServices.getTeachersName()
+    const data = await this.searchServices.getTeachersName()
+    this.teachersName = data.map((teacher: {name: string}) => teacher.name)
   }
 
   // Get list of cities name
   async getCityName() {
-    this.citiesName = await this.searchServices.getCitiesName()
+    const data =  await this.searchServices.getCitiesName()
+    this.citiesName = data.map((city: {details?: {address?: string}}) => city.details?.address).filter((address: string): address is string => address !== null)
   }
 
 
@@ -121,27 +137,19 @@ export class SearchTeachersComponent {
   async getCategories() {
     this.allCategories = await this.searchServices.getAllCategories()
   }
+
+    // Get all modalities
+    async getModalities() {
+      this.allModalities = await this.searchServices.getAllModalities()
+    }
   
   // Get filtered list according to search fields
   async getSearchForm() {
     this.setBounds()
-    const formData = new FormData();
-
-    Object.keys(this.searchForm.value).forEach(index => {
-      const data = this.searchForm.value[index];
-
-      if (Array.isArray(data)) {
-        data.forEach(item => {
-          formData.append(index, item);
-        })
-      } else {
-        formData.append(index, data)
-      }
-    });
-    formData.forEach((value, key) => {
-      console.log(`${key}: ${value}`);
-    });
-    this.teacherFilter = await this.searchServices.search(formData)
+    const params = new HttpParams({fromObject: this.searchForm.value})
+    const teachers = await this.searchServices.search(params)
+    console.log(teachers)
+    this.teacherFilter  = [...teachers]
   }
 
   // Function to hide list of teachers in home page
@@ -182,12 +190,50 @@ export class SearchTeachersComponent {
   }
   filterAutoName(value: string): string[] {
     const filterValue = value.toLowerCase(); 
-    return this.teachersNameTest.filter(name => name.toLowerCase().includes(filterValue))
+    return this.teachersName.filter(name => name.toLowerCase().includes(filterValue))
   }
 
   filterAutoCity(value: string): string[] {
     const filterValue = value.toLowerCase(); 
-    return this.teachersCityTest.filter(city => city.toLowerCase().includes(filterValue));
+    return this.citiesName.filter(city => city.toLowerCase().includes(filterValue));
   }
+
+
+  // Open view teachers details
+  openDialog(event: Event, teacher: any) {
+    const token = localStorage.getItem('token');
+    if(!token) {
+      event.preventDefault();
+      const dialogRef = this.dialog.open(LoginComponent, {
+        width: '90%',
+        height:'90%', 
+        maxWidth: 'none',
+        maxHeight: 'none',
+      })
+    } else {
+    event.preventDefault(); 
+    this.dialog.open(LoginComponent, { // aqui se carga el componente de la vista del profesor
+      width: '90%',
+      height:'90%', 
+      maxWidth: 'none',
+      maxHeight: 'none',
+      data: {
+        teacher: teacher
+      },
+    });
+  }
+}
+
+// Send info city to the map
+async cityCenter() {
+  const city = this.searchForm.get('inputCity')?.value
+  const coords = await this.searchServices.getCityCords(city)
+  this.latCity = Number(coords.lat)
+  this.lngCity = Number(coords.lng)
+}
+
+
+
+
 
 }

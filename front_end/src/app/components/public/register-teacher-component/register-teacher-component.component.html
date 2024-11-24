@@ -20,11 +20,11 @@
 
             <mat-form-field>
               <mat-label>Introduce tu email</mat-label>
-              <input matInput formControlName="mail">
-              @if(inputControl('mail', 'required')){
+              <input matInput formControlName="email">
+              @if(inputControl('email', 'required')){
               <p class="text-danger">El campo es requerido</p>
               }
-              @if(inputControl('mail', 'pattern')){
+              @if(inputControl('email', 'pattern')){
               <p class="text-danger">El email es incorrecto</p>
               }
               <mat-icon matSuffix>mail</mat-icon>
@@ -44,11 +44,11 @@
 
             <mat-form-field>
               <mat-label>Introduce tu poblacion</mat-label>
-              <input matInput formControlName="city" id="city" (input)="autocomplet()" #cityInput>
-              @if(inputControl('city', 'required')){
+              <input matInput formControlName="address" id="city" (input)="autocomplet()" #cityInput>
+              @if(inputControl('address', 'required')){
               <p class="text-danger">El campo es requerido</p>
               }
-              @if(inputControl('city', 'minlength')){
+              @if(inputControl('address', 'minlength')){
               <p class="text-danger">El campo debe tener mínimo 3 caracteres</p>
               }
               <mat-icon matSuffix>location_city</mat-icon>

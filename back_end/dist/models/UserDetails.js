@@ -12,6 +12,8 @@ class UserDetails extends sequelize_1.Model {
     address;
     img_url;
     description;
+    lat;
+    lng;
 }
 UserDetails.init({
     id: {
@@ -38,6 +40,14 @@ UserDetails.init({
     description: {
         type: sequelize_1.DataTypes.STRING,
         allowNull: true,
+    },
+    lat: {
+        type: sequelize_1.DataTypes.NUMBER,
+        allowNull: true
+    },
+    lng: {
+        type: sequelize_1.DataTypes.NUMBER,
+        allowNull: true
     },
 }, {
     sequelize: database_1.default,

@@ -3,14 +3,25 @@
   border-radius: 10px;
 }
 
-.div {
-  height: 300px;
-}
 
 .cardActive {
 display: none !important;
 }
 
+.card_container {
+  max-width: 100%;
+  max-height: 450px;
+  box-sizing: border-box;
+  gap: 5px;
+  overflow-y: auto;
+  }
+  
+  
+  .test {
+    height: auto;
+    max-height: 100%;
+  }
+  
 
 
 

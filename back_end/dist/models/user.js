@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = require("sequelize");
 const database_1 = __importDefault(require("../config/database"));
 const UserDetails_1 = __importDefault(require("./UserDetails"));
+const Course_1 = __importDefault(require("./Course"));
 class User extends sequelize_1.Model {
     id;
     name;
@@ -48,5 +49,9 @@ User.init({
 User.hasOne(UserDetails_1.default, {
     foreignKey: 'userId',
     as: 'details',
+});
+User.hasMany(Course_1.default, {
+    foreignKey: 'professor_id',
+    as: 'course'
 });
 exports.default = User;

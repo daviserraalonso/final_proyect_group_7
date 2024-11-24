@@ -18,8 +18,6 @@ import { SubjectListComponent } from './components/dashboard/admin/subject-list/
 import { CourseListComponent } from './components/dashboard/admin/course-list/course-list.component';
 
 
-
-
 export const routes: Routes = [
     { path: '', redirectTo: '/index', pathMatch: 'full' },
     { path: 'index', component: IndexComponent },

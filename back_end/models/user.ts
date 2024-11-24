@@ -1,6 +1,7 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../config/database';
 import UserDetails from './UserDetails';
+import Course from './Course';
 
 class User extends Model {
   public id!: number;
@@ -50,5 +51,10 @@ User.hasOne(UserDetails, {
   foreignKey: 'userId',
   as: 'details',
 });
+
+User.hasMany(Course, {
+  foreignKey: 'professor_id',
+  as: 'course'
+})
 
 export default User;
