@@ -14,7 +14,8 @@ import { SearchTeachersComponent } from '../../../components/public/search-teach
 })
 export class LoginComponent {
 
-  @Input() dialog = inject(MatDialogRef<SearchTeachersComponent>)
+  @Input() dialog = inject(MatDialogRef<SearchTeachersComponent>, {optional: true})
+
   loginForm: FormGroup;
   errorMessage: string | null = null;
 
@@ -44,10 +45,13 @@ export class LoginComponent {
             localStorage.setItem('token', response.token);
 
             console.log(response.redirectTo)
-            if(this.router.url.includes('looking-teachers')) return this.dialog.close()
+            if(this.router.url.includes('looking-teachers') && this.dialog) return this.dialog.close()
 
             this.router.navigate([response.redirectTo || '/']);
-            this.dialog.close()
+            if(this.dialog) {
+              this.dialog.close()
+            }
+            
           } else {
             console.error('response don´t have property.');
           }

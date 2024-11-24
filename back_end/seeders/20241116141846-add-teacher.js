@@ -10,7 +10,7 @@ module.exports = {
       {
         id: 2,
         name: 'Professor John Doe',
-        email: 'teacher@example.com',
+        email: 'teacher1@example.com',
         password: hashedPassword,
         roleId: 2, // Role de profesor
         isValidated: true,
@@ -20,7 +20,7 @@ module.exports = {
       {
         id: 3,
         name: 'Professor John ',
-        email: 'teacher@example.com',
+        email: 'teacher2@example.com',
         password: hashedPassword,
         roleId: 2, // Role de profesor
         isValidated: true,
@@ -30,7 +30,7 @@ module.exports = {
       {
         id: 4,
         name: 'Professor Doe',
-        email: 'teacher@example.com',
+        email: 'teacher3@example.com',
         password: hashedPassword,
         roleId: 2, // Role de profesor
         isValidated: true,
