@@ -11,7 +11,15 @@ import { AuthService } from './service/auth-service.service';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, MatButtonModule, HeaderPublicComponentComponent, FooterPublicComponentComponent, IndexComponent, SearchTeachersComponent, SideBarComponent, CommonModule],
+  imports: [
+    RouterOutlet, 
+    MatButtonModule, 
+    HeaderPublicComponentComponent, 
+    FooterPublicComponentComponent, 
+    IndexComponent, 
+    SearchTeachersComponent, 
+    SideBarComponent, 
+    CommonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css' // Cambié styleUrl a styleUrls
 })
