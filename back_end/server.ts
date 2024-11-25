@@ -7,6 +7,7 @@ const subjectRoutes = require('./routes/subject');
 const courseRoutes = require('./routes/course');
 const categoriesRoutes = require('./routes/categories');
 const modalitiesRoutes = require('./routes/modalities');
+const taskRoutes = require('./routes/taskRoutes');
 
 // Configuración de dotenv
 dotenv.config();
@@ -33,6 +34,8 @@ app.use('/api/subjects', subjectRoutes);
 app.use('/api/courses', courseRoutes);
 app.use('/api/categories', categoriesRoutes);
 app.use('/api/modalities', modalitiesRoutes);
+app.use('/api/tasks', taskRoutes);
+
 
 // init server
 app.listen(port, () => {

@@ -1,0 +1,10 @@
+('Profesor 1', 'profesor1@example.com', 'password1', (SELECT id FROM role WHERE role_name = 'teacher'), true),
+('Profesor 2', 'profesor2@example.com', 'password2', (SELECT id FROM role WHERE role_name = 'teacher'), true),
+('Profesor 3', 'profesor3@example.com', 'password3', (SELECT id FROM role WHERE role_name = 'teacher'), true),
+('Profesor 4', 'profesor4@example.com', 'password4', (SELECT id FROM role WHERE role_name = 'teacher'), true),
+('Profesor 5', 'profesor5@example.com', 'password5', (SELECT id FROM role WHERE role_name = 'teacher'), true),
+('Profesor 6', 'profesor6@example.com', 'password6', (SELECT id FROM role WHERE role_name = 'teacher'), true),
+('Profesor 7', 'profesor7@example.com', 'password7', (SELECT id FROM role WHERE role_name = 'teacher'), true),
+('Profesor 8', 'profesor8@example.com', 'password8', (SELECT id FROM role WHERE role_name = 'teacher'), true),
+('Profesor 9', 'profesor9@example.com', 'password9', (SELECT id FROM role WHERE role_name = 'teacher'), true),
+('Profesor 10', 'profesor10@example.com', 'password10', (SELECT id FROM role WHERE role_name = 'teacher'), true);
