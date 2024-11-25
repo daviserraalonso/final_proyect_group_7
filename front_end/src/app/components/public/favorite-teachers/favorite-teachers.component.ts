@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-
+import { TeacherService } from '../../../service/teacher-service.service';
 @Component({
   selector: 'app-favorite-teachers',
   standalone: true,
@@ -10,36 +10,21 @@ import { RouterLink } from '@angular/router';
   styleUrls: ['./favorite-teachers.component.css']
 })
 export class FavoriteTeachersComponent {
-  teachers = [
-    {
-      nombre: 'Gohan',
-      area: 'Matemáticas',
-      areaLink: '/area/matematicas',
-      puntuacion: 2.9,
-      calificaciones: 100,
-      descripcion: 'Gohan es un profesor apasionado por las matemáticas con más de 10 años de experiencia.',
-      img: 'assets/professor1.jpeg'
-    },
-    {
-      nombre: 'Goku',
-      area: 'Inglés',
-      areaLink: '/area/ingles',
-      puntuacion: 5.0,
-      calificaciones: 200,
-      descripcion: 'Goku es un profesor dedicado y entusiasta, perfecto para aprender inglés.',
-      img: 'assets/professor2.jpg'
-    },
-    {
-      nombre: 'Vegeta',
-      area: 'Ciencias',
-      areaLink: '/area/ciencias',
-      puntuacion: 4.8,
-      calificaciones: 150,
-      descripcion: 'Vegeta tiene una gran pasión por las ciencias y una manera única de enseñar.',
-      img: 'assets/professor3.jpeg'
-    }
-  ];
+  
+  teachers: any[] = []; // Lista para almacenar los profesores
 
+  constructor(private teacherService: TeacherService) {}
+
+  ngOnInit(): void {
+    this.teacherService.getTopTeachers().subscribe(
+      (data) => {
+        this.teachers = data; // Almacena los profesores obtenidos
+      },
+      (error) => {
+        console.error('Error al obtener los profesores', error);
+      }
+    );
+  }
 
   getStarsArray(rating: number): string[] {
     const fullStars = Math.floor(rating);
