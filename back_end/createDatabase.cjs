@@ -2,7 +2,7 @@ const mysql = require('mysql2/promise');
 
 const database = 'teacherappdb';
 const username = 'root';
-const password = 'Lucas55'; // edit with your credential
+const password = ''; // edit with your credential
 const host = 'localhost';
 const port = 3306; // edit with your configuration
 
