@@ -16,6 +16,8 @@ import { Task } from '../../../../interfaces/itask';
 import { TaskComponentComponent } from '../../../common/task-component/task-component.component';
 import { DashboardStudentService } from '../../../../service/dashboard-student.service';
 import { ProgressResponse } from '../../../../interfaces/iProgressResponse';
+import { IUser } from '../../../../interfaces/iUser';
+import { UserServiceService } from '../../../../service/user-service.service';
 
 @Component({
   selector: 'app-student-profile-component',
@@ -39,18 +41,22 @@ import { ProgressResponse } from '../../../../interfaces/iProgressResponse';
 })
 export class StudentProfileComponentComponent implements OnInit {
   serviceStudentProfile = inject(DashboardStudentService)
+  serviceStudentDetails = inject(UserServiceService)
+  taskService = inject(TaskService)
 
-  studentProfile = {
-    id: 5, // Asegúrate de tener el ID del estudiante
-    name: 'Juan Pérez',
-    email: 'juan.perez@example.com',
-    phone: '+123456789',
-    address: 'Calle Falsa 123, Ciudad, País',
-    photoUrl: 'https://via.placeholder.com/150'
+  studentProfile: IUser = {
+    id: 0,
+    name: '',
+    email: '',
+    details: {
+      phone: '',
+      address: '',
+      img_url: '',
+      description: ''
+    }
   };
 
-  
-  arrCourses:ProgressResponse[] = [];
+  arrCourses: ProgressResponse[] = [];
 
   // Notificaciones
   notifications = [
@@ -65,12 +71,18 @@ export class StudentProfileComponentComponent implements OnInit {
 
   async ngOnInit() {
     try {
-      this.arrCourses = await this.serviceStudentProfile.getProgressByUserId(this.studentProfile.id);
+      const user = JSON.parse(localStorage.getItem('user') || '{}');
+      const userId = user.id || 6; // Default to 6 if user ID is not found
+
+      this.studentProfile = await this.serviceStudentDetails.getUserDetails(6);
+      this.arrCourses = await this.serviceStudentProfile.getProgressByUserId(6);
+      this.tasks = await this.taskService.getTasksByUserId(6);
+      console.log(this.tasks)
+      console.log(this.studentProfile);
     } catch (error) {
-      console.error('Error al obtener las tareas:', error);
+      console.error('Error al obtener los datos:', error);
     }
   }
-
 
   openTaskComponent(): void {
     this.dialog.open(TaskComponentComponent, {
