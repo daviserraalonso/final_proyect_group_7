@@ -7,8 +7,9 @@ const subjectRoutes = require('./routes/subject');
 const courseRoutes = require('./routes/course');
 const categoriesRoutes = require('./routes/categories');
 const modalitiesRoutes = require('./routes/modalities');
+const contactRoutes  = require('./routes/contactRoutes');
 
-// Configuración de dotenv
+// config dotenv
 dotenv.config();
 
 const app = express();
@@ -33,6 +34,8 @@ app.use('/api/subjects', subjectRoutes);
 app.use('/api/courses', courseRoutes);
 app.use('/api/categories', categoriesRoutes);
 app.use('/api/modalities', modalitiesRoutes);
+app.use('/api/contact', contactRoutes);
+
 
 // init server
 app.listen(port, () => {

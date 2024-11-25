@@ -11,6 +11,6 @@
     "moduleResolution": "node",
     "lib": ["ES2022"]
   },
-  "include": ["./**/*.ts"],
+  "include": ["./**/*.ts", "services/emailService.ts"],
   "exclude": ["node_modules"]
 }
