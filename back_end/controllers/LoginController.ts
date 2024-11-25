@@ -29,7 +29,6 @@ class LoginController {
 
         // route to redirect user
         let redirectTo = '/';
-        console.log("llego role: "+user.get('roleId'))
         switch (user.get('roleId')) {
           case 1:
             redirectTo = '/admin';
@@ -43,7 +42,7 @@ class LoginController {
         }
 
         res.json({ 
-          user: { id: user.get('id'), role: user.get('roleId') }, 
+          user: { id: user.get('id'), role: user.get('roleId'), name: user.get('name') }, 
           token,
           redirectTo
         });
