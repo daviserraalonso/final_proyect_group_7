@@ -37,8 +37,6 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       this.authService.login(this.loginForm.value).subscribe({
         next: (response: any) => {
-          console.log('response from server:', response);
-
           if (response && response.user) {
 
             localStorage.setItem('user', JSON.stringify(response.user));
