@@ -16,8 +16,6 @@ import { AuthService } from './service/auth-service.service';
     MatButtonModule, 
     HeaderPublicComponentComponent, 
     FooterPublicComponentComponent, 
-    IndexComponent, 
-    SearchTeachersComponent, 
     SideBarComponent, 
     CommonModule],
   templateUrl: './app.component.html',

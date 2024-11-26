@@ -8,6 +8,7 @@ const courseRoutes = require('./routes/course');
 const categoriesRoutes = require('./routes/categories');
 const modalitiesRoutes = require('./routes/modalities');
 const contactRoutes = require('./routes/contactRoutes');
+const taskRoutes = require('./routes/taskRoutes');
 // config dotenv
 dotenv.config();
 const app = express();
@@ -28,6 +29,7 @@ app.use('/api/courses', courseRoutes);
 app.use('/api/categories', categoriesRoutes);
 app.use('/api/modalities', modalitiesRoutes);
 app.use('/api/contact', contactRoutes);
+app.use('/api/tasks', taskRoutes);
 // init server
 app.listen(port, () => {
     console.log(`Servidor Node escuchando en http://localhost:${port}`);

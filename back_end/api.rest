@@ -1,0 +1,43 @@
+GET http://localhost:3000/api/tasks
+Content-Type: application/json
+
+### GET todas las tareas del usuario
+
+GET http://localhost:3000/api/tasks/user/7
+Content-Type: application/json
+
+### GET info inicial
+
+GET http://localhost:3000/api/tasks/progress/6
+
+
+### POST nueva tarea
+POST http://localhost:3000/api/tasks
+Content-Type: application/json
+
+{
+  "subjectId": 12,
+  "userId": 6,
+  "comments": "Completar ejercicios de matemáticas.",
+  "punctuation": 100,
+  "deadline": "2024-11-30"
+}
+
+###### PUT actualizar tarea
+
+PUT http://localhost:3000/api/tasks/28
+Content-Type: application/json
+
+{
+  "punctuation": 9,
+  "submission": "Contenido de la entrega"
+}
+
+### DELETE tarea
+DELETE http://localhost:3000/api/tasks/26
+Content-Type: application/json
+
+###
+GET http://localhost:3000/api/users/6/details
+Content-Type: application/json
+

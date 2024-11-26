@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { TaskService } from './../../../../service/task.service';
+import { Component, inject, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule } from '@angular/material/menu';
@@ -8,11 +10,22 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
-import { MatGridListModule, MatGridTileText } from '@angular/material/grid-list';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { Task } from '../../../../interfaces/itask';
+import { TaskComponentComponent } from '../../../common/task-component/task-component.component';
+import { DashboardStudentService } from '../../../../service/dashboard-student.service';
+import { ProgressResponse } from '../../../../interfaces/iProgressResponse';
+import { IUser } from '../../../../interfaces/iUser';
+import { UserServiceService } from '../../../../service/user-service.service';
+import { EditUserModalComponent } from '../../admin/edit-user-modal/edit-user-modal.component';
+
 @Component({
   selector: 'app-student-profile-component',
   standalone: true,
-  imports: [MatIconModule,
+  imports: [
+    CommonModule,
+    MatIconModule,
     MatTooltipModule,
     MatMenuModule,
     MatDividerModule,
@@ -22,41 +35,29 @@ import { MatGridListModule, MatGridTileText } from '@angular/material/grid-list'
     MatButtonModule,
     MatListModule,
     MatGridListModule,
-    MatGridTileText,
-    
-    ],
+    MatDialogModule
+  ],
   templateUrl: './student-profile-component.component.html',
   styleUrls: ['./student-profile-component.component.css']
 })
-export class StudentProfileComponentComponent  {
-  
+export class StudentProfileComponentComponent implements OnInit {
+  serviceStudentProfile = inject(DashboardStudentService)
+  serviceStudentDetails = inject(UserServiceService)
+  taskService = inject(TaskService)
 
-  studentProfile = {
-    name: 'Juan Pérez',
-    email: 'juan.perez@example.com',
-    phone: '+123456789',
-    address: 'Calle Falsa 123, Ciudad, País',
-    photoUrl: 'https://via.placeholder.com/150'
+  studentProfile: IUser = {
+    id: 0,
+    name: '',
+    email: '',
+    details: {
+      phone: '',
+      address: '',
+      img_url: '',
+      description: ''
+    }
   };
 
-  // Cursos inscritos
-  courses = [
-    {
-      name: 'Matemáticas Avanzadas',
-      teacher: 'Prof. Ana Gómez',
-      progress: 60
-    },
-    {
-      name: 'Historia del Arte',
-      teacher: 'Prof. Carlos López',
-      progress: 50
-    },
-    {
-      name: 'Ciencias Naturales',
-      teacher: 'Prof. María Fernández',
-      progress: 90
-    }
-  ];
+  arrCourses: ProgressResponse[] = [];
 
   // Notificaciones
   notifications = [
@@ -65,8 +66,48 @@ export class StudentProfileComponentComponent  {
     'Tu progreso en Ciencias Naturales ha sido actualizado.'
   ];
 
-  constructor() { }
+  tasks: Task[] = [];
 
-  ngOnInit(): void {
+  constructor(private dialog: MatDialog, private TaskService: TaskService) {}
+
+  async ngOnInit() {
+    try {
+      const user = JSON.parse(localStorage.getItem('user') || '{}');
+      const userId = user.id || 6; // Default to 6 if user ID is not found
+
+      this.studentProfile = await this.serviceStudentDetails.getUserDetails(userId);
+      this.arrCourses = await this.serviceStudentProfile.getProgressByUserId(userId);
+      this.tasks = await this.taskService.getTasksByUserId(userId);
+      console.log(this.tasks)
+      console.log(this.studentProfile);
+    } catch (error) {
+      console.error('Error al obtener los datos:', error);
+    }
+  }
+
+  openTaskComponent(): void {
+    this.dialog.open(TaskComponentComponent, {
+      width: '80%',
+      height: '1500%',
+      data: { student: this.studentProfile, tasks: this.tasks }
+    });
+  }
+
+  openEditUserModal(): void {
+    const dialogRef = this.dialog.open(EditUserModalComponent, {
+      width: '400px',
+      data: this.studentProfile
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // Actualizar el perfil del estudiante después de la edición
+        this.serviceStudentDetails.getUserDetails(this.studentProfile.id).then(updatedProfile => {
+          this.studentProfile = updatedProfile;
+        }).catch(error => {
+          console.error('Error al actualizar el perfil del estudiante:', error);
+        });
+      }
+    });
   }
 }

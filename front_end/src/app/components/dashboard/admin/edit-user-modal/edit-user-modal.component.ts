@@ -42,7 +42,7 @@ export class EditUserModalComponent {
       name: [data.name, Validators.required],
       email: [data.email, [Validators.required, Validators.email]],
       password: [''], // Opcional
-      roleId: [data.roleId, Validators.required],
+      roleId: [data.roleId],
       phone: [data.details?.phone || ''],
       address: [data.details?.address || ''],
       description: [data.details?.description || ''],
