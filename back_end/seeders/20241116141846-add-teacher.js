@@ -19,7 +19,7 @@ module.exports = {
       },
       {
         id: 3,
-        name: 'Professor John ',
+        name: 'Professor John',
         email: 'teacher2@example.com',
         password: hashedPassword,
         roleId: 2, // Role de profesor
