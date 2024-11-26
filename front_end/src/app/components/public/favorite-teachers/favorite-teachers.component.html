@@ -1,17 +1,14 @@
-<div class="teachers-container">
-  <h2>Profesores Destacados</h2>
-  <div class="cards-container">
-    <div class="card" *ngFor="let teacher of teachers">
-      <img [src]="teacher.img" alt="Foto de {{ teacher.nombre }}" class="teacher-img">
-      <h3>{{ teacher.nombre }}</h3>
-      <a [routerLink]="teacher.areaLink" class="teacher-area">{{ teacher.area }}</a>
-      <div class="rating-stars">
-        <span *ngFor="let star of getStarsArray(teacher.puntuacion)" class="star">★</span>
-        <span class="rating-text">({{ teacher.puntuacion }}/5)</span>
+
+  <div class="teachers-container">
+    <h2>Profesores Desstacados</h2>
+    <div class="cards-container">
+      <div class="card" *ngFor="let teacher of teachers">
+        <img [src]="'assets/images/' + teacher.img_url" alt="Foto de {{ teacher.name }}" class="teacher-img">
+        <h3>{{ teacher.name }}</h3>
+        <p class="teacher-subject"><strong>Materia:</strong> {{ teacher.categories }}</p>
+        <!-- <p class="teacher-rating"><strong>rating:</strong> {{ teacher.rating }}</p> -->
+        <p class="teacher-description"><strong>Description:</strong> {{ teacher.description }}</p>
       </div>
-      
-      <p class="teacher-rating">({{ teacher.calificaciones }}+ calificaciones)</p>
-      <p class="teacher-description">{{ truncateDescription(teacher.descripcion, 100) }}</p>
     </div>
   </div>
-</div>
+
