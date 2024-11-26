@@ -18,6 +18,7 @@ import { DashboardStudentService } from '../../../../service/dashboard-student.s
 import { ProgressResponse } from '../../../../interfaces/iProgressResponse';
 import { IUser } from '../../../../interfaces/iUser';
 import { UserServiceService } from '../../../../service/user-service.service';
+import { EditUserModalComponent } from '../../admin/edit-user-modal/edit-user-modal.component';
 
 @Component({
   selector: 'app-student-profile-component',
@@ -74,9 +75,9 @@ export class StudentProfileComponentComponent implements OnInit {
       const user = JSON.parse(localStorage.getItem('user') || '{}');
       const userId = user.id || 6; // Default to 6 if user ID is not found
 
-      this.studentProfile = await this.serviceStudentDetails.getUserDetails(6);
-      this.arrCourses = await this.serviceStudentProfile.getProgressByUserId(6);
-      this.tasks = await this.taskService.getTasksByUserId(6);
+      this.studentProfile = await this.serviceStudentDetails.getUserDetails(userId);
+      this.arrCourses = await this.serviceStudentProfile.getProgressByUserId(userId);
+      this.tasks = await this.taskService.getTasksByUserId(userId);
       console.log(this.tasks)
       console.log(this.studentProfile);
     } catch (error) {
@@ -89,6 +90,24 @@ export class StudentProfileComponentComponent implements OnInit {
       width: '80%',
       height: '1500%',
       data: { student: this.studentProfile, tasks: this.tasks }
+    });
+  }
+
+  openEditUserModal(): void {
+    const dialogRef = this.dialog.open(EditUserModalComponent, {
+      width: '400px',
+      data: this.studentProfile
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // Actualizar el perfil del estudiante después de la edición
+        this.serviceStudentDetails.getUserDetails(this.studentProfile.id).then(updatedProfile => {
+          this.studentProfile = updatedProfile;
+        }).catch(error => {
+          console.error('Error al actualizar el perfil del estudiante:', error);
+        });
+      }
     });
   }
 }

@@ -1,9 +1,7 @@
 export interface Task {
-    id?: number;
-    subjectId: number;
-    userId: number;
-    comments?: string;
-    punctuation?: number;
-    creationDate: Date;
-    deadline?: Date;
-  }
+  tarea_id?: number;
+  tarea_comentarios?: string;
+  materia_nombre?: string;
+  profesor_nombre?: string;
+  submission?: string; // Nuevo campo para la respuesta
+}

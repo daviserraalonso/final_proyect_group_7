@@ -16,24 +16,24 @@ export const getAllTasks = async (req: Request, res: Response) => {
     res.status(500).json({ message: 'Error fetching tasks', error });
   }
 };
-export const getTaskById = async (req: Request, res: Response): Promise<void> => {
+export const getTaskById = async (req: Request, res: Response): Promise<Response> => {
   try {
     const { id } = req.params;
     const task = await Task.findByPk(id);
     if (task) {
-      res.status(200).json(task);
+      return res.status(200).json(task);
     } else {
-      res.status(404).json({ message: 'Tarea no encontrada' });
+      return res.status(404).json({ message: 'Tarea no encontrada' });
     }
   } catch (error) {
     console.error('Error al obtener la tarea:', error);
-    res.status(500).json({ message: 'Error al obtener la tarea' });
+    return res.status(500).json({ message: 'Error al obtener la tarea' });
   }
 };
 
-export const createTask = async (req: Request, res: Response) => {
+export const createTask = async (req: Request, res: Response): Promise<Response> => {
   console.log('req.body:', req.body);
-  const { subjectId, userId, comments, punctuation, deadline } = req.body;
+  const { subjectId, userId, comments, punctuation, deadline, submission } = req.body;
 
   try {
     // Verifica que todos los datos necesarios estén presentes
@@ -48,52 +48,59 @@ export const createTask = async (req: Request, res: Response) => {
       comments,
       punctuation,
       deadline,
+      submission, // Asegúrate de incluir submission
     });
 
-    res.status(201).json(task);
+    return res.status(201).json(task);
   } catch (error) {
     console.error('Error al crear la tarea:', error);
-    res.status(500).json({ message: 'Error al crear la tarea.', error });
+    return res.status(500).json({ message: 'Error al crear la tarea.', error });
   }
 };
-
-export const updateTask = async (req: Request, res: Response): Promise<void> => {
+export const updateTask = async (req: Request, res: Response): Promise<Response> => {
   try {
     const { id } = req.params;
-    const { subjectId, userId, comments, punctuation, creationDate, deadline } = req.body;
-    const [updated] = await Task.update({ subjectId, userId, comments, punctuation, creationDate, deadline }, {
-      where: { id }
-    });
+    const { subjectId, userId, comments, punctuation, creationDate, deadline, submission } = req.body;
+
+    // Verifica que el campo submission esté presente en el cuerpo de la solicitud
+    if (submission === undefined) {
+      return res.status(400).json({ message: 'El campo submission es obligatorio' });
+    }
+
+    const [updated] = await Task.update(
+      { subjectId, userId, comments, punctuation, creationDate, deadline, submission },
+      { where: { id } }
+    );
     if (updated) {
       const updatedTask = await Task.findByPk(id);
-      res.status(200).json(updatedTask);
+      return res.status(200).json(updatedTask);
     } else {
-      res.status(404).json({ message: 'Tarea no encontrada' });
+      return res.status(404).json({ message: 'Tarea no encontrada' });
     }
   } catch (error) {
     console.error('Error al actualizar la tarea:', error);
-    res.status(500).json({ message: 'Error al actualizar la tarea' });
+    return res.status(500).json({ message: 'Error al actualizar la tarea' });
   }
 };
 
-export const deleteTask = async (req: Request, res: Response): Promise<void> => {
+export const deleteTask = async (req: Request, res: Response): Promise<Response> => {
   try {
     const { id } = req.params;
     const deleted = await Task.destroy({
       where: { id }
     });
     if (deleted) {
-      res.status(204).json({ message: 'Tarea eliminada' });
+      return res.status(204).json({ message: 'Tarea eliminada' });
     } else {
-      res.status(404).json({ message: 'Tarea no encontrada' });
+      return res.status(404).json({ message: 'Tarea no encontrada' });
     }
   } catch (error) {
     console.error('Error al eliminar la tarea:', error);
-    res.status(500).json({ message: 'Error al eliminar la tarea' });
+    return res.status(500).json({ message: 'Error al eliminar la tarea' });
   }
 };
 
-export const getTasksByUserId = async (req: Request, res: Response): Promise<void> => { 
+export const getTasksByUserId = async (req: Request, res: Response): Promise<Response> => { 
   const { userId } = req.params;
 
   try {
@@ -120,16 +127,16 @@ export const getTasksByUserId = async (req: Request, res: Response): Promise<voi
       type: QueryTypes.SELECT,
     });
 
-    res.status(200).json(tasks);
+    return res.status(200).json(tasks);
   } catch (error) {
     console.error('Error al obtener las tareas:', error);
-    res.status(500).json({ message: 'Error al obtener las tareas.' });
+    return res.status(500).json({ message: 'Error al obtener las tareas.' });
   }
 };
 
 
 
-export const getProgressByUserId = async (req: Request, res: Response): Promise<void> => {
+export const getProgressByUserId = async (req: Request, res: Response): Promise<Response> => {
   const { userId } = req.params;
 
   try {
@@ -162,10 +169,10 @@ export const getProgressByUserId = async (req: Request, res: Response): Promise<
     });
 
     // Enviar la respuesta JSON
-    res.status(200).json(progress);
+    return res.status(200).json(progress);
   } catch (error) {
     console.error('Error al obtener el progreso del usuario:', error);
-    res.status(500).json({ message: 'Error al obtener el progreso del usuario', error });
+    return res.status(500).json({ message: 'Error al obtener el progreso del usuario', error });
   }
 };
 

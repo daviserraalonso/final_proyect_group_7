@@ -3,7 +3,7 @@ Content-Type: application/json
 
 ### GET todas las tareas del usuario
 
-GET http://localhost:3000/api/tasks/user/6
+GET http://localhost:3000/api/tasks/user/7
 Content-Type: application/json
 
 ### GET info inicial
@@ -25,13 +25,12 @@ Content-Type: application/json
 
 ###### PUT actualizar tarea
 
-PUT http://localhost:3000/api/tasks/64
+PUT http://localhost:3000/api/tasks/28
 Content-Type: application/json
 
 {
-  "comments": "Actualizar comentarios de la tarea.",
-  "punctuation": 8.5,
-  "deadline": "2024-12-15"
+  "punctuation": 9,
+  "submission": "Contenido de la entrega"
 }
 
 ### DELETE tarea

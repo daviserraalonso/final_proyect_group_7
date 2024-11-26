@@ -34,6 +34,32 @@
                   <mat-icon *ngIf="!task.completed" color="warn">highlight_off</mat-icon>
                 </td>
               </ng-container>
+            
+              <!-- Comentarios de Tarea Column -->
+              <ng-container matColumnDef="tarea_comentarios">
+                <th mat-header-cell *matHeaderCellDef> Comentarios </th>
+                <td mat-cell *matCellDef="let task"> {{ task.tarea_comentarios }} </td>
+              </ng-container>
+            
+              <!-- Nombre de Materia Column -->
+              <ng-container matColumnDef="materia_nombre">
+                <th mat-header-cell *matHeaderCellDef> Materia </th>
+                <td mat-cell *matCellDef="let task"> {{ task.materia_nombre }} </td>
+              </ng-container>
+            
+              <!-- Nombre de Profesor Column -->
+              <ng-container matColumnDef="profesor_nombre">
+                <th mat-header-cell *matHeaderCellDef> Profesor </th>
+                <td mat-cell *matCellDef="let task"> {{ task.profesor_nombre }} </td>
+              </ng-container>
+
+              <!-- Acciones Column -->
+              <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef> Acciones </th>
+                <td mat-cell *matCellDef="let task">
+                  <button mat-button (click)="openTaskForm(task)">Enviar Resolución</button>
+                </td>
+              </ng-container>
   
               <!-- Header and Row Declarations -->
               <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

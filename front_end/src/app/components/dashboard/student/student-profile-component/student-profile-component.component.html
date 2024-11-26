@@ -51,6 +51,14 @@
                 <strong>Dirección:</strong> {{ studentProfile.details.address }}
               </div>
             </div>
+            <div class="row mb-2">
+              <div class="col-1">
+                <mat-icon>edit</mat-icon>
+              </div>
+              <div class="col-11">
+                <button mat-button color="primary" (click)="openEditUserModal()">Editar Perfil</button>
+              </div>
+            </div>
           </div>
         </div>
       </mat-card-content>

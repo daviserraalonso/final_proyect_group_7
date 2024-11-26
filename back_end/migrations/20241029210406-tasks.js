@@ -33,6 +33,14 @@ module.exports = {
         type: Sequelize.DECIMAL(3, 2),
         check: 'punctuation >= 1 AND punctuation <= 10',
       },
+      submission: {
+        type: Sequelize.TEXT, // Permitir almacenar texto o enlaces
+        allowNull: true,
+      },
+      feedback: {
+        type: Sequelize.TEXT, // Comentarios del profesor
+        allowNull: true,
+      },
       creationDate: {
         type: Sequelize.DATE,
         defaultValue: Sequelize.fn('NOW'),
