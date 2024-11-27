@@ -1,0 +1,21 @@
+<section class="container">
+    <h3>Lista de Usuarios</h3>
+    <hr>
+    <div class="row">
+      @for(user of arrUsers; track user.id){
+      <article class="col-12 col-md-6 col-xl-4">
+        <app-studentCard-component [miUser]="user"></app-studentCard-component>
+      </article>
+      }
+    </div>
+    <nav class="navegacion">
+      <ul class="pagination">
+        <li class="page-item">
+          <a class="page-link link-light bg-dark" (click)="pagePrev()">Previous</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link link-light bg-dark" (click)="pageNext()">Next</a>
+        </li>
+      </ul>
+    </nav>
+  </section>

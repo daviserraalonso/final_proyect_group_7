@@ -16,6 +16,7 @@ import { CalendarComponent } from './components/common/calendar/calendar.compone
 import { AllUsersComponent } from './components/dashboard/admin/all-users/all-users.component';
 import { SubjectListComponent } from './components/dashboard/admin/subject-list/subject-list.component';
 import { CourseListComponent } from './components/dashboard/admin/course-list/course-list.component';
+import { StudentListComponent } from './components/common/studentList-component/studentList-component';
 
 
 export const routes: Routes = [
@@ -35,6 +36,7 @@ export const routes: Routes = [
     { path: 'all-users', component: AllUsersComponent },
     { path: 'subjects', component: SubjectListComponent },
     { path: 'courses', component: CourseListComponent },
+    { path: 'lista-alumnos', component: StudentListComponent },
 
 
 

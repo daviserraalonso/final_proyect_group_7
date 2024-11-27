@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { UserAttributes } from '../interfaces/userAttributes';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
+import { IResponse } from '../interfaces/iresponse.interface';
 
 
 
@@ -21,6 +22,9 @@ export class UserServiceService {
 
   getAll(): Promise<UserAttributes[]> {
     return firstValueFrom(this.http.get<UserAttributes[]>(this.baseUrl));
+  }
+  getAllPages(page: number = 1): Promise<IResponse> {
+    return firstValueFrom(this.http.get<IResponse>(`${this.baseUrl}?page=${page}`))
   }
 
   getTeachers(): Observable<any[]> {

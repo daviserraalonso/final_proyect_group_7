@@ -20,6 +20,7 @@ import { CustomSnackbarComponent } from '../../../common/custom-snackbar/custom-
 import { CalendarDialogComponent } from '../../../common/calendar-dialog/calendar-dialog.component';
 import { FormsModule } from '@angular/forms';
 import { TaskManagerComponentComponent } from '../../../common/task-manager-component/task-manager-component.component';
+import { RouterLink } from '@angular/router';
 
 
 
@@ -46,7 +47,7 @@ import { TaskManagerComponentComponent } from '../../../common/task-manager-comp
     MatFormFieldModule,
     MatDatepickerModule,
     FormsModule,
-    
+    RouterLink
 
     
   ],

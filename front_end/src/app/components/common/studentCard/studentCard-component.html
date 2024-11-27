@@ -1,0 +1,18 @@
+<div class="card mb-3 shadow border-1 border-warning">
+    <div class="row g-0">
+      <div class="col-12 col-md-4 p-3 text-center">
+        <img [src]="miUser" class="img-fluid rounded-circle" [alt]="miUser.name">
+      </div>
+      <div class="col-12 col-md-8 text-center text-lg-start">
+        <div class="card-body">
+          <h5 class="card-title">{{miUser.name}}</h5>
+          <p class="card-text"><small class="text-body-secondary"><strong>Email:</strong> <a
+                [href]="'mailto:' + miUser.email">{{miUser.email}}</a> </small>
+          </p>
+          <div class="buttons">
+            <!-- <button [routerLink]="['/user', userId]" class="btn btn-success me-2"><i class="fa-solid fa-eye"></i></button> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
