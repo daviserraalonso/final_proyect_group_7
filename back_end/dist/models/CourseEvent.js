@@ -60,7 +60,7 @@ CourseEvent.init({
     },
     locationId: {
         type: sequelize_1.DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
         field: 'locationId',
     },
     onlineLink: {

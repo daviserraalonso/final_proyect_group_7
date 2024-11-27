@@ -1,9 +1,17 @@
 // models/Subject.ts
 import { Model, DataTypes } from 'sequelize';
 import sequelize from '../config/database';
+import Course from './Course'; // Importar el modelo relacionado si es necesario
 
-const Subject = sequelize.define(
-  'Subject',
+class Subject extends Model {
+  public id!: number;
+  public name!: string;
+  public courseId!: number;
+  public description?: string;
+  public finalGrade?: number;
+}
+
+Subject.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -28,9 +36,10 @@ const Subject = sequelize.define(
     },
   },
   {
+    sequelize,
     tableName: 'subject',
     timestamps: true,
   }
 );
 
-module.exports = Subject;
+export default Subject;

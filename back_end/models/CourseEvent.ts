@@ -59,7 +59,7 @@ CourseEvent.init(
     },
     locationId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       field: 'locationId',
     },
     onlineLink: {

@@ -16,7 +16,7 @@ Message.init(
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      autoIncrement: false,
+      autoIncrement: true,
     },
     chatId: {
       type: DataTypes.INTEGER,

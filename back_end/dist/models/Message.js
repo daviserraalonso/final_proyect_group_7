@@ -18,7 +18,7 @@ Message.init({
     id: {
         type: sequelize_1.DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: false,
+        autoIncrement: true,
     },
     chatId: {
         type: sequelize_1.DataTypes.INTEGER,

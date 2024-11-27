@@ -16,6 +16,7 @@ export const getAllTasks = async (req: Request, res: Response) => {
     res.status(500).json({ message: 'Error fetching tasks', error });
   }
 };
+
 export const getTaskById = async (req: Request, res: Response): Promise<Response> => {
   try {
     const { id } = req.params;
@@ -57,6 +58,7 @@ export const createTask = async (req: Request, res: Response): Promise<Response>
     return res.status(500).json({ message: 'Error al crear la tarea.', error });
   }
 };
+
 export const updateTask = async (req: Request, res: Response): Promise<Response> => {
   try {
     const { id } = req.params;
@@ -133,7 +135,6 @@ export const getTasksByUserId = async (req: Request, res: Response): Promise<Res
     return res.status(500).json({ message: 'Error al obtener las tareas.' });
   }
 };
-
 
 
 export const getProgressByUserId = async (req: Request, res: Response): Promise<Response> => {

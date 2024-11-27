@@ -65,4 +65,4 @@ Task.init({
     tableName: 'tasks',
     timestamps: true, // Agrega `createdAt` y `updatedAt` automáticamente
 });
-module.exports = Task;
+exports.default = Task;

@@ -3,13 +3,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.cityCords = exports.cities = exports.names = exports.searchTeachers = exports.getTeachers = exports.deleteUser = exports.modifyUser = exports.getUserDetails = exports.getAllUsers = exports.createUser = exports.confirmEmail = exports.registerUser = void 0;
+exports.getUserSubscribedCourses = exports.cityCords = exports.cities = exports.names = exports.searchTeachers = exports.getTeachers = exports.deleteUser = exports.modifyUser = exports.getUserDetails = exports.getAllUsers = exports.createUser = exports.confirmEmail = exports.registerUser = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const emailService_1 = require("../services/emailService");
-const user_1 = __importDefault(require("../models/user"));
+const User_1 = __importDefault(require("../models/User"));
 const UserDetails_1 = __importDefault(require("../models/UserDetails"));
 const Course_1 = __importDefault(require("../models/Course"));
 const sequelize_1 = require("sequelize");
+const StudentCourse_1 = __importDefault(require("../models/StudentCourse"));
 const jwt = require('jsonwebtoken');
 /**
  * Function to register user
@@ -21,7 +22,7 @@ const registerUser = async (req, res) => {
     try {
         const { name, email, password, roleId, isValidated, lat, lng, phone, address } = req.body;
         // Verificar si el usuario ya existe
-        const existingUser = await user_1.default.findOne({ where: { email } });
+        const existingUser = await User_1.default.findOne({ where: { email } });
         if (existingUser) {
             res.status(400).json({ message: 'Este correo electrónico ya está registrado.' });
             return;
@@ -30,14 +31,14 @@ const registerUser = async (req, res) => {
         const saltRounds = 10;
         const hashedPassword = await bcrypt_1.default.hash(password, saltRounds);
         // Crear el nuevo usuario
-        const user = await user_1.default.create({
+        const user = await User_1.default.create({
             name,
             email,
             password: hashedPassword,
             roleId,
             isValidated,
         });
-        const userId = user.id;
+        const userId = user.userId;
         await UserDetails_1.default.create({
             userId,
             phone,
@@ -47,7 +48,7 @@ const registerUser = async (req, res) => {
         });
         // not return password in response
         const { password: _, ...userWithoutPassword } = user.get({ plain: true });
-        const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({ userId: user.userId }, process.env.JWT_SECRET, { expiresIn: '1h' });
         const confirmationLink = `http://localhost:${process.env.PORT}/api/users/confirm/${token}`;
         const subject = 'Confirma tu correo electrónico';
         const htmlContent = `
@@ -79,7 +80,7 @@ const confirmEmail = async (req, res) => {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         const userId = decoded.userId;
         // update user to validated a 1 if token is valid
-        const [updatedRows] = await user_1.default.update({ isValidated: 1 }, { where: { id: userId, isValidated: 0 } } // only if user is not validated
+        const [updatedRows] = await User_1.default.update({ isValidated: 1 }, { where: { id: userId, isValidated: 0 } } // only if user is not validated
         );
         // check if email it´s validated
         if (updatedRows > 0) {
@@ -110,7 +111,7 @@ const createUser = async (req, res) => {
 exports.createUser = createUser;
 const getAllUsers = async (req, res) => {
     try {
-        const users = await user_1.default.findAll({
+        const users = await User_1.default.findAll({
             attributes: ['id', 'name', 'email', 'isValidated', 'roleId'],
         });
         res.json(users); // Envía los usuarios
@@ -124,7 +125,7 @@ exports.getAllUsers = getAllUsers;
 const getUserDetails = async (req, res) => {
     try {
         const userId = req.params.id;
-        const user = await user_1.default.findOne({
+        const user = await User_1.default.findOne({
             where: { id: userId },
             attributes: ['id', 'name', 'email'],
             include: [
@@ -156,28 +157,30 @@ exports.getUserDetails = getUserDetails;
 const modifyUser = async (req, res) => {
     try {
         const userId = req.params.id;
-        const { name, email, password, roleId, phone, address, description, img_url, lat, lng } = req.body;
+        const { name, email, password, roleId, phone, address, description, img_url, lat, lng, } = req.body;
         // Hash password if provided
         const hashedPassword = password ? await bcrypt_1.default.hash(password, 10) : undefined;
-        // Actualizar datos del usuario
+        // Actualizar datos del usuario: incluir solo campos no nulos o definidos
         const userUpdateData = {
-            name,
-            email,
-            roleId,
-            ...(hashedPassword && { password: hashedPassword }), // Solo actualizar si se proporciona la contraseña
+            ...(name && { name }),
+            ...(email && { email }),
+            ...(roleId && { roleId }), // Si no se proporciona roleId, no lo incluye
+            ...(hashedPassword && { password: hashedPassword }),
         };
-        await user_1.default.update(userUpdateData, { where: { id: userId } });
+        if (Object.keys(userUpdateData).length > 0) {
+            await User_1.default.update(userUpdateData, { where: { id: userId } });
+        }
         // Manejar UserDetails
         const existingDetails = await UserDetails_1.default.findOne({ where: { userId } });
         if (existingDetails) {
             // Actualizar si existen detalles
             await existingDetails.update({
-                phone,
-                address,
-                description,
-                img_url,
-                lat,
-                lng,
+                ...(phone && { phone }),
+                ...(address && { address }),
+                ...(description && { description }),
+                ...(img_url && { img_url }),
+                ...(lat && { lat }),
+                ...(lng && { lng }),
             });
         }
         else if (phone || address || description || img_url || lat || lng) {
@@ -209,7 +212,7 @@ exports.modifyUser = modifyUser;
 const deleteUser = async (req, res) => {
     try {
         const userId = req.params.id;
-        const deleted = await user_1.default.destroy({
+        const deleted = await User_1.default.destroy({
             where: { id: userId }
         });
         if (deleted) {
@@ -232,7 +235,7 @@ exports.deleteUser = deleteUser;
  */
 const getTeachers = async (req, res) => {
     try {
-        const teachers = await user_1.default.findAll({
+        const teachers = await User_1.default.findAll({
             where: { roleId: 2 },
         });
         res.status(200).json(teachers);
@@ -269,7 +272,7 @@ const searchTeachers = async (req, res) => {
     };
     try {
         console.log(filters);
-        const teachers = await user_1.default.findAll({
+        const teachers = await User_1.default.findAll({
             where: filters,
             include: [
                 {
@@ -293,7 +296,7 @@ const searchTeachers = async (req, res) => {
 exports.searchTeachers = searchTeachers;
 const names = async (req, res, next) => {
     try {
-        const names = await user_1.default.findAll({
+        const names = await User_1.default.findAll({
             where: { roleId: 2 },
             attributes: ['name']
         });
@@ -306,7 +309,7 @@ const names = async (req, res, next) => {
 exports.names = names;
 const cities = async (req, res, next) => {
     try {
-        const names = await user_1.default.findAll({
+        const names = await User_1.default.findAll({
             where: { roleId: 2 },
             attributes: [],
             include: [{
@@ -337,3 +340,48 @@ const cityCords = async (req, res, next) => {
     }
 };
 exports.cityCords = cityCords;
+/**
+ * method to get all courses asociates to user
+ */
+const getUserSubscribedCourses = async (req, res) => {
+    try {
+        const studentId = req.params.id;
+        const subscribedCourses = await StudentCourse_1.default.findAll({
+            where: { studentId },
+            include: [
+                {
+                    model: Course_1.default,
+                    as: 'course',
+                    include: [
+                        {
+                            model: User_1.default,
+                            as: 'professor',
+                            attributes: ['name', 'email'],
+                        },
+                    ],
+                },
+            ],
+        });
+        const courses = subscribedCourses.map((uc) => {
+            const course = uc.get('course'); // Asegúrate de que esto sea un Course
+            if (course) {
+                const professor = course.get('professor');
+                return {
+                    ...course.get(),
+                    professor: professor ? professor.get() : null,
+                };
+            }
+            return null;
+        }).filter((course) => course !== null); // Filtra los cursos nulos
+        if (!courses || courses.length === 0) {
+            res.status(404).json({ message: 'No estás suscrito a ningún curso.' });
+            return;
+        }
+        res.status(200).json({ courses });
+    }
+    catch (error) {
+        console.error('Error al obtener los cursos suscritos:', error);
+        res.status(500).json({ error: 'Error al obtener los cursos suscritos' });
+    }
+};
+exports.getUserSubscribedCourses = getUserSubscribedCourses;

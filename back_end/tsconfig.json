@@ -9,7 +9,9 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "moduleResolution": "node",
-    "lib": ["ES2022"]
+    "lib": ["ES2022"],
+    "forceConsistentCasingInFileNames": true
+
   },
   "include": ["./**/*.ts", "services/emailService.ts"],
   "exclude": ["node_modules"]

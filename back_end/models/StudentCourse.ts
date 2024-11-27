@@ -1,12 +1,15 @@
-// models/StudentCourse.ts
-import { Model, DataTypes } from 'sequelize';
+import { Model, DataTypes, BelongsToGetAssociationMixin } from 'sequelize';
 import sequelize from '../config/database';
+import Course from './Course';
+import User from './User';
 
-class StudentCourse extends Model {
-    public id!: number;
-    public studentId!: number;
-    public courseId!: number;
-    public enrollmentDate!: Date;
+class StudentCourse extends Model { 
+
+  // relation
+  public course?: Course;
+
+  // Métodos de Sequelize
+  public getCourse!: BelongsToGetAssociationMixin<Course>;
 }
 
 StudentCourse.init(
@@ -14,30 +17,28 @@ StudentCourse.init(
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      autoIncrement: false,
+      autoIncrement: true,
     },
     studentId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      field: 'studentId',
     },
     courseId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      field: 'courseId',
     },
     enrollmentDate: {
       type: DataTypes.DATE,
       allowNull: false,
-      field: 'enrollmentDate',
     },
   },
   {
     sequelize,
     modelName: 'StudentCourse',
-    tableName: 'student_courses',
+    tableName: 'student_course',
     timestamps: true,
   }
 );
+
 
 export default StudentCourse;

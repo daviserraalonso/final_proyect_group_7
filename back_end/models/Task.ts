@@ -66,4 +66,4 @@ Task.init(
   }
 );
 
-module.exports = Task;
+export default Task;
