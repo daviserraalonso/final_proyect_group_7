@@ -42,12 +42,12 @@ UserDetails.init({
         allowNull: true,
     },
     lat: {
-        type: sequelize_1.DataTypes.NUMBER,
-        allowNull: true
+        type: sequelize_1.DataTypes.DECIMAL(9, 6),
+        allowNull: true,
     },
     lng: {
-        type: sequelize_1.DataTypes.NUMBER,
-        allowNull: true
+        type: sequelize_1.DataTypes.DECIMAL(9, 6),
+        allowNull: true,
     },
 }, {
     sequelize: database_1.default,

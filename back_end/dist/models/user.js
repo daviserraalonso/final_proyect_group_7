@@ -5,15 +5,30 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = require("sequelize");
 const database_1 = __importDefault(require("../config/database"));
-const UserDetails_1 = __importDefault(require("./UserDetails"));
-const Course_1 = __importDefault(require("./Course"));
 class User extends sequelize_1.Model {
-    id;
-    name;
-    email;
-    password;
-    roleId;
-    isValidated;
+    get userId() {
+        return this.getDataValue('id');
+    }
+    // Getter para name
+    get userName() {
+        return this.getDataValue('name');
+    }
+    // Getter para email
+    get userEmail() {
+        return this.getDataValue('email');
+    }
+    // Getter para password
+    get userPassword() {
+        return this.getDataValue('password');
+    }
+    // Getter para roleId
+    get userRoleId() {
+        return this.getDataValue('roleId');
+    }
+    // Getter para validated
+    get userisValidated() {
+        return this.getDataValue('isValidated');
+    }
 }
 User.init({
     id: {
@@ -45,13 +60,5 @@ User.init({
 }, {
     sequelize: database_1.default,
     tableName: 'user',
-});
-User.hasOne(UserDetails_1.default, {
-    foreignKey: 'userId',
-    as: 'details',
-});
-User.hasMany(Course_1.default, {
-    foreignKey: 'professor_id',
-    as: 'course'
 });
 exports.default = User;

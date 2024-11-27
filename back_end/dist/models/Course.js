@@ -5,8 +5,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = require("sequelize");
 const database_1 = __importDefault(require("../config/database"));
-const user_1 = __importDefault(require("./user"));
-const Course = database_1.default.define('Course', {
+class Course extends sequelize_1.Model {
+}
+Course.init({
     id: {
         type: sequelize_1.DataTypes.INTEGER,
         primaryKey: true,
@@ -27,12 +28,11 @@ const Course = database_1.default.define('Course', {
     professor_id: {
         type: sequelize_1.DataTypes.INTEGER,
         allowNull: false,
-        references: {
-            model: user_1.default,
-            key: 'id',
-        },
     },
 }, {
+    sequelize: database_1.default,
+    modelName: 'Course',
     tableName: 'Course',
+    timestamps: true, // Para incluir createdAt y updatedAt
 });
 exports.default = Course;

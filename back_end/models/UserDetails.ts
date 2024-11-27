@@ -1,6 +1,5 @@
 import { Model, DataTypes } from 'sequelize';
 import sequelize from '../config/database';
-import User from './user';
 
 class UserDetails extends Model {
   public id!: number;
@@ -41,12 +40,12 @@ UserDetails.init(
       allowNull: true,
     },
     lat: {
-      type: DataTypes.NUMBER,
-      allowNull: true
+      type: DataTypes.DECIMAL(9, 6),
+      allowNull: true,
     },
     lng: {
-      type: DataTypes.NUMBER,
-      allowNull: true
+      type: DataTypes.DECIMAL(9, 6),
+      allowNull: true,
     },
   },
   {

@@ -1,7 +1,13 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const sequelize = require('./config/database').default;
+const associations_1 = __importDefault(require("./models/associations")); // because it´s a function
 const userRoutes = require('./routes/user');
 const subjectRoutes = require('./routes/subject');
 const courseRoutes = require('./routes/course');
@@ -22,6 +28,16 @@ app.use(cors({
 }));
 // Middleware
 app.use(express.json());
+// config associations
+(0, associations_1.default)();
+// syncronize db
+sequelize.sync({ alter: true })
+    .then(() => {
+    console.log('Base de datos sincronizada');
+})
+    .catch((error) => {
+    console.error('Error al sincronizar la base de datos:', error);
+});
 // routes
 app.use('/api/users', userRoutes);
 app.use('/api/subjects', subjectRoutes);

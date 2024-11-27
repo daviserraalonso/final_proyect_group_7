@@ -14,7 +14,7 @@ Chat.init(
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      autoIncrement: false,
+      autoIncrement: true,
     },
     courseId: {
       type: DataTypes.INTEGER,

@@ -19,6 +19,8 @@ import { ProgressResponse } from '../../../../interfaces/iProgressResponse';
 import { IUser } from '../../../../interfaces/iUser';
 import { UserServiceService } from '../../../../service/user-service.service';
 import { EditUserModalComponent } from '../../admin/edit-user-modal/edit-user-modal.component';
+import { CourseDetailsComponent } from '../course-details/course-details.component';
+import { CourseService } from '../../../../service/course.service';
 
 @Component({
   selector: 'app-student-profile-component',
@@ -41,10 +43,11 @@ import { EditUserModalComponent } from '../../admin/edit-user-modal/edit-user-mo
   styleUrls: ['./student-profile-component.component.css']
 })
 export class StudentProfileComponentComponent implements OnInit {
-  serviceStudentProfile = inject(DashboardStudentService)
-  serviceStudentDetails = inject(UserServiceService)
-  taskService = inject(TaskService)
+  serviceStudentProfile = inject(DashboardStudentService);
+  serviceStudentDetails = inject(UserServiceService);
+  taskService = inject(TaskService);
 
+  userId: number = 0; // Almacenamos el ID del usuario
   studentProfile: IUser = {
     id: 0,
     name: '',
@@ -58,6 +61,7 @@ export class StudentProfileComponentComponent implements OnInit {
   };
 
   arrCourses: ProgressResponse[] = [];
+  tasks: Task[] = [];
 
   // Notificaciones
   notifications = [
@@ -66,20 +70,20 @@ export class StudentProfileComponentComponent implements OnInit {
     'Tu progreso en Ciencias Naturales ha sido actualizado.'
   ];
 
-  tasks: Task[] = [];
-
-  constructor(private dialog: MatDialog, private TaskService: TaskService) {}
+  constructor(private dialog: MatDialog, private courseService: CourseService) {}
 
   async ngOnInit() {
     try {
       const user = JSON.parse(localStorage.getItem('user') || '{}');
-      const userId = user.id || 6; // Default to 6 if user ID is not found
+      this.userId = user.id || 6; // Asignamos el ID del usuario o usamos un valor predeterminado
 
-      this.studentProfile = await this.serviceStudentDetails.getUserDetails(userId);
-      this.arrCourses = await this.serviceStudentProfile.getProgressByUserId(userId);
-      this.tasks = await this.taskService.getTasksByUserId(userId);
-      console.log(this.tasks)
-      console.log(this.studentProfile);
+      // Llamadas a servicios
+      this.studentProfile = await this.serviceStudentDetails.getUserDetails(this.userId);
+      this.arrCourses = await this.serviceStudentProfile.getProgressByUserId(this.userId);
+      this.tasks = await this.taskService.getTasksByUserId(this.userId);
+
+      console.log('Tareas:', this.tasks);
+      console.log('Perfil del estudiante:', this.studentProfile);
     } catch (error) {
       console.error('Error al obtener los datos:', error);
     }
@@ -107,6 +111,28 @@ export class StudentProfileComponentComponent implements OnInit {
         }).catch(error => {
           console.error('Error al actualizar el perfil del estudiante:', error);
         });
+      }
+    });
+  }
+
+  viewSubscribedCourses(): void {
+    this.courseService.getUserSubscribedCourses(this.userId).subscribe((response) => {
+      console.log('Cursos recibidos:', response);
+  
+      if (response.courses.length === 1) {
+        // Mostrar detalles si solo hay un curso
+        this.dialog.open(CourseDetailsComponent, {
+          width: '500px',
+          data: { course: response.courses[0] }, // Pasa el curso al modal
+        });
+      } else if (response.courses.length > 1) {
+        // Mostrar lista si hay varios cursos
+        this.dialog.open(CourseDetailsComponent, {
+          width: '500px',
+          data: { courses: response.courses }, // Pasa los cursos al modal
+        });
+      } else {
+        console.log('No hay cursos suscritos para este usuario.');
       }
     });
   }

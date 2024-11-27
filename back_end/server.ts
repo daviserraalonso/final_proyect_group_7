@@ -1,6 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const sequelize = require('./config/database').default;
+import setupAssociations from './models/associations'; // because it´s a function
 
 const userRoutes = require('./routes/user');
 const subjectRoutes = require('./routes/subject');
@@ -28,6 +30,18 @@ app.use(
 
 // Middleware
 app.use(express.json());
+
+// config associations
+setupAssociations();
+
+// syncronize db
+sequelize.sync({ alter: true })
+  .then(() => {
+    console.log('Base de datos sincronizada');
+  })
+  .catch((error: any) => {
+    console.error('Error al sincronizar la base de datos:', error);
+  });
 
 // routes
 app.use('/api/users', userRoutes);

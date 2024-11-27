@@ -1,0 +1,23 @@
+<h2 mat-dialog-title>Información de los Cursos</h2>
+<mat-dialog-content *ngIf="data.courses">
+  <h3>Cursos suscritos:</h3>
+  <ul>
+    <li *ngFor="let course of data.courses">
+      <strong>{{ course.name }}</strong> - {{ course.professor.name }}
+      <p>{{ course.description }}</p>
+    </li>
+  </ul>
+</mat-dialog-content>
+
+<mat-dialog-content *ngIf="data.course">
+  <p><strong>Nombre del Curso:</strong> {{ data.course.name }}</p>
+  <p><strong>Descripción:</strong> {{ data.course.description }}</p>
+  <p><strong>Fecha de Inicio:</strong> {{ data.course.startDate | date }}</p>
+  <p><strong>Fecha de Fin:</strong> {{ data.course.endDate | date }}</p>
+  <p><strong>Profesor:</strong> {{ data.course.professor.name }}</p>
+  <p><strong>Email del Profesor:</strong> {{ data.course.professor.email }}</p>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button (click)="closeDialog()">Cerrar</button>
+</mat-dialog-actions>

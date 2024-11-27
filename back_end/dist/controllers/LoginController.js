@@ -5,9 +5,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const user_1 = __importDefault(require("../models/user"));
+const User_1 = __importDefault(require("../models/User"));
 async function findUserByEmail(email) {
-    return await user_1.default.findOne({ where: { email } });
+    return await User_1.default.findOne({ where: { email } });
 }
 class LoginController {
     async login(req, res) {
@@ -19,7 +19,7 @@ class LoginController {
                 res.status(401).json({ message: 'Credenciales inválidas' });
                 return;
             }
-            if (bcrypt_1.default.compareSync(password, user.get('password'))) {
+            if (bcrypt_1.default.compareSync(password, user.userPassword)) {
                 const token = jsonwebtoken_1.default.sign({ id: user.get('id'), role: user.get('roleId') }, process.env.JWT_SECRET || 'default_secret', { expiresIn: '1h' });
                 // route to redirect user
                 let redirectTo = '/';

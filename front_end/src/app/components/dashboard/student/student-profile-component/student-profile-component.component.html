@@ -96,7 +96,7 @@
             <ng-container matColumnDef="actions">
               <th mat-header-cell *matHeaderCellDef> Acciones </th>
               <td mat-cell *matCellDef="let course">
-                <button mat-button color="primary" class="btn btn-primary btn-sm">Ver Curso</button>
+                <button mat-button color="primary" class="btn btn-primary btn-sm" (click)="viewSubscribedCourses()">Ver Curso</button>
                 <button mat-button color="accent" class="btn btn-accent btn-sm" (click)="openTaskComponent()">Ver Tareas</button>
               </td>
             </ng-container>

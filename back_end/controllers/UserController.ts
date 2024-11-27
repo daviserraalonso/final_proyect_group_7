@@ -1,10 +1,11 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import { sendConfirmationEmail } from '../services/emailService';
-import User from '../models/user';
+import User from '../models/User';
 import UserDetails from '../models/UserDetails';
 import Course from '../models/Course';
 import { Op } from 'sequelize';
+import StudentCourse from '../models/StudentCourse';
 const jwt = require('jsonwebtoken');
 
 
@@ -38,7 +39,7 @@ export const registerUser = async (req: Request, res: Response): Promise<void> =
       isValidated,
     });
 
-    const userId = user.id
+    const userId = user.userId
 
     await UserDetails.create({
       userId,
@@ -51,7 +52,7 @@ export const registerUser = async (req: Request, res: Response): Promise<void> =
     // not return password in response
     const { password: _, ...userWithoutPassword } = user.get({ plain: true });
 
-    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    const token = jwt.sign({ userId: user.userId }, process.env.JWT_SECRET, { expiresIn: '1h' });
     const confirmationLink = `http://localhost:${process.env.PORT}/api/users/confirm/${token}`;
     const subject = 'Confirma tu correo electrónico';
     const htmlContent = `
@@ -173,20 +174,33 @@ export const getUserDetails = async (req: Request, res: Response): Promise<void>
 export const modifyUser = async (req: Request, res: Response): Promise<void> => {
   try {
     const userId = req.params.id;
-    const { name, email, password, roleId, phone, address, description, img_url, lat, lng } = req.body;
+    const {
+      name,
+      email,
+      password,
+      roleId,
+      phone,
+      address,
+      description,
+      img_url,
+      lat,
+      lng,
+    } = req.body;
 
     // Hash password if provided
     const hashedPassword = password ? await bcrypt.hash(password, 10) : undefined;
 
-    // Actualizar datos del usuario
+    // Actualizar datos del usuario: incluir solo campos no nulos o definidos
     const userUpdateData = {
-      name,
-      email,
-      roleId,
-      ...(hashedPassword && { password: hashedPassword }), // Solo actualizar si se proporciona la contraseña
+      ...(name && { name }),
+      ...(email && { email }),
+      ...(roleId && { roleId }), // Si no se proporciona roleId, no lo incluye
+      ...(hashedPassword && { password: hashedPassword }),
     };
 
-    await User.update(userUpdateData, { where: { id: userId } });
+    if (Object.keys(userUpdateData).length > 0) {
+      await User.update(userUpdateData, { where: { id: userId } });
+    }
 
     // Manejar UserDetails
     const existingDetails = await UserDetails.findOne({ where: { userId } });
@@ -194,12 +208,12 @@ export const modifyUser = async (req: Request, res: Response): Promise<void> => 
     if (existingDetails) {
       // Actualizar si existen detalles
       await existingDetails.update({
-        phone,
-        address,
-        description,
-        img_url,
-        lat,
-        lng,
+        ...(phone && { phone }),
+        ...(address && { address }),
+        ...(description && { description }),
+        ...(img_url && { img_url }),
+        ...(lat && { lat }),
+        ...(lng && { lng }),
       });
     } else if (phone || address || description || img_url || lat || lng) {
       // Crear si no existen detalles y se proporcionan datos
@@ -220,6 +234,7 @@ export const modifyUser = async (req: Request, res: Response): Promise<void> => 
     res.status(500).json({ error: 'Error al actualizar usuario' });
   }
 };
+
 
 
 
@@ -377,3 +392,55 @@ export const cityCords = async (req: Request, res: Response, next: any) => {
     next(error)
   }
 }
+
+
+/**
+ * method to get all courses asociates to user
+ */
+
+export const getUserSubscribedCourses = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const studentId = req.params.id;
+
+    const subscribedCourses = await StudentCourse.findAll({
+      where: { studentId },
+      include: [
+        {
+          model: Course,
+          as: 'course',
+          include: [
+            {
+              model: User,
+              as: 'professor',
+              attributes: ['name', 'email'],
+            },
+          ],
+        },
+      ],
+    });
+
+    const courses = subscribedCourses.map((uc) => {
+      const course = uc.get('course') as Course | null; // Asegúrate de que esto sea un Course
+      if (course) {
+        const professor = course.get('professor') as User | null;
+        return {
+          ...course.get(),
+          professor: professor ? professor.get() : null,
+        };
+      }
+      return null;
+    }).filter((course) => course !== null); // Filtra los cursos nulos
+
+    if (!courses || courses.length === 0) {
+      res.status(404).json({ message: 'No estás suscrito a ningún curso.' });
+      return;
+    }
+
+    res.status(200).json({ courses });
+  } catch (error) {
+    console.error('Error al obtener los cursos suscritos:', error);
+    res.status(500).json({ error: 'Error al obtener los cursos suscritos' });
+  }
+};
+
+

@@ -1,15 +1,36 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../config/database';
-import UserDetails from './UserDetails';
-import Course from './Course';
 
 class User extends Model {
-  public id!: number;
-  public name!: string;
-  public email!: string;
-  public password!: string;
-  public roleId!: number;
-  public isValidated?: number;
+
+  get userId(): number {
+    return this.getDataValue('id');
+  }
+
+  // Getter para name
+  get userName(): string {
+    return this.getDataValue('name');
+  }
+
+  // Getter para email
+  get userEmail(): string {
+    return this.getDataValue('email');
+  }
+
+  // Getter para password
+  get userPassword(): string {
+    return this.getDataValue('password');
+  }
+
+  // Getter para roleId
+  get userRoleId(): number {
+    return this.getDataValue('roleId');
+  }
+
+  // Getter para validated
+  get userisValidated(): number {
+    return this.getDataValue('isValidated');
+  }
 }
 
 User.init(
@@ -46,15 +67,5 @@ User.init(
     tableName: 'user',
   }
 );
-
-User.hasOne(UserDetails, {
-  foreignKey: 'userId',
-  as: 'details',
-});
-
-User.hasMany(Course, {
-  foreignKey: 'professor_id',
-  as: 'course'
-})
 
 export default User;
