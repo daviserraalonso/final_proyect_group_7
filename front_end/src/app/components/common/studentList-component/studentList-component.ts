@@ -4,6 +4,8 @@ import { IUser } from '../../../interfaces/iUser';
 import { UserServiceService } from '../../../service/user-service.service';
 import { IResponse } from '../../../interfaces/iresponse.interface';
 
+
+
 @Component({
   selector: 'app-studentList-component',
   standalone: true,
@@ -16,9 +18,14 @@ export class StudentListComponent {
   usersServices = inject(UserServiceService);
   totalPage: number = 0;
   currentPage: number = 1;
+ 
 
-
-  ngOnInit(): void {
+ async ngOnInit() {
+    try {
+      this.arrUsers = await this.usersServices.getAllTeacher();
+    } catch (error) {
+      console.error('Error al obtener usuarios:', error);
+    }
     this.getData(this.currentPage)
   }
 

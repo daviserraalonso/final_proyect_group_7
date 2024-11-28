@@ -5,7 +5,7 @@ import { UserAttributes } from '../interfaces/userAttributes';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { IResponse } from '../interfaces/iresponse.interface';
-
+import { IUser } from '../interfaces/iUser';
 
 
 @Injectable({
@@ -23,12 +23,17 @@ export class UserServiceService {
   getAll(): Promise<UserAttributes[]> {
     return firstValueFrom(this.http.get<UserAttributes[]>(this.baseUrl));
   }
+
+  getAllTeacher(): Promise<IUser[]> {
+    return firstValueFrom(this.http.get<any[]>(this.baseUrl));
+  }
+
   getAllPages(page: number = 1): Promise<IResponse> {
-    return firstValueFrom(this.http.get<IResponse>(`${this.baseUrl}?page=${page}`))
+    return firstValueFrom(this.http.get<IResponse>(`${this.baseUrl}?page=${page}`)); 
   }
 
   getTeachers(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/teachers`);
+    return this.http.get<any[]>(`${this.apiUrl}/teachers`); 
   }
 
   getUserDetails(userId: number): Promise<any> {
