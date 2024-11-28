@@ -1,1 +1,43 @@
-<p>how-work-component works!</p>
+<div class="container">
+    <!-- Sección 1 -->
+    <section class="section sticky-section">
+      <div class="content">
+        <h2>La clave está en elegir</h2>
+        <p>
+          Gracias a nuestros 21 millones de profesores, tienes acceso a una amplia selección de talentos y conocimientos.
+        </p>
+      </div>
+      <div class="content">
+        <h2>Despertar la curiosidad</h2>
+        <p>
+          Más de 2001 asignaturas disponibles para inspirarte a aprender, experimentar y descubrir.
+        </p>
+      </div>
+    </section>
+  
+    <!-- Sección 2: Carrusel de imágenes -->
+    <section class="section vertical" id="carousel">
+      <h2>Tenemos pruebas suficientes.</h2>
+      <div class="carousel">
+        @for (card of cards; track card.title){
+        <div class="card">
+            <img [src]="card.image" [alt]="card.title" />
+            <p>{{ card.title }}</p>
+          </div>
+        }
+      </div>
+    </section>
+  
+    <!-- Sección 3: Equipo -->
+    <section class="section horizontal">
+      <h2>Gracias al mejor equipo del mundo.</h2>
+      <img src="assets/team-photo.jpg" alt="Equipo" class="team-photo"/>
+      <ul class="team-stats">
+        <li>Trabajadores: 234</li>
+        <li>Nacionalidades: 57</li>
+        <li>Idiomas hablados: 18</li>
+        <li>Super seminarios: 10</li>
+      </ul>
+    </section>
+  </div>
+  

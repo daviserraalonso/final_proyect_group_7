@@ -1,0 +1,75 @@
+.container {
+    width: 100%;
+    overflow: hidden;
+  }
+  
+  .section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+  }
+  .sticky-section {
+    position: sticky;
+    top: 0;
+    height: 100vh; /* Ocupa toda la pantalla */
+    background-color: #ffffff; /* Color de fondo */
+    z-index: 10; /* Se asegura de estar por encima del contenido */
+  }
+  
+  .horizontal {
+    flex-direction: row;
+    animation: slide-horizontal 10s infinite alternate;
+  }
+  
+  .vertical {
+    flex-direction: column;
+    animation: slide-vertical 10s infinite alternate;
+  }
+  
+  .content {
+    margin: 0 20px;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+  }
+  
+  .carousel {
+    display: flex;
+    overflow: hidden;
+  }
+  
+  .card {
+    flex: 0 0 25%;
+    margin: 10px;
+    transition: transform 0.3s;
+  }
+  
+  .card img {
+    width: 100%;
+    border-radius: 12px;
+  }
+  
+  .team-photo {
+    max-width: 80%;
+    border-radius: 12px;
+  }
+  
+  .team-stats {
+    list-style: none;
+    padding: 0;
+  }
+  
+  /* Animaciones */
+  @keyframes slide-horizontal {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
+  }
+  
+  @keyframes slide-vertical {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-100%); }
+  }
+  
