@@ -21,6 +21,8 @@ import { UserServiceService } from '../../../../service/user-service.service';
 import { EditUserModalComponent } from '../../admin/edit-user-modal/edit-user-modal.component';
 import { CourseDetailsComponent } from '../course-details/course-details.component';
 import { CourseService } from '../../../../service/course.service';
+import { ScoreTeachersComponent } from '../score-teachers/score-teachers.component';
+import { response } from 'express';
 
 @Component({
   selector: 'app-student-profile-component',
@@ -62,6 +64,8 @@ export class StudentProfileComponentComponent implements OnInit {
 
   arrCourses: ProgressResponse[] = [];
   tasks: Task[] = [];
+  cursos: any = []
+
 
   // Notificaciones
   notifications = [
@@ -79,14 +83,25 @@ export class StudentProfileComponentComponent implements OnInit {
 
       // Llamadas a servicios
       this.studentProfile = await this.serviceStudentDetails.getUserDetails(this.userId);
+      console.log(this.userId)
       this.arrCourses = await this.serviceStudentProfile.getProgressByUserId(this.userId);
       this.tasks = await this.taskService.getTasksByUserId(this.userId);
-
+      console.log(this.arrCourses)
       console.log('Tareas:', this.tasks);
       console.log('Perfil del estudiante:', this.studentProfile);
+
+      //prueba albert
+      this.courseService.getUserSubscribedCourses(this.userId).subscribe((response) => {
+        this.cursos = response.courses
+        console.log(this.cursos)
+      })
+    
+      //---------------------------------
+
     } catch (error) {
       console.error('Error al obtener los datos:', error);
     }
+
   }
 
   openTaskComponent(): void {
@@ -122,18 +137,37 @@ export class StudentProfileComponentComponent implements OnInit {
       if (response.courses.length === 1) {
         // Mostrar detalles si solo hay un curso
         this.dialog.open(CourseDetailsComponent, {
-          width: '500px',
+          width: '600px',
           data: { course: response.courses[0] }, // Pasa el curso al modal
         });
       } else if (response.courses.length > 1) {
         // Mostrar lista si hay varios cursos
         this.dialog.open(CourseDetailsComponent, {
-          width: '500px',
+          width: '600px',
           data: { courses: response.courses }, // Pasa los cursos al modal
         });
       } else {
         console.log('No hay cursos suscritos para este usuario.');
       }
     });
+  }
+
+curse: any
+  openScoreModal(cursoId: number) {
+    this.courseService.getCourseById(cursoId).subscribe((response) => {
+      this.curse = response
+      console.log(this.curse)
+
+      this.dialog.open(ScoreTeachersComponent, {
+        width: '400px',
+        data: {user: this.studentProfile,
+               course: this.curse
+        }
+      })
+
+
+
+    })
+  
   }
 }

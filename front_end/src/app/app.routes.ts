@@ -16,12 +16,14 @@ import { CalendarComponent } from './components/common/calendar/calendar.compone
 import { AllUsersComponent } from './components/dashboard/admin/all-users/all-users.component';
 import { SubjectListComponent } from './components/dashboard/admin/subject-list/subject-list.component';
 import { CourseListComponent } from './components/dashboard/admin/course-list/course-list.component';
+import { MapComponentComponent } from './components/public/map-component/map-component.component';
+import { ScoreTeachersComponent } from './components/dashboard/student/score-teachers/score-teachers.component';
 
 
 export const routes: Routes = [
     { path: '', redirectTo: '/index', pathMatch: 'full' },
     { path: 'index', component: IndexComponent },
-    { path: 'looking-teachers', component: SearchTeachersComponent },
+    { path: 'looking-teachers', component: MapComponentComponent },
     { path: 'how-works', component: HowWorkComponentComponent },
     { path: 'contact', component: ContactComponentComponent },
     { path: 'login', component: LoginComponent },
@@ -35,6 +37,7 @@ export const routes: Routes = [
     { path: 'all-users', component: AllUsersComponent },
     { path: 'subjects', component: SubjectListComponent },
     { path: 'courses', component: CourseListComponent },
+    {path: 'prueba', component: ScoreTeachersComponent},
 
 
 

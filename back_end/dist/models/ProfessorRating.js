@@ -11,7 +11,8 @@ class ProfessorRating extends sequelize_1.Model {
     professorId;
     studentId;
     courseId;
-    rating;
+    rating_teacher;
+    rating_course;
     comments;
     ratingDate;
 }
@@ -36,10 +37,15 @@ ProfessorRating.init({
         allowNull: false,
         field: 'courseId',
     },
-    rating: {
+    rating_teacher: {
         type: sequelize_1.DataTypes.FLOAT,
         allowNull: true,
-        field: 'rating',
+        field: 'rating_teacher',
+    },
+    rating_course: {
+        type: sequelize_1.DataTypes.FLOAT,
+        allowNull: true,
+        field: 'rating_course'
     },
     comments: {
         type: sequelize_1.DataTypes.STRING,
@@ -48,13 +54,13 @@ ProfessorRating.init({
     },
     ratingDate: {
         type: sequelize_1.DataTypes.DATE,
-        allowNull: false,
+        allowNull: true,
         field: 'ratingDate',
     },
 }, {
     sequelize: database_1.default,
     modelName: 'ProfessorRating',
-    tableName: 'professor_ratings',
-    timestamps: true,
+    tableName: 'professor_rating',
+    timestamps: false,
 });
 exports.default = ProfessorRating;

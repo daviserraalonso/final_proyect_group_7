@@ -1,4 +1,4 @@
-import User from './User';
+import User from './user';
 import UserDetails from './UserDetails';
 import Course from './Course';
 import StudentCourse from './StudentCourse';
@@ -8,6 +8,7 @@ import CourseEvent from './CourseEvent';
 import Chat from './Chat';
 import Message from './Message';
 import CourseLocation from './CourseLocation';
+import ProfessorRating from './ProfessorRating';
 
 export default function setupAssociations() {
   // **Relación User -> UserDetails**
@@ -222,4 +223,10 @@ export default function setupAssociations() {
     onDelete: 'CASCADE', // Cambia a SET NULL si es necesario
     onUpdate: 'CASCADE',
   });
+
+  // **Relación User -> Profesor Rating**
+  User.hasMany(ProfessorRating,{
+    as: 'ratings',
+    foreignKey: 'professorId'
+  })
 }

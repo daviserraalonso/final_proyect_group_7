@@ -1,11 +1,12 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import { sendConfirmationEmail } from '../services/emailService';
-import User from '../models/User';
+import User from '../models/user';
 import UserDetails from '../models/UserDetails';
 import Course from '../models/Course';
-import { Op } from 'sequelize';
+import { Op, Sequelize } from 'sequelize';
 import StudentCourse from '../models/StudentCourse';
+import ProfessorRating from '../models/ProfessorRating';
 const jwt = require('jsonwebtoken');
 
 
@@ -300,21 +301,24 @@ export const searchTeachers = async (req: Request, res: Response) => {
     roleId: 2,
     isValidated: 1,
     ...(type && {
-      '$course.modality_id$': type,
+      '$coursesTaught.modality_id$': type,
     }),
     ...(inputName && {name: inputName}),
     ...(inputCity && {
       '$details.address$': inputCity}),
     ...(selectedCategory && {
-      '$course.category_id$': selectedCategory,
+      '$coursesTaught.category_id$': selectedCategory,
     }),
     ...(minPrice && { [Op.or]:[
-      {'$course.price$': {[Op.between]:[minPrice, maxPrice]}},
-      {'$course.price$': null}
+      {'$coursesTaught.price$': {[Op.between]:[minPrice, maxPrice]}},
+      {'$coursesTaught.price$': null}
     ]}),
     ...(southWestLat && southWestLng && northEastLat && northEastLng && {
       '$details.lat$': { [Op.between]: [southWestLat, northEastLat] },
       '$details.lng$': { [Op.between]: [southWestLng, northEastLng] },
+    }),
+    ...(score && {
+      '$avgRating$': {[Op.gte]: score}
     })
     
   }
@@ -332,10 +336,21 @@ export const searchTeachers = async (req: Request, res: Response) => {
         },
         {
           model: Course,
-          as: 'course',
+          as: 'coursesTaught',
           attributes: ['price', 'modality_id', 'category_id'],
+        },
+        {
+          model: ProfessorRating,
+          as: 'ratings',
+          attributes: [
+            [Sequelize.fn('AVG', Sequelize.col('rating_teacher')), 'avgRating'],
+          ],
+          required: false,
         }
       ],
+      group: ['professorId'],
+      having: Sequelize.literal('AVG(rating_teacher) >= :score'),
+      replacements: {score: score},
     });
 
     res.status(200).json(teachers);

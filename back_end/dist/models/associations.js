@@ -3,8 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = setupAssociations;
-const User_1 = __importDefault(require("./User"));
+const user_1 = __importDefault(require("./user"));
 const UserDetails_1 = __importDefault(require("./UserDetails"));
 const Course_1 = __importDefault(require("./Course"));
 const StudentCourse_1 = __importDefault(require("./StudentCourse"));
@@ -14,9 +13,10 @@ const CourseEvent_1 = __importDefault(require("./CourseEvent"));
 const Chat_1 = __importDefault(require("./Chat"));
 const Message_1 = __importDefault(require("./Message"));
 const CourseLocation_1 = __importDefault(require("./CourseLocation"));
+const ProfessorRating_1 = __importDefault(require("./ProfessorRating"));
 function setupAssociations() {
     // **Relación User -> UserDetails**
-    User_1.default.hasOne(UserDetails_1.default, {
+    user_1.default.hasOne(UserDetails_1.default, {
         foreignKey: {
             name: 'userId',
             allowNull: false,
@@ -25,7 +25,7 @@ function setupAssociations() {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
     });
-    UserDetails_1.default.belongsTo(User_1.default, {
+    UserDetails_1.default.belongsTo(user_1.default, {
         foreignKey: {
             name: 'userId',
             allowNull: false,
@@ -35,7 +35,7 @@ function setupAssociations() {
         onUpdate: 'CASCADE',
     });
     // **Relación Course -> User (Profesor)**
-    Course_1.default.belongsTo(User_1.default, {
+    Course_1.default.belongsTo(user_1.default, {
         foreignKey: {
             name: 'professor_id',
             allowNull: false,
@@ -44,7 +44,7 @@ function setupAssociations() {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
     });
-    User_1.default.hasMany(Course_1.default, {
+    user_1.default.hasMany(Course_1.default, {
         foreignKey: {
             name: 'professor_id',
             allowNull: false,
@@ -121,7 +121,7 @@ function setupAssociations() {
         onUpdate: 'CASCADE',
     });
     // **Relación StudentCourse -> User (Estudiante)**
-    StudentCourse_1.default.belongsTo(User_1.default, {
+    StudentCourse_1.default.belongsTo(user_1.default, {
         foreignKey: {
             name: 'studentId',
             allowNull: false,
@@ -130,7 +130,7 @@ function setupAssociations() {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
     });
-    User_1.default.hasMany(StudentCourse_1.default, {
+    user_1.default.hasMany(StudentCourse_1.default, {
         foreignKey: {
             name: 'studentId',
             allowNull: false,
@@ -150,7 +150,7 @@ function setupAssociations() {
         onUpdate: 'CASCADE',
     });
     // **Relación Chat -> User (Profesor)**
-    Chat_1.default.belongsTo(User_1.default, {
+    Chat_1.default.belongsTo(user_1.default, {
         foreignKey: {
             name: 'professorId',
             allowNull: false,
@@ -160,7 +160,7 @@ function setupAssociations() {
         onUpdate: 'CASCADE',
     });
     // **Relación Chat -> User (Estudiante)**
-    Chat_1.default.belongsTo(User_1.default, {
+    Chat_1.default.belongsTo(user_1.default, {
         foreignKey: {
             name: 'studentId',
             allowNull: false,
@@ -189,7 +189,7 @@ function setupAssociations() {
         onUpdate: 'CASCADE',
     });
     // **Relación Message -> User (Sender)**
-    Message_1.default.belongsTo(User_1.default, {
+    Message_1.default.belongsTo(user_1.default, {
         foreignKey: {
             name: 'senderId',
             allowNull: false,
@@ -198,7 +198,7 @@ function setupAssociations() {
         onDelete: 'CASCADE', // Cambia a SET NULL si es necesario
         onUpdate: 'CASCADE',
     });
-    User_1.default.hasMany(Message_1.default, {
+    user_1.default.hasMany(Message_1.default, {
         foreignKey: {
             name: 'senderId',
             allowNull: false,
@@ -207,4 +207,10 @@ function setupAssociations() {
         onDelete: 'CASCADE', // Cambia a SET NULL si es necesario
         onUpdate: 'CASCADE',
     });
+    // **Relación User -> Profesor Rating**
+    user_1.default.hasMany(ProfessorRating_1.default, {
+        as: 'ratings',
+        foreignKey: 'professorId'
+    });
 }
+exports.default = setupAssociations;
