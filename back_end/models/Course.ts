@@ -18,6 +18,10 @@ Course.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    price: {
+      type: DataTypes.DECIMAL,
+      allowNull: false
+    },
     category_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
