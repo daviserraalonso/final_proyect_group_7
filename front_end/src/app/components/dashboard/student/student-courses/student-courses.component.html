@@ -1,0 +1,20 @@
+<div class="container">
+    <h2>Mis Cursos</h2>
+    <div *ngIf="studentCourses.length; else noCourses">
+      <div *ngFor="let course of studentCourses" class="card mt-3">
+        <div class="card-body">
+          <h5 class="card-title">{{ course.name }}</h5>
+          <p class="card-text">
+            <strong>Categoría:</strong> {{ course.category }} <br />
+            <strong>Profesor:</strong> {{ course.professor }} <br />
+            <strong>Fecha de inscripción:</strong> {{ course.enrollmentDate | date }}
+          </p>
+        </div>
+      </div>
+    </div>
+  
+    <ng-template #noCourses>
+      <p>No tienes cursos asignados.</p>
+    </ng-template>
+  </div>
+  

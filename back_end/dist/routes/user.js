@@ -11,13 +11,13 @@ router.get('/:id/courses', UserController_1.getUserSubscribedCourses);
 router.get('/:id/details', UserController_1.getUserDetails);
 router.put('/:id', UserController_1.modifyUser);
 router.delete('/:id', UserController_1.deleteUser);
-// Rutas generales después
+// general routes
 router.get('/teachers', UserController_1.getTeachers);
 router.get('/search', UserController_1.searchTeachers);
 router.get('/names', UserController_1.names);
 router.get('/cities', UserController_1.cities);
 router.get('/:city', UserController_1.cityCords);
-// Otras rutas
+// other routes
 router.post('/register', UserController_1.registerUser);
 router.get('/confirm/:token', UserController_1.confirmEmail);
 router.post('/login', LoginController_1.default.login);

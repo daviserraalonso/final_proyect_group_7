@@ -11,6 +11,8 @@ const categoriesRoutes = require('./routes/categories');
 const modalitiesRoutes = require('./routes/modalities');
 const contactRoutes  = require('./routes/contactRoutes');
 const taskRoutes = require('./routes/taskRoutes');
+const studentCoursesRoutes = require('./routes/strudentCoursesRoutes');
+
 
 // config dotenv
 dotenv.config();
@@ -50,9 +52,8 @@ app.use('/api/courses', courseRoutes);
 app.use('/api/categories', categoriesRoutes);
 app.use('/api/modalities', modalitiesRoutes);
 app.use('/api/contact', contactRoutes);
-
 app.use('/api/tasks', taskRoutes);
-
+app.use('/api/student-courses', studentCoursesRoutes);
 
 // init server
 app.listen(port, () => {

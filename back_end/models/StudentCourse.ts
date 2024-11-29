@@ -1,15 +1,15 @@
-import { Model, DataTypes, BelongsToGetAssociationMixin } from 'sequelize';
+import { Model, DataTypes } from 'sequelize';
 import sequelize from '../config/database';
 import Course from './Course';
-import User from './User';
 
-class StudentCourse extends Model { 
-
-  // relation
-  public course?: Course;
+class StudentCourse extends Model {
+  // No declares propiedades públicas aquí
 
   // Métodos de Sequelize
-  public getCourse!: BelongsToGetAssociationMixin<Course>;
+  public getCourse!: () => Promise<Course>;
+
+  // Propiedades de asociación
+  public readonly course?: Course;
 }
 
 StudentCourse.init(
@@ -39,6 +39,5 @@ StudentCourse.init(
     timestamps: true,
   }
 );
-
 
 export default StudentCourse;

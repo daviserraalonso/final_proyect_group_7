@@ -33,6 +33,6 @@ Course.init({
     sequelize: database_1.default,
     modelName: 'Course',
     tableName: 'Course',
-    timestamps: true, // Para incluir createdAt y updatedAt
+    timestamps: true,
 });
 exports.default = Course;

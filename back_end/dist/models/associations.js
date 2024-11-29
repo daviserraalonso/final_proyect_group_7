@@ -14,6 +14,7 @@ const CourseEvent_1 = __importDefault(require("./CourseEvent"));
 const Chat_1 = __importDefault(require("./Chat"));
 const Message_1 = __importDefault(require("./Message"));
 const CourseLocation_1 = __importDefault(require("./CourseLocation"));
+const Category_1 = __importDefault(require("./Category"));
 function setupAssociations() {
     // **Relación User -> UserDetails**
     User_1.default.hasOne(UserDetails_1.default, {
@@ -63,22 +64,17 @@ function setupAssociations() {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
     });
-    // **Relación Course -> StudentCourse**
-    Course_1.default.hasMany(StudentCourse_1.default, {
-        foreignKey: {
-            name: 'courseId',
-            allowNull: false,
-        },
-        as: 'studentCourses',
+    // association StudentCourse -> Course
+    StudentCourse_1.default.belongsTo(Course_1.default, {
+        foreignKey: 'courseId',
+        as: 'course',
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
     });
-    StudentCourse_1.default.belongsTo(Course_1.default, {
-        foreignKey: {
-            name: 'courseId',
-            allowNull: false,
-        },
-        as: 'course',
+    // association Course -> StudentCourse
+    Course_1.default.hasMany(StudentCourse_1.default, {
+        foreignKey: 'courseId',
+        as: 'studentCourses',
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
     });
@@ -205,6 +201,25 @@ function setupAssociations() {
         },
         as: 'sentMessages',
         onDelete: 'CASCADE', // Cambia a SET NULL si es necesario
+        onUpdate: 'CASCADE',
+    });
+    // **Relación Course -> Category**
+    Course_1.default.belongsTo(Category_1.default, {
+        foreignKey: {
+            name: 'category_id',
+            allowNull: false,
+        },
+        as: 'category',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+    });
+    Category_1.default.hasMany(Course_1.default, {
+        foreignKey: {
+            name: 'category_id',
+            allowNull: false,
+        },
+        as: 'courses',
+        onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
     });
 }

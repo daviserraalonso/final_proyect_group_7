@@ -17,7 +17,10 @@ const jwt = require('jsonwebtoken');
  */
 export const registerUser = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { name, email, password, roleId, isValidated, lat, lng, phone, address } = req.body;
+    const { name, email, password, roleId, isValidated, lat, lng, phone, address, isEnrollment, courseId } = req.body;
+
+    console.log('Datos recibidos:', req.body);
+
 
     // Verificar si el usuario ya existe
     const existingUser = await User.findOne({ where: { email } });
@@ -48,6 +51,22 @@ export const registerUser = async (req: Request, res: Response): Promise<void> =
       lat,
       lng
     })
+
+    // check if it´s inscription to course
+    if (isEnrollment) {
+      if (!courseId) {
+        res.status(400).json({ message: 'El ID del curso es obligatorio para la inscripción.' });
+        return;
+      }
+
+      // Insert in student_course
+      const enrollmentDate = new Date();
+      await StudentCourse.create({
+        studentId: userId,
+        courseId,
+        enrollmentDate,
+      });
+    }
 
     // not return password in response
     const { password: _, ...userWithoutPassword } = user.get({ plain: true });

@@ -75,9 +75,9 @@ export class StudentProfileComponentComponent implements OnInit {
   async ngOnInit() {
     try {
       const user = JSON.parse(localStorage.getItem('user') || '{}');
-      this.userId = user.id || 6; // Asignamos el ID del usuario o usamos un valor predeterminado
+      this.userId = user.id || 6; // asign id or use deafult value
 
-      // Llamadas a servicios
+      // call to services
       this.studentProfile = await this.serviceStudentDetails.getUserDetails(this.userId);
       this.arrCourses = await this.serviceStudentProfile.getProgressByUserId(this.userId);
       this.tasks = await this.taskService.getTasksByUserId(this.userId);
@@ -105,7 +105,7 @@ export class StudentProfileComponentComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        // Actualizar el perfil del estudiante después de la edición
+        // update student profile
         this.serviceStudentDetails.getUserDetails(this.studentProfile.id).then(updatedProfile => {
           this.studentProfile = updatedProfile;
         }).catch(error => {
@@ -120,16 +120,16 @@ export class StudentProfileComponentComponent implements OnInit {
       console.log('Cursos recibidos:', response);
   
       if (response.courses.length === 1) {
-        // Mostrar detalles si solo hay un curso
+        // show details if only have one course
         this.dialog.open(CourseDetailsComponent, {
           width: '500px',
-          data: { course: response.courses[0] }, // Pasa el curso al modal
+          data: { course: response.courses[0] }, // pass course to modal
         });
       } else if (response.courses.length > 1) {
-        // Mostrar lista si hay varios cursos
+        // show list if have any courses
         this.dialog.open(CourseDetailsComponent, {
           width: '500px',
-          data: { courses: response.courses }, // Pasa los cursos al modal
+          data: { courses: response.courses }, // pass data to modal
         });
       } else {
         console.log('No hay cursos suscritos para este usuario.');
