@@ -1,102 +1,47 @@
+/* Estilos generales */
 .container {
-    width: 100%;
-    overflow: hidden;
-  }
-  
-  .section {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    text-align: center;
-  }
-  .sticky-section {
-    position: sticky;
-    top: 0;
-    height: 100vh; /* Ocupa toda la pantalla */
-    background-color: #ffffff; /* Color de fondo */
-    z-index: 10; /* Se asegura de estar por encima del contenido */
-  }
-  
-  .horizontal {
-    flex-direction: row;
-    animation: slide-horizontal 10s infinite alternate;
-  }
-  
-  .vertical {
-    flex-direction: column;
-    animation: slide-vertical 10s infinite alternate;
-  }
-  
-  .content {
-    margin: 0 20px;
-    padding: 20px;
-    background: #f9f9f9;
-    border-radius: 12px;
-    box-shadow: 0 10px 15px rgba(0,0,0,0.1);
-  }
-  
-  .carousel {
-    display: flex;
-    overflow: hidden;
-  }
-  
-  .card {
-    flex: 0 0 25%;
-    margin: 10px;
-    transition: transform 0.3s;
-  }
-  
-  .card img {
-    width: 100%;
-    border-radius: 12px;
-  }
-  
-  .team-photo {
-    max-width: 80%;
-    border-radius: 12px;
-  }
-  
-  .team-stats {
-    list-style: none;
-    padding: 0;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+}
 
-  .video-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-color: #f4f4f4; /* Fondo claro para destacar el video */
-  }
-  
-  .video-container {
-    position: relative;
-    width: 80%;
-    max-width: 800px;  /* Ajusta el tamaño máximo */
-    padding-bottom: 45%; /* Proporción 16:9 para el video */
-    height: 0;
-  }
-  
-  .video-container iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border-radius: 12px; /* Bordes redondeados */
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Sombra suave */
-  }
-  /* Animaciones */
-  @keyframes slide-horizontal {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-100%); }
-  }
-  
-  @keyframes slide-vertical {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(-100%); }
-  }
-  
+.card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.title, .subtitle {
+  color: #4a4a4a;
+  text-align: center;
+}
+
+.description {
+  color: #6a6a6a;
+  font-size: 16px;
+  line-height: 1.6;
+  text-align: justify;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.image, .header-image {
+  width: 50%;
+  border-radius: 8px;
+}
+
+.header-image {
+  width: 100%;
+  margin: 10px 0;
+}

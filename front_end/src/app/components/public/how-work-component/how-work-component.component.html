@@ -1,110 +1,43 @@
-<div class="platform-guide-container">
-  
-    <!-- Sección 1: ¿Para qué se usa esta plataforma? -->
-    <section class="guide-section" id="purpose">
-      <h2>¿Para qué se usa esta plataforma?</h2>
+<div class="container">
+  <!-- Sección 1: Bienvenida -->
+  <div class="card">
+    <h1 class="title">Bienvenido a nuestra TeacherApp</h1>
+    <div class="content">
       <p class="description">
-        <!-- Rellena aquí tu texto -->
+        ¡Nos alegra tenerte aquí! Bienvenido a nuestra aplicación diseñada especialmente para profesores y alumnos. Aquí encontrarás todo lo necesario para facilitar tu experiencia de aprendizaje.
       </p>
-    </section>
-  
-    <!-- Sección 2: ¿Cómo se usa? -->
-    <section class="guide-section" id="how-to-use">
-      <h2>¿Cómo se usa?</h2>
-      <p class="description">
-        <!-- Rellena aquí tu texto -->
-      </p>
-      <!-- Añadir una lista interactiva de pasos -->
-      <div class="steps-container">
-        <div class="step">
-          <h3>Paso 1</h3>
-          <p><!-- Detalla el paso 1 --></p>
-        </div>
-        <div class="step">
-          <h3>Paso 2</h3>
-          <p><!-- Detalla el paso 2 --></p>
-        </div>
-        <div class="step">
-          <h3>Paso 3</h3>
-          <p><!-- Detalla el paso 3 --></p>
-        </div>
-      </div>
-    </section>
-  
-    <!-- Sección 3: ¿Cómo registrarse? -->
-    <section class="guide-section" id="register">
-      <h2>¿Cómo registrarse?</h2>
-      <p class="description">
-        <!-- Rellena aquí tu texto -->
-      </p>
-      <div class="video-placeholder">
-        <!-- Aquí puedes incrustar un video de registro si lo tienes -->
-        <iframe 
-          src="https://www.youtube.com/embed/TU_CODIGO_VIDEO" 
-          frameborder="0" 
-          allow="autoplay; encrypted-media" 
-          allowfullscreen>
-        </iframe>
-      </div>
-    </section>
-  
+      <img src="assets/professor2.jpg" alt="Bienvenida" class="image">
+    </div>
   </div>
 
+  <!-- Sección 2: Página de Inicio -->
+  <div class="card">
+    <h2 class="subtitle">Así es nuestra página de inicio</h2>
+    <div class="content">
+      <p class="description">
+        Regístrate como estudiante o profesor y comienza tu viaje en el mundo del aprendizaje. Con nuestro mapa interactivo, encuentra al profesor ideal seleccionando la materia, nombre, modalidad (online o presencial), ubicación, precio y puntuación.
+      </p>
+      <img src="assets/professor2.jpg" alt="Página de inicio" class="image">
+    </div>
+  </div>
 
+  <!-- Sección 3: Profesores Destacados -->
+  <div class="card">
+    <h2 class="subtitle">En los profesores destacados</h2>
+    <div class="content">
+      <p class="description">
+        Justo debajo de la página de inicio, encontrarás a los profesores más destacados. Descubre su área de enseñanza y la puntuación que han obtenido en nuestra plataforma.
+      </p>
+      <img src="assets/professor2.jpg" alt="Profesores destacados" class="image">
+    </div>
+  </div>
 
-<div class="container">
-    <!-- Sección 1 -->
-    <section class="section sticky-section">
-      <div class="content">
-        <h2>La clave está en elegir</h2>
-        <p>
-         para que se va a usar la plataforma, como se usa, como registrarse
-        </p>
-      </div>
-      <div class="content">
-        <h2>Despertar la curiosidad</h2>
-        <p>
-          Más de 2001 asignaturas disponibles para inspirarte a aprender, experimentar y descubrir.
-        </p>
-      </div>
-    </section>
-  
-    <!-- Sección 2: Carrusel de imágenes -->
-    <section class="section vertical" id="carousel">
-      <h2>Tenemos pruebas suficientes.</h2>
-      <div class="carousel">
-        @for (card of cards; track card.title){
-        <div class="card">
-            <img [src]="card.image" [alt]="card.title" />
-            <p>{{ card.title }}</p>
-          </div>
-        }
-      </div>
-    </section>
-  
-    <!-- Sección 3: Equipo -->
-    <section class="section horizontal">
-      <h2>Gracias al mejor equipo del mundo.</h2>
-      <img src="assets/team-photo.jpg" alt="Equipo" class="team-photo"/>
-      <ul class="team-stats">
-        <li>Trabajadores: 234</li>
-        <li>Nacionalidades: 57</li>
-        <li>Idiomas hablados: 18</li>
-        <li>Super seminarios: 10</li>
-      </ul>
-    </section>
-
-    <section class="section video-section">
-        <h2>¿Por qué elegirnos?</h2>
-        <div class="video-container">
-          <iframe 
-            width="560" 
-            height="315" 
-            src="https://www.youtube.com/embed/TV7Dj8lch4k?si=XCAEzg_1f8566jeM" 
-            frameborder="0" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-            allowfullscreen>
-          </iframe>
-        </div>
-      </section>
-    </div>  
+  <!-- Sección 4: Header -->
+  <div class="card">
+    <h2 class="subtitle">En nuestro Header</h2>
+    <img src="assets/professor2.jpg" alt="Header" class="header-image">
+    <p class="description">
+      Desde el Header, accede a diferentes opciones como la página de inicio, búsqueda de profesores, cómo funciona la plataforma y la sección de contacto. Completa un formulario simple con tu nombre, correo y mensaje para comunicarte con nosotros. También puedes iniciar sesión o registrarte como profesor o alumno.
+    </p>
+  </div>
+</div>
