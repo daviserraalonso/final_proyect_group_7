@@ -14,6 +14,7 @@ const Chat_1 = __importDefault(require("./Chat"));
 const Message_1 = __importDefault(require("./Message"));
 const CourseLocation_1 = __importDefault(require("./CourseLocation"));
 const ProfessorRating_1 = __importDefault(require("./ProfessorRating"));
+const avg_teacher_1 = __importDefault(require("./avg_teacher"));
 function setupAssociations() {
     // **Relación User -> UserDetails**
     user_1.default.hasOne(UserDetails_1.default, {
@@ -208,9 +209,14 @@ function setupAssociations() {
         onUpdate: 'CASCADE',
     });
     // **Relación User -> Profesor Rating**
-    user_1.default.hasMany(ProfessorRating_1.default, {
-        as: 'ratings',
-        foreignKey: 'professorId'
+    user_1.default.hasOne(avg_teacher_1.default, {
+        as: 'average',
+        foreignKey: 'id'
+    });
+    //**Relación Profesor Rating -> avg_teacher */
+    ProfessorRating_1.default.hasOne(avg_teacher_1.default, {
+        foreignKey: 'professorId',
+        as: 'average'
     });
 }
 exports.default = setupAssociations;

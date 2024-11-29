@@ -9,6 +9,8 @@ import Chat from './Chat';
 import Message from './Message';
 import CourseLocation from './CourseLocation';
 import ProfessorRating from './ProfessorRating';
+import AvgTeacher from './avg_teacher'
+import AvgCourse from './avg_course';
 
 export default function setupAssociations() {
   // **Relación User -> UserDetails**
@@ -225,8 +227,22 @@ export default function setupAssociations() {
   });
 
   // **Relación User -> Profesor Rating**
-  User.hasMany(ProfessorRating,{
-    as: 'ratings',
-    foreignKey: 'professorId'
+  User.hasOne(AvgTeacher,{
+    as: 'average',
+    foreignKey: 'id'
   })
+
+  //**Relación Profesor Rating -> avg_teacher */
+  ProfessorRating.hasOne(AvgTeacher, {
+    foreignKey: 'professorId',
+    as: 'averageTeacher'
+  })
+
+  //**Relación Profesor Rating -> avg_course ->  */
+  ProfessorRating.hasOne(AvgCourse, {
+    foreignKey: 'courseId',
+    as: 'averageCourse'
+  })
+
+
 }

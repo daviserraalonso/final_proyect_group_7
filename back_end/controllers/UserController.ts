@@ -7,6 +7,7 @@ import Course from '../models/Course';
 import { Op, Sequelize } from 'sequelize';
 import StudentCourse from '../models/StudentCourse';
 import ProfessorRating from '../models/ProfessorRating';
+import AvgTeacher from '../models/avg_teacher';
 const jwt = require('jsonwebtoken');
 
 
@@ -317,9 +318,10 @@ export const searchTeachers = async (req: Request, res: Response) => {
       '$details.lat$': { [Op.between]: [southWestLat, northEastLat] },
       '$details.lng$': { [Op.between]: [southWestLng, northEastLng] },
     }),
-    ...(score && {
-      '$avgRating$': {[Op.gte]: score}
-    })
+    ...(score && { [Op.or] : [
+      {'$averageTeacher.avg$': {[Op.gte]: score}},
+      {'$averageTeacher.avg$': null } 
+    ]}),
     
   }
   
@@ -340,17 +342,14 @@ export const searchTeachers = async (req: Request, res: Response) => {
           attributes: ['price', 'modality_id', 'category_id'],
         },
         {
-          model: ProfessorRating,
-          as: 'ratings',
-          attributes: [
-            [Sequelize.fn('AVG', Sequelize.col('rating_teacher')), 'avgRating'],
-          ],
-          required: false,
-        }
+          model: AvgTeacher,
+          as: 'averageTeacher',
+          attributes: ['avg'],
+
+        },
       ],
-      group: ['professorId'],
-      having: Sequelize.literal('AVG(rating_teacher) >= :score'),
-      replacements: {score: score},
+
+
     });
 
     res.status(200).json(teachers);

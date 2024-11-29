@@ -11,7 +11,7 @@ const UserDetails_1 = __importDefault(require("../models/UserDetails"));
 const Course_1 = __importDefault(require("../models/Course"));
 const sequelize_1 = require("sequelize");
 const StudentCourse_1 = __importDefault(require("../models/StudentCourse"));
-const ProfessorRating_1 = __importDefault(require("../models/ProfessorRating"));
+const avg_teacher_1 = __importDefault(require("../models/avg_teacher"));
 const jwt = require('jsonwebtoken');
 /**
  * Function to register user
@@ -270,9 +270,10 @@ const searchTeachers = async (req, res) => {
             '$details.lat$': { [sequelize_1.Op.between]: [southWestLat, northEastLat] },
             '$details.lng$': { [sequelize_1.Op.between]: [southWestLng, northEastLng] },
         }),
-        ...(score && {
-            '$avgRating$': { [sequelize_1.Op.gte]: score }
-        })
+        ...(score && { [sequelize_1.Op.or]: [
+                { '$average.avg$': { [sequelize_1.Op.gte]: score } },
+                { '$average.avg$': null }
+            ] }),
     };
     try {
         console.log(filters);
@@ -290,17 +291,11 @@ const searchTeachers = async (req, res) => {
                     attributes: ['price', 'modality_id', 'category_id'],
                 },
                 {
-                    model: ProfessorRating_1.default,
-                    as: 'ratings',
-                    attributes: [
-                        [sequelize_1.Sequelize.fn('AVG', sequelize_1.Sequelize.col('rating_teacher')), 'avgRating'],
-                    ],
-                    required: false,
-                }
+                    model: avg_teacher_1.default,
+                    as: 'average',
+                    attributes: ['avg'],
+                },
             ],
-            group: ['professorId'],
-            having: sequelize_1.Sequelize.literal('AVG(rating_teacher) >= :score'),
-            replacements: { score: score },
         });
         res.status(200).json(teachers);
     }
