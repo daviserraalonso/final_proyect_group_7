@@ -15,6 +15,7 @@ const Message_1 = __importDefault(require("./Message"));
 const CourseLocation_1 = __importDefault(require("./CourseLocation"));
 const ProfessorRating_1 = __importDefault(require("./ProfessorRating"));
 const avg_teacher_1 = __importDefault(require("./avg_teacher"));
+const avg_course_1 = __importDefault(require("./avg_course"));
 function setupAssociations() {
     // **Relación User -> UserDetails**
     user_1.default.hasOne(UserDetails_1.default, {
@@ -216,7 +217,12 @@ function setupAssociations() {
     //**Relación Profesor Rating -> avg_teacher */
     ProfessorRating_1.default.hasOne(avg_teacher_1.default, {
         foreignKey: 'professorId',
-        as: 'average'
+        as: 'averageTeacher'
+    });
+    //**Relación Profesor Rating -> avg_course ->  */
+    ProfessorRating_1.default.hasOne(avg_course_1.default, {
+        foreignKey: 'courseId',
+        as: 'averageCourse'
     });
 }
 exports.default = setupAssociations;

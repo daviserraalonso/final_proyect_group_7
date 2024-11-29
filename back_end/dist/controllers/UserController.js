@@ -271,8 +271,8 @@ const searchTeachers = async (req, res) => {
             '$details.lng$': { [sequelize_1.Op.between]: [southWestLng, northEastLng] },
         }),
         ...(score && { [sequelize_1.Op.or]: [
-                { '$average.avg$': { [sequelize_1.Op.gte]: score } },
-                { '$average.avg$': null }
+                { '$averageTeacher.avg$': { [sequelize_1.Op.gte]: score } },
+                { '$averageTeacher.avg$': null }
             ] }),
     };
     try {
@@ -292,7 +292,7 @@ const searchTeachers = async (req, res) => {
                 },
                 {
                     model: avg_teacher_1.default,
-                    as: 'average',
+                    as: 'averageTeacher',
                     attributes: ['avg'],
                 },
             ],
