@@ -7,7 +7,7 @@
 }
 
 .card {
-  background-color: #ffffff;
+  background-color: #d3c1b0;
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
@@ -44,4 +44,36 @@
 .header-image {
   width: 100%;
   margin: 10px 0;
+}
+
+/* Estilos anteriores (omitidos por brevedad) */
+
+/* Nueva sección de registros */
+.register-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+}
+
+.register-image {
+  width: 30%;
+  max-width: 250px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.register-texts {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 30%;
+}
+
+.register-text {
+  font-size: 18px;
+  font-weight: bold;
+  color: #4a4a4a;
+  margin: 15px 0;
 }
