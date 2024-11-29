@@ -1,71 +1,151 @@
-import { Component , signal, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectorRef, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { CalendarOptions, DateSelectArg, EventClickArg, EventApi } from '@fullcalendar/core';
+import { CalendarService } from '../../../service/calendar.service';
 import interactionPlugin from '@fullcalendar/interaction';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
-
-import { INITIAL_EVENTS, createEventId } from '../../../utils/event-utils';
+import { createEventId } from '../../../utils/event-utils';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-calendar',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, FullCalendarModule
-  ],
+  imports: [CommonModule, RouterOutlet, FullCalendarModule],
   templateUrl: './calendar.component.html',
-  styleUrl: './calendar.component.css'
+  styleUrls: ['./calendar.component.css'], // Corrige 'styleUrl' -> 'styleUrls'
 })
-export class CalendarComponent {
+export class CalendarComponent implements OnInit {
   calendarOptions: CalendarOptions = {
     plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin],
     headerToolbar: {
       left: 'prev,next today',
       center: 'title',
-      right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+      right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek',
     },
     initialView: 'dayGridMonth',
-    initialEvents: INITIAL_EVENTS, // initial events
     editable: true,
     selectable: true,
     selectMirror: true,
-    dayMaxEvents: true,
+    dayMaxEvents: true, // Limitar la cantidad de eventos visibles por día
+    events: [], // Inicialmente vacío
     select: this.handleDateSelect.bind(this),
     eventClick: this.handleEventClick.bind(this),
-    eventsSet: this.handleEvents.bind(this)
+    eventsSet: this.handleEvents.bind(this),
   };
 
-  currentEvents: EventApi[] = [];
+  currentEvents: EventApi[] = []; // Para el manejo de eventos actuales
 
-  constructor(private changeDetector: ChangeDetectorRef) {}
+  constructor(
+    private calendarService: CalendarService,
+    private changeDetector: ChangeDetectorRef
+  ) { }
 
-  handleDateSelect(selectInfo: DateSelectArg) {
-    const title = prompt('Ingresa tu evento');
+  ngOnInit(): void {
+    this.loadEvents();
+  }
+
+  /**
+   * Carga los eventos desde el backend y los adapta al formato esperado por FullCalendar.
+   */
+  private async loadEvents(): Promise<void> {
+    try {
+      const response = await lastValueFrom(this.calendarService.getCalendarEvents());
+
+      // Validar si la respuesta es un array
+      if (Array.isArray(response)) {
+        const events = response.map((event) => ({
+          id: event.id.toString(), // Convertir a string
+          title: event.title,
+          start: event.startDateTime, // FullCalendar usa `start`
+          end: event.endDateTime,     // FullCalendar usa `end`
+          allDay: false,              // Ajustar si es necesario
+        }));
+
+        this.calendarOptions.events = events;
+        console.log('Eventos asignados a calendarOptions.events:', this.calendarOptions.events);
+      } else {
+        console.error('Error: La respuesta no es un array.');
+      }
+    } catch (err) {
+      console.error('Error al cargar eventos:', err);
+    }
+  }
+
+  /**
+   * Maneja la selección de fechas para crear un nuevo evento.
+   * @param selectInfo Información de la selección de fechas.
+   */
+  private handleDateSelect(selectInfo: DateSelectArg): void {
+    const title = prompt('Ingresa el título de tu evento:');
     const calendarApi = selectInfo.view.calendar;
 
-    calendarApi.unselect(); // clear date selection
+    calendarApi.unselect(); // Limpia la selección en el calendario
 
     if (title) {
-      calendarApi.addEvent({
+      // Crear un nuevo evento en el formato esperado por el backend
+      const newEvent = {
         id: createEventId(),
         title,
-        start: selectInfo.startStr,
-        end: selectInfo.endStr,
-        allDay: selectInfo.allDay
+        startDateTime: selectInfo.startStr, // Usar `startDateTime` para el backend
+        endDateTime: selectInfo.endStr,    // Usar `endDateTime` para el backend
+        allDay: selectInfo.allDay,
+      };
+
+      // Crear evento en el backend y añadirlo al calendario
+      this.calendarService.createCalendarEvent(newEvent).subscribe({
+        next: (savedEvent) => {
+          calendarApi.addEvent({
+            id: savedEvent.id.toString(),
+            title: savedEvent.title,
+            start: savedEvent.startDateTime, // Adaptar para FullCalendar
+            end: savedEvent.endDateTime,     // Adaptar para FullCalendar
+            allDay: savedEvent.allDay,
+          });
+          console.log('Evento creado:', savedEvent);
+        },
+        error: (err) => {
+          console.error('Error al crear el evento:', err);
+        },
       });
     }
   }
 
-  handleEventClick(clickInfo: EventClickArg) {
-    if (confirm(`estas seguro que quieres eliminar el evento '${clickInfo.event.title}'`)) {
-      clickInfo.event.remove();
+  /**
+   * Maneja el clic en un evento para eliminarlo.
+   * @param clickInfo Información del clic en el evento.
+   */
+  private handleEventClick(clickInfo: EventClickArg): void {
+    const confirmDelete = confirm(
+      `¿Estás seguro de que quieres eliminar el evento '${clickInfo.event.title}'?`
+    );
+
+    if (confirmDelete) {
+      const eventId = clickInfo.event.id;
+
+      // Eliminar evento del backend y del calendario
+      this.calendarService.deleteCalendarEvent(Number(eventId)).subscribe({
+        next: () => {
+          clickInfo.event.remove();
+          console.log('Evento eliminado:', eventId);
+        },
+        error: (err) => {
+          console.error('Error al eliminar el evento:', err);
+        },
+      });
     }
   }
 
-  handleEvents(events: EventApi[]) {
+  /**
+   * Maneja los cambios en los eventos actuales.
+   * @param events Lista actual de eventos en el calendario.
+   */
+  private handleEvents(events: EventApi[]): void {
     this.currentEvents = events;
+    console.log('Eventos actuales en el calendario:', this.currentEvents);
     this.changeDetector.detectChanges();
   }
 }

@@ -78,11 +78,6 @@ CourseEvent.init({
         allowNull: false,
         field: 'isRead',
     },
-    studentId: {
-        type: sequelize_1.DataTypes.INTEGER,
-        allowNull: false,
-        field: 'studentId',
-    },
 }, {
     sequelize: database_1.default,
     modelName: 'CourseEvent',

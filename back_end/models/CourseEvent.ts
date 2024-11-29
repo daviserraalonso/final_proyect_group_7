@@ -3,10 +3,10 @@ import { Model, DataTypes } from 'sequelize';
 import sequelize from '../config/database';
 
 class CourseEvent extends Model {
-    public id!: number;
-    public courseId!: number;
-    public professorId!: number;
-    public studentId!: number;
+  public id!: number;
+  public courseId!: number;
+  public professorId!: number;
+  public studentId!: number;
 }
 
 CourseEvent.init(
@@ -31,7 +31,7 @@ CourseEvent.init(
       allowNull: false,
       field: 'eventType',
     },
-    
+
     title: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -76,11 +76,6 @@ CourseEvent.init(
       type: DataTypes.BOOLEAN,
       allowNull: false,
       field: 'isRead',
-    },
-    studentId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      field: 'studentId',
     },
   },
   {

@@ -15,6 +15,7 @@ const categoriesRoutes = require('./routes/categories');
 const modalitiesRoutes = require('./routes/modalities');
 const contactRoutes = require('./routes/contactRoutes');
 const taskRoutes = require('./routes/taskRoutes');
+const calendarRoutes = require('./routes/calendarRoutes');
 // config dotenv
 dotenv.config();
 const app = express();
@@ -31,7 +32,7 @@ app.use(express.json());
 // config associations
 (0, associations_1.default)();
 // syncronize db
-sequelize.sync({ alter: true })
+sequelize.sync({})
     .then(() => {
     console.log('Base de datos sincronizada');
 })
@@ -46,6 +47,7 @@ app.use('/api/categories', categoriesRoutes);
 app.use('/api/modalities', modalitiesRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/tasks', taskRoutes);
+app.use('/api/course-event', calendarRoutes);
 // init server
 app.listen(port, () => {
     console.log(`Servidor Node escuchando en http://localhost:${port}`);

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import { sendConfirmationEmail } from '../services/emailService';
-import User from '../models/User';
+import User from '../models/user';
 import UserDetails from '../models/UserDetails';
 import Course from '../models/Course';
 import { Op } from 'sequelize';
@@ -117,7 +117,7 @@ export const confirmEmail = async (req: Request, res: Response): Promise<void> =
 export const createUser = async (req: Request, res: Response): Promise<void> => {
   try {
 
-  }catch(error){
+  } catch (error) {
 
   }
 };
@@ -302,23 +302,26 @@ export const searchTeachers = async (req: Request, res: Response) => {
     ...(type && {
       '$course.modality_id$': type,
     }),
-    ...(inputName && {name: inputName}),
+    ...(inputName && { name: inputName }),
     ...(inputCity && {
-      '$details.address$': inputCity}),
+      '$details.address$': inputCity
+    }),
     ...(selectedCategory && {
       '$course.category_id$': selectedCategory,
     }),
-    ...(minPrice && { [Op.or]:[
-      {'$course.price$': {[Op.between]:[minPrice, maxPrice]}},
-      {'$course.price$': null}
-    ]}),
+    ...(minPrice && {
+      [Op.or]: [
+        { '$course.price$': { [Op.between]: [minPrice, maxPrice] } },
+        { '$course.price$': null }
+      ]
+    }),
     ...(southWestLat && southWestLng && northEastLat && northEastLng && {
       '$details.lat$': { [Op.between]: [southWestLat, northEastLat] },
       '$details.lng$': { [Op.between]: [southWestLng, northEastLng] },
     })
-    
+
   }
-  
+
 
   try {
     console.log(filters)
@@ -344,25 +347,25 @@ export const searchTeachers = async (req: Request, res: Response) => {
   }
 };
 
-export const names = async (req: any, res: any , next: any) => {
+export const names = async (req: any, res: any, next: any) => {
   try {
     const names = await User.findAll({
-      where: {roleId: 2},
+      where: { roleId: 2 },
       attributes: ['name']
     }
-      
+
     )
     res.status(200).json(names)
   } catch (error) {
     next(error)
   }
-  
+
 }
 
-export const cities = async (req: Request, res: Response , next: any) => {
+export const cities = async (req: Request, res: Response, next: any) => {
   try {
     const names = await User.findAll({
-      where: {roleId: 2},
+      where: { roleId: 2 },
       attributes: [],
       include: [{
         model: UserDetails,
@@ -370,21 +373,21 @@ export const cities = async (req: Request, res: Response , next: any) => {
         attributes: ['address']
       }]
     }
-      
+
     )
     res.status(200).json(names)
-   
+
   } catch (error) {
     next(error)
   }
 }
 
 export const cityCords = async (req: Request, res: Response, next: any) => {
-  const {city} = req.params
+  const { city } = req.params
   console.log(city)
   try {
     const coords = await UserDetails.findOne({
-      where: {address: city},
+      where: { address: city },
       attributes: ['lat', 'lng']
     })
     res.status(200).json(coords)

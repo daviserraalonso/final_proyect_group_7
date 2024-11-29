@@ -1,4 +1,4 @@
-import User from './User';
+import User from './user';
 import UserDetails from './UserDetails';
 import Course from './Course';
 import StudentCourse from './StudentCourse';
@@ -191,7 +191,7 @@ export default function setupAssociations() {
     onUpdate: 'CASCADE',
   });
 
-  
+
   Chat.hasMany(Message, {
     foreignKey: {
       name: 'chatId',

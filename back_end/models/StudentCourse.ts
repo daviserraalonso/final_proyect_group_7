@@ -1,9 +1,9 @@
 import { Model, DataTypes, BelongsToGetAssociationMixin } from 'sequelize';
 import sequelize from '../config/database';
 import Course from './Course';
-import User from './User';
+import User from './user';
 
-class StudentCourse extends Model { 
+class StudentCourse extends Model {
 
   // relation
   public course?: Course;
