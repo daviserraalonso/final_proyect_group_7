@@ -6,7 +6,7 @@
     <div class="d-flex flex-column flex-sm-row">
 
 
-        <div class="col">
+        <div [ngClass]="{ 'mapIndex': mapIndex, 'col': !mapIndex }">
             <google-map class="map" width="100%" (idle)="onMapChanges()" [options]="mapOptions()">
             
                 <div class="openButton">
@@ -28,7 +28,7 @@
         </div>
 
 
-        <div class="col d-flex flex-column test">
+        <div [class.cardActive]="cardActive" class="col d-flex flex-column test">
             <div [class.cardActive]="cardActive" class="card_container">
               @for (teacher of teachersList; track $index) {
                 <mat-card class="d-flex flex-row justify-content-between mb-2" appearance="outlined">

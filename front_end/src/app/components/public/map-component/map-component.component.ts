@@ -1,5 +1,5 @@
 
-import { isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser, NgClass } from '@angular/common';
 import { Component, inject, PLATFORM_ID, signal, ViewChild} from '@angular/core';
 import { GoogleMap, GoogleMapsModule } from '@angular/google-maps';
 import { MatIconModule } from '@angular/material/icon';
@@ -16,7 +16,7 @@ import {MatButtonModule} from '@angular/material/button';
 @Component({
   selector: 'app-map-component',
   standalone: true,
-  imports: [GoogleMapsModule, MatIconModule, SearchTeachersComponent, MatCardModule, MatButtonModule, SearchTeachersComponent],
+  imports: [GoogleMapsModule, MatIconModule, SearchTeachersComponent, MatCardModule, MatButtonModule, SearchTeachersComponent, NgClass],
   templateUrl: './map-component.component.html',
   styleUrl: './map-component.component.css'
 })
@@ -49,6 +49,7 @@ teachersList: any[] = []
   }
 
   cardActive: boolean = false
+  mapIndex: boolean = false
 
 
 
@@ -59,6 +60,7 @@ teachersList: any[] = []
 
   ngOnInit() {
     this.initLocation()
+    this.viewCard()
     // this.zoom.emit(this.mapZoom)
     // this.bounds.emit(this.boundsObject)
   }
@@ -91,6 +93,7 @@ teachersList: any[] = []
     const route = this.router.url
     if (route === '/index') {
       this.cardActive = !this.cardActive
+      this.mapIndex = !this.mapIndex
     } 
   }
 

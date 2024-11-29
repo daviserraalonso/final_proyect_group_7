@@ -228,7 +228,7 @@ export default function setupAssociations() {
 
   // **Relación User -> Profesor Rating**
   User.hasOne(AvgTeacher,{
-    as: 'average',
+    as: 'averageTeacher',
     foreignKey: 'id'
   })
 

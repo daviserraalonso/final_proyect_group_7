@@ -20,6 +20,15 @@
     align-content: center;
     text-align: center;  
   }
+  
+  .cardActive {
+    display: none;
+  }
+
+  .mapIndex {
+    width: 100% !important;
+    display: inline !important;
+  }
 
 
 

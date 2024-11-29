@@ -211,7 +211,7 @@ function setupAssociations() {
     });
     // **Relación User -> Profesor Rating**
     user_1.default.hasOne(avg_teacher_1.default, {
-        as: 'average',
+        as: 'averageTeacher',
         foreignKey: 'id'
     });
     //**Relación Profesor Rating -> avg_teacher */
