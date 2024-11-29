@@ -1,4 +1,3 @@
-/* Estilos generales */
 .container {
   display: flex;
   flex-direction: column;
@@ -46,9 +45,7 @@
   margin: 10px 0;
 }
 
-/* Estilos anteriores (omitidos por brevedad) */
 
-/* Nueva sección de registros */
 .register-content {
   display: flex;
   justify-content: space-between;
