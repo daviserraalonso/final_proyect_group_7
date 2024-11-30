@@ -46,7 +46,7 @@ CourseLocation.init({
 }, {
     sequelize: database_1.default,
     modelName: 'CourseLocation',
-    tableName: 'course_event',
+    tableName: 'course_location',
     timestamps: true,
 });
 exports.default = CourseLocation;

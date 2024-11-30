@@ -3,10 +3,10 @@ import { Model, DataTypes } from 'sequelize';
 import sequelize from '../config/database';
 
 class CourseLocation extends Model {
-    public id!: number;
-    public courseId!: number;
-    public professorId!: number;
-    public studentId!: number;
+  public id!: number;
+  public courseId!: number;
+  public professorId!: number;
+  public studentId!: number;
 }
 
 CourseLocation.init(
@@ -31,7 +31,7 @@ CourseLocation.init(
       allowNull: false,
       field: 'lang',
     },
-    
+
     address: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -46,7 +46,7 @@ CourseLocation.init(
   {
     sequelize,
     modelName: 'CourseLocation',
-    tableName: 'course_event',
+    tableName: 'course_location',
     timestamps: true,
   }
 );

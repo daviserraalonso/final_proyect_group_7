@@ -32,7 +32,7 @@ app.use(express.json());
 // config associations
 (0, associations_1.default)();
 // syncronize db
-sequelize.sync({})
+sequelize.sync({ alter: true })
     .then(() => {
     console.log('Base de datos sincronizada');
 })
