@@ -1,4 +1,4 @@
-import User from './User';
+import User from './user';
 import UserDetails from './UserDetails';
 import Course from './Course';
 import StudentCourse from './StudentCourse';
@@ -9,6 +9,9 @@ import Chat from './Chat';
 import Message from './Message';
 import CourseLocation from './CourseLocation';
 import Category from './Category';
+import ProfessorRating from './ProfessorRating';
+import AvgTeacher from './avg_teacher'
+import AvgCourse from './avg_course';
 
 export default function setupAssociations() {
   // ** Relation User -> UserDetails**
@@ -240,4 +243,24 @@ export default function setupAssociations() {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   });
+
+  // **Relación User -> Profesor Rating**
+  User.hasOne(AvgTeacher,{
+    as: 'averageTeacher',
+    foreignKey: 'id'
+  })
+
+  //**Relación Profesor Rating -> avg_teacher */
+  ProfessorRating.hasOne(AvgTeacher, {
+    foreignKey: 'professorId',
+    as: 'averageTeacher'
+  })
+
+  //**Relación Profesor Rating -> avg_course ->  */
+  ProfessorRating.hasOne(AvgCourse, {
+    foreignKey: 'courseId',
+    as: 'averageCourse'
+  })
+
+
 }

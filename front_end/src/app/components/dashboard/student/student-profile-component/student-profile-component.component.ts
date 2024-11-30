@@ -21,6 +21,8 @@ import { UserServiceService } from '../../../../service/user-service.service';
 import { EditUserModalComponent } from '../../admin/edit-user-modal/edit-user-modal.component';
 import { CourseDetailsComponent } from '../course-details/course-details.component';
 import { CourseService } from '../../../../service/course.service';
+import { ScoreTeachersComponent } from '../score-teachers/score-teachers.component';
+import { response } from 'express';
 
 @Component({
   selector: 'app-student-profile-component',
@@ -62,6 +64,8 @@ export class StudentProfileComponentComponent implements OnInit {
 
   arrCourses: ProgressResponse[] = [];
   tasks: Task[] = [];
+ 
+
 
   // Notificaciones
   notifications = [
@@ -79,14 +83,17 @@ export class StudentProfileComponentComponent implements OnInit {
 
       // call to services
       this.studentProfile = await this.serviceStudentDetails.getUserDetails(this.userId);
+      console.log(this.userId)
       this.arrCourses = await this.serviceStudentProfile.getProgressByUserId(this.userId);
       this.tasks = await this.taskService.getTasksByUserId(this.userId);
-
+      console.log(this.arrCourses)
       console.log('Tareas:', this.tasks);
       console.log('Perfil del estudiante:', this.studentProfile);
+
     } catch (error) {
       console.error('Error al obtener los datos:', error);
     }
+
   }
 
   openTaskComponent(): void {
@@ -122,18 +129,19 @@ export class StudentProfileComponentComponent implements OnInit {
       if (response.courses.length === 1) {
         // show details if only have one course
         this.dialog.open(CourseDetailsComponent, {
-          width: '500px',
           data: { course: response.courses[0] }, // pass course to modal
+          width: '600px',
         });
       } else if (response.courses.length > 1) {
         // show list if have any courses
         this.dialog.open(CourseDetailsComponent, {
-          width: '500px',
           data: { courses: response.courses }, // pass data to modal
+          width: '600px',
         });
       } else {
         console.log('No hay cursos suscritos para este usuario.');
       }
     });
   }
+
 }

@@ -5,38 +5,28 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = require("sequelize");
 const database_1 = __importDefault(require("../config/database"));
-class Course extends sequelize_1.Model {
+class AvgCourse extends sequelize_1.Model {
 }
-Course.init({
+AvgCourse.init({
     id: {
         type: sequelize_1.DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
     },
-    name: {
-        type: sequelize_1.DataTypes.STRING,
-        allowNull: false,
-    },
-    price: {
-        type: sequelize_1.DataTypes.DECIMAL,
-        allowNull: false
-    },
-    category_id: {
+    courseId: {
         type: sequelize_1.DataTypes.INTEGER,
         allowNull: false,
+        field: 'courseId',
     },
-    modality_id: {
-        type: sequelize_1.DataTypes.INTEGER,
+    avg: {
+        type: sequelize_1.DataTypes.FLOAT,
         allowNull: false,
-    },
-    professor_id: {
-        type: sequelize_1.DataTypes.INTEGER,
-        allowNull: false,
-    },
+        field: 'avg'
+    }
 }, {
     sequelize: database_1.default,
-    modelName: 'Course',
-    tableName: 'Course',
-    timestamps: true,
+    modelName: 'AvgCourse',
+    tableName: 'avg_course',
+    timestamps: false,
 });
-exports.default = Course;
+exports.default = AvgCourse;

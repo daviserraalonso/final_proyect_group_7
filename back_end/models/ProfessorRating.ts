@@ -7,7 +7,8 @@ class ProfessorRating extends Model {
     public professorId!: number;
     public studentId!: number;
     public courseId!: number;
-    public rating?: number;
+    public rating_teacher?: number;
+    public rating_course?: number
     public comments?: string;
     public ratingDate!: Date;
 }
@@ -34,10 +35,15 @@ ProfessorRating.init(
       allowNull: false,
       field: 'courseId',
     },
-    rating: {
+    rating_teacher: {
       type: DataTypes.FLOAT,
       allowNull: true,
-      field: 'rating',
+      field: 'rating_teacher',
+    },
+    rating_course: {
+      type: DataTypes.FLOAT,
+      allowNull: true,
+      field: 'rating_course'
     },
     comments: {
       type: DataTypes.STRING,
@@ -46,15 +52,15 @@ ProfessorRating.init(
     },
     ratingDate: {
       type: DataTypes.DATE,
-      allowNull: false,
+      allowNull: true,
       field: 'ratingDate',
     },
   },
   {
     sequelize,
     modelName: 'ProfessorRating',
-    tableName: 'professor_ratings',
-    timestamps: true,
+    tableName: 'professor_rating',
+    timestamps: false,
   }
 );
 

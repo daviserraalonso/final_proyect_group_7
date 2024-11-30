@@ -7,7 +7,8 @@ module.exports = {
         professorId: 2, // Profesor asignado al curso 1 (Álgebra)
         studentId: 4, // Estudiante Goten
         courseId: 1, // Álgebra
-        rating: 4.5,
+        rating_teacher: 7,
+        rating_course: 6,
         comments: 'El profesor es muy claro al explicar.',
         ratingDate: new Date(),
       },
@@ -15,7 +16,8 @@ module.exports = {
         professorId: 2, // Profesor asignado al curso 1 (Álgebra)
         studentId: 5, // Estudiante Pan
         courseId: 1, // Álgebra
-        rating: 4.8,
+        rating_teacher: 4,
+        rating_course: 3,
         comments: 'Excelente profesor, muy paciente.',
         ratingDate: new Date(),
       },
@@ -23,7 +25,8 @@ module.exports = {
         professorId: 3, // Profesor asignado al curso 4 (Programación)
         studentId: 6, // Estudiante Bra
         courseId: 4, // Programación
-        rating: 4.2,
+        rating_teacher: 5,
+        rating_course: 6,
         comments: 'Explica bien, pero podría responder más rápido a preguntas.',
         ratingDate: new Date(),
       },

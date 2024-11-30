@@ -1,5 +1,7 @@
 import { Model, DataTypes } from 'sequelize';
 import sequelize from '../config/database';
+import User from './user';
+import StudentCourse from './StudentCourse';
 
 class Course extends Model {
   // No declares propiedades públicas aquí
@@ -17,6 +19,10 @@ Course.init(
     name: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    price: {
+      type: DataTypes.DECIMAL,
+      allowNull: false
     },
     category_id: {
       type: DataTypes.INTEGER,

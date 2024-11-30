@@ -1,6 +1,7 @@
 import { Model, DataTypes } from 'sequelize';
 import sequelize from '../config/database';
 import Course from './Course';
+import User from './user';
 
 class StudentCourse extends Model {
   // No declares propiedades públicas aquí

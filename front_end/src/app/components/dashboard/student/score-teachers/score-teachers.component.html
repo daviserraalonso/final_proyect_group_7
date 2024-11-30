@@ -1,0 +1,47 @@
+<section class="m-5">
+    <p>Hola {{name}}!</p>
+    <p>Enhorabuena por terminar el curso {{courseName}}</p>
+        <form [formGroup]="scoreForm" (ngSubmit)="getScore()"   class="d-flex flex-column gap-2">
+        <mat-card >
+            <p><strong>Puntua al profesor</strong></p>
+            <div>
+                @for (icon of iconsTeacher; track $index) {
+                    <mat-icon [ngClass]="{'active': $index <= activeIconTeacher }" (click)="activatedIconTeacher($index)"  aria-hidden="false" aria-label="Example home icon" fontIcon="star_rate"></mat-icon>
+                }
+
+            </div>
+  
+          </mat-card>
+          <mat-card class>
+
+              
+            <p><strong>Puntua al curso</strong></p>
+                     <div>
+                         @for (icon of iconsCourse; track $index) {
+                             <mat-icon [ngClass]="{'active': $index <= activeIconCourse }" (click)="activatedIconCourse($index)"  aria-hidden="false" aria-label="Example home icon" fontIcon="star_rate"></mat-icon>
+                         }
+
+                     </div>
+
+
+          </mat-card>
+          <mat-card>
+
+              <mat-form-field class="example-full-width m-2">
+                <mat-label>Dejanos tu comentario</mat-label>
+                <textarea formControlName="opinion" matInput placeholder=""></textarea>
+              </mat-form-field>
+
+          </mat-card>
+          <div class="mt-3 d-flex justify-content-center">
+  
+              <button [disabled]="!scoreForm.valid" mat-raised-button>Enviar respuestas</button>
+          </div>
+        </form>
+          
+  
+        
+        
+
+     
+</section>

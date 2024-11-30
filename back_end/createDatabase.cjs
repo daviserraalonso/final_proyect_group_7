@@ -4,7 +4,7 @@ const database = 'teacherappdb';
 const username = 'root';
 const password = ''; // edit with your credential
 const host = 'localhost';
-const port = 3306; // edit with your configuration
+const port = 3307; // edit with your configuration
 
 mysql.createConnection({ host, port, user: username, password })
   .then(connection => {

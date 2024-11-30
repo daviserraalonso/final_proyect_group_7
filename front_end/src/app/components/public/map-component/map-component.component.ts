@@ -1,44 +1,38 @@
-import { isPlatformBrowser } from '@angular/common';
-import { ChangeDetectorRef, Component, EventEmitter, inject, Input, Output, PLATFORM_ID, signal, SimpleChanges, ViewChild } from '@angular/core';
-import { GoogleMap, GoogleMapsModule } from '@angular/google-maps';
+
+import { isPlatformBrowser, NgClass } from '@angular/common';
+import { Component, inject, PLATFORM_ID, signal, ViewChild} from '@angular/core';
+import { GoogleMap, GoogleMapsModule, MapInfoWindow, MapMarker } from '@angular/google-maps';
 import { MatIconModule } from '@angular/material/icon';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { TypeCheckShimGenerator } from '@angular/compiler-cli/src/ngtsc/typecheck';
 import { PROFESORES } from '../search-teachers/datos.pruebas';
+import { SearchTeachersComponent } from "../search-teachers/search-teachers.component";
+import { Router } from '@angular/router';
+import { LoginComponent } from '../../../pages/public/login/login.component';
+import { MatDialog } from '@angular/material/dialog';
+import {MatCardModule} from '@angular/material/card';
+import {MatButtonModule} from '@angular/material/button';
 
 
 
 @Component({
   selector: 'app-map-component',
   standalone: true,
-  imports: [GoogleMapsModule, MatIconModule, MatDialogModule],
+  imports: [GoogleMapsModule, MatIconModule, SearchTeachersComponent, MatCardModule, MatButtonModule, SearchTeachersComponent, NgClass],
   templateUrl: './map-component.component.html',
   styleUrl: './map-component.component.css'
 })
 export class MapComponentComponent {
 
-
   @ViewChild(GoogleMap) map!: GoogleMap
-  cdr!: ChangeDetectorRef
-
-  @Input() AAteacherFilter: any[] = [] // OK
-  teacherFilter: any[] = PROFESORES // Prueba
-
-  @Input() radius!: number
-  @Input() latCity!: number
-  @Input() lngCity!: number
 
 
-
-  @Output() zoom: EventEmitter<number> = new EventEmitter<number>()
-  @Output() bounds: EventEmitter<any> = new EventEmitter<any>()
-
-
-  plataformId = inject(PLATFORM_ID)
-  userLat: number = 0
-  userLng: number = 0
-  userPosition = signal<google.maps.LatLngLiteral>({ lat: 0, lng: 0 })
-  mapZoom: number = 10
+plataformId = inject(PLATFORM_ID)
+router = inject(Router)
+dialog = inject(MatDialog)
+userLat: number = 0
+userLng: number = 0
+userPosition = signal<google.maps.LatLngLiteral>({ lat: 0, lng: 0 })
+mapZoom: number | undefined = 10
+teachersList: any[] = []
 
   mapOptions = signal<google.maps.MapOptions>({
     zoom: this.mapZoom,
@@ -47,32 +41,29 @@ export class MapComponentComponent {
     zoomControl: false,
   })
 
-  boundsObject = {
+  bounds = {
     southWestLat: 41.0040347326615,
     southWestLng: 0.5508518835937526,
     northEastLat: 41.314212689980465,
     northEastLng: 1.6769505164062526
   }
 
+  cardActive: boolean = false
+  mapIndex: boolean = false
+
+
+
+
+  teacherFilter: any[] = PROFESORES // Prueba
+
+
+
   ngOnInit() {
     this.initLocation()
-    this.zoom.emit(this.mapZoom)
-    this.bounds.emit(this.boundsObject)
+    this.viewCard()
+    // this.zoom.emit(this.mapZoom)
+    // this.bounds.emit(this.boundsObject)
   }
-
-  ngOnChanges() {
-    if (this.latCity != undefined) {
-      this.userPosition.set({lat: this.latCity, lng: this.lngCity})
-      this.mapOptions.set({
-        center: this.userPosition()
-      })
-    }
-    this.mapOptions.set({
-      zoom: this.radius,
-      center: this.userPosition()
-    })
-  }
-
 
   initLocation() {
     if (isPlatformBrowser(this.plataformId)) {
@@ -90,30 +81,81 @@ export class MapComponentComponent {
     }
   }
 
-  // create a Mark for teacher
-  addMarkers(lat: any, lng: any) {
-    if (isPlatformBrowser(this.plataformId)) {
-      return new google.maps.LatLng(lat, lng)
-    } return lat
-  }
-
-  onMapChanges() {
-    const bounds = this.map.getBounds()
-    const southWest = bounds?.getSouthWest();
-    const northEast = bounds?.getNorthEast()
-
-    this.boundsObject = {
-      southWestLat: southWest?.lat()!,
-      southWestLng: southWest?.lng()!,
-      northEastLat: northEast?.lat()!,
-      northEastLng: northEast?.lng()!
+    // create a Mark for teacher
+    addMarkers(lat: any, lng: any) {
+      if (isPlatformBrowser(this.plataformId)) {
+        return new google.maps.LatLng(lat, lng)
+      } return lat
     }
 
-    const zoom = this.map.getZoom()
-    this.zoom.emit(zoom)
-    this.bounds.emit(this.boundsObject)
+      // Function to hide list of teachers in home page
+  viewCard() {
+    const route = this.router.url
+    if (route === '/index') {
+      this.cardActive = !this.cardActive
+      this.mapIndex = !this.mapIndex
+    } 
   }
 
+    getNewRadius(newRadius: number) {
+      this.mapZoom = newRadius
+      this.mapOptions.set({
+        zoom: this.mapZoom,
+        center: this.userPosition()
+      })
+    }
+
+    getTeachersList(data: []) {
+      this.teachersList = data
+      console.log(this.teachersList)
+    }
+
+    onMapChanges() {
+      const bounds = this.map.getBounds()
+      const southWest = bounds?.getSouthWest();
+      const northEast = bounds?.getNorthEast()
+  
+      this.bounds = {
+        southWestLat: southWest?.lat()!,
+        southWestLng: southWest?.lng()!,
+        northEastLat: northEast?.lat()!,
+        northEastLng: northEast?.lng()!
+      }
+  
+      const zoom = this.map.getZoom()
+      this.mapZoom = this.map.getZoom()
+      //this.bounds.emit(this.boundsObject)
+      
+    }
+
+      // Open view teachers details
+  openDialog(event: Event, teacher: any) {
+    const token = localStorage.getItem('token');
+    if(!token) {
+      event.preventDefault();
+      const dialogRef = this.dialog.open(LoginComponent, {
+        width: '90%',
+        height:'90%', 
+        maxWidth: 'none',
+        maxHeight: 'none',
+      })
+    } else {
+    event.preventDefault(); 
+    this.dialog.open(LoginComponent, { // aqui se carga el componente de la vista del profesor
+      width: '90%',
+      height:'90%', 
+      maxWidth: 'none',
+      maxHeight: 'none',
+      data: {
+        teacher: teacher
+      },
+    });
+  }
+}
+
+openInfoWindow(marker: MapMarker, infoWindow: MapInfoWindow) {
+  infoWindow.open(marker)
+}
 
 
 

@@ -20,6 +20,8 @@ import { SubjectListComponent } from './components/dashboard/admin/subject-list/
 import { CourseListComponent } from './components/dashboard/admin/course-list/course-list.component';
 import { PresentialCoursesComponent } from './components/public/academic-offerings/presential-courses/presential-courses.component';
 import { OnlineCoursesComponent } from './components/public/academic-offerings/online-courses/online-courses.component';
+import { MapComponentComponent } from './components/public/map-component/map-component.component';
+import { ScoreTeachersComponent } from './components/dashboard/student/score-teachers/score-teachers.component';
 
 
 export const routes: Routes = [
@@ -29,6 +31,7 @@ export const routes: Routes = [
     { path: 'academic-offerings/presential', component: PresentialCoursesComponent },
     { path: 'academic-offerings/online', component: OnlineCoursesComponent },
     { path: 'looking-teachers', component: SearchTeachersComponent },
+    { path: 'looking-teachers', component: MapComponentComponent },
     { path: 'how-works', component: HowWorkComponentComponent },
     { path: 'contact', component: ContactComponentComponent },
     { path: 'login', component: LoginComponent },
@@ -43,6 +46,7 @@ export const routes: Routes = [
     { path: 'all-users', component: AllUsersComponent },
     { path: 'subjects', component: SubjectListComponent },
     { path: 'courses', component: CourseListComponent },
+    {path: 'prueba', component: ScoreTeachersComponent},
 
 
 
