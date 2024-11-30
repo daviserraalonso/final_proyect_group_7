@@ -2,7 +2,8 @@
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {`
+  async up (queryInterface, Sequelize) {
+    await queryInterface.sequelize.query(`
     CREATE TRIGGER update_average_course 
 AFTER INSERT ON professor_rating
 FOR EACH ROW 
@@ -24,6 +25,7 @@ BEGIN
     END IF;
 END;
 `
+  )
   },
 
   async down (queryInterface, Sequelize) {

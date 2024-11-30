@@ -7,7 +7,7 @@ exports.getStudentCourses = void 0;
 const StudentCourse_1 = __importDefault(require("../models/StudentCourse"));
 const Course_1 = __importDefault(require("../models/Course"));
 const Category_1 = __importDefault(require("../models/Category"));
-const User_1 = __importDefault(require("../models/User"));
+const user_1 = __importDefault(require("../models/user"));
 const getStudentCourses = async (req, res) => {
     try {
         // get user if rom url
@@ -31,7 +31,7 @@ const getStudentCourses = async (req, res) => {
                             attributes: ['category_name'],
                         },
                         {
-                            model: User_1.default, // Model user to teacher
+                            model: user_1.default, // Model user to teacher
                             as: 'professor',
                             attributes: ['name'],
                         },

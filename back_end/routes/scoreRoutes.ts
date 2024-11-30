@@ -1,8 +1,9 @@
 import { Router } from 'express'
-import { insertScore } from '../controllers/ScoreController'
+import { getScore, insertScore } from '../controllers/ScoreController'
 
 const router = Router()
 
+router.get('/', getScore)
 router.post('/', insertScore)
 
 module.exports = router

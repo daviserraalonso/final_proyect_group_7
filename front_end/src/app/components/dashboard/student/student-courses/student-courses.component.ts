@@ -1,11 +1,12 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpParams } from '@angular/common/http';
 import { StudentServiceService } from '../../../../service/student-service.service';
 import {MatButtonModule} from '@angular/material/button';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ScoreTeachersComponent } from '../score-teachers/score-teachers.component';
 import { CourseService } from '../../../../service/course.service';
+import { ScoreService } from '../../../../service/score.service';
 
 @Component({
   selector: 'app-student-courses',
@@ -18,6 +19,7 @@ export class StudentCoursesComponent implements OnInit {
   studentCourses: any[] = []; // Cursos del estudiante
   dialog = inject(MatDialog)
   courseServices = inject(CourseService)
+  scoreServices = inject(ScoreService)
 
   constructor(private studentService: StudentServiceService) {}
 
@@ -41,15 +43,28 @@ export class StudentCoursesComponent implements OnInit {
     }
   }
 
+
+    verifyScore() {
+
+    }
   curse: any
   openScoreModal(cursoId: number) {
-    this.courseServices.getCourseById(cursoId).subscribe((response) => {
+    console.log(cursoId)
+    this.courseServices.getCourseById(cursoId).subscribe(async (response) => {
       this.curse = response
       console.log(this.curse)
+
       const user = localStorage.getItem('user');
+      const userId = user ? JSON.parse(user).id : null; 
+      const params = new HttpParams().set('studentId', userId).set('idCourse', cursoId)
+      console.log(params)
+      const scoreValid = await this.scoreServices.getScoreByIds(params)
+      if(scoreValid) {
+        return alert('Ya has valorado este curso')
+      }
       this.dialog.open(ScoreTeachersComponent, {
         width: '400px',
-        data: {user: user,
+        data: {user: userId,
                course: this.curse
         }
       })

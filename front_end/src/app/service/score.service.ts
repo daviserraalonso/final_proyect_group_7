@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 
@@ -12,7 +12,10 @@ export class ScoreService {
 
   insertScore(body: any): Promise<any> {
     return firstValueFrom(this.http.post<any>(this.baseUrl, body))
-    
+  }
+
+  getScoreByIds(params: HttpParams): Promise<any> {
+    return firstValueFrom(this.http.get<any>(this.baseUrl, {params: params}))
   }
 
 }

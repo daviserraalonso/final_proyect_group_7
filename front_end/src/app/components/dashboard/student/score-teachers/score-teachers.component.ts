@@ -8,6 +8,7 @@ import {MatButtonModule} from '@angular/material/button';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ScoreService } from '../../../../service/score.service';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-score-teachers',
@@ -60,7 +61,7 @@ export class ScoreTeachersComponent {
     this.courseName = this.data.course.name
     this.idTeacher = this.data.course.professor_id
     this.idCourse = this.data.course.id
-    this.studentId = this.data.user.id
+    this.studentId = this.data.user
   
 
   }
@@ -81,8 +82,10 @@ export class ScoreTeachersComponent {
     this.scoreForm.get('scoreCourse')?.patchValue(this.scoreCourse)
   } 
 
+
+
   async getScore() {
-    
+
     
     this.scoreForm.get('idTeacher')?.patchValue(this.idTeacher)
     this.scoreForm.get('idCourse')?.patchValue(this.idCourse)
