@@ -27,15 +27,17 @@ export class CalendarComponent implements OnInit {
       right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek',
     },
     initialView: 'dayGridMonth',
+    timeZone: 'UTC',
     editable: true,
     selectable: true,
     selectMirror: true,
-    dayMaxEvents: true, // Limitar la cantidad de eventos visibles por día
+    dayMaxEvents: true,
     events: [], // Inicialmente vacío
     select: this.handleDateSelect.bind(this),
     eventClick: this.handleEventClick.bind(this),
     eventsSet: this.handleEvents.bind(this),
   };
+
 
   currentEvents: EventApi[] = []; // Para el manejo de eventos actuales
 
@@ -58,12 +60,14 @@ export class CalendarComponent implements OnInit {
       // Validar si la respuesta es un array
       if (Array.isArray(response)) {
         const events = response.map((event) => ({
-          id: event.id.toString(), // Convertir a string
+          id: event.id.toString(),
           title: event.title,
-          start: event.startDateTime, // FullCalendar usa `start`
-          end: event.endDateTime,     // FullCalendar usa `end`
-          allDay: false,              // Ajustar si es necesario
+          start: new Date(event.startDateTime).toISOString(),
+          end: event.endDateTime ? new Date(event.endDateTime).toISOString() : undefined,
+          allDay: event.allDay || false,
+          color: this.getEventColor(event.locationType || 'default'),
         }));
+
 
         this.calendarOptions.events = events;
         console.log('Eventos asignados a calendarOptions.events:', this.calendarOptions.events);
@@ -75,17 +79,26 @@ export class CalendarComponent implements OnInit {
     }
   }
 
-  /**
-   * Maneja la selección de fechas para crear un nuevo evento.
-   * @param selectInfo Información de la selección de fechas.
-   */
+  private getEventColor(locationType: string): string {
+    switch (locationType) {
+      case 'physical':
+        return 'red';
+      case 'online':
+        return 'green';
+      default:
+        return 'orange'; // Color por defecto si no coincide con ningún tipo
+    }
+  }
+
+
   private handleDateSelect(selectInfo: DateSelectArg): void {
     const title = prompt('Ingresa el título de tu evento:');
+    const type = prompt('Ingresa el tipo de evento (exam, task, class):'); // Solicita el tipo de evento
     const calendarApi = selectInfo.view.calendar;
 
     calendarApi.unselect(); // Limpia la selección en el calendario
 
-    if (title) {
+    if (title && type) {
       // Crear un nuevo evento en el formato esperado por el backend
       const newEvent = {
         id: createEventId(),
@@ -93,6 +106,7 @@ export class CalendarComponent implements OnInit {
         startDateTime: selectInfo.startStr, // Usar `startDateTime` para el backend
         endDateTime: selectInfo.endStr,    // Usar `endDateTime` para el backend
         allDay: selectInfo.allDay,
+        locationType: selectInfo.view.type// Asignar el tipo de evento
       };
 
       // Crear evento en el backend y añadirlo al calendario
@@ -104,6 +118,7 @@ export class CalendarComponent implements OnInit {
             start: savedEvent.startDateTime, // Adaptar para FullCalendar
             end: savedEvent.endDateTime,     // Adaptar para FullCalendar
             allDay: savedEvent.allDay,
+            color: savedEvent.locationType
           });
           console.log('Evento creado:', savedEvent);
         },
