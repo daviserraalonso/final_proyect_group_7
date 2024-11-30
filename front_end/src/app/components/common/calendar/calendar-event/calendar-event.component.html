@@ -1,0 +1,12 @@
+
+<h1 mat-dialog-title>Detalle del Evento</h1>
+<div mat-dialog-content>
+  <p><strong>ID:</strong> {{ data.id }}</p>
+  <p><strong>TITULO:</strong> {{ data.title }}</p>
+  <p><strong>INICIO:</strong> {{ data.start }}</p>
+  <p><strong>FIN:</strong> {{ data.end }}</p>
+
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="closeDialog()">Cerrar</button>
+</div>

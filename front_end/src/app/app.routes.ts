@@ -12,7 +12,7 @@ import { StudentProfileComponentComponent } from './components/dashboard/student
 import { TeacherProfileComponentComponent } from './components/dashboard/teacher/teacher-profile-component/teacher-profile-component.component';
 import { AdminComponent } from './components/dashboard/admin/admin.component';
 import { InboxComponent } from './components/common/inbox/inbox.component';
-import { CalendarComponent } from './components/common/calendar/calendar.component';
+import { CalendarComponent } from './components/common/calendar/calendar-component/calendar.component';
 import { AllUsersComponent } from './components/dashboard/admin/all-users/all-users.component';
 import { SubjectListComponent } from './components/dashboard/admin/subject-list/subject-list.component';
 import { CourseListComponent } from './components/dashboard/admin/course-list/course-list.component';

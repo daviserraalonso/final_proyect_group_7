@@ -1,20 +1,23 @@
 import { Component, ChangeDetectorRef, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { CalendarOptions, DateSelectArg, EventClickArg, EventApi } from '@fullcalendar/core';
-import { CalendarService } from '../../../service/calendar.service';
+import { CalendarService } from '../../../../service/calendar.service';
 import interactionPlugin from '@fullcalendar/interaction';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
+import { CalendarEventComponent } from '../calendar-event/calendar-event.component';
 import listPlugin from '@fullcalendar/list';
-import { createEventId } from '../../../utils/event-utils';
+import { createEventId } from '../../../../utils/event-utils';
 import { lastValueFrom } from 'rxjs';
+import { ICourseEvent } from '../../../../interfaces/iCourseEvent';
 
 @Component({
   selector: 'app-calendar',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, FullCalendarModule],
+  imports: [CommonModule, FullCalendarModule],
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.css'], // Corrige 'styleUrl' -> 'styleUrls'
 })
@@ -43,11 +46,22 @@ export class CalendarComponent implements OnInit {
 
   constructor(
     private calendarService: CalendarService,
-    private changeDetector: ChangeDetectorRef
+    private changeDetector: ChangeDetectorRef,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
     this.loadEvents();
+  }
+
+  canEditEvents(): boolean {
+    const userRole = Number(localStorage.getItem('role'));
+    return userRole === 1 || userRole === 2; // Admin (1) o Profesor (2)
+  }
+
+  canViewEvents(): boolean {
+    const userRole = Number(localStorage.getItem('role'));
+    return userRole === 1 || userRole === 2 || userRole === 3; // Todos los roles
   }
 
   /**
@@ -92,6 +106,11 @@ export class CalendarComponent implements OnInit {
 
 
   private handleDateSelect(selectInfo: DateSelectArg): void {
+    if (!this.canEditEvents()) {
+      alert('No tienes permisos para crear eventos.');
+      console.log('no tienes permiso para eso')
+      return;
+    }
     const title = prompt('Ingresa el título de tu evento:');
     const type = prompt('Ingresa el tipo de evento (exam, task, class):'); // Solicita el tipo de evento
     const calendarApi = selectInfo.view.calendar;
@@ -129,28 +148,49 @@ export class CalendarComponent implements OnInit {
     }
   }
 
+  openEventDetailsDialog(event: any): void {
+    const dialogRef = this.dialog.open(CalendarEventComponent, {
+      data: {
+        id: event.id,
+        title: event.title,
+        start: event.start,
+        end: event.end,
+        width: '1000px'
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      //Hacer algo si se cierra,
+    });
+  }
+
   /**
    * Maneja el clic en un evento para eliminarlo.
    * @param clickInfo Información del clic en el evento.
    */
   private handleEventClick(clickInfo: EventClickArg): void {
-    const confirmDelete = confirm(
-      `¿Estás seguro de que quieres eliminar el evento '${clickInfo.event.title}'?`
-    );
+    if (!this.canEditEvents()) {
+      this.openEventDetailsDialog(clickInfo.event);
+      return;
+    } else {
+      const confirmDelete = confirm(
+        `¿Estás seguro de que quieres eliminar el evento '${clickInfo.event.title}'?`
+      );
 
-    if (confirmDelete) {
-      const eventId = clickInfo.event.id;
+      if (confirmDelete) {
+        const eventId = clickInfo.event.id;
 
-      // Eliminar evento del backend y del calendario
-      this.calendarService.deleteCalendarEvent(Number(eventId)).subscribe({
-        next: () => {
-          clickInfo.event.remove();
-          console.log('Evento eliminado:', eventId);
-        },
-        error: (err) => {
-          console.error('Error al eliminar el evento:', err);
-        },
-      });
+        // Eliminar evento del backend y del calendario
+        this.calendarService.deleteCalendarEvent(Number(eventId)).subscribe({
+          next: () => {
+            clickInfo.event.remove();
+            console.log('Evento eliminado:', eventId);
+          },
+          error: (err) => {
+            console.error('Error al eliminar el evento:', err);
+          },
+        });
+      }
     }
   }
 

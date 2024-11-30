@@ -22,13 +22,13 @@ CourseLocation.init(
       field: 'courseId',
     },
     lat: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
+      type: DataTypes.FLOAT,
+      allowNull: true,
       field: 'lat',
     },
     lang: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
+      type: DataTypes.FLOAT,
+      allowNull: true,
       field: 'lang',
     },
 
@@ -39,7 +39,7 @@ CourseLocation.init(
     },
     onlineLink: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       field: 'onlineLink',
     },
   },
