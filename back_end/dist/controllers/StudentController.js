@@ -7,16 +7,16 @@ exports.getStudentCourses = void 0;
 const StudentCourse_1 = __importDefault(require("../models/StudentCourse"));
 const Course_1 = __importDefault(require("../models/Course"));
 const Category_1 = __importDefault(require("../models/Category"));
-const User_1 = __importDefault(require("../models/User")); // Usamos User como modelo para el profesor
+const User_1 = __importDefault(require("../models/User"));
 const getStudentCourses = async (req, res) => {
     try {
-        // Obtener el userId del parámetro de la URL
+        // get user if rom url
         const userId = parseInt(req.params.userId, 10);
         if (!userId) {
             res.status(400).json({ message: 'El ID del estudiante es obligatorio.' });
             return;
         }
-        // Consultar los cursos relacionados con el estudiante
+        // get courser to student
         const courses = await StudentCourse_1.default.findAll({
             where: { studentId: userId },
             include: [
@@ -31,7 +31,7 @@ const getStudentCourses = async (req, res) => {
                             attributes: ['category_name'],
                         },
                         {
-                            model: User_1.default, // Modelo User para el profesor
+                            model: User_1.default, // Model user to teacher
                             as: 'professor',
                             attributes: ['name'],
                         },

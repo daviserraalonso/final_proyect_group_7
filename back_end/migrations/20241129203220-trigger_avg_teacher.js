@@ -4,7 +4,6 @@
 module.exports = {
   async up (queryInterface, Sequelize) {
     await queryInterface.sequelize.query(`
-      DELIMITER $$
 
       CREATE TRIGGER update_average_teacher AFTER INSERT ON professor_rating
  FOR EACH ROW BEGIN
@@ -24,9 +23,7 @@ module.exports = {
         );
     END IF;
 END;
-$$
 
-DELIMITER ;
 `
 )
   },

@@ -18,7 +18,7 @@ const ProfessorRating_1 = __importDefault(require("./ProfessorRating"));
 const avg_teacher_1 = __importDefault(require("./avg_teacher"));
 const avg_course_1 = __importDefault(require("./avg_course"));
 function setupAssociations() {
-    // **Relación User -> UserDetails**
+    // ** Relation User -> UserDetails**
     user_1.default.hasOne(UserDetails_1.default, {
         foreignKey: {
             name: 'userId',
@@ -37,7 +37,7 @@ function setupAssociations() {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
     });
-    // **Relación Course -> User (Profesor)**
+    // ** Relation Course -> User (Profesor)**
     Course_1.default.belongsTo(user_1.default, {
         foreignKey: {
             name: 'professor_id',
@@ -56,7 +56,7 @@ function setupAssociations() {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
     });
-    // **Relación Course -> Modality**
+    // ** Relation Course -> Modality**
     Course_1.default.belongsTo(Modality_1.default, {
         foreignKey: {
             name: 'modality_id',
@@ -80,7 +80,7 @@ function setupAssociations() {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
     });
-    // **Relación Subject -> Course**
+    // ** Relation Subject -> Course**
     Subject_1.default.belongsTo(Course_1.default, {
         foreignKey: {
             name: 'courseId',
@@ -99,7 +99,7 @@ function setupAssociations() {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
     });
-    // **Relación CourseEvent -> Subject**
+    // ** Relation CourseEvent -> Subject**
     CourseEvent_1.default.belongsTo(Subject_1.default, {
         foreignKey: {
             name: 'subjectId',
@@ -118,7 +118,7 @@ function setupAssociations() {
         onDelete: 'SET NULL',
         onUpdate: 'CASCADE',
     });
-    // **Relación StudentCourse -> User (Estudiante)**
+    // ** Relation StudentCourse -> User (Estudiante)**
     StudentCourse_1.default.belongsTo(user_1.default, {
         foreignKey: {
             name: 'studentId',
@@ -137,7 +137,7 @@ function setupAssociations() {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
     });
-    // **Relación Chat -> Course**
+    // ** Relation Chat -> Course**
     Chat_1.default.belongsTo(Course_1.default, {
         foreignKey: {
             name: 'courseId',
@@ -147,7 +147,7 @@ function setupAssociations() {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
     });
-    // **Relación Chat -> User (Profesor)**
+    // ** Relation Chat -> User (Profesor)**
     Chat_1.default.belongsTo(user_1.default, {
         foreignKey: {
             name: 'professorId',
@@ -157,7 +157,7 @@ function setupAssociations() {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
     });
-    // **Relación Chat -> User (Estudiante)**
+    // ** Relation Chat -> User (Estudiante)**
     Chat_1.default.belongsTo(user_1.default, {
         foreignKey: {
             name: 'studentId',
@@ -167,7 +167,7 @@ function setupAssociations() {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
     });
-    // **Relación Message -> Chat**
+    // ** Relation Message -> Chat**
     Message_1.default.belongsTo(Chat_1.default, {
         foreignKey: {
             name: 'chatId',
@@ -186,14 +186,14 @@ function setupAssociations() {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
     });
-    // **Relación Message -> User (Sender)**
+    // ** Relation Message -> User (Sender)**
     Message_1.default.belongsTo(user_1.default, {
         foreignKey: {
             name: 'senderId',
             allowNull: false,
         },
         as: 'sender',
-        onDelete: 'CASCADE', // Cambia a SET NULL si es necesario
+        onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
     });
     user_1.default.hasMany(Message_1.default, {
@@ -202,10 +202,10 @@ function setupAssociations() {
             allowNull: false,
         },
         as: 'sentMessages',
-        onDelete: 'CASCADE', // Cambia a SET NULL si es necesario
+        onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
     });
-    // **Relación Course -> Category**
+    // ** Relation Course -> Category**
     Course_1.default.belongsTo(Category_1.default, {
         foreignKey: {
             name: 'category_id',
@@ -223,6 +223,7 @@ function setupAssociations() {
         as: 'courses',
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
+    });
     // **Relación User -> Profesor Rating**
     user_1.default.hasOne(avg_teacher_1.default, {
         as: 'averageTeacher',
