@@ -1,7 +1,6 @@
 import { Component, ChangeDetectorRef, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { CalendarOptions, DateSelectArg, EventClickArg, EventApi } from '@fullcalendar/core';
 import { CalendarService } from '../../../../service/calendar.service';
@@ -9,6 +8,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import { CalendarEventComponent } from '../calendar-event/calendar-event.component';
+import { CalendarEditEventComponent } from '../calendar-edit-event/calendar-edit-event.component';
 import listPlugin from '@fullcalendar/list';
 import { createEventId } from '../../../../utils/event-utils';
 import { lastValueFrom } from 'rxjs';
@@ -41,7 +41,6 @@ export class CalendarComponent implements OnInit {
     eventsSet: this.handleEvents.bind(this),
   };
 
-
   currentEvents: EventApi[] = []; // Para el manejo de eventos actuales
 
   constructor(
@@ -54,16 +53,6 @@ export class CalendarComponent implements OnInit {
     this.loadEvents();
   }
 
-  canEditEvents(): boolean {
-    const userRole = Number(localStorage.getItem('role'));
-    return userRole === 1 || userRole === 2; // Admin (1) o Profesor (2)
-  }
-
-  canViewEvents(): boolean {
-    const userRole = Number(localStorage.getItem('role'));
-    return userRole === 1 || userRole === 2 || userRole === 3; // Todos los roles
-  }
-
   /**
    * Carga los eventos desde el backend y los adapta al formato esperado por FullCalendar.
    */
@@ -71,7 +60,6 @@ export class CalendarComponent implements OnInit {
     try {
       const response = await lastValueFrom(this.calendarService.getCalendarEvents());
 
-      // Validar si la respuesta es un array
       if (Array.isArray(response)) {
         const events = response.map((event) => ({
           id: event.id.toString(),
@@ -82,9 +70,7 @@ export class CalendarComponent implements OnInit {
           color: this.getEventColor(event.locationType || 'default'),
         }));
 
-
         this.calendarOptions.events = events;
-        console.log('Eventos asignados a calendarOptions.events:', this.calendarOptions.events);
       } else {
         console.error('Error: La respuesta no es un array.');
       }
@@ -100,98 +86,100 @@ export class CalendarComponent implements OnInit {
       case 'online':
         return 'green';
       default:
-        return 'orange'; // Color por defecto si no coincide con ningún tipo
+        return 'orange';
     }
   }
 
-
+  /**
+   * Maneja la selección de una fecha para crear un nuevo evento.
+   * @param selectInfo Información de la selección.
+   */
   private handleDateSelect(selectInfo: DateSelectArg): void {
-    if (!this.canEditEvents()) {
-      alert('No tienes permisos para crear eventos.');
-      console.log('no tienes permiso para eso')
-      return;
-    }
-    const title = prompt('Ingresa el título de tu evento:');
-    const type = prompt('Ingresa el tipo de evento (exam, task, class):'); // Solicita el tipo de evento
     const calendarApi = selectInfo.view.calendar;
 
-    calendarApi.unselect(); // Limpia la selección en el calendario
-
-    if (title && type) {
-      // Crear un nuevo evento en el formato esperado por el backend
-      const newEvent = {
-        id: createEventId(),
-        title,
-        startDateTime: selectInfo.startStr, // Usar `startDateTime` para el backend
-        endDateTime: selectInfo.endStr,    // Usar `endDateTime` para el backend
-        allDay: selectInfo.allDay,
-        locationType: selectInfo.view.type// Asignar el tipo de evento
-      };
-
-      // Crear evento en el backend y añadirlo al calendario
-      this.calendarService.createCalendarEvent(newEvent).subscribe({
-        next: (savedEvent) => {
-          calendarApi.addEvent({
-            id: savedEvent.id.toString(),
-            title: savedEvent.title,
-            start: savedEvent.startDateTime, // Adaptar para FullCalendar
-            end: savedEvent.endDateTime,     // Adaptar para FullCalendar
-            allDay: savedEvent.allDay,
-            color: savedEvent.locationType
-          });
-          console.log('Evento creado:', savedEvent);
-        },
-        error: (err) => {
-          console.error('Error al crear el evento:', err);
-        },
-      });
+    if (!this.canEditEvents()) {
+      return;
     }
+
+    calendarApi.unselect(); // Limpia la selección
+
+    const newEvent: ICourseEvent = {
+      id: 0,
+      title: '',
+      startDateTime: selectInfo.startStr,
+      endDateTime: selectInfo.endStr,
+      allDay: selectInfo.allDay,
+      locationType: 'default',
+    };
+
+    this.openEventEditDialog(newEvent);
   }
 
-  openEventDetailsDialog(event: any): void {
-    const dialogRef = this.dialog.open(CalendarEventComponent, {
-      data: {
-        id: event.id,
-        title: event.title,
-        start: event.start,
-        end: event.end,
-        width: '1000px'
-      },
+  /**
+   * Abre el diálogo para editar un evento existente.
+   * @param event Información del evento a editar.
+   */
+  private openEventEditDialog(event: ICourseEvent): void {
+    const dialogRef = this.dialog.open(CalendarEditEventComponent, {
+      width: '800px',
+      height: '600px',
+      data: event,
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      //Hacer algo si se cierra,
+    dialogRef.afterClosed().subscribe((result: ICourseEvent | null) => {
+      if (result) {
+        if (result.id) {
+          // Editar evento existente
+          this.calendarService.updateCalendarEvent(result).subscribe({
+            next: () => this.loadEvents(),
+            error: (err) => console.error('Error al actualizar el evento:', err),
+          });
+        } else {
+          // Crear nuevo evento
+          this.calendarService.createCalendarEvent(result).subscribe({
+            next: () => this.loadEvents(),
+            error: (err) => console.error('Error al crear el evento:', err),
+          });
+        }
+      }
     });
   }
 
   /**
-   * Maneja el clic en un evento para eliminarlo.
+   * Maneja el clic en un evento.
    * @param clickInfo Información del clic en el evento.
    */
   private handleEventClick(clickInfo: EventClickArg): void {
     if (!this.canEditEvents()) {
       this.openEventDetailsDialog(clickInfo.event);
-      return;
     } else {
-      const confirmDelete = confirm(
-        `¿Estás seguro de que quieres eliminar el evento '${clickInfo.event.title}'?`
-      );
+      const event: ICourseEvent = {
+        id: Number(clickInfo.event.id),
+        title: clickInfo.event.title,
+        startDateTime: clickInfo.event.start?.toISOString() || '',
+        endDateTime: clickInfo.event.end?.toISOString() || '',
+        allDay: clickInfo.event.allDay,
+        locationType: 'default', // Puedes ajustar según los datos reales
+      };
 
-      if (confirmDelete) {
-        const eventId = clickInfo.event.id;
-
-        // Eliminar evento del backend y del calendario
-        this.calendarService.deleteCalendarEvent(Number(eventId)).subscribe({
-          next: () => {
-            clickInfo.event.remove();
-            console.log('Evento eliminado:', eventId);
-          },
-          error: (err) => {
-            console.error('Error al eliminar el evento:', err);
-          },
-        });
-      }
+      this.openEventEditDialog(event);
     }
+  }
+
+  /**
+   * Abre el diálogo para ver los detalles de un evento.
+   * @param event Información del evento.
+   */
+  private openEventDetailsDialog(event: EventApi): void {
+    this.dialog.open(CalendarEventComponent, {
+      width: '800px',
+      data: {
+        id: event.id,
+        title: event.title,
+        start: event.start?.toISOString(),
+        end: event.end?.toISOString(),
+      },
+    });
   }
 
   /**
@@ -200,7 +188,14 @@ export class CalendarComponent implements OnInit {
    */
   private handleEvents(events: EventApi[]): void {
     this.currentEvents = events;
-    console.log('Eventos actuales en el calendario:', this.currentEvents);
     this.changeDetector.detectChanges();
+  }
+
+  /**
+   * Comprueba si el usuario puede editar eventos.
+   */
+  canEditEvents(): boolean {
+    const userRole = Number(localStorage.getItem('role'));
+    return userRole === 1 || userRole === 2; // Admin (1) o Profesor (2)
   }
 }
