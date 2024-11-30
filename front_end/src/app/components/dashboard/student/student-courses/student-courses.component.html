@@ -3,13 +3,15 @@
     <div *ngIf="studentCourses.length; else noCourses">
       <div *ngFor="let course of studentCourses" class="card mt-3">
         <div class="card-body">
-          <h5 class="card-title">{{ course.name }}</h5>
+          <h5 class="card-title">{{ course.courseName }}</h5>
           <p class="card-text">
             <strong>Categoría:</strong> {{ course.category }} <br />
             <strong>Profesor:</strong> {{ course.professor }} <br />
             <strong>Fecha de inscripción:</strong> {{ course.enrollmentDate | date }}
           </p>
         </div>
+        <button (click)="openScoreModal(course.id)" mat-button color="accent" class="btn btn-accent btn-sm">Puntuar</button>
+
       </div>
     </div>
   

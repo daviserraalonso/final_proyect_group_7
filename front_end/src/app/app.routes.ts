@@ -30,7 +30,6 @@ export const routes: Routes = [
     { path: 'academic-offerings', component: AcademicOfferingComponent },
     { path: 'academic-offerings/presential', component: PresentialCoursesComponent },
     { path: 'academic-offerings/online', component: OnlineCoursesComponent },
-    { path: 'looking-teachers', component: SearchTeachersComponent },
     { path: 'looking-teachers', component: MapComponentComponent },
     { path: 'how-works', component: HowWorkComponentComponent },
     { path: 'contact', component: ContactComponentComponent },
