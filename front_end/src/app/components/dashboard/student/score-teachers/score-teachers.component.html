@@ -1,7 +1,7 @@
 <section class="m-5">
     <p>Hola {{name}}!</p>
     <p>Enhorabuena por terminar el curso {{courseName}}</p>
-        <div class="d-flex flex-column gap-2">
+        <form [formGroup]="scoreForm" (ngSubmit)="getScore()"   class="d-flex flex-column gap-2">
         <mat-card >
             <p><strong>Puntua al profesor</strong></p>
             <div>
@@ -29,16 +29,16 @@
 
               <mat-form-field class="example-full-width m-2">
                 <mat-label>Dejanos tu comentario</mat-label>
-                <textarea matInput placeholder=""></textarea>
+                <textarea formControlName="opinion" matInput placeholder=""></textarea>
               </mat-form-field>
 
           </mat-card>
-        </div>
-          
           <div class="mt-3 d-flex justify-content-center">
-
-              <button (click)="getScore()"  mat-raised-button>Enviar respuestas</button>
+  
+              <button [disabled]="!scoreForm.valid" mat-raised-button>Enviar respuestas</button>
           </div>
+        </form>
+          
   
         
         

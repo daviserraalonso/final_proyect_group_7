@@ -64,7 +64,7 @@ export class StudentProfileComponentComponent implements OnInit {
 
   arrCourses: ProgressResponse[] = [];
   tasks: Task[] = [];
-  cursos: any = []
+ 
 
 
   // Notificaciones
@@ -89,14 +89,6 @@ export class StudentProfileComponentComponent implements OnInit {
       console.log(this.arrCourses)
       console.log('Tareas:', this.tasks);
       console.log('Perfil del estudiante:', this.studentProfile);
-
-      //prueba albert
-      this.courseService.getUserSubscribedCourses(this.userId).subscribe((response) => {
-        this.cursos = response.courses
-        console.log(this.cursos)
-      })
-    
-      //---------------------------------
 
     } catch (error) {
       console.error('Error al obtener los datos:', error);
@@ -152,22 +144,4 @@ export class StudentProfileComponentComponent implements OnInit {
     });
   }
 
-curse: any
-  openScoreModal(cursoId: number) {
-    this.courseService.getCourseById(cursoId).subscribe((response) => {
-      this.curse = response
-      console.log(this.curse)
-
-      this.dialog.open(ScoreTeachersComponent, {
-        width: '400px',
-        data: {user: this.studentProfile,
-               course: this.curse
-        }
-      })
-
-
-
-    })
-  
-  }
 }

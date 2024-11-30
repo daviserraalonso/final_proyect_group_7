@@ -17,7 +17,13 @@
             
         
                 @for (teacher of teachersList; track teacher.id) {
-                    <map-marker #teacherMarker="mapMarker" [position]="addMarkers(teacher?.details.lat, teacher?.details.lng)"  >
+                    <map-marker #teacherMarker="mapMarker" [position]="addMarkers(teacher?.details.lat, teacher?.details.lng)" (mapClick)="openInfoWindow(teacherMarker, infoWindow)"  >
+                      <map-info-window #infoWindow="mapInfoWindow" >
+                        <h5 class="fs-6 m-0">{{ teacher.name }}</h5>
+                        <hr class="m-1" noshade="noshade">
+                        <p class="m-1">Puntuacion: </p>
+                        <p class="m-1">Materia:</p>
+                    </map-info-window>
             
             
                     </map-marker>

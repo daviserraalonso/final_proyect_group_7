@@ -5,14 +5,14 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ScoreService } from '../../../../service/score.service';
 
 @Component({
   selector: 'app-score-teachers',
   standalone: true,
-  imports: [MatIconModule, NgClass, MatInputModule, MatFormFieldModule, MatCardModule, MatButtonModule ],
+  imports: [MatIconModule, NgClass, MatInputModule, MatFormFieldModule, MatCardModule, MatButtonModule, ReactiveFormsModule ],
   templateUrl: './score-teachers.component.html',
   styleUrl: './score-teachers.component.css'
 })
@@ -25,8 +25,8 @@ export class ScoreTeachersComponent {
 
   activeIconTeacher: number = -1
   activeIconCourse: number = -1
-  scoreTeacher: number = 0
-  scoreCourse: number = 0
+  scoreTeacher?: number | null
+  scoreCourse?: number | null
 
   scoreForm: FormGroup
 
@@ -43,10 +43,15 @@ export class ScoreTeachersComponent {
   ) {
     this.scoreForm = new FormGroup({
       studentId: new FormControl (null, []),
-      scoreTeacher: new FormControl(0,[]),
-      scoreCourse: new FormControl(0,[]),
+      scoreTeacher: new FormControl(null,[
+        Validators.required
+      ]),
+      scoreCourse: new FormControl(null,[
+        Validators.required
+      ]),
       idTeacher: new FormControl(null,[]),
-      idCourse: new FormControl(null, [] )
+      idCourse: new FormControl(null, [] ),
+      opinion: new FormControl(null, [])
     })
 
     console.log(data)
@@ -67,18 +72,18 @@ export class ScoreTeachersComponent {
   activatedIconTeacher(index: number) {
     this.activeIconTeacher = index
     this.scoreTeacher = index + 1
-    console.log(this.scoreTeacher)
+    this.scoreForm.get('scoreTeacher')?.patchValue(this.scoreTeacher)
   } 
 
   activatedIconCourse(index: number) {
     this.activeIconCourse = index
     this.scoreCourse = index + 1
-    console.log(this.scoreCourse)
+    this.scoreForm.get('scoreCourse')?.patchValue(this.scoreCourse)
   } 
 
   async getScore() {
-    this.scoreForm.get('scoreTeacher')?.patchValue(this.scoreTeacher)
-    this.scoreForm.get('scoreCourse')?.patchValue(this.scoreCourse)
+    
+    
     this.scoreForm.get('idTeacher')?.patchValue(this.idTeacher)
     this.scoreForm.get('idCourse')?.patchValue(this.idCourse)
     this.scoreForm.get('studentId')?.patchValue(this.studentId)
@@ -90,3 +95,26 @@ export class ScoreTeachersComponent {
 
 
 }
+
+
+// <button mat-button color="accent" class="btn btn-accent btn-sm"  (click)="openScoreModal(course.subject_id)">Puntuar</button>
+
+
+// curse: any
+//   openScoreModal(cursoId: number) {
+//     this.courseService.getCourseById(cursoId).subscribe((response) => {
+//       this.curse = response
+//       console.log(this.curse)
+
+//       this.dialog.open(ScoreTeachersComponent, {
+//         width: '400px',
+//         data: {user: this.studentProfile,
+//                course: this.curse
+//         }
+//       })
+
+
+
+//     })
+  
+//   }

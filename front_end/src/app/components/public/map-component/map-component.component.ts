@@ -1,7 +1,7 @@
 
 import { isPlatformBrowser, NgClass } from '@angular/common';
 import { Component, inject, PLATFORM_ID, signal, ViewChild} from '@angular/core';
-import { GoogleMap, GoogleMapsModule } from '@angular/google-maps';
+import { GoogleMap, GoogleMapsModule, MapInfoWindow, MapMarker } from '@angular/google-maps';
 import { MatIconModule } from '@angular/material/icon';
 import { PROFESORES } from '../search-teachers/datos.pruebas';
 import { SearchTeachersComponent } from "../search-teachers/search-teachers.component";
@@ -152,6 +152,11 @@ teachersList: any[] = []
     });
   }
 }
+
+openInfoWindow(marker: MapMarker, infoWindow: MapInfoWindow) {
+  infoWindow.open(marker)
+}
+
 
 
 
