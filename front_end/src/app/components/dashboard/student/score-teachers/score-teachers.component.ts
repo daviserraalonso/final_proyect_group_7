@@ -55,7 +55,7 @@ export class ScoreTeachersComponent {
       opinion: new FormControl(null, [])
     })
 
-    console.log(data)
+  
 
     this.name = this.data.user.name
     this.courseName = this.data.course.name
@@ -90,7 +90,6 @@ export class ScoreTeachersComponent {
     this.scoreForm.get('idTeacher')?.patchValue(this.idTeacher)
     this.scoreForm.get('idCourse')?.patchValue(this.idCourse)
     this.scoreForm.get('studentId')?.patchValue(this.studentId)
-    console.log(this.scoreForm.value)
     const score = await this.scoreService.insertScore(this.scoreForm.value)
     this.dialogRef.close()
   }
@@ -98,26 +97,3 @@ export class ScoreTeachersComponent {
 
 
 }
-
-
-// <button mat-button color="accent" class="btn btn-accent btn-sm"  (click)="openScoreModal(course.subject_id)">Puntuar</button>
-
-
-// curse: any
-//   openScoreModal(cursoId: number) {
-//     this.courseService.getCourseById(cursoId).subscribe((response) => {
-//       this.curse = response
-//       console.log(this.curse)
-
-//       this.dialog.open(ScoreTeachersComponent, {
-//         width: '400px',
-//         data: {user: this.studentProfile,
-//                course: this.curse
-//         }
-//       })
-
-
-
-//     })
-  
-//   }

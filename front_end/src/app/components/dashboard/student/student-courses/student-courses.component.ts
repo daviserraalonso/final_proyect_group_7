@@ -21,6 +21,8 @@ export class StudentCoursesComponent implements OnInit {
   courseServices = inject(CourseService)
   scoreServices = inject(ScoreService)
 
+  curse: any
+
   constructor(private studentService: StudentServiceService) {}
 
   ngOnInit(): void {
@@ -44,20 +46,14 @@ export class StudentCoursesComponent implements OnInit {
   }
 
 
-    verifyScore() {
 
-    }
-  curse: any
   openScoreModal(cursoId: number) {
-    console.log(cursoId)
     this.courseServices.getCourseById(cursoId).subscribe(async (response) => {
       this.curse = response
-      console.log(this.curse)
-
       const user = localStorage.getItem('user');
       const userId = user ? JSON.parse(user).id : null; 
       const params = new HttpParams().set('studentId', userId).set('idCourse', cursoId)
-      console.log(params)
+
       const scoreValid = await this.scoreServices.getScoreByIds(params)
       if(scoreValid) {
         return alert('Ya has valorado este curso')

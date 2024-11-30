@@ -1,8 +1,7 @@
 <section class="m-5">
-    <p>Hola {{name}}!</p>
-    <p>Enhorabuena por terminar el curso {{courseName}}</p>
+    <p>Hola! Nos interesa saber tu opinión</p>
         <form [formGroup]="scoreForm" (ngSubmit)="getScore()"   class="d-flex flex-column gap-2">
-        <mat-card >
+        <mat-card class="p-2" >
             <p><strong>Puntua al profesor</strong></p>
             <div>
                 @for (icon of iconsTeacher; track $index) {
@@ -12,7 +11,7 @@
             </div>
   
           </mat-card>
-          <mat-card class>
+          <mat-card class="p-2">
 
               
             <p><strong>Puntua al curso</strong></p>
@@ -25,7 +24,7 @@
 
 
           </mat-card>
-          <mat-card>
+          <mat-card class="p-2">
 
               <mat-form-field class="example-full-width m-2">
                 <mat-label>Dejanos tu comentario</mat-label>
