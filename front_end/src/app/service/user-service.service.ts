@@ -28,6 +28,9 @@ export class UserServiceService {
     return firstValueFrom(this.http.get<any[]>(this.baseUrl));
   }
 
+  getByIdTeacher(id: string): Promise<IUser[]> {
+    return firstValueFrom(this.http.get<IUser[]>(`${this.baseUrl}/${id}`))
+  }
   getAllPages(page: number = 1): Promise<IResponse> {
     return firstValueFrom(this.http.get<IResponse>(`${this.baseUrl}?page=${page}`)); 
   }
@@ -42,7 +45,7 @@ export class UserServiceService {
   
   // function to get user by Id, url no complete
   getById(id: string): Promise<UserAttributes> {
-    return firstValueFrom(this.http.get<UserAttributes>(this.baseUrl))
+    return firstValueFrom(this.http.get<UserAttributes>(`${this.baseUrl}/${id}`))
   }
 
   delete(userId: number): Promise<void> {

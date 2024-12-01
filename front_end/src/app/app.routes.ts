@@ -17,7 +17,8 @@ import { AllUsersComponent } from './components/dashboard/admin/all-users/all-us
 import { SubjectListComponent } from './components/dashboard/admin/subject-list/subject-list.component';
 import { CourseListComponent } from './components/dashboard/admin/course-list/course-list.component';
 import { StudentListComponent } from './components/common/studentList-component/studentList-component';
-
+import { StudentViewComponent } from './components/common/studentView/studentView';
+// import { getStudentsByteacher } from './controllers/CourseTeacherController';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/index', pathMatch: 'full' },
@@ -37,7 +38,7 @@ export const routes: Routes = [
     { path: 'subjects', component: SubjectListComponent },
     { path: 'courses', component: CourseListComponent },
     { path: 'lista-alumnos', component: StudentListComponent },
-
+    { path: 'user/:id', component: StudentViewComponent},
 
 
     { path: '**', redirectTo: '/index' } // route to 404

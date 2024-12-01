@@ -2,11 +2,12 @@
     <h3>Lista de Usuarios</h3>
     <hr>
     <div class="row">
+      @if (arrUsers.length > 1) {
       @for(user of arrUsers; track user.id){
       <article class="col-12 col-md-6 col-xl-4">
         <app-studentCard-component [miUser]="user"></app-studentCard-component>
       </article>
-      }
+      }}
     </div>
     <nav class="navegacion">
       <ul class="pagination">
