@@ -1,5 +1,6 @@
 .map {
     position: relative;
+    height: 50px;
   }
   
   .icon {
@@ -18,6 +19,15 @@
     width: 40px;
     align-content: center;
     text-align: center;  
+  }
+  
+  .cardActive {
+    display: none;
+  }
+
+  .mapIndex {
+    width: 100% !important;
+    display: inline !important;
   }
 
 

@@ -1,20 +1,76 @@
-<google-map class="map h-100" width="100%" (idle)="onMapChanges()" [options]="mapOptions()">
-
-    <div class="openButton">
-        <mat-icon class="icon" (click)="initLocation()" matSuffix>person</mat-icon>
+<div>
+    <div>
+        <app-search-teachers (newRadius)="getNewRadius($event)" (teachers)="getTeachersList($event)" [mapZoom]="mapZoom" [newbounds]="bounds"></app-search-teachers>
     </div>
 
-    <map-marker [position]="userPosition()"></map-marker>
-
-    @if (AAteacherFilter != []) {
-    @for (teacher of AAteacherFilter; track teacher.id) {
-        <map-marker #teacherMarker="mapMarker" [position]="addMarkers(teacher?.details.lat, teacher?.details.lng)"  >
+    <div class="d-flex flex-column flex-sm-row">
 
 
-        </map-marker>
-    }
-}
-</google-map>
+        <div [ngClass]="{ 'mapIndex': mapIndex, 'col': !mapIndex }">
+            <google-map class="map" width="100%" (idle)="onMapChanges()" [options]="mapOptions()">
+            
+                <div class="openButton">
+                    <mat-icon class="icon" (click)="initLocation()" matSuffix>person</mat-icon>
+                </div>
+            
+                <map-marker [position]="userPosition()"></map-marker>
+            
+        
+                @for (teacher of teachersList; track teacher.id) {
+                    <map-marker #teacherMarker="mapMarker" [position]="addMarkers(teacher?.details.lat, teacher?.details.lng)" (mapClick)="openInfoWindow(teacherMarker, infoWindow)"  >
+                      <map-info-window #infoWindow="mapInfoWindow" >
+                        <h5 class="fs-6 m-0">{{ teacher.name }}</h5>
+                        <hr class="m-1" noshade="noshade">
+                        <p class="m-1">Puntuacion: </p>
+                        <p class="m-1">Materia:</p>
+                    </map-info-window>
+            
+            
+                    </map-marker>
+                }
+            
+            </google-map>
+    
+        </div>
+
+
+        <div [class.cardActive]="cardActive" class="col d-flex flex-column test">
+            <div [class.cardActive]="cardActive" class="card_container">
+              @for (teacher of teachersList; track $index) {
+                <mat-card class="d-flex flex-row justify-content-between mb-2" appearance="outlined">
+                  <div class="d-flex flex-column pt-2 ps-2">
+                    <div class="d-flex flex-row gap-3">
+                      <img mat-card-avatar class="rounded-circle" src="https://material.angular.io/assets/img/examples/shiba2.jpg" >
+                      <mat-card-title>{{teacher.name}}</mat-card-title>
+                      
+                      
+                    </div>
+                    <div class="d-flex justify-content-start mt-auto">
+                      <a (click)="openDialog($event, teacher)"><small class="text">Ver detalles</small></a>
+            
+                    </div>
+            
+                  </div>
+                  <div class="p-2">
+                    <p>Puntuacion: ⭐️</p>
+                    <p class="m-0">Precio:</p>
+                    <p class="m-0">Materia: matematicas, programacion</p>
+          
+                  </div>
+          
+             
+                </mat-card>
+              }
+            </div>
+          
+          
+            </div>
+
+    </div>
+
+
+</div>
+
 
 
 

@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteCourse = exports.updateCourse = exports.createCourse = exports.getCourseById = exports.getCourses = void 0;
+exports.getOnlineCourses = exports.getPresentialCourses = exports.deleteCourse = exports.updateCourse = exports.createCourse = exports.getCourseById = exports.getCourses = void 0;
 const Course_1 = __importDefault(require("../models/Course"));
 // Obtener todos los cursos
 const getCourses = async (req, res) => {
@@ -100,3 +100,32 @@ const deleteCourse = async (req, res) => {
     }
 };
 exports.deleteCourse = deleteCourse;
+// get presential courses
+const getPresentialCourses = async (req, res) => {
+    try {
+        const presentialCourses = await Course_1.default.findAll({
+            where: { modality_id: 1 },
+        });
+        console.log(presentialCourses);
+        res.status(200).json(presentialCourses);
+    }
+    catch (error) {
+        console.error('Error al obtener los cursos presenciales:', error);
+        res.status(500).json({ message: 'Error al obtener los cursos presenciales.' });
+    }
+};
+exports.getPresentialCourses = getPresentialCourses;
+// get online courses
+const getOnlineCourses = async (req, res) => {
+    try {
+        const onlineCourses = await Course_1.default.findAll({
+            where: { modality_id: 2 },
+        });
+        res.status(200).json(onlineCourses);
+    }
+    catch (error) {
+        console.error('Error al obtener los cursos online:', error);
+        res.status(500).json({ message: 'Error al obtener los cursos online.' });
+    }
+};
+exports.getOnlineCourses = getOnlineCourses;

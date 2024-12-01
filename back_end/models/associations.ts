@@ -1,4 +1,4 @@
-import User from './User';
+import User from './user';
 import UserDetails from './UserDetails';
 import Course from './Course';
 import StudentCourse from './StudentCourse';
@@ -8,9 +8,13 @@ import CourseEvent from './CourseEvent';
 import Chat from './Chat';
 import Message from './Message';
 import CourseLocation from './CourseLocation';
+import Category from './Category';
+import ProfessorRating from './ProfessorRating';
+import AvgTeacher from './avg_teacher'
+import AvgCourse from './avg_course';
 
 export default function setupAssociations() {
-  // **Relación User -> UserDetails**
+  // ** Relation User -> UserDetails**
   User.hasOne(UserDetails, {
     foreignKey: {
       name: 'userId',
@@ -31,7 +35,7 @@ export default function setupAssociations() {
     onUpdate: 'CASCADE',
   });
 
-  // **Relación Course -> User (Profesor)**
+  // ** Relation Course -> User (Profesor)**
   Course.belongsTo(User, {
     foreignKey: {
       name: 'professor_id',
@@ -52,7 +56,7 @@ export default function setupAssociations() {
     onUpdate: 'CASCADE',
   });
 
-  // **Relación Course -> Modality**
+  // ** Relation Course -> Modality**
   Course.belongsTo(Modality, {
     foreignKey: {
       name: 'modality_id',
@@ -63,28 +67,24 @@ export default function setupAssociations() {
     onUpdate: 'CASCADE',
   });
 
-  // **Relación Course -> StudentCourse**
-  Course.hasMany(StudentCourse, {
-    foreignKey: {
-      name: 'courseId',
-      allowNull: false,
-    },
-    as: 'studentCourses',
-    onDelete: 'CASCADE',
-    onUpdate: 'CASCADE',
-  });
-
+  // association StudentCourse -> Course
   StudentCourse.belongsTo(Course, {
-    foreignKey: {
-      name: 'courseId',
-      allowNull: false,
-    },
+    foreignKey: 'courseId',
     as: 'course',
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   });
 
-  // **Relación Subject -> Course**
+  // association Course -> StudentCourse
+  Course.hasMany(StudentCourse, {
+    foreignKey: 'courseId',
+    as: 'studentCourses',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  });
+
+
+  // ** Relation Subject -> Course**
   Subject.belongsTo(Course, {
     foreignKey: {
       name: 'courseId',
@@ -105,7 +105,7 @@ export default function setupAssociations() {
     onUpdate: 'CASCADE',
   });
 
-  // **Relación CourseEvent -> Subject**
+  // ** Relation CourseEvent -> Subject**
   CourseEvent.belongsTo(Subject, {
     foreignKey: {
       name: 'subjectId',
@@ -126,7 +126,7 @@ export default function setupAssociations() {
     onUpdate: 'CASCADE',
   });
 
-  // **Relación StudentCourse -> User (Estudiante)**
+  // ** Relation StudentCourse -> User (Estudiante)**
   StudentCourse.belongsTo(User, {
     foreignKey: {
       name: 'studentId',
@@ -147,7 +147,7 @@ export default function setupAssociations() {
     onUpdate: 'CASCADE',
   });
 
-  // **Relación Chat -> Course**
+  // ** Relation Chat -> Course**
   Chat.belongsTo(Course, {
     foreignKey: {
       name: 'courseId',
@@ -158,7 +158,7 @@ export default function setupAssociations() {
     onUpdate: 'CASCADE',
   });
 
-  // **Relación Chat -> User (Profesor)**
+  // ** Relation Chat -> User (Profesor)**
   Chat.belongsTo(User, {
     foreignKey: {
       name: 'professorId',
@@ -169,7 +169,7 @@ export default function setupAssociations() {
     onUpdate: 'CASCADE',
   });
 
-  // **Relación Chat -> User (Estudiante)**
+  // ** Relation Chat -> User (Estudiante)**
   Chat.belongsTo(User, {
     foreignKey: {
       name: 'studentId',
@@ -180,7 +180,7 @@ export default function setupAssociations() {
     onUpdate: 'CASCADE',
   });
 
-  // **Relación Message -> Chat**
+  // ** Relation Message -> Chat**
   Message.belongsTo(Chat, {
     foreignKey: {
       name: 'chatId',
@@ -202,14 +202,14 @@ export default function setupAssociations() {
     onUpdate: 'CASCADE',
   });
 
-  // **Relación Message -> User (Sender)**
+  // ** Relation Message -> User (Sender)**
   Message.belongsTo(User, {
     foreignKey: {
       name: 'senderId',
       allowNull: false,
     },
     as: 'sender',
-    onDelete: 'CASCADE', // Cambia a SET NULL si es necesario
+    onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   });
 
@@ -219,7 +219,48 @@ export default function setupAssociations() {
       allowNull: false,
     },
     as: 'sentMessages',
-    onDelete: 'CASCADE', // Cambia a SET NULL si es necesario
+    onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   });
+
+  // ** Relation Course -> Category**
+  Course.belongsTo(Category, {
+    foreignKey: {
+      name: 'category_id',
+      allowNull: false,
+    },
+    as: 'category',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  });
+
+  Category.hasMany(Course, {
+    foreignKey: {
+      name: 'category_id',
+      allowNull: false,
+    },
+    as: 'courses',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  });
+
+  // **Relación User -> Profesor Rating**
+  User.hasOne(AvgTeacher,{
+    as: 'averageTeacher',
+    foreignKey: 'id'
+  })
+
+  //**Relación Profesor Rating -> avg_teacher */
+  ProfessorRating.hasOne(AvgTeacher, {
+    foreignKey: 'professorId',
+    as: 'averageTeacher'
+  })
+
+  //**Relación Profesor Rating -> avg_course ->  */
+  ProfessorRating.hasOne(AvgCourse, {
+    foreignKey: 'courseId',
+    as: 'averageCourse'
+  })
+
+
 }
