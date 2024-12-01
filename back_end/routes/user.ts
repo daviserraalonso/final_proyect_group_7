@@ -14,7 +14,7 @@ import {
   getUserSubscribedCourses
 } from '../controllers/UserController';
 import LoginController from '../controllers/LoginController';
-
+import { getStudentsByteacher } from '../controllers/CourseTeacherController';
 const router = Router();
 
 router.get('/:id/courses', getUserSubscribedCourses);
@@ -34,5 +34,6 @@ router.post('/register', registerUser);
 router.get('/confirm/:token', confirmEmail);
 router.post('/login', LoginController.login);
 router.get('/', getAllUsers);
+router.get('/profesor/:professorId/alumnos', getStudentsByteacher);
 
 module.exports = router;

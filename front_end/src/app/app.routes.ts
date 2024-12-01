@@ -18,7 +18,7 @@ import { SubjectListComponent } from './components/dashboard/admin/subject-list/
 import { CourseListComponent } from './components/dashboard/admin/course-list/course-list.component';
 import { StudentListComponent } from './components/common/studentList-component/studentList-component';
 import { StudentViewComponent } from './components/common/studentView/studentView';
-// import { getStudentsByteacher } from './controllers/CourseTeacherController';
+
 
 export const routes: Routes = [
     { path: '', redirectTo: '/index', pathMatch: 'full' },
