@@ -1,84 +1,78 @@
-@import url("//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css");
+/* Importar la fuente Roboto */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
 
-.container{
-    height: 70vh;
-    width: 80%;
-    margin-top: 6%;
-    margin-bottom: 10%;
-    background:#fff; 
-    border-radius: 10px; 
-    box-shadow:15px 20px 20px 20px rgba(0,0,0,0.1);
+body {
+    font-family: 'Roboto', sans-serif; 
 }
-.carousel-inner{
-    border-radius:0 10px 10px 0;
+
+.container {
+    max-width: 600px; 
+    margin-top: 5%;
+    padding: 80px; 
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0px 15px 40px rgba(0, 0, 0, 0.1);
 }
-.carousel-caption{
-    text-align:left; left:5%;
-}
-.login-sec{
-    padding: 50px 30px; 
-    position:relative;
-}
-.login-sec .copy-text{
-    position:absolute; 
-    width:80%; 
-    bottom:20px; 
-    font-size:13px; 
-    text-align:center;
-}
-.login-sec .copy-text i{
-    color:#FEB58A;
-}
-.login-sec .copy-text a{
-    color:#E36262;
-}
-.login-sec h2{
-    margin-bottom:30px; 
-    font-weight:800; 
-    font-size:30px; 
+
+.login-sec h2 {
+    font-size: 36px; 
     color: #DE6262;
-}
-.login-sec h2:after{
-    content:" "; 
-    width:100px; 
-    height:5px; 
-    background:#FEB58A; 
-    display:block; 
-    margin-top:20px; 
-    border-radius:3px; 
-    margin-left:auto;
-    margin-right:auto
-}
-.btn-login{
-    background: #DE6262; 
-    color:#fff; 
-    font-weight:600;
-}
-.banner-text{
-    width:70%; 
-    position:absolute; 
-    bottom:40px; 
-    padding-left:20px;
-}
-.banner-text h2{
-    color:#fff; 
-    font-weight:600;
-}
-.banner-text h2:after{
-    content:" "; 
-    width:100px; 
-    height:5px; 
-    background:#FFF; 
-    display:block; 
-    margin-top:20px; 
-    border-radius:3px;
-}
-.banner-text p{
-    color:#fff;
+    margin-bottom: 40px; 
+    text-align: center;
 }
 
-@media (min-width: 768px) {
+.login-sec h2::after {
+    content: '';
+    width: 80px;
+    height: 4px;
+    background: #FEB58A;
+    display: block;
+    margin: 15px auto;
+    border-radius: 2px;
+}
+
+.form-group label {
+    font-weight: 500;
+    font-size: 16px; 
+    color: #444;
+}
+
+.form-control {
+    border-radius: 12px;
+    padding: 15px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    transition: border-color 0.3s;
+}
+
+.form-control:focus {
+    border-color: #DE6262;
+    box-shadow: 0 0 8px rgba(74, 144, 226, 0.2);
+}
+
+.btn-login {
+    background: #DE6262;
+    color: white;
+    font-weight: 700;
+    font-size: 18px;
+    padding: 12px 30px;
+    border-radius: 12px;
+    transition: background-color 0.3s;
+}
+
+.btn-login:hover {
+    background-color: #d62f2f;
+}
+
+.form-check small {
+    color: #666;
+    font-size: 14px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
     .container {
-        width: 50%;
+        width: 90%;
+        margin-top: 10%;
     }
 }
