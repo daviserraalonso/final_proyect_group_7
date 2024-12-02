@@ -1,11 +1,13 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import { sendConfirmationEmail } from '../services/emailService';
-import User from '../models/User';
+import User from '../models/user';
 import UserDetails from '../models/UserDetails';
 import Course from '../models/Course';
-import { Op } from 'sequelize';
+import { Op, Sequelize } from 'sequelize';
 import StudentCourse from '../models/StudentCourse';
+import ProfessorRating from '../models/ProfessorRating';
+import AvgTeacher from '../models/avg_teacher';
 const jwt = require('jsonwebtoken');
 
 
@@ -17,7 +19,10 @@ const jwt = require('jsonwebtoken');
  */
 export const registerUser = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { name, email, password, roleId, isValidated, lat, lng, phone, address } = req.body;
+    const { name, email, password, roleId, isValidated, lat, lng, phone, address, isEnrollment, courseId } = req.body;
+
+    console.log('Datos recibidos:', req.body);
+
 
     // Verificar si el usuario ya existe
     const existingUser = await User.findOne({ where: { email } });
@@ -48,6 +53,22 @@ export const registerUser = async (req: Request, res: Response): Promise<void> =
       lat,
       lng
     })
+
+    // check if it´s inscription to course
+    if (isEnrollment) {
+      if (!courseId) {
+        res.status(400).json({ message: 'El ID del curso es obligatorio para la inscripción.' });
+        return;
+      }
+
+      // Insert in student_course
+      const enrollmentDate = new Date();
+      await StudentCourse.create({
+        studentId: userId,
+        courseId,
+        enrollmentDate,
+      });
+    }
 
     // not return password in response
     const { password: _, ...userWithoutPassword } = user.get({ plain: true });
@@ -300,22 +321,26 @@ export const searchTeachers = async (req: Request, res: Response) => {
     roleId: 2,
     isValidated: 1,
     ...(type && {
-      '$course.modality_id$': type,
+      '$coursesTaught.modality_id$': type,
     }),
     ...(inputName && {name: inputName}),
     ...(inputCity && {
       '$details.address$': inputCity}),
     ...(selectedCategory && {
-      '$course.category_id$': selectedCategory,
+      '$coursesTaught.category_id$': selectedCategory,
     }),
     ...(minPrice && { [Op.or]:[
-      {'$course.price$': {[Op.between]:[minPrice, maxPrice]}},
-      {'$course.price$': null}
+      {'$coursesTaught.price$': {[Op.between]:[minPrice, maxPrice]}},
+      {'$coursesTaught.price$': null}
     ]}),
     ...(southWestLat && southWestLng && northEastLat && northEastLng && {
       '$details.lat$': { [Op.between]: [southWestLat, northEastLat] },
       '$details.lng$': { [Op.between]: [southWestLng, northEastLng] },
-    })
+    }),
+    ...(score && { [Op.or] : [
+      {'$averageTeacher.avg$': {[Op.gte]: score}},
+      {'$averageTeacher.avg$': null } 
+    ]}),
     
   }
   
@@ -332,10 +357,18 @@ export const searchTeachers = async (req: Request, res: Response) => {
         },
         {
           model: Course,
-          as: 'course',
+          as: 'coursesTaught',
           attributes: ['price', 'modality_id', 'category_id'],
-        }
+        },
+        {
+          model: AvgTeacher,
+          as: 'averageTeacher',
+          attributes: ['avg'],
+
+        },
       ],
+
+
     });
 
     res.status(200).json(teachers);

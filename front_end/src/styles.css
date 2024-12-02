@@ -3,3 +3,19 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+.custom-modal .mat-mdc-dialog-container {
+  box-sizing: border-box; /* Asegura que el padding no reduzca el tamaño del contenido */
+  border-radius: 8px; /* Bordes redondeados */
+  width: 100%; /* Ancho personalizado */
+  max-width: 900px; /* Ancho máximo */
+}
+
+.custom-modal .mat-mdc-dialog-content {
+  padding: 50px; /* Espaciado para el contenido */
+}
+
+.custom-modal .mat-mdc-dialog-actions {
+  padding: 16px 24px; /* Espaciado para los botones */
+}
+
+

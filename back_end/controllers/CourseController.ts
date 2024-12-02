@@ -96,4 +96,33 @@ export const deleteCourse = async (req: Request, res: Response) => {
     console.error('Error al eliminar el curso:', error);
     res.status(500).json({ message: 'Error al eliminar el curso.' });
   }
+  
 };
+
+// get presential courses
+export const getPresentialCourses = async (req: Request, res: Response) => {
+  try {
+    const presentialCourses = await Course.findAll({
+      where: { modality_id: 1 },
+    });
+    console.log(presentialCourses)
+    res.status(200).json(presentialCourses);
+  } catch (error) {
+    console.error('Error al obtener los cursos presenciales:', error);
+    res.status(500).json({ message: 'Error al obtener los cursos presenciales.' });
+  }
+};
+
+// get online courses
+export const getOnlineCourses = async (req: Request, res: Response) => {
+  try {
+    const onlineCourses = await Course.findAll({
+      where: { modality_id: 2 },
+    });
+    res.status(200).json(onlineCourses);
+  } catch (error) {
+    console.error('Error al obtener los cursos online:', error);
+    res.status(500).json({ message: 'Error al obtener los cursos online.' });
+  }
+};
+
