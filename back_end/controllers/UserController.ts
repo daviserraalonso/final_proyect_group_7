@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import { sendConfirmationEmail } from '../services/emailService';
-import User from '../models/user';
+import User from '../models/User';
 import UserDetails from '../models/UserDetails';
 import Course from '../models/Course';
 import { Op, Sequelize } from 'sequelize';

@@ -6,10 +6,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = require("sequelize");
 const database_1 = __importDefault(require("../config/database"));
 class StudentCourse extends sequelize_1.Model {
-    // No declares propiedades públicas aquí
-    // Métodos de Sequelize
+    // method sequalize
     getCourse;
-    // Propiedades de asociación
+    // associations properties
     course;
 }
 StudentCourse.init({

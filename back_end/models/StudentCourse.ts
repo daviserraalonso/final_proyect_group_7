@@ -1,15 +1,13 @@
 import { Model, DataTypes } from 'sequelize';
 import sequelize from '../config/database';
 import Course from './Course';
-import User from './user';
 
 class StudentCourse extends Model {
-  // No declares propiedades públicas aquí
-
-  // Métodos de Sequelize
+  
+  // method sequalize
   public getCourse!: () => Promise<Course>;
 
-  // Propiedades de asociación
+  // associations properties
   public readonly course?: Course;
 }
 
