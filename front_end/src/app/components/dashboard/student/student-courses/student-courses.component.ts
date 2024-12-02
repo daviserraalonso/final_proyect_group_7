@@ -7,6 +7,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ScoreTeachersComponent } from '../score-teachers/score-teachers.component';
 import { CourseService } from '../../../../service/course.service';
 import { ScoreService } from '../../../../service/score.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-student-courses',
@@ -47,7 +48,7 @@ export class StudentCoursesComponent implements OnInit {
 
 
 
-  openScoreModal(cursoId: number) {
+  openScoreModal(cursoId: number): void {
     this.courseServices.getCourseById(cursoId).subscribe(async (response) => {
       this.curse = response
       const user = localStorage.getItem('user');
@@ -55,19 +56,29 @@ export class StudentCoursesComponent implements OnInit {
       const params = new HttpParams().set('studentId', userId).set('idCourse', cursoId)
 
       const scoreValid = await this.scoreServices.getScoreByIds(params)
-      if(scoreValid) {
-        return alert('Ya has valorado este curso')
-      }
+      if(!scoreValid) {
       this.dialog.open(ScoreTeachersComponent, {
         width: '400px',
         data: {user: userId,
                course: this.curse
         }
       })
+    }
+    if(scoreValid) {
+      Swal.fire({
+        title: "Error",
+        text: "Ya has valorado este curso",
+        width: 400,
+        confirmButtonText: `
+       Ok! <i class="fa fa-thumbs-up"></i>
+      `,
+        imageUrl: 'assets/logo.png',
+        imageAlt: 'Icon image',
+        imageHeight: 80,
+        imageWidth: 60,
 
-
-
+      });
+    }
     })
-  
   }
 }

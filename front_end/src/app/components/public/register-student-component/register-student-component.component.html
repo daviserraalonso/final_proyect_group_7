@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-10 login-sec">
-        <h4 class="text-center">{{headerForm}}</h4>
+        <h4 class="text-center">Registrarse como alumno</h4>
 
         <form class="card" [formGroup]="registerStudent" (ngSubmit)="getdataForm()">
 
@@ -57,7 +57,7 @@
             </button>
           </mat-form-field>
           <button type="submit" class="custom-btn mt-3 mb-3" [disabled]="!registerStudent.valid">
-            {{ textButton }}
+            Enviar
           </button>
         </form>
       </div>
