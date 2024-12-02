@@ -167,7 +167,7 @@ export const getUserDetails = async (req: Request, res: Response): Promise<void>
         {
           model: UserDetails,
           as: 'details',
-          attributes: ['phone', 'address', 'img_url', 'description'],
+          attributes: ['phone', 'address', 'img_url', 'description', 'lat', 'lng'],
         },
       ],
     });

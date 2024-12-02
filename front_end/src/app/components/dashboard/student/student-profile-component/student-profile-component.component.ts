@@ -23,6 +23,7 @@ import { CourseDetailsComponent } from '../course-details/course-details.compone
 import { CourseService } from '../../../../service/course.service';
 import { ScoreTeachersComponent } from '../score-teachers/score-teachers.component';
 import { response } from 'express';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-student-profile-component',
@@ -115,6 +116,17 @@ export class StudentProfileComponentComponent implements OnInit {
         // update student profile
         this.serviceStudentDetails.getUserDetails(this.studentProfile.id).then(updatedProfile => {
           this.studentProfile = updatedProfile;
+          Swal.fire({
+            text: 'Usuario actualizado',
+            width: 400,
+            showConfirmButton: false,
+            imageUrl: 'assets/logo.png',
+            imageAlt: 'Icon image',
+            imageHeight: 80,
+            imageWidth: 60,
+            timer: 2500
+   
+          });
         }).catch(error => {
           console.error('Error al actualizar el perfil del estudiante:', error);
         });
