@@ -301,6 +301,25 @@ export const getTeachers = async (req: Request, res: Response) => {
   }
 };
 
+/**
+ * FUNCTION TO GET ALL STUDENT
+ * @param req 
+ * @param res 
+ */
+export const getStudents = async (req: Request, res: Response) => {
+  try {
+    const students = await User.findAll({
+      where: { roleId: 3 },
+    });
+
+    res.status(200).json(students);
+  } catch (error) {
+    console.error('Error al obtener estudiantes:', error);
+    res.status(500).json({ message: 'Error al obtener estudiantes' }); // Maneja errores
+  }
+};
+
+
 export const searchTeachers = async (req: Request, res: Response) => {
   console.log(req.query)
   const {

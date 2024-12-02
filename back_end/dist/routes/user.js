@@ -14,6 +14,7 @@ router.put('/:id', UserController_1.modifyUser);
 router.delete('/:id', UserController_1.deleteUser);
 // general routes
 router.get('/teachers', UserController_1.getTeachers);
+router.get('/students', UserController_1.getStudents);
 router.get('/search', UserController_1.searchTeachers);
 router.get('/names', UserController_1.names);
 router.get('/cities', UserController_1.cities);

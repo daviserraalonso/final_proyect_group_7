@@ -28,6 +28,11 @@ export class UserServiceService {
     return firstValueFrom(this.http.get<any[]>(this.baseUrl));
   }
 
+  getAllStudents(): Promise<IUser[]> {
+    return firstValueFrom(this.http.get<IUser[]>(`${this.baseUrl}/students`));
+  }
+
+
   getByIdTeacher(id: string): Promise<IUser[]> {
     return firstValueFrom(this.http.get<IUser[]>(`${this.baseUrl}/${id}`))
   }

@@ -11,6 +11,7 @@ import {
   deleteUser,
   getUserDetails,
   getTeachers,
+  getStudents,
   getUserSubscribedCourses
 } from '../controllers/UserController';
 
@@ -25,6 +26,7 @@ router.delete('/:id', deleteUser);
 
 // general routes
 router.get('/teachers', getTeachers);
+router.get('/students', getStudents);
 router.get('/search', searchTeachers);
 router.get('/names', names);
 router.get('/cities', cities);

@@ -3,16 +3,17 @@ import { StudentCardComponent } from "../../common/studentCard/studentCard-compo
 import { IUser } from '../../../interfaces/iUser';
 import { UserServiceService } from '../../../service/user-service.service';
 import { IResponse } from '../../../interfaces/iresponse.interface';
-
+import { CommonModule } from '@angular/common';
 
 
 @Component({
   selector: 'app-studentList-component',
   standalone: true,
-  imports: [StudentCardComponent],
+  imports: [StudentCardComponent, CommonModule,],
   templateUrl: './studentList-component.html',
   styleUrl: './studentList-component.css'
 })
+
 export class StudentListComponent {
   arrUsers: IUser[] = [];
   usersServices = inject(UserServiceService);
@@ -22,7 +23,7 @@ export class StudentListComponent {
 
  async ngOnInit() {
     try {
-      this.arrUsers = await this.usersServices.getAllTeacher();
+      this.arrUsers = await this.usersServices.getAllStudents();
     } catch (error) {
       console.error('Error al obtener usuarios:', error);
     }

@@ -47,7 +47,7 @@ export const routes: Routes = [
     { path: 'all-users', component: AllUsersComponent },
     { path: 'subjects', component: SubjectListComponent },
     { path: 'courses', component: CourseListComponent },
-    { path: 'lista-alumnos', component: StudentListComponent },
+    { path: 'student-list', component: StudentListComponent },
     { path: 'user/:id', component: StudentViewComponent},
 
 

@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getUserSubscribedCourses = exports.cityCords = exports.cities = exports.names = exports.searchTeachers = exports.getTeachers = exports.deleteUser = exports.modifyUser = exports.getUserDetails = exports.getAllUsers = exports.createUser = exports.confirmEmail = exports.registerUser = void 0;
+exports.getUserSubscribedCourses = exports.cityCords = exports.cities = exports.names = exports.searchTeachers = exports.getStudents = exports.getTeachers = exports.deleteUser = exports.modifyUser = exports.getUserDetails = exports.getAllUsers = exports.createUser = exports.confirmEmail = exports.registerUser = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const emailService_1 = require("../services/emailService");
 const User_1 = __importDefault(require("../models/User"));
@@ -261,6 +261,24 @@ const getTeachers = async (req, res) => {
     }
 };
 exports.getTeachers = getTeachers;
+/**
+ * FUNCTION TO GET ALL STUDENT
+ * @param req
+ * @param res
+ */
+const getStudents = async (req, res) => {
+    try {
+        const students = await User_1.default.findAll({
+            where: { roleId: 3 },
+        });
+        res.status(200).json(students);
+    }
+    catch (error) {
+        console.error('Error al obtener estudiantes:', error);
+        res.status(500).json({ message: 'Error al obtener estudiantes' }); // Maneja errores
+    }
+};
+exports.getStudents = getStudents;
 const searchTeachers = async (req, res) => {
     console.log(req.query);
     const { inputName, inputCity, selectedCategory, minPrice, maxPrice, score, southWestLat, southWestLng, northEastLat, northEastLng, type } = req.query;

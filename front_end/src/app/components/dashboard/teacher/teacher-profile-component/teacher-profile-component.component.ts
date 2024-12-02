@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarConfig, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatIconModule } from '@angular/material/icon';
@@ -21,6 +22,8 @@ import { CalendarDialogComponent } from '../../../common/calendar-dialog/calenda
 import { FormsModule } from '@angular/forms';
 import { TaskManagerComponentComponent } from '../../../common/task-manager-component/task-manager-component.component';
 import { RouterLink } from '@angular/router';
+import { UserServiceService } from '../../../../service/user-service.service';
+
 
 
 
@@ -47,13 +50,14 @@ import { RouterLink } from '@angular/router';
     MatFormFieldModule,
     MatDatepickerModule,
     FormsModule,
-    RouterLink
-
-    
+    RouterLink,
+    CommonModule    
   ],
+
   templateUrl: './teacher-profile-component.component.html',
   styleUrl: './teacher-profile-component.component.css'
 })
+
 export class TeacherProfileComponentComponent {
   teacherProfile = {
     name: 'Ana Gómez',
@@ -62,6 +66,8 @@ export class TeacherProfileComponentComponent {
     address: 'Calle Falsa 123, Ciudad, País',
     photoUrl: 'https://via.placeholder.com/150'
   };
+
+  
 
   //TAREAS
   tasks: any[] = [];
@@ -117,11 +123,16 @@ export class TeacherProfileComponentComponent {
   // Fecha seleccionada
   selectedDate: Date | null = null;
 
-  constructor(public dialog: MatDialog, private snackBar: MatSnackBar) {}
+  constructor(public dialog: MatDialog, private snackBar: MatSnackBar, private userService: UserServiceService ) {}
 
   get recentMessages() {
     return this.messages.slice(-5).reverse();
   }
+
+  ngOnInit(): void {
+    this.loadStudents(); 
+  }
+
 
   openMessageDialog(): void {
     const dialogRef = this.dialog.open(MessageComponentComponent, {
@@ -182,6 +193,18 @@ export class TeacherProfileComponentComponent {
   reviewTask(task: any): void {
     console.log('Revisar Tarea:', task);
     // Aquí podrías implementar lógica adicional, como abrir un diálogo para revisar o actualizar el estado de la tarea
+  }
+
+  async loadStudents(): Promise<void> {
+    try {
+      const users = await this.userService.getAllStudents();
+      this.students = users.map(user => ({
+        name: user.name,
+        progress: Math.random() * 100 // Generar un valor simulado
+      }));
+    } catch (error) {
+      console.error('Error al cargar los estudiantes:', error);
+    }
   }
 }
 

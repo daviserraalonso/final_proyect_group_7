@@ -15,7 +15,7 @@ const categoriesRoutes = require('./routes/categories');
 const modalitiesRoutes = require('./routes/modalities');
 const contactRoutes = require('./routes/contactRoutes');
 const taskRoutes = require('./routes/taskRoutes');
-const studentCoursesRoutes = require('./routes/strudentCoursesRoutes');
+const studentCoursesRoutes = require('./routes/studentCoursesRoutes');
 const scoreRoutes = require('./routes/scoreRoutes');
 // config dotenv
 dotenv.config();
