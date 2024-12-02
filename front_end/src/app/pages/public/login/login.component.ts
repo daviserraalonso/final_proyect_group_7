@@ -41,6 +41,7 @@ export class LoginComponent {
 
             localStorage.setItem('user', JSON.stringify(response.user));
             localStorage.setItem('token', response.token);
+            localStorage.setItem('url_rol', response.redirectTo)
 
             console.log(response.redirectTo)
             if(this.router.url.includes('looking-teachers') && this.dialog) return this.dialog.close()
