@@ -102,3 +102,7 @@
   font-weight: bold;
   color: #007BFF;
 }
+.sidebar-image {
+  width: 10%;
+  max-width: 40%;
+}
