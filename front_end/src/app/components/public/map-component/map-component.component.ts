@@ -10,6 +10,7 @@ import { LoginComponent } from '../../../pages/public/login/login.component';
 import { MatDialog } from '@angular/material/dialog';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
+import { TeacherViewComponent } from '../../common/teacher-view/teacher-view.component';
 
 
 
@@ -141,7 +142,7 @@ teachersList: any[] = []
       })
     } else {
     event.preventDefault(); 
-    this.dialog.open(LoginComponent, { // aqui se carga el componente de la vista del profesor
+    this.dialog.open(TeacherViewComponent, { // aqui se carga el componente de la vista del profesor
       width: '90%',
       height:'90%', 
       maxWidth: 'none',

@@ -12,6 +12,7 @@ const sequelize_1 = require("sequelize");
 const StudentCourse_1 = __importDefault(require("../models/StudentCourse"));
 const avg_teacher_1 = __importDefault(require("../models/avg_teacher"));
 const User_1 = __importDefault(require("../models/User"));
+const Category_1 = __importDefault(require("../models/Category"));
 const jwt = require('jsonwebtoken');
 /**
  * Function to register user
@@ -303,7 +304,14 @@ const searchTeachers = async (req, res) => {
                 {
                     model: Course_1.default,
                     as: 'coursesTaught',
-                    attributes: ['price', 'modality_id', 'category_id'],
+                    attributes: ['name', 'price', 'modality_id', 'category_id'],
+                    include: [
+                        {
+                            model: Category_1.default,
+                            as: 'category',
+                            attributes: ['category_name']
+                        }
+                    ]
                 },
                 {
                     model: avg_teacher_1.default,

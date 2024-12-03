@@ -7,6 +7,7 @@ import { Op, Sequelize } from 'sequelize';
 import StudentCourse from '../models/StudentCourse';
 import AvgTeacher from '../models/avg_teacher';
 import User from '../models/User';
+import Category from '../models/Category';
 const jwt = require('jsonwebtoken');
 
 
@@ -356,7 +357,14 @@ export const searchTeachers = async (req: Request, res: Response) => {
         {
           model: Course,
           as: 'coursesTaught',
-          attributes: ['price', 'modality_id', 'category_id'],
+          attributes: ['name', 'price', 'modality_id', 'category_id'],
+          include: [
+            {
+              model: Category,
+              as: 'category',
+              attributes: ['category_name']
+            }
+          ]
         },
         {
           model: AvgTeacher,

@@ -1,0 +1,14 @@
+<div class="comment p-2">
+    @for (comment of arrComments; track $index) {
+        <mat-card class="p-2">
+            <div class="mb-2">
+                @for (icon of score; track $index) {
+                    <mat-icon class="score" aria-hidden="false" aria-label="Example home icon" fontIcon="star_rate"></mat-icon>
+                }
+
+            </div>
+            <p>{{comment.comments}}</p>
+        </mat-card>
+    }
+</div>
+    
