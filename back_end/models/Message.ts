@@ -2,14 +2,7 @@
 import { Model, DataTypes } from 'sequelize';
 import sequelize from '../config/database';
 
-class Message extends Model {
-    public id!: number;
-    public chatId!: number;
-    public senderId!: number;
-    public content!: string;
-    public createdAt!: Date;
-    public isRead?: boolean;
-}
+class Message extends Model {}
 
 Message.init(
   {
@@ -38,6 +31,10 @@ Message.init(
       allowNull: false,
       field: 'createdAt',
     },
+    updatedAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+    },
     isRead: {
       type: DataTypes.BOOLEAN,
       allowNull: true,
@@ -48,7 +45,7 @@ Message.init(
   {
     sequelize,
     modelName: 'Message',
-    tableName: 'messages',
+    tableName: 'message',
     timestamps: true,
   }
 );

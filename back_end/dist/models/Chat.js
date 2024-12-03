@@ -8,20 +8,16 @@ const sequelize_1 = require("sequelize");
 const database_1 = __importDefault(require("../config/database"));
 class Chat extends sequelize_1.Model {
     id;
-    courseId;
-    professorId;
     studentId;
+    professorId;
+    createdAt;
+    updatedAt;
 }
 Chat.init({
     id: {
         type: sequelize_1.DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
-    },
-    courseId: {
-        type: sequelize_1.DataTypes.INTEGER,
-        allowNull: false,
-        field: 'courseId',
     },
     professorId: {
         type: sequelize_1.DataTypes.INTEGER,
