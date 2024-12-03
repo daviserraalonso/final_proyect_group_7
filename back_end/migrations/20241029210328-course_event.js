@@ -1,8 +1,8 @@
-'use strict';
+"use strict";
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('course_event', {
+    await queryInterface.createTable("course_event", {
       id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -12,21 +12,21 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'course',
-          key: 'id',
+          model: "course",
+          key: "id",
         },
-        onDelete: 'CASCADE',
+        onDelete: "CASCADE",
       },
       subjectId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'subject',
-          key: 'id',
+          model: "subject",
+          key: "id",
         },
-        onDelete: 'SET NULL',
+        onDelete: "SET NULL",
       },
       eventType: {
-        type: Sequelize.ENUM('class', 'task'),
+        type: Sequelize.ENUM("class", "task"),
         allowNull: false,
       },
       title: {
@@ -45,16 +45,16 @@ module.exports = {
         allowNull: false,
       },
       locationType: {
-        type: Sequelize.ENUM('physical', 'online'),
+        type: Sequelize.ENUM("physical", "online"),
         allowNull: false,
       },
       locationId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'course_location',
-          key: 'id',
+          model: "course_location",
+          key: "id",
         },
-        onDelete: 'SET NULL',
+        onDelete: "SET NULL",
       },
       onlineLink: {
         type: Sequelize.STRING,
@@ -68,16 +68,16 @@ module.exports = {
       },
       createdAt: {
         type: Sequelize.DATE,
-        defaultValue: Sequelize.fn('NOW'),
+        defaultValue: Sequelize.fn("NOW"),
       },
       updatedAt: {
         type: Sequelize.DATE,
-        defaultValue: Sequelize.fn('NOW'),
+        defaultValue: Sequelize.fn("NOW"),
       },
     });
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('course_event');
+    await queryInterface.dropTable("course_event");
   },
 };

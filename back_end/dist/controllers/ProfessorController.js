@@ -33,7 +33,7 @@ const getStudentsByProfessor = async (req, res) => {
             replacements: { professorId }, // Sustituye el :professorId en la consulta
             type: sequelize_1.QueryTypes.SELECT, // Indica que queremos un resultado SELECT
         });
-        // Agregar la URL de la imagen generada dinámicamente
+        // Agregar la URL de la image n generada dinámicamente
         const studentsWithImages = students.map((student) => ({
             ...student,
             student_image: `https://robohash.org/${encodeURIComponent(student.student_name)}?set=set4`,
