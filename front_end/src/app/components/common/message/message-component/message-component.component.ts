@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA  } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -8,20 +8,21 @@ import { MatSelectModule } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-
 @Component({
   selector: 'app-message-component',
   standalone: true,
-  imports: [MatFormFieldModule,
+  imports: [
+    MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
     MatSelectModule,
     FormsModule,
     MatDialogModule,
-  CommonModule,
-ReactiveFormsModule],
+    CommonModule,
+    ReactiveFormsModule
+  ],
   templateUrl: './message-component.component.html',
-  styleUrl: './message-component.component.css'
+  styleUrls: ['./message-component.component.css']
 })
 export class MessageComponentComponent {
   messageForm: FormGroup;

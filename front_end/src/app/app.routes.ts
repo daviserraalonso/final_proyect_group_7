@@ -22,6 +22,7 @@ import { PresentialCoursesComponent } from './components/public/academic-offerin
 import { OnlineCoursesComponent } from './components/public/academic-offerings/online-courses/online-courses.component';
 import { MapComponentComponent } from './components/public/map-component/map-component.component';
 import { ScoreTeachersComponent } from './components/dashboard/student/score-teachers/score-teachers.component';
+import { TeacherStudentViewComponent } from './components/dashboard/teacher/teacher-student-view/teacher-student-view.component';
 
 
 export const routes: Routes = [
@@ -46,6 +47,9 @@ export const routes: Routes = [
     { path: 'subjects', component: SubjectListComponent },
     { path: 'courses', component: CourseListComponent },
     {path: 'prueba', component: ScoreTeachersComponent},
+    {path: 'mis-alumnos', component: TeacherStudentViewComponent},
+
+    
 
 
 

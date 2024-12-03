@@ -1,21 +1,21 @@
 @import 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css';
 
-.student-cards {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-}
-
-.student-card {
-  width: 300px;
+mat-card {
+  margin: 16px;
   animation: fadeIn 1s;
 }
 
-.mat-card-header {
+mat-card-header {
+  background-color: #f5f5f5;
   display: flex;
   align-items: center;
 }
 
 .mat-card-avatar {
   margin-right: 16px;
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: space-between;
 }

@@ -8,39 +8,29 @@
           {{ student }}
         </mat-option>
       </mat-select>
-      @if ("messageForm.get('selectedStudent')?.hasError('required')") {
-        <mat-error>
-          El alumno es obligatorio
-        </mat-error>
-      }
+      <mat-error *ngIf="messageForm.get('selectedStudent')?.hasError('required')">
+        El alumno es obligatorio
+      </mat-error>
     </mat-form-field>
     <mat-form-field class="full-width">
       <mat-label>Asunto</mat-label>
       <input matInput formControlName="subject">
-      @if ("messageForm.get('subject')?.hasError('required')") {
-        <mat-error>
-          El asunto es obligatorio
-        </mat-error>
-      }
-      @if ("messageForm.get('subject')?.hasError('minlength')") {
-        <mat-error>
-          El asunto debe tener al menos 3 caracteres
-        </mat-error>
-      }
+      <mat-error *ngIf="messageForm.get('subject')?.hasError('required')">
+        El asunto es obligatorio
+      </mat-error>
+      <mat-error *ngIf="messageForm.get('subject')?.hasError('minlength')">
+        El asunto debe tener al menos 3 caracteres
+      </mat-error>
     </mat-form-field>
     <mat-form-field class="full-width">
       <mat-label>Contenido</mat-label>
       <textarea matInput formControlName="content" placeholder="Escribe tu mensaje aquí..." rows="10" mat-autosize matAutosizeMinRows="5" matAutosizeMaxRows="15"></textarea>
-      @if ("messageForm.get('content')?.hasError('required')") {
-        <mat-error>
-          El contenido del mensaje es obligatorio
-        </mat-error>
-      }
-      @if ("messageForm.get('content')?.hasError('maxlength')") {
-        <mat-error>
-          El contenido del mensaje no puede exceder los 500 caracteres
-        </mat-error>
-      }
+      <mat-error *ngIf="messageForm.get('content')?.hasError('required')">
+        El contenido del mensaje es obligatorio
+      </mat-error>
+      <mat-error *ngIf="messageForm.get('content')?.hasError('maxlength')">
+        El contenido del mensaje no puede exceder los 500 caracteres
+      </mat-error>
     </mat-form-field>
   </form>
 </div>
