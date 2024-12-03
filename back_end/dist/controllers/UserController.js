@@ -148,7 +148,7 @@ const getUserDetails = async (req, res) => {
                 {
                     model: UserDetails_1.default,
                     as: 'details',
-                    attributes: ['phone', 'address', 'img_url', 'description'],
+                    attributes: ['phone', 'address', 'img_url', 'description', 'lat', 'lng'],
                 },
             ],
         });
