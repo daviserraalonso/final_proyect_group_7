@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 import sequelize from '../config/database';
 import { QueryTypes } from 'sequelize';
 import Course from '../models/Course';
-import User from '../models/user';
 import StudentCourse from '../models/StudentCourse';
 
 export const getStudentsByProfessor = async (req: Request, res: Response): Promise<Response> => {
