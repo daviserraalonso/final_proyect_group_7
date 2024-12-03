@@ -6,4 +6,9 @@
   .dropdown-menu .dropdown-item:hover {
     background-color: #e9ecef;
   }
+
+  .img {
+    height: 25px;
+    margin: 3px;
+  }
   

@@ -42,7 +42,7 @@ export class PresentialCoursesComponent {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         console.log(`Usuario inscrito: ${result.username}, Curso: ${result.courseName}`);
-        alert(`Inscripción confirmada para el curso: ${result.courseName}`);
+        
       }
     });
   }

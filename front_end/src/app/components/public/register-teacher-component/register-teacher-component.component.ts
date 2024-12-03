@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UserServiceService } from '../../../service/user-service.service';
 import { UserAttributes } from '../../../interfaces/userAttributes';
 import { GoogleMapsModule } from '@angular/google-maps';
+import Swal from 'sweetalert2'
 
 
 
@@ -26,8 +27,6 @@ export class RegisterTeacherComponentComponent {
   router = inject(Router);
   activateRoute = inject(ActivatedRoute);
   userServices = inject(UserServiceService)
-  headerForm: string = 'Registrarse como profesor' // header of form
-  textButton: string = 'Enviar' // text of button submit
   registerTeacher: FormGroup;
   selectedPlace: any;
 
@@ -77,53 +76,7 @@ export class RegisterTeacherComponentComponent {
   }
   
 
-  // recovery user data to update
-ngOnInit() {
-  this.activateRoute.params.subscribe(async (params: any) => {
-  if (params.id) {
-    //if user exists change text of header and button
-  this.headerForm = 'Actualizar el usuario'
-  this.textButton = 'Actualizar datos'
-  const user: UserAttributes = await this.userServices.getById(params.id)
 
-  this.registerTeacher = new FormGroup({
-    id: new FormControl(user.id, []),
-    name: new FormControl(user.name, [
-      Validators.required,
-      Validators.minLength(3)
-    ]),
-    email: new FormControl(user.email, [
-      Validators.required,
-      Validators.pattern(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/)
-    ]),
-    phone: new FormControl(user.phone, [
-      Validators.required
-    ]),
-    address: new FormControl(null, [ // city ​​field missing in interface
-      Validators.required,
-      Validators.minLength(3)
-    ]),
-    lat: new FormControl(user.lat, [
-      Validators.required
-    ]),
-    lng: new FormControl(user.lng, [
-      Validators.required
-    ]),
-    password: new FormControl(user.password, [
-      Validators.required,
-      Validators.minLength(8),
-      Validators.pattern(/^(?=.*[A-Za-z]).+$/), // required one letter
-      Validators.pattern(/^(?=.*[A-Z]).+$/), //required one capital letter
-      Validators.pattern(/^(?=.*\d).+$/), // required one number
-      Validators.pattern(/^(?=.*[@$!%*?&]).+$/), // requider special caracter
-    ]),
-    repeatPassword: new FormControl(user.password, []),
-    roleId: new FormControl(user.roleId, [
-      Validators.required
-    ])
-  }, [this.checkPassword])    
-  }
-})}
 
 
 // verify that the two passwords are the same
@@ -160,27 +113,27 @@ clickEvent2(event: MouseEvent) {
 
 // sending form data to the service
 async getdataForm() {
-  console.log(this.registerTeacher.value)
-  if (this.registerTeacher.value._id) {
-    try {
-      const user: UserAttributes = await this.userServices.update(this.registerTeacher.value)     
-      if (user.id) {
-        alert('Usuario actualizado')
-      this.router.navigate([''])
-    }    
-    } catch (error) {
-      console.log(error) 
-    }
-  } else {
     try {
       const user: UserAttributes = await this.userServices.insert(this.registerTeacher.value)
       if(user.id) {
+        Swal.fire({
+          text: `Enhorabuena ${user.name}, te has registrado con exito`,
+          footer: 'Tu usuario queda pendiente de validación por el administrador',
+          width: 400,
+          showConfirmButton: false,
+          imageUrl: 'assets/logo.png',
+          imageAlt: 'Icon image',
+          imageHeight: 80,
+          imageWidth: 60,
+          timer: 4000
+ 
+        });
         this.router.navigate([''])
         this.registerTeacher.reset()
       }
     } catch (error) {   
     }
-  }
+  
   }
 
 
