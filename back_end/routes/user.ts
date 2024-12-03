@@ -12,7 +12,8 @@ import {
   getUserDetails,
   getTeachers,
   getUserSubscribedCourses,
-  getFavoriteTeachers // Importa la nueva función
+  getFavoriteTeachers, // Importa la nueva función
+  validate
 } from '../controllers/UserController';
 
 import LoginController from '../controllers/LoginController';
@@ -36,6 +37,7 @@ router.get('/:city', cityCords);
 router.post('/register', registerUser);
 router.get('/confirm/:token', confirmEmail);
 router.post('/login', LoginController.login);
+router.put('/:userId/validate', validate)
 router.get('/', getAllUsers);
 
 module.exports = router;

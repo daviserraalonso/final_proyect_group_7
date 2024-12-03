@@ -29,6 +29,7 @@ export const sendConfirmationEmail = async (to: string, subject: string, html: s
   }
 };
 
+
 // function to send email contact form
 export const sendContactEmail = async (name: string, email: string, message: string): Promise<void> => {
   const mailOptions = {
