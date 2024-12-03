@@ -142,11 +142,11 @@ teachersList: any[] = []
       })
     } else {
     event.preventDefault(); 
-    this.dialog.open(TeacherViewComponent, { // aqui se carga el componente de la vista del profesor
+    this.dialog.open(TeacherViewComponent, { 
       width: '90%',
       height:'90%', 
       maxWidth: 'none',
-      maxHeight: 'none',
+      maxHeight: 'max-content',
       data: {
         teacher: teacher
       },
