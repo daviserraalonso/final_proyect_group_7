@@ -28,7 +28,7 @@ module.exports = {
         startDateTime: new Date(),
         endDateTime: new Date(new Date().setHours(new Date().getHours() + 1)),
         locationType: "online",
-        locationId: "enlace_2",
+        locationId: 2,
         onlineLink: "https://submit-task-programming.com",
         deadline: new Date(new Date().setDate(new Date().getDate() + 7)),
         isRead: false,

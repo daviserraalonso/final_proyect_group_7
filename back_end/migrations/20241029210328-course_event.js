@@ -50,6 +50,7 @@ module.exports = {
       },
       locationId: {
         type: Sequelize.INTEGER,
+        allowNull: true,
         references: {
           model: "course_location",
           key: "id",
