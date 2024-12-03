@@ -1,4 +1,4 @@
-import User from './user';
+import User from './User';
 import UserDetails from './UserDetails';
 import Course from './Course';
 import StudentCourse from './StudentCourse';
@@ -147,17 +147,6 @@ export default function setupAssociations() {
     onUpdate: 'CASCADE',
   });
 
-  // ** Relation Chat -> Course**
-  Chat.belongsTo(Course, {
-    foreignKey: {
-      name: 'courseId',
-      allowNull: false,
-    },
-    as: 'course',
-    onDelete: 'CASCADE',
-    onUpdate: 'CASCADE',
-  });
-
   // ** Relation Chat -> User (Profesor)**
   Chat.belongsTo(User, {
     foreignKey: {
@@ -197,7 +186,7 @@ export default function setupAssociations() {
       name: 'chatId',
       allowNull: false,
     },
-    as: 'messages',
+    as: 'message',
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   });
@@ -261,6 +250,19 @@ export default function setupAssociations() {
     foreignKey: 'courseId',
     as: 'averageCourse'
   })
+
+
+  // relation avgTeacher user
+  AvgTeacher.belongsTo(User, {
+    foreignKey: 'professorId',
+    as: 'User'
+  });
+
+  User.hasMany(AvgTeacher, {
+    foreignKey: 'professorId',
+    as: 'AvgTeacher'
+  });
+
 
 
 }

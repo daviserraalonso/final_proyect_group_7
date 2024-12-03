@@ -5,11 +5,13 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { MessageDetailComponentComponent } from '../message/message-detail-component/message-detail-component.component';
-import { MessageComponentComponent } from '../message/message-component/message-component.component';
-import { ReplyMessageComponent } from '../reply-message/reply-message.component';
+import { HttpClientModule } from '@angular/common/http';
+import { InboxService } from '../../../service/inbox.service';
 import { CustomSnackbarComponent } from '../custom-snackbar/custom-snackbar.component';
 import { MatButton } from '@angular/material/button';
+import { MessageDialogComponent } from '../message-dialog/message-dialog.component';
+import { CommonModule } from '@angular/common';
+import { NewMessageDialogComponent } from '../new-message-dialog/new-message-dialog.component';
 
 @Component({
   selector: 'app-inbox',
@@ -26,81 +28,81 @@ import { MatButton } from '@angular/material/button';
     MatButton,
     MatCardContent,
     MatCardActions,
-    
+    HttpClientModule,
+    CommonModule
   ],
   templateUrl: './inbox.component.html',
-  styleUrl: './inbox.component.css'
+  styleUrls: ['./inbox.component.css'],
 })
 export class InboxComponent {
-  messages = [
-    { subject: 'Reunión de seguimiento', sender: 'Juan Pérez', content: 'Tenemos una reunión programada para el próximo lunes.' },
-    { subject: 'Entrega de Proyecto', sender: 'María López', content: 'Por favor, entrega el proyecto antes del viernes.' },
-    { subject: 'Recordatorio de pago', sender: 'Carlos Fernández', content: 'Recuerda realizar el pago antes de final de mes.' },
-  ];
+  chats: any[] = []; // Datos de los chats obtenidos de la API
+  userId: number = JSON.parse(localStorage.getItem('user') || '{}').id;
 
-  constructor(private dialog: MatDialog, private snackBar: MatSnackBar) {}
+  constructor(
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar,
+    private inboxService: InboxService
+  ) {}
 
-  showCustomSnackBar(message: string): void { 
-    // Abre la snackbar con el componente personalizado
+  ngOnInit(): void {
+    this.loadChats();
+  }
+
+  /**
+   * LOAD CHAT FROM API
+   */
+  loadChats(): void {
+    if (!this.userId) {
+      this.showCustomSnackBar('No se encontró el usuario autenticado');
+      return;
+    }
+
+    this.inboxService.getMessages(this.userId).subscribe(
+      (response: any) => {
+        this.chats = response.map((chat: any) => ({
+          ...chat,
+          lastMessage: chat.message?.[chat.message.length - 1] || null,
+        }));
+      },
+      (error) => {
+        console.error('Error al cargar los chats:', error);
+        this.showCustomSnackBar('Error al cargar los chats');
+      }
+    );
+  }
+
+
+  showCustomSnackBar(message: string): void {
     this.snackBar.openFromComponent(CustomSnackbarComponent, {
       duration: 3000,
       horizontalPosition: 'center',
       data: message,
       direction: 'rtl',
-      panelClass: ['custom-snackbar']
+      panelClass: ['custom-snackbar'],
     });
   }
-  openMessageDialog(message: any): void {
-    const dialogRef = this.dialog.open(MessageDetailComponentComponent, {
-      data: message,
+
+
+  /**
+   * INIT MODAL TO INIT NEW CHAT
+   */
+  newMessage(): void {
+    const dialogRef = this.dialog.open(NewMessageDialogComponent, {
       width: '500px',
     });
-
+  
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.snackBar.open('Mensaje revisado', 'Cerrar', { duration: 3000 });
+        alert('Mensaje enviado con éxito');
       }
     });
   }
+  
 
-  replyMessage(message: any): void {
-    const dialogRef = this.dialog.open(ReplyMessageComponent, {
-      width: '90%',
-      height:'90%', // Ajusta el ancho del diálogo aquí
-      maxWidth: 'none',
-      maxHeight: 'none',
-      data: { students: this.getStudents(), replyTo: message.sender }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.messages.push(result);
-        this.showCustomSnackBar('Mensaje enviado');
-      }
-    });
-  }
-
-  getStudents(): string[] {
-    // Aquí puedes obtener la lista de estudiantes desde un servicio o una propiedad
-    return ['Juan Pérez', 'María López', 'Carlos Fernández'];
-  }
-
-  newMessage(): void {
-    const dialogRef = this.dialog.open(MessageComponentComponent, {
-      width: '75%',
-      height:'75%', // Ajusta el ancho del diálogo aquí
-      maxWidth: 'none',
-      maxHeight: 'none',
-      data: { students: this.getStudents() }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.messages.push(result);
-        this.showCustomSnackBar('Mensaje enviado');
-      }
+  openChat(chat: any): void {
+    this.dialog.open(MessageDialogComponent, {
+      width: '500px',
+      data: { chat },
     });
   }
 }
-
-

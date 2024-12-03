@@ -11,22 +11,20 @@ AvgTeacher.init({
     id: {
         type: sequelize_1.DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true,
+        autoIncrement: true
     },
     professorId: {
         type: sequelize_1.DataTypes.INTEGER,
-        allowNull: false,
-        field: 'professorId',
+        allowNull: false
     },
     avg: {
         type: sequelize_1.DataTypes.FLOAT,
-        allowNull: false,
-        field: 'avg'
+        allowNull: false
     }
 }, {
     sequelize: database_1.default,
     modelName: 'AvgTeacher',
     tableName: 'avg_teacher',
-    timestamps: false,
+    timestamps: false
 });
 exports.default = AvgTeacher;

@@ -20,6 +20,7 @@ export class SideBarComponent implements OnInit {
 
   isAuthenticated: boolean = false;
   role: string = '';
+  role_url: string | null = ""
 
   studentProfile = {
     name: 'Juan Pérez',
@@ -67,6 +68,9 @@ export class SideBarComponent implements OnInit {
         this.role = role; // asiggn role
       }
     }
+
+    this.role_url = localStorage.getItem('url_rol')
+    console.log(this.role_url)
   }
 
   openMenu() {
