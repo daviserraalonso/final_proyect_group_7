@@ -3,10 +3,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getUserSubscribedCourses = exports.cityCords = exports.cities = exports.names = exports.searchTeachers = exports.getTeachers = exports.deleteUser = exports.modifyUser = exports.getUserDetails = exports.getAllUsers = exports.createUser = exports.confirmEmail = exports.registerUser = void 0;
+exports.getFavoriteTeachers = exports.getUserSubscribedCourses = exports.cityCords = exports.cities = exports.names = exports.searchTeachers = exports.getTeachers = exports.deleteUser = exports.modifyUser = exports.getUserDetails = exports.getAllUsers = exports.createUser = exports.confirmEmail = exports.registerUser = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const emailService_1 = require("../services/emailService");
-const user_1 = __importDefault(require("../models/user"));
+const User_1 = __importDefault(require("../models/User"));
 const UserDetails_1 = __importDefault(require("../models/UserDetails"));
 const Course_1 = __importDefault(require("../models/Course"));
 const sequelize_1 = require("sequelize");
@@ -24,7 +24,7 @@ const registerUser = async (req, res) => {
         const { name, email, password, roleId, isValidated, lat, lng, phone, address, isEnrollment, courseId } = req.body;
         console.log('Datos recibidos:', req.body);
         // Verificar si el usuario ya existe
-        const existingUser = await user_1.default.findOne({ where: { email } });
+        const existingUser = await User_1.default.findOne({ where: { email } });
         if (existingUser) {
             res.status(400).json({ message: 'Este correo electrónico ya está registrado.' });
             return;
@@ -33,7 +33,7 @@ const registerUser = async (req, res) => {
         const saltRounds = 10;
         const hashedPassword = await bcrypt_1.default.hash(password, saltRounds);
         // Crear el nuevo usuario
-        const user = await user_1.default.create({
+        const user = await User_1.default.create({
             name,
             email,
             password: hashedPassword,
@@ -96,7 +96,7 @@ const confirmEmail = async (req, res) => {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         const userId = decoded.userId;
         // update user to validated a 1 if token is valid
-        const [updatedRows] = await user_1.default.update({ isValidated: 1 }, { where: { id: userId, isValidated: 0 } } // only if user is not validated
+        const [updatedRows] = await User_1.default.update({ isValidated: 1 }, { where: { id: userId, isValidated: 0 } } // only if user is not validated
         );
         // check if email it´s validated
         if (updatedRows > 0) {
@@ -127,7 +127,7 @@ const createUser = async (req, res) => {
 exports.createUser = createUser;
 const getAllUsers = async (req, res) => {
     try {
-        const users = await user_1.default.findAll({
+        const users = await User_1.default.findAll({
             attributes: ['id', 'name', 'email', 'isValidated', 'roleId'],
         });
         res.json(users); // Envía los usuarios
@@ -141,7 +141,7 @@ exports.getAllUsers = getAllUsers;
 const getUserDetails = async (req, res) => {
     try {
         const userId = req.params.id;
-        const user = await user_1.default.findOne({
+        const user = await User_1.default.findOne({
             where: { id: userId },
             attributes: ['id', 'name', 'email'],
             include: [
@@ -184,7 +184,7 @@ const modifyUser = async (req, res) => {
             ...(hashedPassword && { password: hashedPassword }),
         };
         if (Object.keys(userUpdateData).length > 0) {
-            await user_1.default.update(userUpdateData, { where: { id: userId } });
+            await User_1.default.update(userUpdateData, { where: { id: userId } });
         }
         // Manejar UserDetails
         const existingDetails = await UserDetails_1.default.findOne({ where: { userId } });
@@ -228,7 +228,7 @@ exports.modifyUser = modifyUser;
 const deleteUser = async (req, res) => {
     try {
         const userId = req.params.id;
-        const deleted = await user_1.default.destroy({
+        const deleted = await User_1.default.destroy({
             where: { id: userId }
         });
         if (deleted) {
@@ -251,7 +251,7 @@ exports.deleteUser = deleteUser;
  */
 const getTeachers = async (req, res) => {
     try {
-        const teachers = await user_1.default.findAll({
+        const teachers = await User_1.default.findAll({
             where: { roleId: 2 },
         });
         res.status(200).json(teachers);
@@ -292,7 +292,7 @@ const searchTeachers = async (req, res) => {
     };
     try {
         console.log(filters);
-        const teachers = await user_1.default.findAll({
+        const teachers = await User_1.default.findAll({
             where: filters,
             include: [
                 {
@@ -321,7 +321,7 @@ const searchTeachers = async (req, res) => {
 exports.searchTeachers = searchTeachers;
 const names = async (req, res, next) => {
     try {
-        const names = await user_1.default.findAll({
+        const names = await User_1.default.findAll({
             where: { roleId: 2 },
             attributes: ['name']
         });
@@ -334,7 +334,7 @@ const names = async (req, res, next) => {
 exports.names = names;
 const cities = async (req, res, next) => {
     try {
-        const names = await user_1.default.findAll({
+        const names = await User_1.default.findAll({
             where: { roleId: 2 },
             attributes: [],
             include: [{
@@ -379,7 +379,7 @@ const getUserSubscribedCourses = async (req, res) => {
                     as: 'course',
                     include: [
                         {
-                            model: user_1.default,
+                            model: User_1.default,
                             as: 'professor',
                             attributes: ['name', 'email'],
                         },
@@ -388,7 +388,7 @@ const getUserSubscribedCourses = async (req, res) => {
             ],
         });
         const courses = subscribedCourses.map((uc) => {
-            const course = uc.get('course'); // Asegúrate de que esto sea un Course
+            const course = uc.get('course');
             if (course) {
                 const professor = course.get('professor');
                 return {
@@ -397,7 +397,7 @@ const getUserSubscribedCourses = async (req, res) => {
                 };
             }
             return null;
-        }).filter((course) => course !== null); // Filtra los cursos nulos
+        }).filter((course) => course !== null);
         if (!courses || courses.length === 0) {
             res.status(404).json({ message: 'No estás suscrito a ningún curso.' });
             return;
@@ -410,3 +410,35 @@ const getUserSubscribedCourses = async (req, res) => {
     }
 };
 exports.getUserSubscribedCourses = getUserSubscribedCourses;
+const getFavoriteTeachers = async (req, res) => {
+    try {
+        const teachers = await avg_teacher_1.default.findAll({
+            where: {
+                avg: { [sequelize_1.Op.gte]: 6 } // avg >= 6
+            },
+            include: [
+                {
+                    model: User_1.default,
+                    as: 'User',
+                    attributes: ['id', 'name']
+                }
+            ]
+        });
+        console.log('Resultados de la consulta:', teachers);
+        // Formatear la respuesta
+        const favoriteTeachers = teachers.map((teacher) => ({
+            id: teacher.User?.id,
+            name: teacher.User?.name,
+            description: teacher.User?.description || 'Sin descripción disponible.',
+            image: teacher.User?.image || `https://randomuser.me/api/portraits/men/${teacher.User?.id % 100}.jpg`,
+            avg: teacher.avg
+        }));
+        console.log('Profesores formateados:', favoriteTeachers);
+        res.status(200).json(favoriteTeachers);
+    }
+    catch (error) {
+        console.error('Error al obtener profesores favoritos:', error);
+        res.status(500).json({ message: 'Error al obtener profesores favoritos' });
+    }
+}; // end class
+exports.getFavoriteTeachers = getFavoriteTeachers;

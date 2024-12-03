@@ -1,12 +1,24 @@
 // models/chat.ts
-import { Model, DataTypes } from 'sequelize';
+import { Model, DataTypes, Optional } from 'sequelize';
 import sequelize from '../config/database';
 
-class Chat extends Model {
-    public id!: number;
-    public courseId!: number;
-    public professorId!: number;
-    public studentId!: number;
+// Definir los atributos del modelo
+interface ChatAttributes {
+  id: number; // Este es el campo clave primaria
+  studentId: number;
+  professorId: number;
+}
+
+// Para crear, omitir el campo `id` porque se genera automáticamente
+interface ChatCreationAttributes extends Optional<ChatAttributes, 'id'> {}
+
+class Chat extends Model<ChatAttributes, ChatCreationAttributes> implements ChatAttributes {
+  public id!: number;
+  public studentId!: number;
+  public professorId!: number;
+
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
 }
 
 Chat.init(
@@ -15,11 +27,6 @@ Chat.init(
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
-    },
-    courseId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      field: 'courseId',
     },
     professorId: {
       type: DataTypes.INTEGER,

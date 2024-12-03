@@ -10,9 +10,10 @@
     "skipLibCheck": true,
     "moduleResolution": "node",
     "lib": ["ES2022"],
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitAny": false
 
   },
-  "include": ["./**/*.ts", "services/emailService.ts"],
+  "include": ["./**/*.ts", "./models/**/*.js", "services/emailService.ts"],
   "exclude": ["node_modules"]
 }

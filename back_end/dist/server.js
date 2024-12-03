@@ -18,6 +18,7 @@ const taskRoutes = require('./routes/taskRoutes');
 const studentCoursesRoutes = require('./routes/strudentCoursesRoutes');
 const professorRoutes = require('./routes/professor');
 const scoreRoutes = require('./routes/scoreRoutes');
+const ChatRoutes = require('./routes/ChatRoutes');
 // config dotenv
 dotenv.config();
 const app = express();
@@ -51,6 +52,7 @@ app.use('/api/contact', contactRoutes);
 app.use('/api/tasks', taskRoutes);
 app.use('/api/student-courses', studentCoursesRoutes);
 app.use('/api/score', scoreRoutes);
+app.use('/api/chats', ChatRoutes);
 app.use('/api/professors', professorRoutes);
 // init server
 app.listen(port, () => {
