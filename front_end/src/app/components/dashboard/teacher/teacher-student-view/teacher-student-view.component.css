@@ -1,0 +1,10 @@
+
+.student-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.student-card {
+  width: 300px;
+}

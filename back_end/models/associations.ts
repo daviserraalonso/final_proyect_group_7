@@ -74,6 +74,7 @@ export default function setupAssociations() {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   });
+  
 
   // association Course -> StudentCourse
   Course.hasMany(StudentCourse, {

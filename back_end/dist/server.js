@@ -16,6 +16,7 @@ const modalitiesRoutes = require('./routes/modalities');
 const contactRoutes = require('./routes/contactRoutes');
 const taskRoutes = require('./routes/taskRoutes');
 const studentCoursesRoutes = require('./routes/strudentCoursesRoutes');
+const professorRoutes = require('./routes/professor');
 const scoreRoutes = require('./routes/scoreRoutes');
 // config dotenv
 dotenv.config();
@@ -50,6 +51,7 @@ app.use('/api/contact', contactRoutes);
 app.use('/api/tasks', taskRoutes);
 app.use('/api/student-courses', studentCoursesRoutes);
 app.use('/api/score', scoreRoutes);
+app.use('/api/professors', professorRoutes);
 // init server
 app.listen(port, () => {
     console.log(`Servidor Node escuchando en http://localhost:${port}`);

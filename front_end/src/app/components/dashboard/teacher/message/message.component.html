@@ -1,0 +1,10 @@
+
+<h2>Enviar Mensaje a {{ data.student.name }}</h2>
+<mat-form-field appearance="fill">
+  <mat-label>Mensaje</mat-label>
+  <textarea matInput [(ngModel)]="message"></textarea>
+</mat-form-field>
+<div class="actions">
+  <button mat-button (click)="sendMessage()">Enviar</button>
+  <button mat-button (click)="dialogRef.close()">Cancelar</button>
+</div>

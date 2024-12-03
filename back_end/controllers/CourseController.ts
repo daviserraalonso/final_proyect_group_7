@@ -27,6 +27,8 @@ export const getCourseById = async (req: Request, res: Response) => {
   }
 };
 
+
+
 // Crear un nuevo curso
 export const createCourse = async (req: Request, res: Response) => {
   console.log('Datos recibidos:', req.body);
