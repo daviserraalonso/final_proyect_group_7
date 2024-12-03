@@ -33,10 +33,12 @@ Message.init({
         type: sequelize_1.DataTypes.DATE,
         allowNull: false,
         field: 'createdAt',
+        defaultValue: database_1.default.literal('CURRENT_TIMESTAMP'),
     },
     updatedAt: {
         type: sequelize_1.DataTypes.DATE,
         allowNull: false,
+        defaultValue: database_1.default.literal('CURRENT_TIMESTAMP'),
     },
     isRead: {
         type: sequelize_1.DataTypes.BOOLEAN,
