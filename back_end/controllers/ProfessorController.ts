@@ -34,7 +34,7 @@ export const getStudentsByProfessor = async (req: Request, res: Response): Promi
       type: QueryTypes.SELECT,       // Indica que queremos un resultado SELECT
     });
 
-    // Agregar la URL de la imagen generada dinámicamente
+    // Agregar la URL de la image n generada dinámicamente
     const studentsWithImages = (students as any[]).map((student) => ({
       ...student,
       student_image: `https://robohash.org/${encodeURIComponent(student.student_name)}?set=set4`,

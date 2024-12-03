@@ -1,0 +1,25 @@
+{
+    "development": {
+        "username": "root",
+        "password": "Lucas555",
+        "database": "TeacherAppDB",
+        "host": "127.0.0.1",
+        "port": 3306,
+        "dialect": "mysql",
+        "seeders-path": "./seeders"
+    },
+    "test": {
+        "username": "root",
+        "password": "",
+        "database": "TeacherAppDB",
+        "host": "127.0.0.1",
+        "dialect": "mysql"
+    },
+    "production": {
+        "username": "root",
+        "password": "",
+        "database": "TeacherAppDB",
+        "host": "127.0.0.1",
+        "dialect": "mysql"
+    }
+}
