@@ -1,13 +1,14 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-const User = require('../models/User');
+import User from '../models/User';
 
 async function findUserByEmail(email: string) {
   return await User.findOne({ where: { email } });
 }
 
 class LoginController {
+
   async login(req: Request, res: Response): Promise<void> {
     const { email, password } = req.body;
 
