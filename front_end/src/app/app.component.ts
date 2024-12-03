@@ -8,6 +8,7 @@ import { SearchTeachersComponent } from "./components/public/search-teachers/sea
 import { SideBarComponent } from './components/common/side-bar/side-bar.component';
 import { CommonModule } from '@angular/common';
 import { AuthService } from './service/auth-service.service';  
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -17,10 +18,12 @@ import { AuthService } from './service/auth-service.service';
     HeaderPublicComponentComponent, 
     FooterPublicComponentComponent, 
     SideBarComponent, 
-    CommonModule],
+    CommonModule,
+  ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css' // Cambié styleUrl a styleUrls
+  styleUrls: ['./app.component.css'] // Cambiado a styleUrls
 })
+
 export class AppComponent implements OnInit {
   isAuthenticated: boolean = false;
   userRole: string | null = null;
@@ -28,10 +31,9 @@ export class AppComponent implements OnInit {
   constructor(private authService: AuthService) {}
 
   ngOnInit() {
-    this.isAuthenticated = this.authService.isAuthenticated(); // Obtiene el estado de autenticación actual
-    this.userRole = this.authService.getRole(); // Obtiene el rol del usuario// Obtiene el rol del usuario
+    this.isAuthenticated = this.authService.isAuthenticated(); // get status login
+    this.userRole = this.authService.getRole(); // get role user
 
-    // Opcionalmente, suscríbete a cambios de autenticación
     this.authService.isAuthenticated$.subscribe(
       isAuthenticated => {
         this.isAuthenticated = isAuthenticated;

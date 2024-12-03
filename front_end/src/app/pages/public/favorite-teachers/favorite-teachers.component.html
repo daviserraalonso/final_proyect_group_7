@@ -1,0 +1,12 @@
+<div class="favorite-teachers">
+  <h2>Profesores Favoritos</h2>
+  <div class="teachers-container">
+    <div class="teacher-card" *ngFor="let teacher of favoriteTeachers">
+      <img [src]="teacher.image" alt="{{ teacher.name }}" />
+      <div class="teacher-details">
+        <h3>{{ teacher.name }}</h3>
+        <p>{{ teacher.description }}</p>
+      </div>
+    </div>
+  </div>
+</div>

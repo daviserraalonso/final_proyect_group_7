@@ -11,7 +11,8 @@ import {
   deleteUser,
   getUserDetails,
   getTeachers,
-  getUserSubscribedCourses
+  getUserSubscribedCourses,
+  getFavoriteTeachers // Importa la nueva función
 } from '../controllers/UserController';
 
 import LoginController from '../controllers/LoginController';
@@ -25,6 +26,7 @@ router.delete('/:id', deleteUser);
 
 // general routes
 router.get('/teachers', getTeachers);
+router.get('/teachers/favorites', getFavoriteTeachers);
 router.get('/search', searchTeachers);
 router.get('/names', names);
 router.get('/cities', cities);
@@ -35,7 +37,5 @@ router.post('/register', registerUser);
 router.get('/confirm/:token', confirmEmail);
 router.post('/login', LoginController.login);
 router.get('/', getAllUsers);
-
-
 
 module.exports = router;

@@ -252,4 +252,17 @@ export default function setupAssociations() {
   })
 
 
+  // relation avgTeacher user
+  AvgTeacher.belongsTo(User, {
+    foreignKey: 'professorId',
+    as: 'User'
+  });
+
+  User.hasMany(AvgTeacher, {
+    foreignKey: 'professorId',
+    as: 'AvgTeacher'
+  });
+
+
+
 }

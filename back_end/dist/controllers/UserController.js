@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getUserSubscribedCourses = exports.cityCords = exports.cities = exports.names = exports.searchTeachers = exports.getTeachers = exports.deleteUser = exports.modifyUser = exports.getUserDetails = exports.getAllUsers = exports.createUser = exports.confirmEmail = exports.registerUser = void 0;
+exports.getFavoriteTeachers = exports.getUserSubscribedCourses = exports.cityCords = exports.cities = exports.names = exports.searchTeachers = exports.getTeachers = exports.deleteUser = exports.modifyUser = exports.getUserDetails = exports.getAllUsers = exports.createUser = exports.confirmEmail = exports.registerUser = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const emailService_1 = require("../services/emailService");
 const User_1 = __importDefault(require("../models/User"));
@@ -388,7 +388,7 @@ const getUserSubscribedCourses = async (req, res) => {
             ],
         });
         const courses = subscribedCourses.map((uc) => {
-            const course = uc.get('course'); // Asegúrate de que esto sea un Course
+            const course = uc.get('course');
             if (course) {
                 const professor = course.get('professor');
                 return {
@@ -397,7 +397,7 @@ const getUserSubscribedCourses = async (req, res) => {
                 };
             }
             return null;
-        }).filter((course) => course !== null); // Filtra los cursos nulos
+        }).filter((course) => course !== null);
         if (!courses || courses.length === 0) {
             res.status(404).json({ message: 'No estás suscrito a ningún curso.' });
             return;
@@ -410,3 +410,35 @@ const getUserSubscribedCourses = async (req, res) => {
     }
 };
 exports.getUserSubscribedCourses = getUserSubscribedCourses;
+const getFavoriteTeachers = async (req, res) => {
+    try {
+        const teachers = await avg_teacher_1.default.findAll({
+            where: {
+                avg: { [sequelize_1.Op.gte]: 6 } // avg >= 6
+            },
+            include: [
+                {
+                    model: User_1.default,
+                    as: 'User',
+                    attributes: ['id', 'name']
+                }
+            ]
+        });
+        console.log('Resultados de la consulta:', teachers);
+        // Formatear la respuesta
+        const favoriteTeachers = teachers.map((teacher) => ({
+            id: teacher.User?.id,
+            name: teacher.User?.name,
+            description: teacher.User?.description || 'Sin descripción disponible.',
+            image: teacher.User?.image || `https://randomuser.me/api/portraits/men/${teacher.User?.id % 100}.jpg`,
+            avg: teacher.avg
+        }));
+        console.log('Profesores formateados:', favoriteTeachers);
+        res.status(200).json(favoriteTeachers);
+    }
+    catch (error) {
+        console.error('Error al obtener profesores favoritos:', error);
+        res.status(500).json({ message: 'Error al obtener profesores favoritos' });
+    }
+}; // end class
+exports.getFavoriteTeachers = getFavoriteTeachers;

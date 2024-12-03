@@ -230,4 +230,13 @@ function setupAssociations() {
         foreignKey: 'courseId',
         as: 'averageCourse'
     });
+    // relation avgTeacher user
+    avg_teacher_1.default.belongsTo(User_1.default, {
+        foreignKey: 'professorId',
+        as: 'User'
+    });
+    User_1.default.hasMany(avg_teacher_1.default, {
+        foreignKey: 'professorId',
+        as: 'AvgTeacher'
+    });
 }
