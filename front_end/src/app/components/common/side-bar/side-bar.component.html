@@ -19,16 +19,7 @@
     
     <!-- User Profile Section -->
     <div class="user-profile" *ngIf="isAuthenticated">
-      <img 
-        [src]="studentProfile.photoUrl" 
-        alt="Profile" 
-        class="profile-image"
-        matTooltip="Profile Details">
-      
-      <div *ngIf="isMobileView()" class="profile-details">
-        <h3>{{ studentProfile.name }}</h3>
-        <p>{{ studentProfile.email }}</p>
-      </div>
+      <img src="https://github.com/mdo.png" alt="mdo" width="24" height="24" class="rounded-circle">
     </div>
 
     <!-- Navigation Menu -->

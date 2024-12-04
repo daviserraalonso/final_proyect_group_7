@@ -1,50 +1,83 @@
+/* Sidebar fijo con menor altura */
 .sidebar {
-  position: fixed;           /* Fija el sidebar en la pantalla */
-  left: 0;                   /* Lo mantiene en el lado izquierdo */
-  top: 50%;                  /* Lo posiciona en la mitad vertical de la pantalla */
-  transform: translateY(-50%); /* Lo centra verticalmente */
+  position: fixed;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
   height: auto;              /* Altura dinámica según el contenido */
-  min-height: 70%;           /* Altura mínima para mostrar todo el contenido */
+  min-height: 50%;           /* Altura mínima reducida */
+  max-height: 90%;           /* Altura máxima para evitar desbordamiento */
   width: 250px;              /* Ancho suficiente para el contenido */
   background-color: #f5f5f5;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
-  overflow-y: auto;          /* Añadir scroll si el contenido es más grande */
+  overflow-y: auto;          /* Scroll si el contenido excede la altura */
 }
 
+/* Ajustes específicos para vista de escritorio */
 .sidebar-desktop {
-  width: 80px;               /* Ancho fijo del sidebar */
-  left: 0;
+  width: 60px; 
+                /* Ancho más compacto */
   overflow-x: hidden;
+  overflow-y: auto;          /* Scroll si el contenido es largo */
 }
 
-.sidebar-desktop .user-profile {
-  display: flex;
-  flex-direction: column;     /* Ajusta la disposición de la información del perfil */
-  align-items: center;
-  padding: 15px 0;
+/* Estilos del menú móvil */
+.sidebar-mobile {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 0;
+  z-index: 1000;
+  overflow-x: hidden;
+  transition: left 0.3s ease; /* Transición suave para apertura */
 }
 
-.profile-image {
-  width: 80px;                /* Tamaño más grande para mejor visualización */
-  height: 80px;
-  border-radius: 50%;
-  object-fit: cover;
+.sidebar-mobile-open {
+  left: 0;                    /* Abre el sidebar móvil */
+  width: 100%;                /* Ocupará todo el ancho disponible */
+  max-width: 300px;           /* Máximo ancho del menú móvil */
+}
+
+/* Botón para abrir menú móvil */
+.mobile-menu-toggle {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 1001;
+  display: block;             /* Se muestra siempre en móvil */
+  background-color: #f5f5f5;  /* Fondo del botón */
 }
 
 /* Mantener la versión móvil funcional */
 @media (max-width: 768px) {
-  .sidebar {
-    width: 100%;              /* El sidebar ocupará todo el ancho */
-    left: 0;
-    top: 0;
-    transform: none;
-    height: 100%;
+  .sidebar-desktop {
+    display: none;            /* Ocultar el sidebar de escritorio */
   }
 
-  .sidebar-mobile-open {
-    left: 0;
-    width: 100%;
-    max-width: 300px;
+  .sidebar-mobile {
+    display: block;           /* Mostrar versión móvil */
+  }
+
+  .sidebar-mobile .user-profile {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    background-color: #e0e0e0;
+  }
+
+  .sidebar-mobile .profile-details {
+    margin-left: 15px;
+  }
+
+  .sidebar-mobile .profile-details h3 {
+    margin: 0;
+    font-size: 1rem;
+  }
+
+  .sidebar-mobile .profile-details p {
+    margin: 0;
+    font-size: 0.8rem;
+    color: #666;
   }
 }
