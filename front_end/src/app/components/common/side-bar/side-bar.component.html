@@ -74,6 +74,11 @@
         <span matListItemTitle *ngIf="isMobileView()">Notifications</span>
       </mat-list-item>
 
+      <mat-list-item 
+        [routerLink]="['/inbox']" class="nav-link py-2 border-bottom" matTooltip="Bandeja de entrada" matTooltipPosition="right">
+          <mat-icon>email</mat-icon>
+        </mat-list-item>
+
       <!-- Logout -->
       <mat-list-item (click)="logout()">
         <mat-icon matListItemIcon>logout</mat-icon>
