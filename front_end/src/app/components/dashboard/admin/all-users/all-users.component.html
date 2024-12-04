@@ -1,6 +1,6 @@
 <div class="container">
     <h2 class="mb-3">Listado de Usuarios</h2>
-    <mat-form-field appearance="fill" class="mb-4">
+    <mat-form-field appearance="fill" class="mb-4 search-field">
         <mat-label>Buscar usuario</mat-label>
         <input matInput (keyup)="applyFilter($event)" placeholder="Buscar por nombre, email o rol">
     </mat-form-field>
@@ -40,7 +40,7 @@
           <button mat-icon-button color="primary" (click)="viewUser(user.id)" matTooltip="Ver">
             <mat-icon>visibility</mat-icon>
           </button>
-          <button mat-icon-button color="warn" (click)="editUser(user.id)" matTooltip="Editar">
+          <button mat-icon-button color="acent" (click)="editUser(user.id)" matTooltip="Editar">
             <mat-icon>edit</mat-icon>
           </button>
           <button mat-icon-button color="warn" (click)="deleteUser(user.id)" matTooltip="Eliminar">
@@ -53,4 +53,7 @@
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
   </div>
+  
+
+
   
