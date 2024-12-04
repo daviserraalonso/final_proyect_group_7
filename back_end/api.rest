@@ -12,15 +12,14 @@ GET http://localhost:3000/api/tasks/progress/6
 
 
 ### POST nueva tarea
-POST http://localhost:3000/api/tasks
+POST http://localhost:3000/api/tasks/assign
 Content-Type: application/json
 
 {
-  "subjectId": 12,
-  "userId": 6,
-  "comments": "Completar ejercicios de matemáticas.",
-  "punctuation": 100,
-  "deadline": "2024-11-30"
+  "studentId": 3,
+  "subjectId": 1,
+  "comments": "Completar el capítulo 3.",
+  "deadline": "2024-12-10"
 }
 
 ###### PUT actualizar tarea

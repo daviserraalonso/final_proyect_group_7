@@ -7,6 +7,7 @@ router.get('/', TasksController_1.getAllTasks);
 router.get('/:id', TasksController_1.getTaskById);
 router.get('/user/:userId', TasksController_1.getTasksByUserId);
 router.get('/progress/:userId', TasksController_1.getProgressByUserId);
+router.post('/assign', TasksController_1.assignTaskToStudent);
 router.post('/', TasksController_1.createTask);
 router.put('/:id', TasksController_1.updateTask);
 router.delete('/:id', TasksController_1.deleteTask);

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import sequelize from '../config/database';
 import { QueryTypes } from 'sequelize';
-const Task = require('../models/Task');
+import Task from '../models/Task'; // Cambiado a import
 const Subject = require('../models/Subject'); // Importa el modelo Subject
 const Course = require('../models/Course'); // Importa el modelo Course
 const User = require('../models/User'); // Importa el modelo User
@@ -56,6 +56,30 @@ export const createTask = async (req: Request, res: Response): Promise<Response>
   } catch (error) {
     console.error('Error al crear la tarea:', error);
     return res.status(500).json({ message: 'Error al crear la tarea.', error });
+  }
+};
+
+export const assignTaskToStudent = async (req, res) => {
+  const { studentId, subjectId, comments, deadline } = req.body;
+
+  try {
+    // Validar campos requeridos
+    if (!studentId || !subjectId || !deadline) {
+      return res.status(400).json({ message: 'Faltan campos obligatorios (studentId, subjectId, deadline).' });
+    }
+
+    // Crear la tarea asociada al estudiante
+    const newTask = await Task.create({
+      userId: studentId, // ID del estudiante
+      subjectId, // ID de la materia
+      comments, // Comentarios opcionales
+      deadline, // Fecha límite
+    });
+
+    return res.status(201).json({ message: 'Tarea asignada con éxito.', task: newTask });
+  } catch (error) {
+    console.error('Error al asignar tarea:', error);
+    return res.status(500).json({ message: 'Error al asignar tarea.', error });
   }
 };
 

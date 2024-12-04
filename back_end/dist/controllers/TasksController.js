@@ -3,16 +3,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getProgressByUserId = exports.getTasksByUserId = exports.deleteTask = exports.updateTask = exports.createTask = exports.getTaskById = exports.getAllTasks = void 0;
+exports.getProgressByUserId = exports.getTasksByUserId = exports.deleteTask = exports.updateTask = exports.assignTaskToStudent = exports.createTask = exports.getTaskById = exports.getAllTasks = void 0;
 const database_1 = __importDefault(require("../config/database"));
 const sequelize_1 = require("sequelize");
-const Task = require('../models/Task');
+const Task_1 = __importDefault(require("../models/Task")); // Cambiado a import
 const Subject = require('../models/Subject'); // Importa el modelo Subject
 const Course = require('../models/Course'); // Importa el modelo Course
 const User = require('../models/User'); // Importa el modelo User
 const getAllTasks = async (req, res) => {
     try {
-        const tasks = await Task.findAll(); // Ejecuta un SELECT * FROM tasks
+        const tasks = await Task_1.default.findAll(); // Ejecuta un SELECT * FROM tasks
         res.json(tasks);
     }
     catch (error) {
@@ -24,7 +24,7 @@ exports.getAllTasks = getAllTasks;
 const getTaskById = async (req, res) => {
     try {
         const { id } = req.params;
-        const task = await Task.findByPk(id);
+        const task = await Task_1.default.findByPk(id);
         if (task) {
             return res.status(200).json(task);
         }
@@ -47,7 +47,7 @@ const createTask = async (req, res) => {
             return res.status(400).json({ message: 'Faltan campos obligatorios' });
         }
         // Crea la tarea
-        const task = await Task.create({
+        const task = await Task_1.default.create({
             subjectId,
             userId,
             comments,
@@ -63,6 +63,28 @@ const createTask = async (req, res) => {
     }
 };
 exports.createTask = createTask;
+const assignTaskToStudent = async (req, res) => {
+    const { studentId, subjectId, comments, deadline } = req.body;
+    try {
+        // Validar campos requeridos
+        if (!studentId || !subjectId || !deadline) {
+            return res.status(400).json({ message: 'Faltan campos obligatorios (studentId, subjectId, deadline).' });
+        }
+        // Crear la tarea asociada al estudiante
+        const newTask = await Task_1.default.create({
+            userId: studentId, // ID del estudiante
+            subjectId, // ID de la materia
+            comments, // Comentarios opcionales
+            deadline, // Fecha límite
+        });
+        return res.status(201).json({ message: 'Tarea asignada con éxito.', task: newTask });
+    }
+    catch (error) {
+        console.error('Error al asignar tarea:', error);
+        return res.status(500).json({ message: 'Error al asignar tarea.', error });
+    }
+};
+exports.assignTaskToStudent = assignTaskToStudent;
 const updateTask = async (req, res) => {
     try {
         const { id } = req.params;
@@ -71,9 +93,9 @@ const updateTask = async (req, res) => {
         if (submission === undefined) {
             return res.status(400).json({ message: 'El campo submission es obligatorio' });
         }
-        const [updated] = await Task.update({ subjectId, userId, comments, punctuation, creationDate, deadline, submission }, { where: { id } });
+        const [updated] = await Task_1.default.update({ subjectId, userId, comments, punctuation, creationDate, deadline, submission }, { where: { id } });
         if (updated) {
-            const updatedTask = await Task.findByPk(id);
+            const updatedTask = await Task_1.default.findByPk(id);
             return res.status(200).json(updatedTask);
         }
         else {
@@ -89,7 +111,7 @@ exports.updateTask = updateTask;
 const deleteTask = async (req, res) => {
     try {
         const { id } = req.params;
-        const deleted = await Task.destroy({
+        const deleted = await Task_1.default.destroy({
             where: { id }
         });
         if (deleted) {

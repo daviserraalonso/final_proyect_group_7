@@ -57,13 +57,14 @@ export class TaskService {
     }
   }
 
-  // Crear una nueva tarea
-  async createTask(task: Task): Promise<Task> {
+  // Crear una nueva tarea por id del alumno
+  async createTask(task: { studentId: number, subjectId: number, comments: string, deadline: string }): Promise<any> {
+    const url = `${this.apiUrl}/assign`;
     try {
-      const response = await lastValueFrom(this.http.post<Task>(this.apiUrl, task, this.httpOptions));
+      const response = await lastValueFrom(this.http.post<any>(url, task, this.httpOptions));
       return response;
     } catch (error) {
-      this.handleError<Task>('createTask');
+      this.handleError<any>('createTask');
       throw error;
     }
   }
