@@ -238,5 +238,9 @@ function setupAssociations() {
         foreignKey: 'professorId',
         as: 'AvgTeacher'
     });
+    Course_1.default.hasOne(avg_course_1.default, {
+        foreignKey: 'courseId',
+        as: 'averageCourse'
+    });
 }
 exports.default = setupAssociations;

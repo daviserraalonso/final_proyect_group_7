@@ -1,14 +1,12 @@
 .comment {
-    width: 15%;
+    width: 40%;
 }
 
 mat-icon {
-    cursor: pointer;
-    color: gray;  /* Color por defecto */
-    transition: color 0.3s ease;
     font-size: 16px;
+    color: gold; 
   }
-  
-  mat-icon.active {
-    color: gold;  /* Color de los íconos activos */
+
+  .comment {
+    border: 2px solid black;
   }

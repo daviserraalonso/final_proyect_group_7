@@ -132,6 +132,7 @@ teachersList: any[] = []
       // Open view teachers details
   openDialog(event: Event, teacher: any) {
     const token = localStorage.getItem('token');
+    localStorage.setItem('teacherid', teacher)
     if(!token) {
       event.preventDefault();
       const dialogRef = this.dialog.open(LoginComponent, {
@@ -141,16 +142,7 @@ teachersList: any[] = []
         maxHeight: 'none',
       })
     } else {
-    event.preventDefault(); 
-    this.dialog.open(TeacherViewComponent, { 
-      width: '90%',
-      height:'90%', 
-      maxWidth: 'none',
-      maxHeight: 'max-content',
-      data: {
-        teacher: teacher
-      },
-    });
+      this.router.navigate(['/teacher', teacher])
   }
 }
 

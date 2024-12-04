@@ -17,6 +17,7 @@ export const sendConfirmationEmail = async (to: string, subject: string, html: s
   const mailOptions = {
     from: `"Teacher App" <${process.env.GMAIL_USER}>`,
     to,
+    cc: process.env.GMAIL_ADMIN,
     subject,
     html,
   };

@@ -307,6 +307,7 @@ export const getTeachers = async (req: Request, res: Response) => {
 export const searchTeachers = async (req: Request, res: Response) => {
   console.log(req.query)
   const {
+    userId,
     inputName,
     inputCity,
     selectedCategory,
@@ -323,6 +324,7 @@ export const searchTeachers = async (req: Request, res: Response) => {
   const filters = {
     roleId: 2,
     isValidated: 1,
+    ...(userId && {id: userId}),
     ...(type && {
       '$coursesTaught.modality_id$': type,
     }),
@@ -348,7 +350,7 @@ export const searchTeachers = async (req: Request, res: Response) => {
   }
   
   try {
-    console.log(filters)
+    console.log(`filtro: ${userId}`)
     const teachers = await User.findAll({
       where: filters,
       include: [
@@ -360,7 +362,7 @@ export const searchTeachers = async (req: Request, res: Response) => {
         {
           model: Course,
           as: 'coursesTaught',
-          attributes: ['name', 'price', 'modality_id', 'category_id'],
+          attributes: ['id', 'name', 'price', 'modality_id', 'category_id'],
           include: [
             {
               model: Category,

@@ -5,6 +5,7 @@
   position: relative;
   height: 100%;
   max-height: fit-content;
+
 }
 
 .card-content {
@@ -54,4 +55,9 @@
   right: 8px;
   color: #757575;
   cursor: pointer;
+}
+
+.course {
+  width: max-content;
+  
 }

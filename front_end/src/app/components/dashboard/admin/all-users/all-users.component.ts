@@ -143,7 +143,8 @@ export class AllUsersComponent implements OnInit {
         console.error('Error al eliminar el usuario:', error);
       });
     }}
-  )}
+  )
+}
 
   async validateUser(teacherId: number) {
     const validate = await this.userService.validate(teacherId)

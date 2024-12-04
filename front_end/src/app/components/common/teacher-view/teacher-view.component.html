@@ -1,7 +1,7 @@
 <mat-card class="container">
    
     
-      <mat-icon (click)="onClose()" class="close" aria-hidden="false" aria-label="Example home icon" fontIcon="close"></mat-icon>
+
 
  
   
@@ -10,12 +10,12 @@
       <div class="info">
         <img mat-card-avatar class="img" src="URL_DE_LA_FOTO" alt="Foto del profesor">
         <div class="info-dates">
-          <h2>{{data.teacher.name}}</h2>
-          <p><strong>Teléfono:</strong> {{data.teacher.details.phone}}</p>
-          <p><strong>Email:</strong> {{data.teacher.email}}</p>
-          <p><strong>Dirección:</strong> {{data.teacher.details.address}}</p>
-          <p><strong>Puntuación:</strong> {{data.teacher.averageTeacher.avg}}</p>
-          <p><strong>Descripción:</strong> {{data.teacher.details.description}}</p>
+          <h2>{{teacherdata?.name}}</h2>
+          <p><strong>Teléfono:</strong> {{teacherdata?.details.phone}}</p>
+          <p><strong>Email:</strong> {{teacherdata?.email}}</p>
+          <p><strong>Dirección:</strong> {{teacherdata?.details.address}}</p>
+          <p><strong>Puntuación:</strong> {{teacherdata?.averageTeacher.avg}}</p>
+          <p><strong>Descripción:</strong> {{teacherdata?.details.description}}</p>
         </div>
       
       </div>
@@ -25,29 +25,33 @@
   
 
       <div class="courses">
-        <h3>Cursos Ofrecidos</h3>
-        <ul>
-
-           @for (course of data.teacher.coursesTaught; track $index) {
-            <mat-card class="w-50">
-              <div>
-                <p>{{course.name}}</p>
-
-              </div>
-              <div class="d-flex gap-2">
-                <p><strong>Puntuación:</strong>{{course.price}}</p>
-                <p><strong>Materia:</strong>{{course.category.category_name}}</p>
-
-              </div>
-            </mat-card>
-           }
-        </ul>
+        <app-comments></app-comments>
       </div>
     </div>
   
 
     <div class="comments">
-      <app-comments></app-comments>
+      
+      <h3>Cursos Ofrecidos</h3>
+      <div class="d-flex gap-2">
+
+         @for (course of teacherdata?.coursesTaught; track $index) {
+          <mat-card class="course">
+            <div>
+              <p>{{course?.name}}</p>
+
+            </div>
+
+            <div>
+              <button (click)="viewCurse(course.id, teacherdata.id)" mat-button>Ver Curso</button>
+            </div>
+          </mat-card>
+         }
+        </div>
+    </div>
+    <div class="mt-2">
+     
+      <router-outlet></router-outlet>
     </div>
   </mat-card>
 

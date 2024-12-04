@@ -1,4 +1,5 @@
 import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import {MatCardModule} from '@angular/material/card';
 import { ScoreService } from '../../../service/score.service';
 import {MatIconModule} from '@angular/material/icon';
@@ -6,7 +7,7 @@ import {MatIconModule} from '@angular/material/icon';
 @Component({
   selector: 'app-comments',
   standalone: true,
-  imports: [MatCardModule, MatIconModule],
+  imports: [MatCardModule, MatIconModule, CommonModule],
   templateUrl: './comments.component.html',
   styleUrl: './comments.component.css'
 })

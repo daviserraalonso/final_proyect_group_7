@@ -23,6 +23,8 @@ import { OnlineCoursesComponent } from './components/public/academic-offerings/o
 import { MapComponentComponent } from './components/public/map-component/map-component.component';
 import { ScoreTeachersComponent } from './components/dashboard/student/score-teachers/score-teachers.component';
 import { TeacherStudentViewComponent } from './components/dashboard/teacher/teacher-student-view/teacher-student-view.component';
+import { TeacherViewComponent } from './components/common/teacher-view/teacher-view.component';
+import { CourseViewComponent } from './components/common/course-view/course-view.component';
 
 
 export const routes: Routes = [
@@ -46,8 +48,11 @@ export const routes: Routes = [
     { path: 'all-users', component: AllUsersComponent },
     { path: 'subjects', component: SubjectListComponent },
     { path: 'courses', component: CourseListComponent },
-    {path: 'prueba', component: ScoreTeachersComponent},
     {path: 'mis-alumnos', component: TeacherStudentViewComponent},
+    {path: 'teacher/:id', component: TeacherViewComponent, 
+        children: [
+        {path: 'course/:idcourse', component: CourseViewComponent, runGuardsAndResolvers: 'paramsChange'}
+    ]},
 
     
 

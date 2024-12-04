@@ -264,6 +264,11 @@ export default function setupAssociations() {
     as: 'AvgTeacher'
   });
 
+  Course.hasOne(AvgCourse, {
+    foreignKey: 'courseId',
+    as: 'averageCourse'
+  })
+
 
 
 }

@@ -264,10 +264,11 @@ const getTeachers = async (req, res) => {
 exports.getTeachers = getTeachers;
 const searchTeachers = async (req, res) => {
     console.log(req.query);
-    const { inputName, inputCity, selectedCategory, minPrice, maxPrice, score, southWestLat, southWestLng, northEastLat, northEastLng, type } = req.query;
+    const { userId, inputName, inputCity, selectedCategory, minPrice, maxPrice, score, southWestLat, southWestLng, northEastLat, northEastLng, type } = req.query;
     const filters = {
         roleId: 2,
         isValidated: 1,
+        ...(userId && { id: userId }),
         ...(type && {
             '$coursesTaught.modality_id$': type,
         }),
@@ -292,7 +293,7 @@ const searchTeachers = async (req, res) => {
             ] }),
     };
     try {
-        console.log(filters);
+        console.log(`filtro: ${userId}`);
         const teachers = await User_1.default.findAll({
             where: filters,
             include: [
@@ -304,7 +305,7 @@ const searchTeachers = async (req, res) => {
                 {
                     model: Course_1.default,
                     as: 'coursesTaught',
-                    attributes: ['name', 'price', 'modality_id', 'category_id'],
+                    attributes: ['id', 'name', 'price', 'modality_id', 'category_id'],
                     include: [
                         {
                             model: Category_1.default,
