@@ -1,18 +1,184 @@
+/* Estilo general del contenedor principal */
 .main-content {
-  flex-grow: 1;
   padding: 20px;
-  overflow-y: auto; 
+  background-color: #f5f7fa;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-.progress {
-  height: 1.5rem; 
+/* Tarjetas */
+mat-card {
+  background-color: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  padding: 25px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+}
+mat-card-title {
+  color: purple;
+}
+mat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
-.progress-bar {
-  line-height: 1.5rem; 
+/* Encabezado del Dashboard */
+.dashboard-header {
+  color: black;
+  text-align: center;
+  padding: 20px;
 }
 
 .large-title {
-  font-size: 2.5rem; /* Ajusta el tamaño del texto según tus necesidades */
-  font-weight: bold;
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+/* Perfil del estudiante */
+.profile-card mat-card-header {
+  background-color: #e3f2fd;
+}
+
+.profile-img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #1e88e5;
+  transition: transform 0.3s ease;
+}
+.header-cell{
+  color: black;
+  
+}
+
+.profile-img:hover {
+  transform: scale(1.1);
+}
+
+
+/* Información del perfil */
+.profile-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  font-size: 1.1rem;
+  gap: 10px;
+}
+
+.profile-info mat-icon {
+  color: #1e88e5;
+  font-size: 1.8rem;
+}
+
+/* Botón de editar perfil */
+.edit-profile-btn {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+/* Tabla de tareas */
+
+
+th.mat-header-cell {
+  background-color: #1976d2;
+  color: white;
+  text-transform: uppercase;
+  font-size: 1.1rem;
+}
+
+td.mat-cell {
+  padding: 15px;
+  font-size: 1rem;
+}
+
+mat-progress-bar {
+  height: 8px;
+  border-radius: 5px;
+  background-color: #e0e0e0;
+}
+
+/* Botones de acciones en la tabla */
+.actions-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+button.mat-button {
+  min-width: 36px;
+  height: 36px;
+  border-radius: 50%;
+}
+
+/* Notificaciones */
+.notification-card mat-card-header {
+  background-color: #f3e5f5;
+}
+
+mat-list-item {
+  padding: 1rem;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  transition: background-color 0.3s ease, padding 0.3s ease;
+}
+
+mat-list-item:hover {
+  background-color: #f5f5f5; /* Cambia el color de fondo al pasar el mouse */
+}
+
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .large-title {
+    font-size: 2rem;
+  }
+
+  .profile-img {
+    width: 100px;
+    height: 100px;
+  }
+
+  .profile-info {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .actions-buttons {
+    flex-direction: column;
+  }
+
+  .task-card, .notification-card {
+    padding: 10px;
+  }
+  mat-list-item {
+    padding: 0.8rem; /* Menos padding en pantallas medianas */
+    font-size: 0.95rem; /* Ajusta el tamaño de fuente para tabletas */
+  }
+}
+
+@media (max-width: 480px) {
+  .main-content {
+    padding: 10px;
+  }
+
+  .large-title {
+    font-size: 1.8rem;
+  }
+
+  th.mat-header-cell, td.mat-cell {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+  mat-list-item {
+    padding: 0.6rem; /* Menor padding para dispositivos móviles */
+    font-size: 0.9rem; /* Reduce el tamaño de fuente en pantallas pequeñas */
+    
+  }
 }
