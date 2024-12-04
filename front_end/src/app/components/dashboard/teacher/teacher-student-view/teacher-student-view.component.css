@@ -7,8 +7,11 @@
 }
 
 .student-card {
-  width: 300px;
+  width: 100%;
+  max-width: 400px;
   animation: fadeIn 1s;
+  word-wrap: break-word;
+  overflow: hidden;
 }
 
 .mat-card-header {
@@ -18,4 +21,10 @@
 
 .mat-card-avatar {
   margin-right: 16px;
+}
+
+.mat-card-title, .mat-card-subtitle, .mat-card-content p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

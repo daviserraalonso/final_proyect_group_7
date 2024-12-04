@@ -12,7 +12,8 @@ import { StudentProfileComponentComponent } from '../../student/student-profile-
 import { MessageComponent } from '../message/message.component';
 import { MessageComponentComponent } from '../../../common/message/message-component/message-component.component';
 import { StudentCardComponent } from '../../student/student-card/student-card.component';
-
+import { TeacherServiceService } from '../../../../service/teacher-service.service';
+import { TaskFormComponent } from '../../../common/task-form/task-form.component';
 
 @Component({
   selector: 'app-teacher-student-view',
@@ -28,42 +29,29 @@ import { StudentCardComponent } from '../../student/student-card/student-card.co
   templateUrl: './teacher-student-view.component.html',
   styleUrls: ['./teacher-student-view.component.css']
 })
+
 export class TeacherStudentViewComponent implements OnInit {
   serviceStudentDetails = inject(UserServiceService);
-  students: IStudent[] = [
-    {
-      student_id: 5,
-      student_name: "Goten",
-      student_email: "goten@example.com",
-      course_id: 1,
-      course_name: "Curso 1",
-      student_image: "https://robohash.org/Goten?set=set4"
-    },
-    {
-      student_id: 7,
-      student_name: "Bra",
-      student_email: "bra@example.com",
-      course_id: 3,
-      course_name: "Curso 3",
-      student_image: "https://robohash.org/Bra?set=set4"
-    }
-  ];
+  serviceTeacherDetails = inject(TeacherServiceService);
+  students: IStudent[] = [];
 
   constructor(private dialog: MatDialog) {}
 
   async ngOnInit() {
     try {
-    //   this.students = await this.serviceStudentDetails.getAllStudents();
+      this.students = await this.serviceTeacherDetails.getStudentsByProfessorId(3);
     } catch (error) {
       console.error('Error al obtener los datos de los estudiantes:', error);
     }
   }
 
   sendTask(student: IStudent): void {
-    this.dialog.open(TaskComponentComponent, {
-      width: '80%',
-      height: '1500%',
-      data: { student }
+    this.dialog.open(TaskFormComponent, {
+      width: '400px',
+      data: { 
+        studentId: student.student_id,
+        subjectId: student.subject_id
+      }
     });
   }
 
