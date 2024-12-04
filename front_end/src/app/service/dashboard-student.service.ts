@@ -22,12 +22,12 @@ export class DashboardStudentService {
 
   private httpClient = inject(HttpClient);
 
-  // Obtener todas las tareas por usuario
+  // get task by user
   getTasksByUserId(userId: number) {
     return lastValueFrom(this.httpClient.get<TaskResponse[]>(`${this.baseUrl}/user/${userId}`));
   }
 
-  // Obtener progreso por usuario y materia
+  // get progress by user and subject
   getProgressByUserId(userId: number) {
     return lastValueFrom(this.httpClient.get<ProgressResponse[]>(`${this.baseUrl}/progress/${userId}`));
   }

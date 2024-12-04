@@ -1,11 +1,12 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import { sendConfirmationEmail } from '../services/emailService';
-import User from '../models/User';
 import UserDetails from '../models/UserDetails';
 import Course from '../models/Course';
-import { Op } from 'sequelize';
+import { Op, Sequelize } from 'sequelize';
 import StudentCourse from '../models/StudentCourse';
+import AvgTeacher from '../models/avg_teacher';
+import User from '../models/User';
 const jwt = require('jsonwebtoken');
 
 
@@ -17,7 +18,10 @@ const jwt = require('jsonwebtoken');
  */
 export const registerUser = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { name, email, password, roleId, isValidated, lat, lng, phone, address } = req.body;
+    const { name, email, password, roleId, isValidated, lat, lng, phone, address, isEnrollment, courseId } = req.body;
+
+    console.log('Datos recibidos:', req.body);
+
 
     // Verificar si el usuario ya existe
     const existingUser = await User.findOne({ where: { email } });
@@ -48,6 +52,22 @@ export const registerUser = async (req: Request, res: Response): Promise<void> =
       lat,
       lng
     })
+
+    // check if it´s inscription to course
+    if (isEnrollment) {
+      if (!courseId) {
+        res.status(400).json({ message: 'El ID del curso es obligatorio para la inscripción.' });
+        return;
+      }
+
+      // Insert in student_course
+      const enrollmentDate = new Date();
+      await StudentCourse.create({
+        studentId: userId,
+        courseId,
+        enrollmentDate,
+      });
+    }
 
     // not return password in response
     const { password: _, ...userWithoutPassword } = user.get({ plain: true });
@@ -146,7 +166,7 @@ export const getUserDetails = async (req: Request, res: Response): Promise<void>
         {
           model: UserDetails,
           as: 'details',
-          attributes: ['phone', 'address', 'img_url', 'description'],
+          attributes: ['phone', 'address', 'img_url', 'description', 'lat', 'lng'],
         },
       ],
     });
@@ -300,14 +320,14 @@ export const searchTeachers = async (req: Request, res: Response) => {
     roleId: 2,
     isValidated: 1,
     ...(type && {
-      '$course.modality_id$': type,
+      '$coursesTaught.modality_id$': type,
     }),
     ...(inputName && { name: inputName }),
     ...(inputCity && {
       '$details.address$': inputCity
     }),
     ...(selectedCategory && {
-      '$course.category_id$': selectedCategory,
+      '$coursesTaught.category_id$': selectedCategory,
     }),
     ...(minPrice && {
       [Op.or]: [
@@ -335,10 +355,18 @@ export const searchTeachers = async (req: Request, res: Response) => {
         },
         {
           model: Course,
-          as: 'course',
+          as: 'coursesTaught',
           attributes: ['price', 'modality_id', 'category_id'],
-        }
+        },
+        {
+          model: AvgTeacher,
+          as: 'averageTeacher',
+          attributes: ['avg'],
+
+        },
       ],
+
+
     });
 
     res.status(200).json(teachers);
@@ -400,7 +428,6 @@ export const cityCords = async (req: Request, res: Response, next: any) => {
 /**
  * method to get all courses asociates to user
  */
-
 export const getUserSubscribedCourses = async (req: Request, res: Response): Promise<void> => {
   try {
     const studentId = req.params.id;
@@ -423,7 +450,7 @@ export const getUserSubscribedCourses = async (req: Request, res: Response): Pro
     });
 
     const courses = subscribedCourses.map((uc) => {
-      const course = uc.get('course') as Course | null; // Asegúrate de que esto sea un Course
+      const course = uc.get('course') as Course | null;
       if (course) {
         const professor = course.get('professor') as User | null;
         return {
@@ -432,7 +459,7 @@ export const getUserSubscribedCourses = async (req: Request, res: Response): Pro
         };
       }
       return null;
-    }).filter((course) => course !== null); // Filtra los cursos nulos
+    }).filter((course) => course !== null);
 
     if (!courses || courses.length === 0) {
       res.status(404).json({ message: 'No estás suscrito a ningún curso.' });
@@ -444,6 +471,48 @@ export const getUserSubscribedCourses = async (req: Request, res: Response): Pro
     console.error('Error al obtener los cursos suscritos:', error);
     res.status(500).json({ error: 'Error al obtener los cursos suscritos' });
   }
+
 };
+
+
+export const getFavoriteTeachers = async (req: Request, res: Response) => {
+  try {
+
+    const teachers = await AvgTeacher.findAll({
+      where: {
+        avg: { [Op.gte]: 6 } // avg >= 6
+      },
+      include: [
+        {
+          model: User,
+          as: 'User',
+          attributes: ['id', 'name']
+        }
+      ]
+    });
+
+
+    console.log('Resultados de la consulta:', teachers);
+
+    // Formatear la respuesta
+    const favoriteTeachers = teachers.map((teacher: any) => ({
+      id: teacher.User?.id,
+      name: teacher.User?.name,
+      description: teacher.User?.description || 'Sin descripción disponible.',
+      image: teacher.User?.image || `https://randomuser.me/api/portraits/men/${teacher.User?.id % 100}.jpg`,
+      avg: teacher.avg
+    }));
+
+    console.log('Profesores formateados:', favoriteTeachers);
+
+    res.status(200).json(favoriteTeachers);
+  } catch (error) {
+    console.error('Error al obtener profesores favoritos:', error);
+    res.status(500).json({ message: 'Error al obtener profesores favoritos' });
+  }
+
+
+
+}; // end class
 
 

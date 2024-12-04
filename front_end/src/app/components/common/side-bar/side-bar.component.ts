@@ -20,6 +20,7 @@ export class SideBarComponent implements OnInit {
 
   isAuthenticated: boolean = false;
   role: string = '';
+  role_url: string | null = ""
 
   studentProfile = {
     name: 'Juan Pérez',
@@ -58,24 +59,27 @@ export class SideBarComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
-    // Obtiene el estado de autenticación al cargar el componente
+    // get status authenticated
     this.isAuthenticated = this.authService.isAuthenticated();
 
     if (this.isAuthenticated) {
       const role = this.authService.getRole();
       if (role) {
-        this.role = role; // Asigna el rol del usuario ('admin', 'teacher', 'student')
+        this.role = role; // asiggn role
       }
     }
+
+    this.role_url = localStorage.getItem('url_rol')
+    console.log(this.role_url)
   }
 
   openMenu() {
     this.menuTrigger.openMenu();
   }
 
-  // Método para cerrar sesión
+  // sesion destoy
   logout() {
-    this.authService.logout();  // Llama al método logout de AuthService
-    this.router.navigate(['/login']);  // Redirige a la página de inicio de sesión o inicio
+    this.authService.logout();  // call logout function in service
+    this.router.navigate(['/login']);  // redirect to home
   }
 }

@@ -7,12 +7,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = require("sequelize");
 const database_1 = __importDefault(require("../config/database"));
 class Message extends sequelize_1.Model {
-    id;
-    chatId;
-    senderId;
-    content;
-    createdAt;
-    isRead;
 }
 Message.init({
     id: {
@@ -39,6 +33,12 @@ Message.init({
         type: sequelize_1.DataTypes.DATE,
         allowNull: false,
         field: 'createdAt',
+        defaultValue: database_1.default.literal('CURRENT_TIMESTAMP'),
+    },
+    updatedAt: {
+        type: sequelize_1.DataTypes.DATE,
+        allowNull: false,
+        defaultValue: database_1.default.literal('CURRENT_TIMESTAMP'),
     },
     isRead: {
         type: sequelize_1.DataTypes.BOOLEAN,
@@ -49,7 +49,7 @@ Message.init({
 }, {
     sequelize: database_1.default,
     modelName: 'Message',
-    tableName: 'messages',
+    tableName: 'message',
     timestamps: true,
 });
 exports.default = Message;

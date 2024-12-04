@@ -35,7 +35,15 @@ module.exports = {
         },
         onDelete: 'CASCADE',
       },
-      rating: {
+      rating_teacher: {
+        type: Sequelize.DECIMAL(2, 1),
+        allowNull: false,
+        validate: {
+          min: 1,
+          max: 5,
+        },
+      },
+      rating_course: {
         type: Sequelize.DECIMAL(2, 1),
         allowNull: false,
         validate: {

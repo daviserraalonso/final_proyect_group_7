@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, Input, Output, EventEmitter, inject, signal } from '@angular/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -8,6 +8,7 @@ import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModu
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserServiceService } from '../../../service/user-service.service';
 import { UserAttributes } from '../../../interfaces/userAttributes';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-register-student-component',
@@ -26,8 +27,6 @@ export class RegisterStudentComponentComponent {
   router = inject(Router);
   activateRoute = inject(ActivatedRoute);
   userServices = inject(UserServiceService)
-  headerForm: string = 'Registarse como Alumno'
-  textButton: string = 'Enviar'
   registerStudent: FormGroup;
 
   constructor() {
@@ -55,39 +54,6 @@ export class RegisterStudentComponentComponent {
     }, [this.checkPassword])
   }
 
-  ngOnInit() {
-    this.activateRoute.params.subscribe(async (params: any) => {
-      if (params.id) {
-        this.headerForm = 'Actualizar el usuario'
-        this.textButton = 'Actualizar datos'
-        const user: UserAttributes = await this.userServices.getById(params.id)
-
-        this.registerStudent = new FormGroup({
-          id: new FormControl(user.id, []),
-          name: new FormControl(user.name, [
-            Validators.required,
-            Validators.minLength(3)
-          ]),
-          email: new FormControl(user.email, [
-            Validators.required,
-            Validators.pattern(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/)
-          ]),
-          password: new FormControl(user.password, [
-            Validators.required,
-            Validators.minLength(8),
-            Validators.pattern(/^(?=.*[A-Za-z]).+$/),
-            Validators.pattern(/^(?=.*[A-Z]).+$/),
-            Validators.pattern(/^(?=.*\d).+$/),
-            Validators.pattern(/^(?=.*[@$!%*?&]).+$/),
-          ]),
-          repeatPassword: new FormControl(user.password, [
-            Validators.required
-          ]),
-          roleId: new FormControl(user.roleId, [])
-        }, [this.checkPassword])
-      }
-    })
-  }
 
   checkPassword(formValue: AbstractControl): any {
     const password = formValue.get('password')?.value;
@@ -116,29 +82,27 @@ export class RegisterStudentComponentComponent {
   }
 
   async getdataForm() {
-    console.log('Datos del formulario:', this.registerStudent.value);
-    if (this.registerStudent.value.id) {
-      // update user
-      try {
-        const user: UserAttributes = await this.userServices.update(this.registerStudent.value);
-        if (user.id) {
-          alert('Usuario actualizado correctamente');
-          this.router.navigate(['']);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    } else {
+
       // create new user
       try {
         const user: UserAttributes = await this.userServices.insert(this.registerStudent.value);
         if (user.id) {
-          alert('Usuario creado correctamente');
+          Swal.fire({
+            text: `Enhorabuena ${user.name}, te has registrado con exito`,
+            width: 400,
+            showConfirmButton: false,
+            imageUrl: 'assets/logo.png',
+            imageAlt: 'Icon image',
+            imageHeight: 80,
+            imageWidth: 60,
+            timer: 4000
+          });
+    
           this.router.navigate(['']);
         }
       } catch (error) {
         console.error('Error al crear el usuario:', error);
       }
-    }
+    
   }
 }

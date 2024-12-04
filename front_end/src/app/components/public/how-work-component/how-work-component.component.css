@@ -1,0 +1,163 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding: 30px;
+  background-color: #F0F4F8; 
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.card {
+  background-color: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  padding: 25px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+
+.title, .subtitle {
+  color: #333333;
+  text-align: center;
+  margin-bottom: 15px;
+  font-family: 'Roboto', sans-serif;
+}
+
+
+.description {
+  color: #555555;
+  font-size: 16px;
+  line-height: 1.6;
+  text-align: justify;
+}
+
+
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+
+.image, .header-image {
+  width: 45%;
+  border-radius: 12px;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.header-image {
+  width: 100%;
+  margin: 10px 0;
+}
+
+.image:hover, .header-image:hover {
+  transform: scale(1.03);
+  filter: brightness(1.1);
+}
+
+
+.register-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  flex-wrap: wrap;
+}
+
+.register-image {
+  width: 30%;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.register-image:hover {
+  transform: scale(1.05);
+}
+
+
+.register-text {
+  font-size: 18px;
+  font-weight: bold;
+  color: #007BFF;
+  margin: 15px 0;
+}
+
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #E0E0E0;
+  transition: background-color 0.3s ease;
+}
+
+.sidebar-item:last-child {
+  border-bottom: none;
+}
+
+.sidebar-item span {
+  font-size: 24px;
+  margin-right: 15px;
+  color: #00A896;
+}
+
+.sidebar-item:hover {
+  background-color: #EAF4F8;
+}
+
+.highlight {
+  font-weight: bold;
+  color: #007BFF;
+}
+
+
+@media (max-width: 768px) {
+  .content, .register-content {
+    flex-direction: column; 
+    gap: 15px;
+  }
+
+  .image, .register-image {
+    width: 80%; 
+  }
+
+  .register-texts {
+    width: 100%;
+    text-align: center;
+  }
+
+  .sidebar-item {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .container {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .title, .subtitle {
+    font-size: 22px;
+  }
+
+  .description {
+    font-size: 14px;
+  }
+
+  .register-image {
+    width: 100%;
+  }
+
+  .sidebar-item span {
+    font-size: 20px;
+  }
+}

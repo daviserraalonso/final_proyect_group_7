@@ -1,0 +1,14 @@
+.dropdown-menu {
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+  }
+  
+  .dropdown-menu .dropdown-item:hover {
+    background-color: #e9ecef;
+  }
+
+  .img {
+    height: 25px;
+    margin: 3px;
+  }
+  

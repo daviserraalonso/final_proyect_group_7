@@ -21,6 +21,49 @@ display: none !important;
     height: auto;
     max-height: 100%;
   }
+
+  .form1 {
+    display: none;
+  }
+
+  .filterActive {
+    display: none;
+  }
+
+  .click {
+    cursor: pointer;
+  }
+
+
+
+
+
+  @media (min-width: 768px) {
+    .form2{
+      display: none;
+    }
+
+    .form1 {
+      display: block;
+    }
+  }
+
+  .fab-container {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    z-index: 1000; /* Asegúrate de que esté sobre otros elementos */
+  }
+
+  .back {
+    background-color: white;
+    border-radius: 50%;
+   
+  }
+
+
+  
+
   
 
 

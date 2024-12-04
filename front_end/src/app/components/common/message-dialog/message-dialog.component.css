@@ -1,0 +1,32 @@
+.messages-container {
+    max-height: 400px;
+    overflow-y: auto;
+    padding: 10px;
+  }
+  
+  .message {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+  
+  .timestamp {
+    display: block;
+    text-align: right;
+    font-size: 0.8em;
+    color: gray;
+  }
+
+  mat-dialog-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  
+  mat-form-field {
+    margin-right: 10px;
+  }
+  

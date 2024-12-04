@@ -11,8 +11,10 @@ import {
   deleteUser,
   getUserDetails,
   getTeachers,
-  getUserSubscribedCourses
+  getUserSubscribedCourses,
+  getFavoriteTeachers // Importa la nueva función
 } from '../controllers/UserController';
+
 import LoginController from '../controllers/LoginController';
 
 const router = Router();
@@ -22,14 +24,15 @@ router.get('/:id/details', getUserDetails);
 router.put('/:id', modifyUser);
 router.delete('/:id', deleteUser);
 
-// Rutas generales después
+// general routes
 router.get('/teachers', getTeachers);
+router.get('/teachers/favorites', getFavoriteTeachers);
 router.get('/search', searchTeachers);
 router.get('/names', names);
 router.get('/cities', cities);
 router.get('/:city', cityCords);
 
-// Otras rutas
+// other routes
 router.post('/register', registerUser);
 router.get('/confirm/:token', confirmEmail);
 router.post('/login', LoginController.login);

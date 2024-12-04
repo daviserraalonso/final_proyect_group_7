@@ -1,10 +1,10 @@
 import { Model, DataTypes } from 'sequelize';
 import sequelize from '../config/database';
-import User from './User';
-import StudentCourse from './StudentCourse';
 
 class Course extends Model {
+  // No declares propiedades públicas aquí
 
+  // Si necesitas métodos o propiedades adicionales, puedes agregarlos aquí
 }
 
 Course.init(
@@ -17,6 +17,10 @@ Course.init(
     name: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    price: {
+      type: DataTypes.DECIMAL,
+      allowNull: false
     },
     category_id: {
       type: DataTypes.INTEGER,
@@ -35,9 +39,8 @@ Course.init(
     sequelize,
     modelName: 'Course',
     tableName: 'Course',
-    timestamps: true, // Para incluir createdAt y updatedAt
+    timestamps: true,
   }
 );
-
 
 export default Course;

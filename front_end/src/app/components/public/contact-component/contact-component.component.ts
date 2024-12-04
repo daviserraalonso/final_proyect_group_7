@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
 import { ContactService } from '../../../service/contact.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-contact-component',
@@ -41,11 +42,31 @@ export class ContactComponentComponent {
       this.contactService.sendContactForm(this.contactForm.value).subscribe({
         next: () => {
           this.successMessage = 'El correo se ha enviado exitosamente.';
+          Swal.fire({
+            text: 'El correo se ha enviado con éxito',
+            width: 400,
+            showConfirmButton: false,
+            imageUrl: 'assets/logo.png',
+            imageAlt: 'Icon image',
+            imageHeight: 80,
+            imageWidth: 60,
+            timer: 4000
+          });
           this.contactForm.reset();
         },
         error: (err) => {
           console.error('Error al enviar el correo:', err);
           this.errorMessage = 'Hubo un error al enviar el correo. Inténtalo nuevamente.';
+          Swal.fire({
+            text: 'Error al enviar el correo',
+            width: 400,
+            showConfirmButton: false,
+            imageUrl: 'assets/logo.png',
+            imageAlt: 'Icon image',
+            imageHeight: 80,
+            imageWidth: 60,
+            timer: 2500
+          });
         }
       });
     }

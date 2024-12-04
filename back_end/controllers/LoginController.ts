@@ -8,6 +8,7 @@ async function findUserByEmail(email: string) {
 }
 
 class LoginController {
+
   async login(req: Request, res: Response): Promise<void> {
     const { email, password } = req.body;
 

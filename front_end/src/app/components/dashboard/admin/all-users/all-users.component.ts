@@ -12,6 +12,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { UserDetailModalComponent } from '../user-detail-modal/user-detail-modal.component';
 import { EditUserModalComponent } from '../edit-user-modal/edit-user-modal.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import Swal from 'sweetalert2';
 
 
 
@@ -74,6 +75,7 @@ export class AllUsersComponent implements OnInit {
   loadUsers(): void {
     this.userService.getAll().then((data) => {
       this.dataSource.data = data;
+      console.log(this.dataSource.data)
     }).catch((error) => {
       console.error('Error loading users:', error);
     });
@@ -115,16 +117,31 @@ export class AllUsersComponent implements OnInit {
   
 
   deleteUser(userId: number): void {
-    if (confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
+    Swal.fire({
+      title: "¿Estas seguro?",
+      text: `Vas a eliminar al usuario`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si",
+      cancelButtonText: "No"
+    }).then((result) =>
+    { if(result.isConfirmed) {
       this.userService.delete(userId).then(() => {
         console.log(`Usuario con ID ${userId} eliminado`);
         // Eliminar el usuario del dataSource localmente
         this.dataSource.data = this.dataSource.data.filter(user => user.id !== userId);
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success"
+        });
       }).catch((error) => {
         console.error('Error al eliminar el usuario:', error);
       });
-    }
-  }
+    }}
+  )}
 
 
 }

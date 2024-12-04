@@ -5,10 +5,11 @@ import { ContactComponentComponent } from './components/public/contact-component
 import { LoginComponent } from './pages/public/login/login.component';
 import { RegisterStudentComponentComponent } from './components/public/register-student-component/register-student-component.component';
 import { RegisterTeacherComponentComponent } from './components/public/register-teacher-component/register-teacher-component.component';
+import { MapComponentComponent } from './components/public/map-component/map-component.component';
 export const routes = [
     { path: '', redirectTo: '/index', pathMatch: 'full' },
     { path: 'index', component: IndexComponent },
-    { path: 'looking-teachers', component: SearchTeachersComponent },
+    { path: 'looking-teachers', component: MapComponentComponent },
     { path: 'how-works', component: HowWorkComponentComponent },
     { path: 'contact', component: ContactComponentComponent },
     { path: 'login', component: LoginComponent },

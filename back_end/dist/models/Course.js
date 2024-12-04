@@ -17,6 +17,10 @@ Course.init({
         type: sequelize_1.DataTypes.STRING,
         allowNull: false,
     },
+    price: {
+        type: sequelize_1.DataTypes.DECIMAL,
+        allowNull: false
+    },
     category_id: {
         type: sequelize_1.DataTypes.INTEGER,
         allowNull: false,
@@ -33,6 +37,6 @@ Course.init({
     sequelize: database_1.default,
     modelName: 'Course',
     tableName: 'Course',
-    timestamps: true, // Para incluir createdAt y updatedAt
+    timestamps: true,
 });
 exports.default = Course;

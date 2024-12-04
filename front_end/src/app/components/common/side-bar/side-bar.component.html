@@ -9,12 +9,12 @@
 
     <!-- general option -->
     <li class="nav-item mb-3">
-      <p routerLink="/" routerLinkActive="router-link-active" class="nav-link py-2 border-bottom" aria-current="page">
+      <p [routerLink]="role_url"  routerLinkActive="router-link-active" class="nav-link py-2 border-bottom" aria-current="page">
         <img src="https://github.com/mdo.png" alt="mdo" width="24" height="24" class="rounded-circle">
       </p>
     </li>
     <li class="nav-item mb-3">
-      <a routerLink="/" routerLinkActive="router-link-active" class="nav-link py-2 border-bottom" aria-current="page" matTooltip="Home" matTooltipPosition="right">
+      <a routerLink="student" routerLinkActive="router-link-active" class="nav-link py-2 border-bottom" aria-current="page" matTooltip="Home" matTooltipPosition="right">
         <mat-icon>home</mat-icon>
       </a>
     </li>
@@ -44,7 +44,7 @@
       <!-- option to role teacher -->
       <ng-container *ngIf="role === '2'">
         <li class="nav-item mb-3">
-          <a routerLink="/my-classes" routerLinkActive="router-link-active" class="nav-link py-2 border-bottom" matTooltip="Mis Clases" matTooltipPosition="right">
+          <a routerLink="/mis-alumnos" routerLinkActive="router-link-active" class="nav-link py-2 border-bottom" matTooltip="Mis Clases" matTooltipPosition="right">
             <mat-icon>class</mat-icon>
           </a>
         </li>
@@ -63,7 +63,7 @@
       <!-- option to role student -->
       <ng-container *ngIf="role === '3'">
         <li class="nav-item mb-3">
-          <a routerLink="/student" routerLinkActive="router-link-active" class="nav-link py-2 border-bottom" matTooltip="Mis Cursos" matTooltipPosition="right">
+          <a routerLink="/courses" routerLinkActive="router-link-active" class="nav-link py-2 border-bottom" matTooltip="Mis Cursos" matTooltipPosition="right">
             <mat-icon>library_books</mat-icon>
           </a>
         </li>
