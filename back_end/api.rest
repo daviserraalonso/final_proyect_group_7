@@ -3,7 +3,7 @@ Content-Type: application/json
 
 ### GET todas las tareas del usuario
 
-GET http://localhost:3000/api/tasks/user/7
+GET http://localhost:3000/api/tasks/user/5
 Content-Type: application/json
 
 ### GET info inicial
@@ -41,3 +41,7 @@ Content-Type: application/json
 GET http://localhost:3000/api/users/6/details
 Content-Type: application/json
 
+###
+### Obtener estudiantes por profesor
+GET http://localhost:3000/api/professors/3/students
+Content-Type: application/json

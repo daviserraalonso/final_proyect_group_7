@@ -33,7 +33,7 @@ class MessagesController {
                 include: [
                   {
                     model: Message,
-                    as: 'message',
+                    as: 'messages',
                     include: [
                       {
                         model: User,

@@ -6,12 +6,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getFavoriteTeachers = exports.getUserSubscribedCourses = exports.cityCords = exports.cities = exports.names = exports.searchTeachers = exports.getTeachers = exports.deleteUser = exports.modifyUser = exports.getUserDetails = exports.getAllUsers = exports.createUser = exports.confirmEmail = exports.registerUser = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const emailService_1 = require("../services/emailService");
-const User_1 = __importDefault(require("../models/User"));
 const UserDetails_1 = __importDefault(require("../models/UserDetails"));
 const Course_1 = __importDefault(require("../models/Course"));
 const sequelize_1 = require("sequelize");
 const StudentCourse_1 = __importDefault(require("../models/StudentCourse"));
 const avg_teacher_1 = __importDefault(require("../models/avg_teacher"));
+const User_1 = __importDefault(require("../models/User"));
 const jwt = require('jsonwebtoken');
 /**
  * Function to register user

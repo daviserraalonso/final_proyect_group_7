@@ -3,7 +3,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const User_1 = __importDefault(require("./User"));
 const UserDetails_1 = __importDefault(require("./UserDetails"));
 const Course_1 = __importDefault(require("./Course"));
 const StudentCourse_1 = __importDefault(require("./StudentCourse"));
@@ -17,6 +16,7 @@ const Category_1 = __importDefault(require("./Category"));
 const ProfessorRating_1 = __importDefault(require("./ProfessorRating"));
 const avg_teacher_1 = __importDefault(require("./avg_teacher"));
 const avg_course_1 = __importDefault(require("./avg_course"));
+const User_1 = __importDefault(require("./User"));
 function setupAssociations() {
     // ** Relation User -> UserDetails**
     User_1.default.hasOne(UserDetails_1.default, {
@@ -172,7 +172,7 @@ function setupAssociations() {
             name: 'chatId',
             allowNull: false,
         },
-        as: 'message',
+        as: 'messages',
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
     });

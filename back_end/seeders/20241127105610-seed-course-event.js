@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
@@ -6,14 +6,14 @@ module.exports = {
       {
         courseId: 1,
         subjectId: 1,
-        eventType: 'class',
-        title: 'Clase introductoria de Álgebra',
-        description: 'Primer día del curso.',
+        eventType: "class",
+        title: "Clase introductoria de Álgebra",
+        description: "Primer día del curso.",
         startDateTime: new Date(),
         endDateTime: new Date(new Date().setHours(new Date().getHours() + 2)),
-        locationType: 'physical',
+        locationType: "physical",
         locationId: 1,
-        onlineLink: null,
+        onlineLink: "enlace_prueba",
         deadline: null,
         isRead: false,
         createdAt: new Date(),
@@ -22,14 +22,14 @@ module.exports = {
       {
         courseId: 4,
         subjectId: 3,
-        eventType: 'task',
-        title: 'Entrega de práctica de Programación',
-        description: 'Subir el ejercicio en línea.',
+        eventType: "task",
+        title: "Entrega de práctica de Programación",
+        description: "Subir el ejercicio en línea.",
         startDateTime: new Date(),
         endDateTime: new Date(new Date().setHours(new Date().getHours() + 1)),
-        locationType: 'online',
-        locationId: null,
-        onlineLink: 'https://submit-task-programming.com',
+        locationType: "online",
+        locationId: 2,
+        onlineLink: "https://submit-task-programming.com",
         deadline: new Date(new Date().setDate(new Date().getDate() + 7)),
         isRead: false,
         createdAt: new Date(),
@@ -37,10 +37,10 @@ module.exports = {
       },
     ];
 
-    await queryInterface.bulkInsert('course_event', courseEvents, {});
+    await queryInterface.bulkInsert("course_event", courseEvents, {});
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkDelete('course_event', null, {});
+    await queryInterface.bulkDelete("course_event", null, {});
   },
 };

@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import StudentCourse from '../models/StudentCourse';
 import Course from '../models/Course';
 import Category from '../models/Category';
-import User from '../models/User';
+const User = require('../models/User');
 
 export const getStudentCourses = async (req: Request, res: Response): Promise<void> => {
   try {

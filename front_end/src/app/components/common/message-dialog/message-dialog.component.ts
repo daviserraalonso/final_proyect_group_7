@@ -68,7 +68,7 @@ export class MessageDialogComponent {
             timestamp: new Date(),
           };
   
-          this.chat.message.push(message);
+          this.chat.messages.push(message);
   
           // CLEAR INPUT
           this.newMessage = '';
