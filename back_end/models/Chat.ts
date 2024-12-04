@@ -2,14 +2,13 @@
 import { Model, DataTypes, Optional } from 'sequelize';
 import sequelize from '../config/database';
 
-// Definir los atributos del modelo
+// define attribute in model
 interface ChatAttributes {
-  id: number; // Este es el campo clave primaria
+  id: number;
   studentId: number;
   professorId: number;
 }
 
-// Para crear, omitir el campo `id` porque se genera automáticamente
 interface ChatCreationAttributes extends Optional<ChatAttributes, 'id'> {}
 
 class Chat extends Model<ChatAttributes, ChatCreationAttributes> implements ChatAttributes {

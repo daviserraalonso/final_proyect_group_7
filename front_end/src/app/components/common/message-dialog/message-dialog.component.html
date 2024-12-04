@@ -2,7 +2,7 @@
 <mat-divider></mat-divider>
 
 <mat-dialog-content>
-  <div *ngFor="let message of chat.message" class="message">
+  <div *ngFor="let message of chat.messages" class="message">
     <p><strong>{{ message.sender.name }}:</strong> {{ message.content }}</p>
     <span class="timestamp">{{ message.timestamp | date: 'short' }}</span>
   </div>

@@ -11,7 +11,9 @@
         <mat-card-content>
           <div>
             <h4 class="mb-1 fw-bold">Chat con: {{ chat.student.name }}</h4>
-            <p class="text-muted">Último mensaje: {{ chat.message[chat.message.length - 1]?.content }}</p>
+            Último mensaje:           
+            {{ chat.messages?.length ? chat.messages[chat.messages.length - 1]?.content : 'Sin mensajes' }}
+
           </div>
           <div class="mt-2">
             <button mat-raised-button color="primary" (click)="openChat(chat)">Abrir Chat</button>

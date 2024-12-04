@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 const { Op } = require('sequelize');
 import Chat from '../models/Chat';
 import Message from '../models/Message';
-const User = require('../models/User');
+import User from '../models/User';
 
 class MessagesController {
   
@@ -33,7 +33,7 @@ class MessagesController {
                 include: [
                   {
                     model: Message,
-                    as: 'message',
+                    as: 'messages',
                     include: [
                       {
                         model: User,
