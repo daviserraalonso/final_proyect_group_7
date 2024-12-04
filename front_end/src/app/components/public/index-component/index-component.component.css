@@ -26,7 +26,7 @@
     gap: 20px;
 
     .stat-item {
-      background-color: #E9EDC9;
+      background-color: #D8CEC2;
       border-radius: 8px;
       padding: 20px;
       width: 100%;
@@ -89,20 +89,20 @@
         }
 
         &.btn-student {
-          background-color: #00796b;
+          background-color: #3366FF;
           color: #ffffff;
 
           &:hover {
-            background-color: #004d40;
+            background-color: #022eb1 ;
           }
         }
 
         &.btn-teacher {
-          background-color: #4d1172;
+          background-color: #FFA500  ;
           color: #ffffff;
 
           &:hover {
-            background-color: #4a148c;
+            background-color: #b67601 ;
           }
         }
       }

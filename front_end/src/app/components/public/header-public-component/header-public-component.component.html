@@ -40,8 +40,8 @@
             <a *ngIf="isAuthenticated"  [routerLink]="['/profile']" class="btn btn-primary me-2">
               {{ userName }}
             </a>
-            <a *ngIf="!isAuthenticated" data-bs-toggle="collapse" data-bs-target="#navbarNav" [routerLink]="['/register-student']" class="btn btn-outline-info m-2">Registrarse como alumno</a>
-            <a *ngIf="!isAuthenticated" data-bs-toggle="collapse" data-bs-target="#navbarNav" [routerLink]="['/register-teacher']" class="btn btn-outline-warning">Registrarse como profesor</a>
+            <a *ngIf="!isAuthenticated" data-bs-toggle="collapse" data-bs-target="#navbarNav" [routerLink]="['/register-student']" class="btn btn-outline-custom-blue m-2">Registrarse como Alumno</a>
+            <a *ngIf="!isAuthenticated" data-bs-toggle="collapse" data-bs-target="#navbarNav" [routerLink]="['/register-teacher']" class="btn btn-outline-custom-orange">Registrarse como Profesor</a>
           </div>
         </div>
       </div>
