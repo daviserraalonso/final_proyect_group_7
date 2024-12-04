@@ -114,8 +114,12 @@ export class SearchTeachersComponent {
     this.searchForm.get('northEastLng')?.patchValue(this.bounds.northEastLng)
   }
 
-
-
+  onScroll(event: WheelEvent): void {
+    event.preventDefault();
+    const container = event.currentTarget as HTMLElement;
+    container.scrollLeft += event.deltaY > 0 ? 100 : -100; 
+  }
+  
    // Get list of teachers name
    async getTeacherName() {
     const data = await this.searchServices.getTeachersName()
