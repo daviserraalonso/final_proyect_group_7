@@ -34,10 +34,10 @@
             <li data-bs-toggle="collapse" data-bs-target="#navbarNav" class="nav-item"><a class="nav-link" [routerLink]="['/contact']">Contacto</a></li>
           </ul>
           <div>
-            <a data-bs-toggle="collapse" data-bs-target="#navbarNav" *ngIf="!isAuthenticated" [routerLink]="['/login']" class="btn btn-success me-2">
+            <a data-bs-toggle="collapse" data-bs-target="#navbarNav" *ngIf="!isAuthenticated" [routerLink]="['/login']" class="btn btn-outline-custom-green me-2">
               Iniciar Sesión
             </a>
-            <a *ngIf="isAuthenticated"  [routerLink]="['/profile']" class="btn btn-primary me-2">
+            <a *ngIf="isAuthenticated"  [routerLink]="['/profile']" class="btn btn-outline-custom-green me-2">
               {{ userName }}
             </a>
             <a *ngIf="!isAuthenticated" data-bs-toggle="collapse" data-bs-target="#navbarNav" [routerLink]="['/register-student']" class="btn btn-outline-custom-blue m-2">Registrarse como Alumno</a>
