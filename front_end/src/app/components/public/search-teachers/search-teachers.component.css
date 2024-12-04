@@ -22,11 +22,11 @@
   }
   
   .category-item:hover {
-    background-color: #f0f0f0;
+    background-color: white;
   }
   
   mat-form-field {
-    background-color: #f8f9fa;
+    background-color: white;
     border-radius: 5px;
     padding: 10px;
   }
