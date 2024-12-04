@@ -61,7 +61,10 @@ export class InboxComponent {
       (response: any) => {
         this.chats = response.map((chat: any) => ({
           ...chat,
-          lastMessage: chat.message?.[chat.message.length - 1] || null,
+          messages: chat.messages || [], // Garantiza que siempre sea un array
+          lastMessage: Array.isArray(chat.messages) && chat.messages.length > 0
+            ? chat.messages[chat.messages.length - 1]
+            : null,
         }));
       },
       (error) => {
@@ -69,6 +72,7 @@ export class InboxComponent {
         this.showCustomSnackBar('Error al cargar los chats');
       }
     );
+    
   }
 
 

@@ -187,7 +187,7 @@ export default function setupAssociations() {
       name: 'chatId',
       allowNull: false,
     },
-    as: 'message',
+    as: 'messages',
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   });
