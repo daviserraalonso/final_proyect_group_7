@@ -46,8 +46,10 @@
   background-color: #f5f5f5;  /* Fondo del botón */
 }
 
-.user-profile{
-   
+img{
+  
+   width: 24px;
+   height: 24px;
 }
 /* Mantener la versión móvil funcional */
 @media (max-width: 768px) {
