@@ -32,7 +32,6 @@
 
       <!-- Admin Role Options -->
       <ng-container *ngIf="isAuthenticated && role === '1'">
-        <mat-divider></mat-divider>
         <mat-list-item routerLink="/all-users" routerLinkActive="active">
           <mat-icon matListItemIcon>people</mat-icon>
           <span matListItemTitle *ngIf="isMobileView()">All Users</span>
@@ -45,7 +44,6 @@
 
       <!-- Teacher Role Options -->
       <ng-container *ngIf="isAuthenticated && role === '2'">
-        <mat-divider></mat-divider>
         <mat-list-item routerLink="/my-classes" routerLinkActive="active">
           <mat-icon matListItemIcon>class</mat-icon>
           <span matListItemTitle *ngIf="isMobileView()">My Classes</span>
@@ -58,7 +56,6 @@
 
       <!-- Student Role Options -->
       <ng-container *ngIf="isAuthenticated && role === '3'">
-        <mat-divider></mat-divider>
         <mat-list-item routerLink="/my-courses" routerLinkActive="active">
           <mat-icon matListItemIcon>school</mat-icon>
           <span matListItemTitle *ngIf="isMobileView()">My Courses</span>
