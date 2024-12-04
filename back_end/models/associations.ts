@@ -1,4 +1,3 @@
-import User from './User';
 import UserDetails from './UserDetails';
 import Course from './Course';
 import StudentCourse from './StudentCourse';
@@ -12,6 +11,7 @@ import Category from './Category';
 import ProfessorRating from './ProfessorRating';
 import AvgTeacher from './avg_teacher'
 import AvgCourse from './avg_course';
+import User from './User';
 
 export default function setupAssociations() {
   // ** Relation User -> UserDetails**
@@ -74,6 +74,7 @@ export default function setupAssociations() {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   });
+  
 
   // association Course -> StudentCourse
   Course.hasMany(StudentCourse, {
