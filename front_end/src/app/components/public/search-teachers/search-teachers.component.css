@@ -1,38 +1,37 @@
 .search-section {
-  background: linear-gradient(to bottom, #dce6f8, #ffffff);
-  border-radius: 10px;
+  background: linear-gradient(to bottom, #f8f9fa, #ffffff);
+  border-radius: 15px;
 }
 
-
-.cardActive {
-display: none !important;
+.category-item {
+  padding: 10px 20px;
+  border-radius: 30px;
 }
 
-.card_container {
-  max-width: 100%;
-  max-height: 450px;
-  box-sizing: border-box;
-  gap: 5px;
-  overflow-y: auto;
-  }
-  
-  
-  .test {
-    height: auto;
-    max-height: 100%;
-  }
+mat-form-field {
+  background-color: #f8f9fa;
+  border-radius: 5px;
+  padding: 10px;
+}
 
-  .form1 {
-    display: none;
-  }
+mat-button-toggle {
+  font-size: 0.9rem;
+  text-transform: none;
+  transition: all 0.3s ease;
+}
 
-  .filterActive {
-    display: none;
-  }
+mat-button-toggle:hover {
+  background-color: #e3f2fd !important;
+}
 
-  .click {
-    cursor: pointer;
-  }
+mat-slider {
+  width: 100%;
+}
+
+.btn-lg {
+  padding: 10px 30px;
+  font-size: 1.25rem;
+}
 
 
 
