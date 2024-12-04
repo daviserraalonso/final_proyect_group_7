@@ -1,24 +1,52 @@
-.card {
-    border-radius: 8px;
-    overflow: hidden;
-  }
-  
-  .card-title {
-    font-weight: bold;
-    font-size: 1.2rem;
-  }
-  
-  .card-text {
-    font-size: 0.95rem;
-    color: #6c757d;
-  }
+.container{
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+  margin: 2px;
+}
+.custom-card {
+  background-color: #D8CEC2;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
 
-  .custom-modal .mat-dialog-container {
-    padding: 24px; /* Espaciado interno */
-    border-radius: 8px; /* Opcional */
+.custom-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+.custom-card-title {
+  font-weight: bold;
+  font-size: 1.3rem;
+  color: #343a40;
+}
+
+.custom-img {
+  object-fit: cover;
+  height: 200px;
+}
+
+.custom-text {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.6;
+}
+
+.btn-inscribirse {
+  background-color: #007bff;
+  color: white;
+  width: 100%;
+  border-radius: 8px;
+}
+
+.btn-inscribirse:hover {
+  background-color: white;
+}
+
+@media (max-width: 768px) {
+  .custom-card {
+    margin: 0 auto;
   }
-
-  
-
-  
-  
+}

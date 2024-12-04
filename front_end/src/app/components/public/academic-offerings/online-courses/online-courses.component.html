@@ -1,16 +1,20 @@
-<div class="container">
-    <h1>Cursos Online</h1>
-    <div class="row">
-      <!-- *ngFor con el pipe async -->
-      <div class="col-md-4" *ngFor="let course of courses$ | async">
-        <div class="card mb-4 shadow-sm">
-          <div class="card-body">
-            <h5 class="card-title">{{ course.name }}</h5>
-            <p class="card-text">Este curso online te ayudará a mejorar tus conocimientos en {{ course.name.toLowerCase() }} desde la comodidad de tu hogar.</p>
-            <a href="#" class="btn btn-primary">Más información</a>
+<div class="container my-5">
+  <h1 class="text-center mb-4 pt-4">Cursos Online</h1>
+  <div class="row">
+    <!-- Recorre la lista de cursos -->
+    <div class="col-md-4 col-sm-6" *ngFor="let course of courses$ | async">
+      <div class="card mb-4 shadow-sm course-card">
+        <div class="card-body">
+          <h5 class="card-title text-primary">{{ course.name }}</h5>
+          <p class="card-text text-muted">
+            Mejora tus conocimientos en <strong>{{ course.name.toLowerCase() }}</strong> desde la comodidad de tu hogar. Accede a contenido actualizado y dinámico.
+          </p>
+          <div class="d-flex justify-content-between align-items-center">
+            <a href="#" class="btn btn-outline-primary">Más información</a>
+            <small class="text-muted">Duración: {{ course.duration || 'N/A' }} horas</small>
           </div>
         </div>
       </div>
     </div>
   </div>
-  
+</div>
