@@ -3,28 +3,26 @@
     border-radius: 15px 15px 0 0;
   }
 
-  .category-scroll {
-    display: flex;
-    overflow-x: auto;
-    overflow-y: hidden;
-    white-space: nowrap;
-    padding: 10px;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    scroll-behavior: smooth;
-    max-height: 80px; 
-    max-width: 100%;
-    scrollbar-width: thin; /* Visible en Firefox */
-  }
-  
-  .category-scroll::-webkit-scrollbar {
-    height: 5px; /* Visible en Chrome y Safari */
+  .category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Columnas automáticas */
+    gap: 15px; /* Espaciado entre tarjetas */
+    justify-items: center; /* Centra el contenido de cada tarjeta */
   }
   
   .category-item {
-    flex-shrink: 0;
-    margin-right: 10px;
-    white-space: nowrap; /* Evita que el texto rompa la línea */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    text-align: center;
+    transition: background-color 0.3s;
+  }
+  
+  .category-item:hover {
+    background-color: #f0f0f0;
   }
   
   mat-form-field {

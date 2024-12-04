@@ -9,25 +9,18 @@
       <div class="row mb-4">
         <div class="col-12 text-center">
           <h4 class="mb-3 text-primary">Selecciona Materia</h4>
-          <div class="category-scroll" (wheel)="onScroll($event)">
-            <mat-button-toggle-group 
-              name="categories" 
-              aria-label="Categories" 
-              multiple 
-              formControlName="selectedCategory"
-              style="display: inline-flex; flex-wrap: nowrap;">
-              
-              @for (category of allCategories; track $index) {
-                <mat-button-toggle 
-                  class="btn btn-outline-primary category-item" 
-                  [value]="category.id" 
-                  [checked]="selectedCategory.includes(category.category_name)">
-                  <mat-icon class="me-2">{{category.description}}</mat-icon> 
-                  {{ category.category_name }}
-                </mat-button-toggle>
-              }
-            </mat-button-toggle-group>
+          <div class="category-grid">
+            @for (category of allCategories; track $index) {
+              <mat-button-toggle 
+                class="category-item" 
+                [value]="category.id" 
+                [checked]="selectedCategory.includes(category.category_name)">
+                <mat-icon class="me-2">{{category.description}}</mat-icon> 
+                {{ category.category_name }}
+              </mat-button-toggle>
+            }
           </div>
+          
         </div>
       </div>
 

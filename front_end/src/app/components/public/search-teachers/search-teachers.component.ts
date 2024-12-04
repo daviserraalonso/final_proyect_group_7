@@ -115,9 +115,9 @@ export class SearchTeachersComponent {
   }
 
   onScroll(event: WheelEvent): void {
-    event.preventDefault();
     const container = event.currentTarget as HTMLElement;
-    container.scrollLeft += event.deltaY > 0 ? 100 : -100; 
+    container.scrollLeft += event.deltaY; // Desplazamiento con el scroll del mouse
+    event.preventDefault(); // Evita el desplazamiento vertical por defecto
   }
   
    // Get list of teachers name
