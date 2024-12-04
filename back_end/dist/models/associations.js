@@ -3,8 +3,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = setupAssociations;
-const User_1 = __importDefault(require("./User"));
 const UserDetails_1 = __importDefault(require("./UserDetails"));
 const Course_1 = __importDefault(require("./Course"));
 const StudentCourse_1 = __importDefault(require("./StudentCourse"));
@@ -241,3 +239,4 @@ function setupAssociations() {
         as: 'AvgTeacher'
     });
 }
+exports.default = setupAssociations;
