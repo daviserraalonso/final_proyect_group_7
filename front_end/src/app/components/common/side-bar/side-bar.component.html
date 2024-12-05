@@ -14,7 +14,7 @@
       </p>
     </li>
     <li class="nav-item mb-3">
-      <a routerLink="student" routerLinkActive="router-link-active" class="nav-link py-2 border-bottom" aria-current="page" matTooltip="Home" matTooltipPosition="right">
+      <a routerLink="/" routerLinkActive="router-link-active" class="nav-link py-2 border-bottom" aria-current="page" matTooltip="Home" matTooltipPosition="right">
         <mat-icon>home</mat-icon>
       </a>
     </li>
@@ -44,8 +44,8 @@
       <!-- option to role teacher -->
       <ng-container *ngIf="role === '2'">
         <li class="nav-item mb-3">
-          <a routerLink="/mis-alumnos" routerLinkActive="router-link-active" class="nav-link py-2 border-bottom" matTooltip="Mis Clases" matTooltipPosition="right">
-            <mat-icon>class</mat-icon>
+          <a routerLink="/mis-alumnos" routerLinkActive="router-link-active" class="nav-link py-2 border-bottom" matTooltip="Mis Alumnos" matTooltipPosition="right">
+            <mat-icon>hotel_class</mat-icon>
           </a>
         </li>
         <li class="nav-item mb-3">
@@ -56,6 +56,11 @@
         <li class="nav-item mb-3">
           <a [routerLink]="['/inbox']" class="nav-link py-2 border-bottom" matTooltip="Bandeja de entrada" matTooltipPosition="right">
             <mat-icon>email</mat-icon>
+          </a>
+        </li>
+        <li class="nav-item mb-3">
+          <a routerLink="/teacher" routerLinkActive="router-link-active" class="nav-link py-2 border-bottom" aria-current="page" matTooltip="Dashboard" matTooltipPosition="right">
+            <mat-icon>dashboard</mat-icon>
           </a>
         </li>
       </ng-container>

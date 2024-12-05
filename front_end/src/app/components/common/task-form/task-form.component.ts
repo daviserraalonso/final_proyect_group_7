@@ -23,6 +23,7 @@ export class TaskFormComponent {
     private dialogRef: MatDialogRef<TaskFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { studentId: number, subjectId: number }
   ) {
+    console.log('Datos inyectados:', data); // Agrega este console.log para ver los datos
     this.taskForm = this.fb.group({
       studentId: [data.studentId, Validators.required],
       subjectId: [data.subjectId, Validators.required],

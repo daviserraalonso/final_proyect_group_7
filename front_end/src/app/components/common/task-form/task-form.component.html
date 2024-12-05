@@ -1,13 +1,6 @@
 <h2>Enviar Tarea</h2>
 <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
-  <mat-form-field>
-    <mat-label>ID del Estudiante</mat-label>
-    <input matInput formControlName="studentId" readonly>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>ID de la Asignatura</mat-label>
-    <input matInput formControlName="subjectId" readonly>
-  </mat-form-field>
+  
   <mat-form-field>
     <mat-label>Comentarios</mat-label>
     <textarea matInput formControlName="comments"></textarea>

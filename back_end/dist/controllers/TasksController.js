@@ -3,12 +3,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getProgressByUserId = exports.getTasksByUserId = exports.deleteTask = exports.updateTask = exports.assignTaskToStudent = exports.createTask = exports.getTaskById = exports.getAllTasks = void 0;
+exports.getEarningsForProfessor = exports.getStudentCountByProfessor = exports.getTaskCountsByStatus = exports.getTaskDetailsById = exports.getPendingTasksByProfessor = exports.getProgressByUserId = exports.getTasksByUserId = exports.deleteTask = exports.updateTask = exports.assignTaskToStudent = exports.createTask = exports.getTaskById = exports.getAllTasks = void 0;
 const database_1 = __importDefault(require("../config/database"));
 const sequelize_1 = require("sequelize");
 const Task_1 = __importDefault(require("../models/Task")); // Cambiado a import
 const Subject = require('../models/Subject'); // Importa el modelo Subject
-const Course = require('../models/Course'); // Importa el modelo Course
+const Course_1 = __importDefault(require("../models/Course")); // Importa el modelo Course
+const StudentCourse_1 = __importDefault(require("../models/StudentCourse"));
 const User = require('../models/User'); // Importa el modelo User
 const getAllTasks = async (req, res) => {
     try {
@@ -88,12 +89,12 @@ exports.assignTaskToStudent = assignTaskToStudent;
 const updateTask = async (req, res) => {
     try {
         const { id } = req.params;
-        const { subjectId, userId, comments, punctuation, creationDate, deadline, submission } = req.body;
-        // Verifica que el campo submission esté presente en el cuerpo de la solicitud
-        if (submission === undefined) {
-            return res.status(400).json({ message: 'El campo submission es obligatorio' });
+        const { subjectId, userId, comments, punctuation, creationDate, deadline, submission, feedback } = req.body;
+        // Verifica que el campo feedback esté presente en el cuerpo de la solicitud
+        if (feedback === undefined) {
+            return res.status(400).json({ message: 'El campo feedback es obligatorio' });
         }
-        const [updated] = await Task_1.default.update({ subjectId, userId, comments, punctuation, creationDate, deadline, submission }, { where: { id } });
+        const [updated] = await Task_1.default.update({ subjectId, userId, comments, punctuation, creationDate, deadline, submission, feedback }, { where: { id } });
         if (updated) {
             const updatedTask = await Task_1.default.findByPk(id);
             return res.status(200).json(updatedTask);
@@ -197,3 +198,146 @@ const getProgressByUserId = async (req, res) => {
     }
 };
 exports.getProgressByUserId = getProgressByUserId;
+const getPendingTasksByProfessor = async (req, res) => {
+    const { professorId } = req.params;
+    try {
+        // Consulta SQL para obtener las tareas pendientes por calificar
+        const query = `
+      SELECT 
+        t.id AS taskId,
+        u.name AS studentName,
+        c.name AS courseName
+      FROM 
+        tasks t
+      JOIN 
+        user u ON t.userId = u.id
+      JOIN 
+        course c ON t.subjectId = c.id
+      WHERE 
+        t.punctuation IS NULL
+        AND c.professor_id = :professorId;
+    `;
+        // Ejecutar la consulta SQL
+        const pendingTasks = await database_1.default.query(query, {
+            replacements: { professorId }, // Sustituye el :professorId en la consulta
+            type: sequelize_1.QueryTypes.SELECT, // Indica que queremos un resultado SELECT
+        });
+        // Enviar la respuesta JSON
+        return res.status(200).json(pendingTasks);
+    }
+    catch (error) {
+        console.error('Error al obtener las tareas pendientes por calificar:', error);
+        return res.status(500).json({ message: 'Error al obtener las tareas pendientes por calificar', error });
+    }
+};
+exports.getPendingTasksByProfessor = getPendingTasksByProfessor;
+const getTaskDetailsById = async (req, res) => {
+    const { taskId } = req.params;
+    try {
+        // Obtener los detalles de la tarea utilizando Sequelize
+        const taskDetails = await Task_1.default.findOne({
+            where: { id: taskId },
+            attributes: ['id', 'userId', 'submission', 'createdAt'],
+            include: [
+                {
+                    model: Course_1.default,
+                    as: 'course',
+                    attributes: ['id', 'name'],
+                },
+            ],
+        });
+        if (!taskDetails) {
+            return res.status(404).json({ message: 'Tarea no encontrada' });
+        }
+        // Enviar la respuesta JSON
+        return res.status(200).json(taskDetails);
+    }
+    catch (error) {
+        console.error('Error al obtener los detalles de la tarea:', error);
+        return res.status(500).json({ message: 'Error al obtener los detalles de la tarea', error });
+    }
+};
+exports.getTaskDetailsById = getTaskDetailsById;
+const getTaskCountsByStatus = async (req, res) => {
+    try {
+        const { professorId } = req.params;
+        // Verifica que el campo professorId esté presente y sea válido
+        if (!professorId || isNaN(Number(professorId))) {
+            return res.status(400).json({ message: 'El campo professorId es obligatorio y debe ser un número válido' });
+        }
+        const query = `
+      SELECT 
+        COUNT(CASE WHEN t.punctuation IS NULL THEN 1 END) AS pendingTasks,
+        COUNT(CASE WHEN t.punctuation IS NOT NULL THEN 1 END) AS gradedTasks
+      FROM 
+        tasks t
+      JOIN 
+        course c ON t.subjectId = c.id
+      WHERE 
+        c.professor_id = :professorId;
+    `;
+        const result = await database_1.default.query(query, {
+            replacements: { professorId: Number(professorId) },
+            type: sequelize_1.QueryTypes.SELECT,
+        });
+        return res.status(200).json(result[0]);
+    }
+    catch (error) {
+        console.error('Error fetching task counts:', error);
+        return res.status(500).json({
+            message: 'Error al obtener el conteo de tareas',
+            error,
+        });
+    }
+};
+exports.getTaskCountsByStatus = getTaskCountsByStatus;
+const getStudentCountByProfessor = async (req, res) => {
+    const { professorId } = req.params;
+    try {
+        const studentCount = await StudentCourse_1.default.count({
+            include: [{
+                    model: Course_1.default,
+                    as: 'course', // Alias definido en la asociación
+                    where: { professor_id: professorId }, // Filtrar cursos por profesor
+                    attributes: [] // No necesitamos atributos del curso
+                }],
+            distinct: true, // Contar estudiantes únicos
+            col: 'studentId' // Contar en la columna `studentId`
+        });
+        return res.status(200).json({ studentCount });
+    }
+    catch (error) {
+        console.error('Error al obtener el conteo de estudiantes:', error);
+        return res.status(500).json({ message: 'Error al obtener el conteo de estudiantes', error });
+    }
+};
+exports.getStudentCountByProfessor = getStudentCountByProfessor;
+const getEarningsForProfessor = async (req, res) => {
+    const { professorId } = req.params;
+    try {
+        const earnings = await Course_1.default.findAll({
+            where: { professor_id: professorId },
+            attributes: [
+                'id',
+                'name',
+                'price',
+                [database_1.default.fn('COUNT', database_1.default.col('studentCourses.studentId')), 'studentCount'],
+                [database_1.default.literal('price * COUNT(studentCourses.studentId)'), 'totalEarnings']
+            ],
+            include: [
+                {
+                    model: StudentCourse_1.default,
+                    as: 'studentCourses',
+                    attributes: [] // No necesitamos atributos de StudentCourse
+                }
+            ],
+            group: ['Course.id', 'Course.professor_id', 'Course.name', 'Course.price']
+        });
+        return res.status(200).json(earnings);
+    }
+    catch (error) {
+        console.error('Error al obtener ingresos para el profesor:', error);
+        return res.status(500).json({ message: 'Error al obtener ingresos para el profesor', error });
+    }
+};
+exports.getEarningsForProfessor = getEarningsForProfessor;

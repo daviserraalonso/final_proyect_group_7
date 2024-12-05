@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarConfig, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -26,8 +26,10 @@ import { UserServiceService } from '../../../../service/user-service.service';
 import { DashboardStudentService } from '../../../../service/dashboard-student.service';
 import { TaskService } from '../../../../service/task.service';
 import { ProgressResponse } from '../../../../interfaces/iProgressResponse';
-
-
+import { Color, NgxChartsModule, ScaleType } from '@swimlane/ngx-charts';
+import { Task_ejemplo } from '../../../../interfaces/iTask_1';
+import { PendingTasksDialogComponent } from '../pending-tasks-dialog/pending-tasks-dialog.component';
+import { TeacherServiceService } from '../../../../service/teacher-service.service';
 
 @Component({
   selector: 'app-teacher-profile-component',
@@ -43,25 +45,23 @@ import { ProgressResponse } from '../../../../interfaces/iProgressResponse';
     MatButtonModule,
     MatListModule,
     MatGridListModule,
-    NgFor,
     MatDialogModule,
     MatSnackBarModule,
-   
     MatNativeDateModule,
     MatFormFieldModule,
     MatDatepickerModule,
     FormsModule,
-    
-
-    
+    NgxChartsModule,
   ],
   templateUrl: './teacher-profile-component.component.html',
   styleUrl: './teacher-profile-component.component.css'
 })
+
 export class TeacherProfileComponentComponent implements OnInit {
   serviceStudentDetails = inject(UserServiceService);
   serviceStudentProfile = inject(DashboardStudentService);
   taskService = inject(TaskService);
+  teacherService = inject(TeacherServiceService);
 
   userId: number = 0; // Almacenamos el ID del usuario
   teacherProfile: IUser = {
@@ -77,46 +77,41 @@ export class TeacherProfileComponentComponent implements OnInit {
   };
   arrCourses: ProgressResponse[] = [];
 
-  tasks: Task[] = [];
+  tasks:Task_ejemplo [] = [];
+  
+  pendingTasksData = [
+    { name: 'Pendientes', value: 10 },
+    { name: 'Calificadas', value: 8 }
+  ];
+  
+  
   
 
   
-  //tareas
-  studentTasks = [
-    {
-      title: 'Ensayo sobre la Revolución Francesa',
-      student: 'Juan Pérez',
-      description: '.......................',
-      status: 'Pendiente'
-    },
-    {
-      title: 'Ejercicios de Matemáticas',
-      student: 'María López',
-      description: '..............',
-      status: 'Pendiente'
-    }
-  ];
-  // Mensajes
-  messages = [
-    {
-      subject: 'Reunión de Padres',
-      content: 'Recordatorio de la reunión .'
-    },
-    {
-      subject: 'Entrega de Tareas',
-      content: 'La fecha límite para la entrega de tareas es el viernes.'
-    }
-  ];
-
-  // Notificaciones
-  notifications = [
-    'Tienes una nueva tarea para revisar.',
-    'El alumno Carlos Fernández ha completado una lección.',
-    'Tu progreso en el curso de Historia del Arte ha sido actualizado.'
-  ];
 
   // Fecha seleccionada
   selectedDate: Date | null = null;
+
+  
+  earningsData = [
+    { name: 'Curso de Historia', value: 500 },
+    { name: 'Curso de Matemáticas', value: 300 },
+    { name: 'Curso de Ciencias', value: 450 }
+  ];
+
+  colorScheme: Color = {
+    name: 'default',
+    selectable: true,
+    group: ScaleType.Ordinal,
+    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
+  };
+
+  data = [
+    {
+      name: 'Estudiantes',
+      value: 25 // Número total de alumnos del profesor
+    }
+  ];
 
   constructor(public dialog: MatDialog, private snackBar: MatSnackBar) {}
   async ngOnInit() {
@@ -127,35 +122,37 @@ export class TeacherProfileComponentComponent implements OnInit {
       // call to services
       this.teacherProfile = await this.serviceStudentDetails.getUserDetails(this.userId);
       console.log(this.userId)
+      
       this.arrCourses = await this.serviceStudentProfile.getProgressByUserId(this.userId);
-      this.tasks = await this.taskService.getTasksByUserId(this.userId);
-      console.log(this.arrCourses)
-      console.log('Tareas:', this.tasks);
-      console.log('Perfil del estudiante:', this.teacherProfile);
+    
+  
+      this.loadPendingTasksData(this.userId); // Llama a la función aquí
 
+      // Llama al nuevo método para obtener el conteo de estudiantes
+      const studentCountResponse = await this.teacherService.getStudentCount(this.userId);
+      this.data = [
+        {
+          name: 'Estudiantes',
+          value: studentCountResponse.studentCount // Actualiza el valor con la respuesta del servicio
+        }
+      ];
     } catch (error) {
       console.error('Error al obtener los datos:', error);
     }
-
   }
 
-  get recentMessages() {
-    return this.messages.slice(-5).reverse();
+  loadPendingTasksData(professorId: number) {
+    this.teacherService.getTaskCounts(professorId).then(taskCounts => {
+      this.pendingTasksData = [
+        { name: 'Pendientes', value: taskCounts.pendingTasks },
+        { name: 'Calificadas', value: taskCounts.gradedTasks }
+      ];
+    });
   }
 
-  // openMessageDialog(): void {
-  //   const dialogRef = this.dialog.open(MessageComponentComponent, {
-  //     width: '600px',
-  //     data: { students: this.students.map(student => student.name) }
-  //   });
+  
 
-  //   dialogRef.afterClosed().subscribe(result => {
-  //     if (result) {
-  //       this.messages.push(result);
-  //       this.showCustomSnackBar('Mensaje enviado');
-  //     }
-  //   });
-  // }
+  
 
   showCustomSnackBar(message: string): void { 
     // Abre la snackbar con el componente personalizado
@@ -165,19 +162,30 @@ export class TeacherProfileComponentComponent implements OnInit {
       panelClass: ['custom-snackbar']
     });
   }
-  // openTaskManagerDialog(): void {
-  //   const dialogRef = this.dialog.open(TaskManagerComponentComponent, {
-  //     width: '1000px',
-  //     data: { students: this.students.map(student => student.name) }
-  //   });
+ 
+  updatePendingTasksData() {
+    const pending = this.tasks.filter(task => task.status === 'Pendiente').length;
+    const graded = this.tasks.length - pending;
+    this.pendingTasksData = [
+      { name: 'Pendientes', value: pending },
+      { name: 'Calificadas', value: graded }
+    ];
+  }
 
-  //   dialogRef.afterClosed().subscribe(result => {
-  //     if (result) {
-  //       this.messages.push(result);
-  //       this.showCustomSnackBar('Tarea enviada');
-  //     }
-  //   });
-  // }
+  openPendingTasksDialog(): void {
+    const pendingTasks = this.tasks.filter(task => task.status === 'Pendiente');
+    const dialogRef = this.dialog.open(PendingTasksDialogComponent, {
+      width: '600px',
+      height:'600px', // Asegúrate de que el tamaño sea adecuado
+      data: { tasks: pendingTasks },
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.showCustomSnackBar('Tarea revisada');
+      }
+    });
+  }
  
 }
 

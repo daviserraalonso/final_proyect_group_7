@@ -17,6 +17,7 @@ const ProfessorRating_1 = __importDefault(require("./ProfessorRating"));
 const avg_teacher_1 = __importDefault(require("./avg_teacher"));
 const avg_course_1 = __importDefault(require("./avg_course"));
 const User_1 = __importDefault(require("./User"));
+const Task_1 = __importDefault(require("./Task"));
 function setupAssociations() {
     // ** Relation User -> UserDetails**
     User_1.default.hasOne(UserDetails_1.default, {
@@ -237,6 +238,26 @@ function setupAssociations() {
     User_1.default.hasMany(avg_teacher_1.default, {
         foreignKey: 'professorId',
         as: 'AvgTeacher'
+    });
+    // ** Relation Task -> Course**
+    // ** Relation Task -> Course**
+    Task_1.default.belongsTo(Course_1.default, {
+        foreignKey: {
+            name: 'subjectId',
+            allowNull: false,
+        },
+        as: 'course',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+    });
+    Course_1.default.hasMany(Task_1.default, {
+        foreignKey: {
+            name: 'subjectId',
+            allowNull: false,
+        },
+        as: 'tasks',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
     });
 }
 exports.default = setupAssociations;

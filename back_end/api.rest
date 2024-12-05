@@ -29,7 +29,8 @@ Content-Type: application/json
 
 {
   "punctuation": 9,
-  "submission": "Contenido de la entrega"
+  "submission": "Contenido de la entrega",
+  "feedback": "Contenido de la entrega"
 }
 
 ### DELETE tarea
@@ -43,4 +44,24 @@ Content-Type: application/json
 ###
 ### Obtener estudiantes por profesor
 GET http://localhost:3000/api/professors/3/students
+Content-Type: application/json
+
+###
+### Obtener tareas pendientes de un profesor
+GET http://localhost:3000/api/tasks/profesor/2/pending-tasks
+Content-Type: application/json
+###detalles de la tarea
+###
+GET http://localhost:3000/api/tasks/details/65
+Content-Type: application/json
+###
+### Obtener el conteo de tareas calificadas y no calificadas para un profesor
+GET http://localhost:3000/api/tasks/counts/3
+Content-Type: application/json
+
+#### Obtener el conteo de alumnos del profesor
+GET http://localhost:3000/api/tasks/profesor/1/student-count
+Content-Type: application/json
+### Obtener ingresos de un profesor específico
+GET http://localhost:3000/api/tasks/profesor/3/earnings
 Content-Type: application/json

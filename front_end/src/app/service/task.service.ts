@@ -92,4 +92,16 @@ export class TaskService {
       throw error;
     }
   }
+
+  // Enviar retroalimentación de la tarea
+  async submitFeedback(taskId: number, feedback: { punctuation: number, submission: string, feedback: string }): Promise<any> {
+    const url = `${this.apiUrl}/${taskId}/feedback`;
+    try {
+      const response = await lastValueFrom(this.http.post<any>(url, feedback, this.httpOptions));
+      return response;
+    } catch (error) {
+      this.handleError<any>('submitFeedback');
+      throw error;
+    }
+  }
 }
