@@ -3,6 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const CalendarController_1 = require("../controllers/CalendarController");
 const router = (0, express_1.Router)();
-// Rutas del calendario
-router.get('/', CalendarController_1.getAllCourseEvent); // Obtener todos los eventos
+router.get('/', CalendarController_1.getAllCourseEvent);
+router.get('/:id', CalendarController_1.getCourseEventById);
+router.post('/', CalendarController_1.createCourseEvent);
+router.put('/:id', CalendarController_1.updateCourseEvent);
+router.delete('/:id', CalendarController_1.deleteCourseEvent);
 module.exports = router;

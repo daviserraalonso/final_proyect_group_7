@@ -8,7 +8,6 @@ export interface ICourseEvent {
     locationId?: number;
     onlineLink?: string;
     description?: string;
-    deadline?: string;
     isRead?: boolean;
     courseId?: number;
     subjectId?: number;

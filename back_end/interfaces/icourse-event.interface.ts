@@ -2,6 +2,7 @@ export interface IcourseEvent {
     id: number;
     courseId: number;
     subjectId?: number;
+    proffesorId?: number;
     eventType: 'class' | 'task';
     title: string;
     description?: string;
@@ -10,6 +11,5 @@ export interface IcourseEvent {
     locationType: 'physical' | 'online';
     locationId?: number;
     onlineLink?: string;
-    deadline?: Date;
     isRead?: boolean;
 }

@@ -66,10 +66,6 @@ CourseEvent.init(
       type: DataTypes.STRING,
       allowNull: true,
     },
-    deadline: {
-      type: DataTypes.DATEONLY,
-      allowNull: true,
-    },
     isRead: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,

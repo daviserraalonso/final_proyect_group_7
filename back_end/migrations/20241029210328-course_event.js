@@ -60,9 +60,6 @@ module.exports = {
       onlineLink: {
         type: Sequelize.STRING,
       },
-      deadline: {
-        type: Sequelize.DATEONLY,
-      },
       isRead: {
         type: Sequelize.BOOLEAN,
         defaultValue: false,

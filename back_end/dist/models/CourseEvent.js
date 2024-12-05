@@ -68,10 +68,6 @@ CourseEvent.init({
         type: sequelize_1.DataTypes.STRING,
         allowNull: true,
     },
-    deadline: {
-        type: sequelize_1.DataTypes.DATEONLY,
-        allowNull: true,
-    },
     isRead: {
         type: sequelize_1.DataTypes.BOOLEAN,
         defaultValue: false,

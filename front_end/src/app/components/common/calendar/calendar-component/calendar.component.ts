@@ -64,10 +64,14 @@ export class CalendarComponent implements OnInit {
         const events = response.map((event) => ({
           id: event.id.toString(),
           title: event.title,
+          description: event.description,
           start: new Date(event.startDateTime).toISOString(),
           end: event.endDateTime ? new Date(event.endDateTime).toISOString() : undefined,
           allDay: event.allDay || false,
           color: this.getEventColor(event.locationType || 'default'),
+          extendedProps: {
+            description: event.description, // Incluye 'description' aquí
+          }
         }));
 
         this.calendarOptions.events = events;
@@ -106,6 +110,7 @@ export class CalendarComponent implements OnInit {
     const newEvent: ICourseEvent = {
       id: 0,
       title: '',
+      description: '',
       startDateTime: selectInfo.startStr,
       endDateTime: selectInfo.endStr,
       allDay: selectInfo.allDay,
@@ -145,39 +150,40 @@ export class CalendarComponent implements OnInit {
     });
   }
 
-  /**
-   * Maneja el clic en un evento.
-   * @param clickInfo Información del clic en el evento.
-   */
   private handleEventClick(clickInfo: EventClickArg): void {
-    if (!this.canEditEvents()) {
-      this.openEventDetailsDialog(clickInfo.event);
-    } else {
-      const event: ICourseEvent = {
-        id: Number(clickInfo.event.id),
-        title: clickInfo.event.title,
-        startDateTime: clickInfo.event.start?.toISOString() || '',
-        endDateTime: clickInfo.event.end?.toISOString() || '',
-        allDay: clickInfo.event.allDay,
-        locationType: 'default', // Puedes ajustar según los datos reales
-      };
+    const event: ICourseEvent = {
+      id: Number(clickInfo.event.id),
+      title: clickInfo.event.title,
+      description: clickInfo.event.extendedProps['description'], // Accede a 'description' desde 'extendedProps'
+      startDateTime: clickInfo.event.start?.toISOString() || '',
+      endDateTime: clickInfo.event.end?.toISOString() || '',
+      allDay: clickInfo.event.allDay,
+      locationType: 'default', // Puedes ajustar según los datos reales
+    };
 
+    if (!this.canEditEvents()) {
+      // Abrir el diálogo de detalles
+      this.openEventDetailsDialog(event);
+    } else {
+      // Abrir el diálogo de edición
       this.openEventEditDialog(event);
     }
   }
+
 
   /**
    * Abre el diálogo para ver los detalles de un evento.
    * @param event Información del evento.
    */
-  private openEventDetailsDialog(event: EventApi): void {
+  private openEventDetailsDialog(event: ICourseEvent): void {
     this.dialog.open(CalendarEventComponent, {
       width: '800px',
       data: {
         id: event.id,
         title: event.title,
-        start: event.start?.toISOString(),
-        end: event.end?.toISOString(),
+        description: event.description, // Agregar descripción
+        start: event.startDateTime,
+        end: event.endDateTime,
       },
     });
   }
