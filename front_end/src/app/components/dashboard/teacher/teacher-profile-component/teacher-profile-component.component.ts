@@ -30,6 +30,8 @@ import { Color, NgxChartsModule, ScaleType } from '@swimlane/ngx-charts';
 import { Task_ejemplo } from '../../../../interfaces/iTask_1';
 import { PendingTasksDialogComponent } from '../pending-tasks-dialog/pending-tasks-dialog.component';
 import { TeacherServiceService } from '../../../../service/teacher-service.service';
+import { IEarnings } from '../../../../interfaces/iearnings';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-teacher-profile-component',
@@ -113,7 +115,7 @@ export class TeacherProfileComponentComponent implements OnInit {
     }
   ];
 
-  constructor(public dialog: MatDialog, private snackBar: MatSnackBar) {}
+  constructor(public dialog: MatDialog, private snackBar: MatSnackBar, private router: Router) {}
   async ngOnInit() {
     try {
       const user = JSON.parse(localStorage.getItem('user') || '{}');
@@ -126,7 +128,7 @@ export class TeacherProfileComponentComponent implements OnInit {
       this.arrCourses = await this.serviceStudentProfile.getProgressByUserId(this.userId);
     
   
-      this.loadPendingTasksData(this.userId); // Llama a la función aquí
+      this.loadPendingTasksData(3); // Llama a la función aquí
 
       // Llama al nuevo método para obtener el conteo de estudiantes
       const studentCountResponse = await this.teacherService.getStudentCount(this.userId);
@@ -136,6 +138,13 @@ export class TeacherProfileComponentComponent implements OnInit {
           value: studentCountResponse.studentCount // Actualiza el valor con la respuesta del servicio
         }
       ];
+
+      // Llama al nuevo método para obtener las ganancias
+      const earningsResponse = await this.teacherService.getEarnings(3);
+      this.earningsData = earningsResponse.map((earning: IEarnings) => ({
+        name: earning.name,
+        value: parseFloat(earning.totalEarnings) || 0 // Asegúrate de que los valores "0" se muestren correctamente
+      }));
     } catch (error) {
       console.error('Error al obtener los datos:', error);
     }
@@ -186,7 +195,9 @@ export class TeacherProfileComponentComponent implements OnInit {
       }
     });
   }
- 
+  openStudents() {
+    this.router.navigate(['/mis-alumnos']); // Reemplaza '/ruta-deseada' con la ruta a la que deseas redirigir
+  }
 }
 
 

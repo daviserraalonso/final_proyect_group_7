@@ -7,6 +7,7 @@ import { IPendingTask } from '../interfaces/ipending-task';
 import { ITaskDetails } from '../interfaces/itask-details'; // Asegúrate de tener esta interfaz definida
 import { ITaskCounts } from '../interfaces/itask-counts'; // Asegúrate de tener esta interfaz definida
 import { IStudentCount } from '../interfaces/istudent-count';
+import { IEarnings } from '../interfaces/iearnings';
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +35,10 @@ export class TeacherServiceService {
 
   getStudentCount(professorId: number) {
     return lastValueFrom(this.httpClient.get<IStudentCount>(`${this.baseUrl}/tasks/profesor/${professorId}/student-count`));
+  }
+
+  getEarnings(professorId: number) {
+    return lastValueFrom(this.httpClient.get<IEarnings[]>(`${this.baseUrl}/tasks/profesor/${professorId}/earnings`));
   }
 }
 

@@ -53,8 +53,8 @@ export class PendingTasksDialogComponent implements OnInit {
     try {
       const user = JSON.parse(localStorage.getItem('user') || '{}');
       const userId = user.id || 6; // asign id or use default value
-      this.pendingTasks = await this.teacherService.getPendingTasks(2);
-      this.taskdetails = await this.teacherService.getTaskDetails(2)
+      this.pendingTasks = await this.teacherService.getPendingTasks(3);
+      this.taskdetails = await this.teacherService.getTaskDetails(3)
       console.log('Tareas pendientes:', this.pendingTasks);
     } catch (error) {
       console.error('Error al obtener las tareas pendientes:', error);
