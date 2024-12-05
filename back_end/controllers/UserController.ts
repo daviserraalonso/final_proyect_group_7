@@ -3,10 +3,12 @@ import bcrypt from 'bcrypt';
 import { sendConfirmationEmail } from '../services/emailService';
 import UserDetails from '../models/UserDetails';
 import Course from '../models/Course';
-import { Op, Sequelize } from 'sequelize';
+import { Op, Sequelize, where } from 'sequelize';
 import StudentCourse from '../models/StudentCourse';
 import AvgTeacher from '../models/avg_teacher';
 import User from '../models/User';
+import Category from '../models/Category';
+import { isValidDate } from '@fullcalendar/core/internal';
 const jwt = require('jsonwebtoken');
 
 
@@ -82,7 +84,7 @@ export const registerUser = async (req: Request, res: Response): Promise<void> =
     `;
 
     await sendConfirmationEmail(email, subject, htmlContent);
-
+   
 
     res.status(201).json(userWithoutPassword);
 
@@ -90,6 +92,8 @@ export const registerUser = async (req: Request, res: Response): Promise<void> =
     console.error('Error al crear el usuario:', error);
     res.status(500).json({ message: 'Error interno del servidor' });
   }
+
+
 };
 
 
@@ -303,6 +307,7 @@ export const getTeachers = async (req: Request, res: Response) => {
 export const searchTeachers = async (req: Request, res: Response) => {
   console.log(req.query)
   const {
+    userId,
     inputName,
     inputCity,
     selectedCategory,
@@ -319,6 +324,7 @@ export const searchTeachers = async (req: Request, res: Response) => {
   const filters = {
     roleId: 2,
     isValidated: 1,
+    ...(userId && {id: userId}),
     ...(type && {
       '$coursesTaught.modality_id$': type,
     }),
@@ -344,7 +350,7 @@ export const searchTeachers = async (req: Request, res: Response) => {
   }
   
   try {
-    console.log(filters)
+    console.log(`filtro: ${userId}`)
     const teachers = await User.findAll({
       where: filters,
       include: [
@@ -356,7 +362,14 @@ export const searchTeachers = async (req: Request, res: Response) => {
         {
           model: Course,
           as: 'coursesTaught',
-          attributes: ['price', 'modality_id', 'category_id'],
+          attributes: ['id', 'name', 'price', 'modality_id', 'category_id'],
+          include: [
+            {
+              model: Category,
+              as: 'category',
+              attributes: ['category_name']
+            }
+          ]
         },
         {
           model: AvgTeacher,
@@ -473,6 +486,26 @@ export const getUserSubscribedCourses = async (req: Request, res: Response): Pro
   }
 
 };
+
+export const validate = async (req: Request, res: Response, next: any) => {
+  try {
+    const {userId} = req.params
+
+    const userUpdateData = {
+        isValidated: 1
+  
+    };
+    await User.update(userUpdateData,{
+      where: {
+        id: userId
+      }
+    })
+    res.status(200).json('Usuario Validado')
+  } catch (error) {
+    next(error)
+    res.json('error')
+  }
+}
 
 
 export const getFavoriteTeachers = async (req: Request, res: Response) => {

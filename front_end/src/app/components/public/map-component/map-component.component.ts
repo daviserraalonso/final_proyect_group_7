@@ -10,6 +10,7 @@ import { LoginComponent } from '../../../pages/public/login/login.component';
 import { MatDialog } from '@angular/material/dialog';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
+import { TeacherViewComponent } from '../../common/teacher-view/teacher-view.component';
 
 
 
@@ -131,6 +132,7 @@ teachersList: any[] = []
       // Open view teachers details
   openDialog(event: Event, teacher: any) {
     const token = localStorage.getItem('token');
+    localStorage.setItem('teacherid', teacher)
     if(!token) {
       event.preventDefault();
       const dialogRef = this.dialog.open(LoginComponent, {
@@ -140,16 +142,7 @@ teachersList: any[] = []
         maxHeight: 'none',
       })
     } else {
-    event.preventDefault(); 
-    this.dialog.open(LoginComponent, { // aqui se carga el componente de la vista del profesor
-      width: '90%',
-      height:'90%', 
-      maxWidth: 'none',
-      maxHeight: 'none',
-      data: {
-        teacher: teacher
-      },
-    });
+      this.router.navigate(['/teacher', teacher])
   }
 }
 

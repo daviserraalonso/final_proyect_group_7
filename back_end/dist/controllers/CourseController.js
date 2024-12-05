@@ -5,6 +5,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getOnlineCourses = exports.getPresentialCourses = exports.deleteCourse = exports.updateCourse = exports.createCourse = exports.getCourseById = exports.getCourses = void 0;
 const Course_1 = __importDefault(require("../models/Course"));
+const Category_1 = __importDefault(require("../models/Category"));
+const Modality_1 = __importDefault(require("../models/Modality"));
+const avg_course_1 = __importDefault(require("../models/avg_course"));
 // Obtener todos los cursos
 const getCourses = async (req, res) => {
     try {
@@ -21,7 +24,26 @@ exports.getCourses = getCourses;
 const getCourseById = async (req, res) => {
     const { id } = req.params;
     try {
-        const course = await Course_1.default.findByPk(id);
+        const course = await Course_1.default.findOne({
+            where: { id: id },
+            include: [
+                {
+                    model: Category_1.default,
+                    as: 'category',
+                    attributes: ['category_name']
+                },
+                {
+                    model: Modality_1.default,
+                    as: 'modality',
+                    attributes: ['type']
+                },
+                {
+                    model: avg_course_1.default,
+                    as: 'averageCourse',
+                    attributes: ['avg']
+                }
+            ],
+        });
         if (!course) {
             return res.status(404).json({ message: 'Curso no encontrado.' });
         }

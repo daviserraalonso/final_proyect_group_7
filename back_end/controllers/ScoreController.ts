@@ -48,3 +48,21 @@ import Course from "../models/Course";
     }
 
 
+    export const getComments = async (req: Request, res: Response, next: any) => {
+        const {userId} = req.params
+
+        try {
+            const comments = await ProfessorRating.findAll({
+                where: {
+                    professorId: userId
+                },
+                attributes: ['comments', 'rating_teacher']
+            })
+            res.status(200).json(comments)
+        } catch (error) {
+            
+        }
+
+    }
+
+

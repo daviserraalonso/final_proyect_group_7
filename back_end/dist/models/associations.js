@@ -239,6 +239,12 @@ function setupAssociations() {
         foreignKey: 'professorId',
         as: 'AvgTeacher'
     });
+    Course_1.default.hasOne(avg_course_1.default, {
+        foreignKey: 'courseId',
+        as: 'averageCourse'
+    });
+}
+exports.default = setupAssociations;
     // ** Relation Task -> Course**
     // ** Relation Task -> Course**
     Task_1.default.belongsTo(Course_1.default, {
