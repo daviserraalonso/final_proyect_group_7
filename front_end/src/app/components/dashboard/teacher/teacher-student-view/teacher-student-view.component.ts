@@ -43,7 +43,7 @@ export class TeacherStudentViewComponent implements OnInit {
       this.userId = user.id || 6; // asign id or use deafult value
       console.log('User ID:', this.userId);
     try {
-      this.students = await this.serviceTeacherDetails.getStudentsByProfessorId(7);
+      this.students = await this.serviceTeacherDetails.getStudentsByProfessorId(this.userId);
       console.log('Estudiantes obtenidos:', this.students); //
     } catch (error) {
       console.error('Error al obtener los datos de los estudiantes:', error);
