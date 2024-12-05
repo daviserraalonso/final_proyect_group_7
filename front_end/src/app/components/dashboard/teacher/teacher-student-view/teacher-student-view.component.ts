@@ -34,12 +34,17 @@ export class TeacherStudentViewComponent implements OnInit {
   serviceStudentDetails = inject(UserServiceService);
   serviceTeacherDetails = inject(TeacherServiceService);
   students: IStudent[] = [];
+  userId: number = 0
 
   constructor(private dialog: MatDialog) {}
 
   async ngOnInit() {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+      this.userId = user.id || 6; // asign id or use deafult value
+      console.log('User ID:', this.userId);
     try {
-      this.students = await this.serviceTeacherDetails.getStudentsByProfessorId(3);
+      this.students = await this.serviceTeacherDetails.getStudentsByProfessorId(7);
+      console.log('Estudiantes obtenidos:', this.students); //
     } catch (error) {
       console.error('Error al obtener los datos de los estudiantes:', error);
     }

@@ -43,7 +43,7 @@ Content-Type: application/json
 
 ###
 ### Obtener estudiantes por profesor
-GET http://localhost:3000/api/professors/3/students
+GET http://localhost:3000/api/professors/7/students
 Content-Type: application/json
 
 ###
@@ -56,11 +56,11 @@ GET http://localhost:3000/api/tasks/details/65
 Content-Type: application/json
 ###
 ### Obtener el conteo de tareas calificadas y no calificadas para un profesor
-GET http://localhost:3000/api/tasks/counts/3
+GET http://localhost:3000/api/tasks/counts/7
 Content-Type: application/json
 
 #### Obtener el conteo de alumnos del profesor
-GET http://localhost:3000/api/tasks/profesor/1/student-count
+GET http://localhost:3000/api/tasks/profesor/7/student-count
 Content-Type: application/json
 ### Obtener ingresos de un profesor específico
 GET http://localhost:3000/api/tasks/profesor/3/earnings
