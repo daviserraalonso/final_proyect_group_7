@@ -1,0 +1,22 @@
+<h2 mat-dialog-title class="p-4">Inscribirse al curso</h2>
+<mat-dialog-content>
+  <h3>Curso seleccionado: <strong>{{ data.courseName }}</strong></h3>
+  <form>
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Nombre del usuario</mat-label>
+      <input matInput [(ngModel)]="username" name="username" required />
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>No</button>
+  <button
+    mat-raised-button
+    color="primary"
+    [disabled]="!username"
+    (click)="confirmEnroll()"
+    cdkFocusInitial
+  >
+    Confirmar inscripción
+  </button>
+</mat-dialog-actions>

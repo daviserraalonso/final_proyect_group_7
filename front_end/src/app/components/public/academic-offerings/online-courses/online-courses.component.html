@@ -1,16 +1,28 @@
 <div class="container">
-    <h1>Cursos Online</h1>
-    <div class="row">
-      <!-- *ngFor con el pipe async -->
-      <div class="col-md-4" *ngFor="let course of courses$ | async">
-        <div class="card mb-4 shadow-sm">
-          <div class="card-body">
-            <h5 class="card-title">{{ course.name }}</h5>
-            <p class="card-text">Este curso online te ayudará a mejorar tus conocimientos en {{ course.name.toLowerCase() }} desde la comodidad de tu hogar.</p>
-            <a href="#" class="btn btn-primary">Más información</a>
-          </div>
-        </div>
-      </div>
+  <h2>Listado de cursos Online</h2>
+
+  <mat-divider class="mb-4"></mat-divider>
+
+  <div class="row">
+    <!-- Iterar sobre los cursos -->
+    <div class="col-md-4" *ngFor="let course of courses$ | async">
+      <mat-card class="example-card" appearance="outlined">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title>{{ course.name }}</mat-card-title>
+        </mat-card-header>
+        <img mat-card-image [src]="'https://picsum.photos/300/200?random=' + course.id" alt="Imagen del curso {{ course.name }}">
+        <mat-card-content>
+          <p class="p-2">
+            Aprende más sobre {{ course.name.toLowerCase() }} con este curso especializado.
+          </p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="info" (click)="openModal(course)">
+            Inscribirse
+          </button>
+        </mat-card-actions>
+      </mat-card>
     </div>
   </div>
-  
+</div>
