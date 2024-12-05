@@ -12,6 +12,7 @@ import ProfessorRating from './ProfessorRating';
 import AvgTeacher from './avg_teacher'
 import AvgCourse from './avg_course';
 import User from './User';
+import Task from './Task';
 
 export default function setupAssociations() {
   // ** Relation User -> UserDetails**
@@ -267,6 +268,28 @@ export default function setupAssociations() {
   Course.hasOne(AvgCourse, {
     foreignKey: 'courseId',
     as: 'averageCourse'
+  })
+
+  // ** Relation Task -> Course**
+  // ** Relation Task -> Course**
+  Task.belongsTo(Course, {
+    foreignKey: {
+      name: 'subjectId',
+      allowNull: false,
+    },
+    as: 'course',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  });
+
+  Course.hasMany(Task, {
+    foreignKey: {
+      name: 'subjectId',
+      allowNull: false,
+    },
+    as: 'tasks',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
   })
 
 

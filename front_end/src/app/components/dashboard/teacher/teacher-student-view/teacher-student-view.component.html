@@ -10,8 +10,18 @@
     </mat-card-content>
     <mat-card-actions>
       <button mat-button (click)="sendTask(student)">Enviar Tarea</button>
-      <button mat-button (click)="sendMessage(student)">Enviar Mensaje</button>
       <button mat-button (click)="viewStudentDetails(student)">Ver Detalles</button>
     </mat-card-actions>
   </mat-card>
 </div>
+
+<style>
+  .student-card {
+    word-wrap: break-word;
+  }
+  .student-card mat-card-title,
+  .student-card mat-card-subtitle,
+  .student-card p {
+    white-space: normal;
+  }
+</style>

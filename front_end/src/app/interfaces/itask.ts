@@ -4,4 +4,5 @@ export interface Task {
   materia_nombre?: string;
   profesor_nombre?: string;
   submission?: string; // Nuevo campo para la respuesta
+  status: string;
 }
