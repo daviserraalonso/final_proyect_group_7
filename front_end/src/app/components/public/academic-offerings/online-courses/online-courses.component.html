@@ -1,20 +1,28 @@
-<div class="container my-5">
-  <h1 class="text-center mb-4 pt-4">Cursos Online</h1>
+<div class="container">
+  <h2>Listado de cursos Online</h2>
+
+  <mat-divider class="mb-4"></mat-divider>
+
   <div class="row">
-    <!-- Recorre la lista de cursos -->
-    <div class="col-md-4 col-sm-6" *ngFor="let course of courses$ | async">
-      <div class="card mb-4 shadow-sm course-card">
-        <div class="card-body">
-          <h5 class="card-title text-primary">{{ course.name }}</h5>
-          <p class="card-text text-muted">
-            Mejora tus conocimientos en <strong>{{ course.name.toLowerCase() }}</strong> desde la comodidad de tu hogar. Accede a contenido actualizado y dinámico.
+    <!-- Iterar sobre los cursos -->
+    <div class="col-md-4" *ngFor="let course of courses$ | async">
+      <mat-card class="example-card" appearance="outlined">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title>{{ course.name }}</mat-card-title>
+        </mat-card-header>
+        <img mat-card-image [src]="'https://picsum.photos/300/200?random=' + course.id" alt="Imagen del curso {{ course.name }}">
+        <mat-card-content>
+          <p class="p-2">
+            Aprende más sobre {{ course.name.toLowerCase() }} con este curso especializado.
           </p>
-          <div class="d-flex justify-content-between align-items-center">
-            <a href="#" class="btn btn-outline-primary">Más información</a>
-            <small class="text-muted">Duración: {{ course.duration || 'N/A' }} horas</small>
-          </div>
-        </div>
-      </div>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="info" (click)="openModal(course)">
+            Inscribirse
+          </button>
+        </mat-card-actions>
+      </mat-card>
     </div>
   </div>
 </div>

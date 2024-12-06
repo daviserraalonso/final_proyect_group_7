@@ -1,51 +1,49 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TaskService } from '../../../service/task.service';
-import { Task } from '../../../interfaces/itask';
 
 @Component({
   selector: 'app-task-form',
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule
-  ],
   templateUrl: './task-form.component.html',
-  styleUrls: ['./task-form.component.css']
+  styleUrls: ['./task-form.component.css'],
+  imports: [CommonModule, ReactiveFormsModule, MatButtonModule, MatInputModule, MatFormFieldModule]
 })
 export class TaskFormComponent {
-  form: FormGroup;
+  taskForm: FormGroup;
 
   constructor(
     private fb: FormBuilder,
-    public dialogRef: MatDialogRef<TaskFormComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { taskId: number, tarea_comentarios: string, materia_nombre: string, profesor_nombre: string },
-    private taskService: TaskService
+    private taskService: TaskService,
+    private dialogRef: MatDialogRef<TaskFormComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: { studentId: number, subjectId: number }
   ) {
-    this.form = this.fb.group({
-      resolution: ['']
+    console.log('Datos inyectados:', data); // Agrega este console.log para ver los datos
+    this.taskForm = this.fb.group({
+      studentId: [data.studentId, Validators.required],
+      subjectId: [data.subjectId, Validators.required],
+      comments: ['', Validators.required],
+      deadline: ['', Validators.required]
     });
   }
 
-  async submit(): Promise<void> {
-    try {
-      const updatedTask: Task = {
-        
-        submission: this.form.value.resolution
-      };
-      await this.taskService.updateTask(this.data.taskId, updatedTask);
-      console.log(`Resolución enviada para la tarea con ID: ${this.data.taskId}`, this.form.value);
-      this.dialogRef.close();
-    } catch (error) {
-      console.error('Error al enviar la resolución:', error);
+  async onSubmit() {
+    if (this.taskForm.valid) {
+      try {
+        await this.taskService.createTask(this.taskForm.value);
+        this.dialogRef.close(true);
+      } catch (error) {
+        console.error('Error al crear la tarea:', error);
+      }
     }
+  }
+
+  onCancel() {
+    this.dialogRef.close();
   }
 }

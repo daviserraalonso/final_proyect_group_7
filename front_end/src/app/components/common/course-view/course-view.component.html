@@ -1,0 +1,15 @@
+<div class="course-card">
+    <div class="course-header">
+      <h3>{{ course?.name }}</h3>
+      <p class="course-subtitle">{{ course?.category?.category_name }}</p>
+    </div>
+    <div class="course-body">
+      <p><strong>Precio:</strong> {{ course?.price }}</p>
+      <p><strong>Modalidad:</strong> {{ course?.modality?.type }}</p>
+      <p><strong>Puntuación:</strong> {{ course?.averageCourse?.avg }} </p>
+    </div>
+    <div class="course-footer">
+        <button (click)="inscription(course.id)" class="btn btn-primary">Inscripción</button>
+      </div>
+
+  </div>

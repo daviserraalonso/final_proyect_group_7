@@ -22,5 +22,6 @@ router.get('/:city', UserController_1.cityCords);
 router.post('/register', UserController_1.registerUser);
 router.get('/confirm/:token', UserController_1.confirmEmail);
 router.post('/login', LoginController_1.default.login);
+router.put('/:userId/validate', UserController_1.validate);
 router.get('/', UserController_1.getAllUsers);
 module.exports = router;

@@ -44,12 +44,19 @@ export class LoginComponent {
             localStorage.setItem('url_rol', response.redirectTo)
 
             console.log(response.redirectTo)
-            if(this.router.url.includes('looking-teachers') && this.dialog) return this.dialog.close()
-
-            this.router.navigate([response.redirectTo || '/']);
-            if(this.dialog) {
-              this.dialog.close()
+            if(this.router.url.includes('looking-teachers') && this.dialog) {
+              const id = localStorage.getItem('teacherid')
+              console.log(id)
+              this.router.navigate(['/teacher', id])
+             this.dialog.close()
+            } else {
+              this.router.navigate([response.redirectTo || '/']);
             }
+              
+              
+
+          
+
             
           } else {
             console.error('response don´t have property.');

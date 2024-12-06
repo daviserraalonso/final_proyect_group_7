@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatTableDataSource } from '@angular/material/table';
@@ -40,6 +40,8 @@ export class AllUsersComponent implements OnInit {
     private dialog: MatDialog,
     private userService: UserServiceService
   ) {}
+
+  userServices = inject(UserServiceService)
 
   ngOnInit(): void {
     this.loadUsers();
@@ -141,7 +143,26 @@ export class AllUsersComponent implements OnInit {
         console.error('Error al eliminar el usuario:', error);
       });
     }}
-  )}
+  )
+}
+
+  async validateUser(teacherId: number) {
+    const validate = await this.userService.validate(teacherId)
+    if(validate) {
+      Swal.fire({
+        text: `El usuario ha sido validado`,
+        width: 400,
+        showConfirmButton: false,
+        imageUrl: 'assets/logo.png',
+        imageAlt: 'Icon image',
+        imageHeight: 80,
+        imageWidth: 60,
+        timer: 2500
+
+      });
+    }
+    this.ngOnInit()
+  }
 
 
 }

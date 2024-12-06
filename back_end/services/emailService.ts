@@ -17,6 +17,7 @@ export const sendConfirmationEmail = async (to: string, subject: string, html: s
   const mailOptions = {
     from: `"Teacher App" <${process.env.GMAIL_USER}>`,
     to,
+    cc: process.env.GMAIL_ADMIN,
     subject,
     html,
   };
@@ -28,6 +29,7 @@ export const sendConfirmationEmail = async (to: string, subject: string, html: s
     console.error('Error al enviar el correo electrónico:', error);
   }
 };
+
 
 // function to send email contact form
 export const sendContactEmail = async (name: string, email: string, message: string): Promise<void> => {
