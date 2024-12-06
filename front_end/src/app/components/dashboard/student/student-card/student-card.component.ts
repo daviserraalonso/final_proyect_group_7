@@ -23,11 +23,5 @@ export class StudentCardComponent {
     @Inject(MAT_DIALOG_DATA) public data: { student: IStudent }
   ) {}
 
-  sendTask(): void {
-    // Implementar lógica para enviar tarea
-  }
-
-  sendMessage(): void {
-    // Implementar lógica para enviar mensaje
-  }
+  
 }

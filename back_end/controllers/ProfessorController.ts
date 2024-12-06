@@ -8,33 +8,37 @@ export const getStudentsByProfessor = async (req: Request, res: Response): Promi
   const { professorId } = req.params;
 
   try {
-    // Consulta SQL para obtener los alumnos y sus cursos
+    // Consulta SQL para obtener los alumnos, sus cursos y las materias relacionadas
     const query = `
       SELECT 
         u.id AS student_id,         -- ID del estudiante
         u.name AS student_name,     -- Nombre del estudiante
         u.email AS student_email,   -- Correo electrónico del estudiante
         c.id AS course_id,          -- ID del curso
-        c.name AS course_name       -- Nombre del curso
+        c.name AS course_name,      -- Nombre del curso
+        s.id AS subject_id,         -- ID de la materia
+        s.name AS subject_name      -- Nombre de la materia
       FROM 
         course AS c
       JOIN 
         student_course AS sc ON c.id = sc.courseId
       JOIN 
         user AS u ON sc.studentId = u.id
+      JOIN 
+        subject AS s ON s.courseId = c.id -- Relación entre materia y curso
       WHERE 
         c.professor_id = :professorId
       ORDER BY 
         c.id, u.id;
     `;
 
-    // Ejecución de la consulta SQL
+    // Ejecutar la consulta SQL
     const students = await sequelize.query(query, {
       replacements: { professorId }, // Sustituye el :professorId en la consulta
       type: QueryTypes.SELECT,       // Indica que queremos un resultado SELECT
     });
 
-    // Agregar la URL de la image n generada dinámicamente
+    // Agregar la URL de la imagen generada dinámicamente
     const studentsWithImages = (students as any[]).map((student) => ({
       ...student,
       student_image: `https://robohash.org/${encodeURIComponent(student.student_name)}?set=set4`,

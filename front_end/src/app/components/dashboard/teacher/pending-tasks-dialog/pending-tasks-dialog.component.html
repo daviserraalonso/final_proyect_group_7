@@ -1,0 +1,32 @@
+<h1 mat-dialog-title>Tareas Pendientes</h1>
+<div mat-dialog-content>
+  <div *ngIf="!selectedTask">
+    <mat-list>
+      <mat-list-item *ngFor="let task of pendingTasks">
+        {{ task.courseName }} - {{ task.studentName }}
+        <button mat-button (click)="selectTask(task)">Ver Detalle</button>
+      </mat-list-item>
+    </mat-list>
+  </div>
+  <div *ngIf="selectedTask">
+    <form [formGroup]="feedbackForm">
+      <mat-form-field appearance="fill">
+        <mat-label>Puntuación</mat-label>
+        <input matInput type="number" formControlName="punctuation" min="1" max="10">
+        <mat-error *ngIf="feedbackForm.get('punctuation')?.invalid">Puntuación entre 1 y 10</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Entrega</mat-label>
+        <textarea matInput formControlName="submission" readonly></textarea>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Feedback</mat-label>
+        <textarea matInput formControlName="feedback"></textarea>
+      </mat-form-field>
+    </form>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancelar</button>
+  <button mat-button *ngIf="selectedTask" (click)="onSubmit()" [disabled]="feedbackForm.invalid">Enviar</button>
+</div>

@@ -1,0 +1,22 @@
+<div>
+    <h5>Opiniones de los alumnos</h5>
+<div class="p-1">
+  
+    @for (comment of arrComments; track $index) {
+        <div class="p-1 comment">
+            <div class="mb-2">
+
+    <mat-icon *ngFor="let item of [].constructor(comment.rating_teacher); let i = index" class="score" aria-hidden="false" aria-label="Example home icon" fontIcon="star_rate"></mat-icon>
+
+
+                
+    
+
+            </div>
+            <p>{{comment.comments}}</p>
+        </div>
+    }
+</div>
+</div>
+
+    

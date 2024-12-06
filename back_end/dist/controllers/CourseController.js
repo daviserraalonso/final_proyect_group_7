@@ -5,6 +5,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getOnlineCourses = exports.getPresentialCourses = exports.deleteCourse = exports.updateCourse = exports.createCourse = exports.getCourseById = exports.getCourses = void 0;
 const Course_1 = __importDefault(require("../models/Course"));
+const Category_1 = __importDefault(require("../models/Category"));
+const Modality_1 = __importDefault(require("../models/Modality"));
+const avg_course_1 = __importDefault(require("../models/avg_course"));
 // Obtener todos los cursos
 const getCourses = async (req, res) => {
     try {
@@ -21,7 +24,26 @@ exports.getCourses = getCourses;
 const getCourseById = async (req, res) => {
     const { id } = req.params;
     try {
-        const course = await Course_1.default.findByPk(id);
+        const course = await Course_1.default.findOne({
+            where: { id: id },
+            include: [
+                {
+                    model: Category_1.default,
+                    as: 'category',
+                    attributes: ['category_name']
+                },
+                {
+                    model: Modality_1.default,
+                    as: 'modality',
+                    attributes: ['type']
+                },
+                {
+                    model: avg_course_1.default,
+                    as: 'averageCourse',
+                    attributes: ['avg']
+                }
+            ],
+        });
         if (!course) {
             return res.status(404).json({ message: 'Curso no encontrado.' });
         }
@@ -38,22 +60,24 @@ const createCourse = async (req, res) => {
     console.log('Datos recibidos:', req.body);
     const { body } = req.body;
     try {
-        const { name, categoryId, modalityId, teacherId } = req.body;
+        const { name, categoryId, modalityId, teacherId, price } = req.body;
         // Validar campos requeridos
-        if (!name || !categoryId || !modalityId || !teacherId) {
-            return res.status(400).json({ message: 'Todos los campos son obligatorios: name, categoryId, modalityId' });
+        if (!name || !categoryId || !modalityId || !teacherId || !price) {
+            return res.status(400).json({ message: 'Todos los campos son obligatorios: name, categoryId, modalityId, price' });
         }
         console.log('Intentando crear el curso con:', {
             name,
             category_id: categoryId,
             modality_id: modalityId,
             professor_id: teacherId,
+            price: price
         });
         const newCourse = await Course_1.default.create({
             name,
             category_id: categoryId,
             modality_id: modalityId,
             professor_id: teacherId,
+            price: price
         });
         res.status(201).json(newCourse);
     }

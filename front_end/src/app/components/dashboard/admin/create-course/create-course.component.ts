@@ -32,6 +32,7 @@ import { CourseService } from '../../../../service/course.service';
 export class CreateCourseComponent implements OnInit {
   course = {
     name: '',
+    price: 0,
     categoryId: null,
     modalityId: null,
     teacherId: null,

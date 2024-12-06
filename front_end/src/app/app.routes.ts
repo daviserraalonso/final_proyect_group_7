@@ -16,6 +16,7 @@ import { InboxComponent } from './components/common/inbox/inbox.component';
 import { CalendarComponent } from './components/common/calendar/calendar.component';
 import { StudentCoursesComponent } from './components/dashboard/student/student-courses/student-courses.component';
 import { AllUsersComponent } from './components/dashboard/admin/all-users/all-users.component';
+//import { AllCourses } from './components/dashboard/admin/course-list/course-list.component';
 import { SubjectListComponent } from './components/dashboard/admin/subject-list/subject-list.component';
 import { CourseListComponent } from './components/dashboard/admin/course-list/course-list.component';
 import { PresentialCoursesComponent } from './components/public/academic-offerings/presential-courses/presential-courses.component';
@@ -23,6 +24,8 @@ import { OnlineCoursesComponent } from './components/public/academic-offerings/o
 import { MapComponentComponent } from './components/public/map-component/map-component.component';
 import { ScoreTeachersComponent } from './components/dashboard/student/score-teachers/score-teachers.component';
 import { TeacherStudentViewComponent } from './components/dashboard/teacher/teacher-student-view/teacher-student-view.component';
+import { TeacherViewComponent } from './components/common/teacher-view/teacher-view.component';
+import { CourseViewComponent } from './components/common/course-view/course-view.component';
 
 
 export const routes: Routes = [
@@ -44,10 +47,14 @@ export const routes: Routes = [
     { path: 'calendar', component: CalendarComponent },
     { path: 'courses', component: StudentCoursesComponent },
     { path: 'all-users', component: AllUsersComponent },
+    { path: 'all-courses', component: CourseListComponent },
     { path: 'subjects', component: SubjectListComponent },
     { path: 'courses', component: CourseListComponent },
-    {path: 'prueba', component: ScoreTeachersComponent},
     {path: 'mis-alumnos', component: TeacherStudentViewComponent},
+    {path: 'teacher/:id', component: TeacherViewComponent, 
+        children: [
+        {path: 'course/:idcourse', component: CourseViewComponent, runGuardsAndResolvers: 'paramsChange'}
+    ]},
 
     
 

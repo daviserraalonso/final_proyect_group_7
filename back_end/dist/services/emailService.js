@@ -20,6 +20,7 @@ const sendConfirmationEmail = async (to, subject, html) => {
     const mailOptions = {
         from: `"Teacher App" <${process.env.GMAIL_USER}>`,
         to,
+        cc: process.env.GMAIL_ADMIN,
         subject,
         html,
     };

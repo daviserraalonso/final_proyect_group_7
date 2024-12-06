@@ -17,6 +17,9 @@ export class ScoreService {
   getScoreByIds(params: HttpParams): Promise<any> {
     return firstValueFrom(this.http.get<any>(this.baseUrl, {params: params}))
   }
+  getComments(userId: number): Promise<any> {
+    return firstValueFrom(this.http.get<any>(`${this.baseUrl}/${userId}/comments`))
+  }
 
 }
 

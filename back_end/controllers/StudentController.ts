@@ -59,3 +59,22 @@ export const getStudentCourses = async (req: Request, res: Response): Promise<vo
     res.status(500).json({ message: 'Error interno del servidor.' });
   }
 };
+
+export const inscription = async (req: Request, res: Response, next) => {
+  const {studentId, courseId} = req.body
+  const date = new Date()
+  if(!studentId || !courseId) {
+    return res.status(400).json('Algo ha fallado')
+  }
+  try {
+    const studentInscription = await StudentCourse.create({
+      studentId: studentId,
+      courseId: courseId,
+      enrollmentDate: date
+
+    }) 
+    return res.status(200).json(studentInscription)
+  } catch (error) {
+    next(error)
+  }
+}
