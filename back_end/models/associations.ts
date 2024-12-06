@@ -11,7 +11,7 @@ import Category from './Category';
 import ProfessorRating from './ProfessorRating';
 import AvgTeacher from './avg_teacher'
 import AvgCourse from './avg_course';
-import User from './User';
+import User from './user';
 
 export default function setupAssociations() {
   // ** Relation User -> UserDetails**
@@ -31,6 +31,16 @@ export default function setupAssociations() {
       allowNull: false,
     },
     as: 'user',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  });
+
+  CourseEvent.belongsTo(Course, {
+    foreignKey: {
+      name: 'courseId',
+      allowNull: false,
+    },
+    as: 'course',
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   });
@@ -56,6 +66,28 @@ export default function setupAssociations() {
     onUpdate: 'CASCADE',
   });
 
+
+  CourseEvent.belongsTo(User, {
+    foreignKey: {
+      name: 'professorId',
+      allowNull: false,
+    },
+    as: 'professor',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  });
+
+  User.hasMany(CourseEvent, {
+    foreignKey: {
+      name: 'professorId',
+      allowNull: false,
+    },
+    as: 'events',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  });
+
+
   // ** Relation Course -> Modality**
   Course.belongsTo(Modality, {
     foreignKey: {
@@ -74,7 +106,17 @@ export default function setupAssociations() {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   });
-  
+
+  Course.hasMany(CourseEvent, {
+    foreignKey: {
+      name: 'courseId',
+      allowNull: false,
+    },
+    as: 'events',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  });
+
 
   // association Course -> StudentCourse
   Course.hasMany(StudentCourse, {
@@ -235,7 +277,7 @@ export default function setupAssociations() {
   });
 
   // **Relación User -> Profesor Rating**
-  User.hasOne(AvgTeacher,{
+  User.hasOne(AvgTeacher, {
     as: 'averageTeacher',
     foreignKey: 'id'
   })

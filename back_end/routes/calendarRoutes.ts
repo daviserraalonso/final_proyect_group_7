@@ -1,23 +1,17 @@
 import { Router } from 'express';
 import {
-    createCourseEvent,
-    deleteCourseEvent,
     getAllCourseEvent,
     getCourseEventById,
-    updateCourseEvent,
-    getCoursesByProfessor, // Importa el controlador
+    getCoursesByProfessor, // Controlador para cursos por profesor
 } from '../controllers/CalendarController';
 
 const router = Router();
 
 // Rutas existentes
-router.get('/', getAllCourseEvent);
-router.get('/:id', getCourseEventById);
-router.post('/', createCourseEvent);
-router.put('/:id', updateCourseEvent);
-router.delete('/:id', deleteCourseEvent);
+router.get('/', getAllCourseEvent); // Obtener todos los eventos del curso
+router.get('/:id', getCourseEventById); // Obtener un evento por ID
 
 // Nueva ruta para obtener cursos por profesor
-router.get('/course-event/courses-by-professor', getCoursesByProfessor);
+router.get('/professor/:id/courses', getCoursesByProfessor); // Obtener cursos por ID de profesor
 
 module.exports = router;

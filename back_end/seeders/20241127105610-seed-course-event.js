@@ -5,6 +5,7 @@ module.exports = {
                 const courseEvents = [
                         {
                                 courseId: 1,
+                                professorId: 3,
                                 subjectId: 2,
                                 eventType: 'class',
                                 title: 'Clase introductoria de Álgebra',
@@ -20,6 +21,7 @@ module.exports = {
                         },
                         {
                                 courseId: 1,
+                                professorId: 3,
                                 subjectId: 1,
                                 eventType: 'task',
                                 title: 'Entrega de práctica de Programación',

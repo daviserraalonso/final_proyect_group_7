@@ -5,26 +5,34 @@ import { CalendarService } from '../../../../service/calendar.service';
 import { CourseService } from '../../../../service/course.service';
 import { ICourseEvent } from '../../../../interfaces/iCourseEvent';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+
 
 @Component({
   selector: 'app-calendar-edit-event',
   templateUrl: './calendar-edit-event.component.html',
   standalone: true,
   imports: [
+    CommonModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSelectModule,
+    MatCheckboxModule
   ],
   styleUrls: ['./calendar-edit-event.component.css'],
 })
 export class CalendarEditEventComponent implements OnInit {
   eventForm: FormGroup;
   courses: any[] = []; //Almacena los cursos del profesor
-
+  locations: { id: number; name: string }[] = [];
+  subjects: { id: number; name: string }[] = [];
   constructor(
     public dialogRef: MatDialogRef<CalendarEditEventComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ICourseEvent,
@@ -36,13 +44,24 @@ export class CalendarEditEventComponent implements OnInit {
       title: [data.title, [Validators.required]],
       start: [this.toLocalDateTime(data.startDateTime), [Validators.required]],
       end: [this.toLocalDateTime(data.endDateTime), [Validators.required]],
-      description: [data.description]
+      description: [data.description],
+      locationType: [data.locationType || 'physical', [Validators.required]], // Predeterminado: 'physical'
+      locationId: [data.locationId || null], // Opcional si es físico
+      onlineLink: [data.onlineLink || ''], // Opcional si es online
+      courseId: [data.courseId, [Validators.required]],
+      subjectId: [data.subjectId, [Validators.required]],
+      professorId: [data.professorId, [Validators.required]],
+      allDay: [data.allDay || false],
+      isRead: [data.isRead || false],
     });
+    console.log('locationType en constructor:', this.eventForm.get('locationType')?.value);
+
     console.log(data.description)
   }
 
   ngOnInit(): void {
     this.loadCoursesByProfessor();
+    console.log('locationType en constructor:', this.eventForm.get('locationType')?.value);
   }
 
   toLocalDateTime(date: string): string {
@@ -54,12 +73,30 @@ export class CalendarEditEventComponent implements OnInit {
   async loadCoursesByProfessor() {
     try {
       console.log('Cargando cursos por profesor...');
-      this.calendarService.getCoursesByProfessor().subscribe({
-        next: (response) => {
+
+      // Obtener el usuario desde localStorage
+      const userString = localStorage.getItem('user');
+      if (!userString) {
+        console.error('No se encontró el usuario en localStorage.');
+        return;
+      }
+
+      // Parsear el objeto usuario y obtener el ID
+      const user = JSON.parse(userString);
+      const professorId = user.id;
+
+      if (!professorId) {
+        console.error('El ID del profesor no está definido.');
+        return;
+      }
+
+      // Llamar al servicio con el ID del profesor
+      this.calendarService.getCoursesByProfessorId(professorId).subscribe({
+        next: (response: ICourseEvent[]) => {
           console.log('Respuesta del servidor:', response);
-          this.courses = response; // Ahora puedes asignarlo correctamente
+          this.courses = response; // Asignar los cursos obtenidos
         },
-        error: (error) => {
+        error: (error: any) => {
           console.error('Error al cargar los cursos:', error);
         }
       });
@@ -67,6 +104,8 @@ export class CalendarEditEventComponent implements OnInit {
       console.error('Error en loadCoursesByProfessor:', error);
     }
   }
+
+
 
 
   formatDateTime(date: string): string {

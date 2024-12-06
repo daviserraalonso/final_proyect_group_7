@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { lastValueFrom, Observable, throwError, catchError } from 'rxjs';
 import { ICourseEvent } from '../interfaces/iCourseEvent';
 
 @Injectable({
@@ -11,61 +11,77 @@ export class CalendarService {
 
   constructor(private http: HttpClient) { }
 
-  /**
-   * Obtiene todos los eventos del calendario.
-   */
   getCalendarEvents(): Observable<ICourseEvent[]> {
-    return this.http.get<ICourseEvent[]>(`${this.apiUrl}`);
+    return this.http.get<ICourseEvent[]>(`${this.apiUrl}`).pipe(
+      catchError(this.handleError<ICourseEvent[]>('getCalendarEvents'))
+    );
   }
 
-  /**
-   * Obtiene un evento del calendario por su ID.
-   * @param id - ID del evento a obtener
-   */
-  getCalendarEventById(id: number): Observable<ICourseEvent> {
-    return this.http.get<ICourseEvent>(`${this.apiUrl}/${id}`);
+  getCalendarEventById(eventId: number): Observable<ICourseEvent> {
+    return this.http.get<ICourseEvent>(`${this.apiUrl}/${eventId}`).pipe(
+      catchError(this.handleError<ICourseEvent>('getCalendarEventById'))
+    );
   }
 
-  /**
-   * Crea un nuevo evento en el calendario.
-   * @param event - Objeto del evento a crear
-   */
+  getCoursesByProfessorId(professorId: number): Observable<ICourseEvent[]> {
+    const url = `${this.apiUrl}/professor/${professorId}`;
+    return this.http.get<ICourseEvent[]>(url).pipe(
+      catchError(this.handleError<ICourseEvent[]>('getCoursesByProfessorId'))
+    );
+  }
+
+
   createCalendarEvent(event: ICourseEvent): Observable<ICourseEvent> {
-    return this.http.post<ICourseEvent>(`${this.apiUrl}`, event);
-  }
-
-  /**
-   * Actualiza un evento del calendario existente.
-   * @param event - Objeto del evento con los cambios a realizar
-   */
-  updateCalendarEvent(event: ICourseEvent): Observable<ICourseEvent> {
-    return this.http.put<ICourseEvent>(`${this.apiUrl}/${event.id}`, event);
-  }
-
-  /**
-   * Elimina un evento del calendario por su ID.
-   * @param eventId - ID del evento a eliminar
-   */
-  deleteCalendarEvent(eventId: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${eventId}`);
-  }
-
-  /**
-   * Obtiene cursos por profesor basado en el encabezado `user`.
-   */
-  getCoursesByProfessor(): Observable<any> {
-    const user = localStorage.getItem('user'); // Obtén los datos del usuario desde localStorage
-    const parsedUser = user ? JSON.parse(user) : null;
-
-    if (!parsedUser || !parsedUser.id) {
-      throw new Error('No se encontró información válida del usuario en localStorage.');
+    if (!this.isEventValid(event)) {
+      return throwError(() => new Error('El evento no tiene todos los campos obligatorios.'));
     }
 
-    // Realiza la solicitud GET al servidor sin pasar el encabezado 'user'
-    return this.http.get(`${this.apiUrl}/courses-by-professor`, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      }),
-    });
+    return this.http.post<ICourseEvent>(`${this.apiUrl}`, event).pipe(
+      catchError(this.handleError<ICourseEvent>('createCalendarEvent'))
+    );
   }
+
+
+  updateCalendarEvent(event: ICourseEvent): Observable<ICourseEvent> {
+    if (!this.isEventValid(event)) {
+      return throwError(() => new Error('El evento no tiene todos los campos obligatorios.'));
+    }
+
+    return this.http.put<ICourseEvent>(`${this.apiUrl}/${event.id}`, event).pipe(
+      catchError(this.handleError<ICourseEvent>('updateCalendarEvent'))
+    );
+  }
+
+  deleteCalendarEvent(eventId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${eventId}`).pipe(
+      catchError(this.handleError<void>('deleteCalendarEvent'))
+    );
+  }
+
+
+
+  //Manejo de errores
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      console.error(`${operation} failed:`, error);
+      return throwError(() => new Error(`Error en ${operation}: ${error.message}`));
+    };
+  }
+
+  //Método auxiliar para validar campos obligatorios
+  private isEventValid(event: ICourseEvent): boolean {
+    if (!event.title) throw new Error('El título es obligatorio.');
+    if (!event.startDateTime) throw new Error('La fecha de inicio es obligatoria.');
+    if (!event.endDateTime) throw new Error('La fecha de fin es obligatoria.');
+    if (event.allDay === undefined) throw new Error('El campo "allDay" es obligatorio.');
+    if (!event.locationType) throw new Error('El tipo de ubicación es obligatorio.');
+    if (event.isRead === undefined) throw new Error('El campo "isRead" es obligatorio.');
+    if (!event.courseId) throw new Error('El ID del curso es obligatorio.');
+    if (!event.subjectId) throw new Error('El ID de la materia es obligatorio.');
+    if (!event.professorId) throw new Error('El ID del profesor es obligatorio.');
+
+    return true;
+  }
+
+
 }

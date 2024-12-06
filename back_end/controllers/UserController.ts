@@ -6,7 +6,7 @@ import Course from '../models/Course';
 import { Op, Sequelize } from 'sequelize';
 import StudentCourse from '../models/StudentCourse';
 import AvgTeacher from '../models/avg_teacher';
-import User from '../models/User';
+import User from '../models/user';
 const jwt = require('jsonwebtoken');
 
 

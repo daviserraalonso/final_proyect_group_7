@@ -5,6 +5,7 @@ class CourseEvent extends Model {
   public id!: number;
   public courseId!: number;
   public subjectId!: number | null;
+  public professorId!: number;
   public eventType!: 'class' | 'task';
   public title!: string;
   public description!: string | null;
@@ -33,6 +34,10 @@ CourseEvent.init(
     subjectId: {
       type: DataTypes.INTEGER,
       allowNull: true,
+    },
+    professorId: {
+      type: DataTypes.INTEGER,
+      allowNull: false, // Este campo es obligatorio
     },
     eventType: {
       type: DataTypes.ENUM('class', 'task'),

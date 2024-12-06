@@ -17,6 +17,15 @@ module.exports = {
         },
         onDelete: "CASCADE",
       },
+      professorId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: "user",
+          key: "id",
+        },
+        onDelete: "CASCADE",
+      },
       subjectId: {
         type: Sequelize.INTEGER,
         references: {

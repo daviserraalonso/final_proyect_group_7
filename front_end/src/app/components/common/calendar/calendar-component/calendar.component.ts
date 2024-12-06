@@ -10,7 +10,6 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import { CalendarEventComponent } from '../calendar-event/calendar-event.component';
 import { CalendarEditEventComponent } from '../calendar-edit-event/calendar-edit-event.component';
 import listPlugin from '@fullcalendar/list';
-import { createEventId } from '../../../../utils/event-utils';
 import { lastValueFrom } from 'rxjs';
 import { ICourseEvent } from '../../../../interfaces/iCourseEvent';
 
@@ -19,7 +18,7 @@ import { ICourseEvent } from '../../../../interfaces/iCourseEvent';
   standalone: true,
   imports: [CommonModule, FullCalendarModule],
   templateUrl: './calendar.component.html',
-  styleUrls: ['./calendar.component.css'], // Corrige 'styleUrl' -> 'styleUrls'
+  styleUrls: ['./calendar.component.css'],
 })
 export class CalendarComponent implements OnInit {
   calendarOptions: CalendarOptions = {
@@ -35,13 +34,14 @@ export class CalendarComponent implements OnInit {
     selectable: true,
     selectMirror: true,
     dayMaxEvents: true,
-    events: [], // Inicialmente vacío
+    events: [],
     select: this.handleDateSelect.bind(this),
     eventClick: this.handleEventClick.bind(this),
     eventsSet: this.handleEvents.bind(this),
   };
 
-  currentEvents: EventApi[] = []; // Para el manejo de eventos actuales
+  currentEvents: EventApi[] = [];
+
 
   constructor(
     private calendarService: CalendarService,
@@ -53,28 +53,33 @@ export class CalendarComponent implements OnInit {
     this.loadEvents();
   }
 
-  /**
-   * Carga los eventos desde el backend y los adapta al formato esperado por FullCalendar.
-   */
   private async loadEvents(): Promise<void> {
     try {
+      const userString = localStorage.getItem('user');
+      if (!userString) throw new Error('Usuario no encontrado en localStorage.');
+
+      const user = JSON.parse(userString);
+      const userId = user.id;
+      if (!userId) throw new Error('ID del usuario no encontrado.');
+
       const response = await lastValueFrom(this.calendarService.getCalendarEvents());
 
       if (Array.isArray(response)) {
+        // Limpia los eventos previos para evitar duplicados
         const events = response.map((event) => ({
           id: event.id.toString(),
           title: event.title,
-          description: event.description,
+          description: event.description || '',
           start: new Date(event.startDateTime).toISOString(),
           end: event.endDateTime ? new Date(event.endDateTime).toISOString() : undefined,
           allDay: event.allDay || false,
           color: this.getEventColor(event.locationType || 'default'),
           extendedProps: {
-            description: event.description, // Incluye 'description' aquí
-          }
+            description: event.description || '',
+          },
         }));
 
-        this.calendarOptions.events = events;
+        this.calendarOptions = { ...this.calendarOptions, events }; // Actualiza eventos de manera reactiva
       } else {
         console.error('Error: La respuesta no es un array.');
       }
@@ -82,6 +87,7 @@ export class CalendarComponent implements OnInit {
       console.error('Error al cargar eventos:', err);
     }
   }
+
 
   private getEventColor(locationType: string): string {
     switch (locationType) {
@@ -94,37 +100,60 @@ export class CalendarComponent implements OnInit {
     }
   }
 
-  /**
-   * Maneja la selección de una fecha para crear un nuevo evento.
-   * @param selectInfo Información de la selección.
-   */
   private handleDateSelect(selectInfo: DateSelectArg): void {
     const calendarApi = selectInfo.view.calendar;
 
-    if (!this.canEditEvents()) {
-      return;
-    }
+    if (!this.canEditEvents()) return;
 
-    calendarApi.unselect(); // Limpia la selección
+    calendarApi.unselect();
 
     const newEvent: ICourseEvent = {
       id: 0,
-      title: '',
+      title: 'Nuevo Evento',
       description: '',
       startDateTime: selectInfo.startStr,
       endDateTime: selectInfo.endStr,
       allDay: selectInfo.allDay,
-      locationType: 'default',
+      locationType: 'physical', // Cambia 'default' a 'physical'
+      isRead: false,
+      courseId: 0,
+      subjectId: 0,
+      professorId: 0,
     };
 
     this.openEventEditDialog(newEvent);
   }
 
-  /**
-   * Abre el diálogo para editar un evento existente.
-   * @param event Información del evento a editar.
-   */
+
+  private handleEventClick(clickInfo: EventClickArg): void {
+    const event: ICourseEvent = {
+      id: Number(clickInfo.event.id),
+      title: clickInfo.event.title,
+      description: clickInfo.event.extendedProps['description'] || '',
+      startDateTime: clickInfo.event.start?.toISOString() || '',
+      endDateTime: clickInfo.event.end?.toISOString() || '',
+      allDay: clickInfo.event.allDay,
+      locationType: clickInfo.event.extendedProps['locationType'] || 'physical', // Cambia 'default' a 'physical'
+      isRead: false,
+      courseId: 0,
+      subjectId: 0,
+      professorId: 0,
+    };
+
+    if (!this.canEditEvents()) {
+      this.openEventDetailsDialog(event);
+    } else {
+      this.openEventEditDialog(event);
+    }
+  }
+
+
   private openEventEditDialog(event: ICourseEvent): void {
+    // Validar y corregir locationType si es 'default'
+    if (event.locationType === 'default') {
+      event.locationType = 'physical'; // Valor predeterminado
+    }
+
     const dialogRef = this.dialog.open(CalendarEditEventComponent, {
       width: '800px',
       height: '600px',
@@ -133,75 +162,39 @@ export class CalendarComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: ICourseEvent | null) => {
       if (result) {
-        if (result.id) {
-          // Editar evento existente
-          this.calendarService.updateCalendarEvent(result).subscribe({
-            next: () => this.loadEvents(),
-            error: (err) => console.error('Error al actualizar el evento:', err),
-          });
-        } else {
-          // Crear nuevo evento
-          this.calendarService.createCalendarEvent(result).subscribe({
-            next: () => this.loadEvents(),
-            error: (err) => console.error('Error al crear el evento:', err),
-          });
-        }
+        const saveObservable = result.id
+          ? this.calendarService.updateCalendarEvent(result)
+          : this.calendarService.createCalendarEvent(result);
+
+        saveObservable.subscribe({
+          next: () => this.loadEvents(),
+          error: (err) => console.error('Error al guardar el evento:', err),
+        });
       }
     });
   }
 
-  private handleEventClick(clickInfo: EventClickArg): void {
-    const event: ICourseEvent = {
-      id: Number(clickInfo.event.id),
-      title: clickInfo.event.title,
-      description: clickInfo.event.extendedProps['description'], // Accede a 'description' desde 'extendedProps'
-      startDateTime: clickInfo.event.start?.toISOString() || '',
-      endDateTime: clickInfo.event.end?.toISOString() || '',
-      allDay: clickInfo.event.allDay,
-      locationType: 'default', // Puedes ajustar según los datos reales
-    };
 
-    if (!this.canEditEvents()) {
-      // Abrir el diálogo de detalles
-      this.openEventDetailsDialog(event);
-    } else {
-      // Abrir el diálogo de edición
-      this.openEventEditDialog(event);
-    }
-  }
-
-
-  /**
-   * Abre el diálogo para ver los detalles de un evento.
-   * @param event Información del evento.
-   */
   private openEventDetailsDialog(event: ICourseEvent): void {
     this.dialog.open(CalendarEventComponent, {
       width: '800px',
       data: {
         id: event.id,
         title: event.title,
-        description: event.description, // Agregar descripción
+        description: event.description,
         start: event.startDateTime,
         end: event.endDateTime,
       },
     });
   }
 
-  /**
-   * Maneja los cambios en los eventos actuales.
-   * @param events Lista actual de eventos en el calendario.
-   */
   private handleEvents(events: EventApi[]): void {
     this.currentEvents = events;
     this.changeDetector.detectChanges();
   }
 
-  /**
-   * Comprueba si el usuario puede editar eventos.
-   */
   canEditEvents(): boolean {
     const userRole = Number(localStorage.getItem('role'));
-    return userRole === 1 || userRole === 2; // Admin (1) o Profesor (2)
+    return userRole === 1 || userRole === 2;
   }
 }

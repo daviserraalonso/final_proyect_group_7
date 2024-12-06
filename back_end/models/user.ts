@@ -64,7 +64,8 @@ User.init(
   },
   {
     sequelize,
-    tableName: 'user',
+    modelName: 'User',
+    tableName: 'ser',
   }
 );
 
