@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { lastValueFrom, Observable, throwError, catchError } from 'rxjs';
+import { lastValueFrom, Observable, throwError, catchError, map, of } from 'rxjs';
 import { ICourseEvent } from '../interfaces/iCourseEvent';
 
 @Injectable({
@@ -29,12 +29,23 @@ export class CalendarService {
       catchError(this.handleError<ICourseEvent[]>('getEventsByProfessorId'))
     );
   }
+
+
   getSubjectsByCourseId(courseId: number): Observable<any[]> {
     const url = `${this.apiUrl}/course/${courseId}/subjects`;
     return this.http.get<any[]>(url).pipe(
-      catchError(this.handleError<any[]>('getSubjectsByCourseId', []))
+      catchError((error) => {
+        if (error.status === 404) {
+          // Si no hay asignaturas, devolvemos un array vacío
+          console.warn(`No se encontraron asignaturas para el curso ${courseId}:`, error.message);
+          return of([]); // Devuelve un observable con un array vacío
+        }
+        return throwError(() => new Error(`Error en getSubjectsByCourseId: ${error.message}`));
+      })
     );
   }
+
+
 
 
   getCoursesByProfessorId(professorId: number): Observable<ICourseEvent[]> {
@@ -71,12 +82,17 @@ export class CalendarService {
       catchError(this.handleError<void>('deleteCalendarEvent'))
     );
   }
-
-  getCourseLocation(courseId: number): Observable<{ address: string }> {
-    return this.http.get<{ address: string }>(`/api/course-location/${courseId}`).pipe(
-      catchError(this.handleError<{ address: string }>('getCourseLocation'))
+  getCourseLocation(locationId: number): Observable<{ address: string; onlineLink?: string }> {
+    return this.http.get<{ address: string; onlineLink?: string }>(`${this.apiUrl}/location/${locationId}`).pipe(
+      catchError((error) => {
+        console.error(`Error en getCourseLocation:`, error);
+        return of({ address: '', onlineLink: '' }); // Devuelve un objeto vacío si hay error
+      })
     );
   }
+
+
+
 
 
 

@@ -77,9 +77,11 @@ export class CalendarComponent implements OnInit {
           color: this.getEventColor(event.locationType || 'default'),
           extendedProps: {
             description: event.description || '',
-            locationType: event.locationType || null, // Valor predeterminado
+            locationType: event.locationType || null,
+            locationId: event.locationId || null, // Incluye locationId
+            onlineLink: event.onlineLink || '',   // Incluye onlineLink
             courseId: event.courseId || null,
-            subjectId: event.subjectId || null, // Incluye subjectId si está disponible
+            subjectId: event.subjectId || null,
           },
         }));
 
@@ -142,11 +144,14 @@ export class CalendarComponent implements OnInit {
       endDateTime: clickInfo.event.end?.toISOString() || '',
       allDay: clickInfo.event.allDay,
       locationType: clickInfo.event.extendedProps['locationType'] || null,
+      locationId: clickInfo.event.extendedProps['locationId'] || null, // Recupera locationId
+      onlineLink: clickInfo.event.extendedProps['onlineLink'] || '',   // Recupera onlineLink
       courseId: clickInfo.event.extendedProps['courseId'] || 0,
       subjectId: clickInfo.event.extendedProps['subjectId'] || 0,
-      professorId: user?.id || 0, // Usa el ID del profesor, o 0 si no está disponible
+      professorId: user?.id || 0,
       isRead: clickInfo.event.extendedProps['isRead'] || false,
     };
+
 
     if (!this.canEditEvents()) {
       this.openEventDetailsDialog(event);

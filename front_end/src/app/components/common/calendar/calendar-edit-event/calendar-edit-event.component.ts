@@ -34,8 +34,7 @@ export class CalendarEditEventComponent implements OnInit {
   locations: { id: number; type: string }[] = [];
   subjects: { id: number; name: string }[] = [];
   selectedModality: string | null = null;
-  modality: string = '';
-  onlineLink: string = '';
+  locationDisplay: string = ''; // Para mostrar address o onlineLink dinámicamente
 
   constructor(
     public dialogRef: MatDialogRef<CalendarEditEventComponent>,
@@ -44,17 +43,15 @@ export class CalendarEditEventComponent implements OnInit {
     private calendarService: CalendarService,
     private searchService: SearchServiceService,
     private cdr: ChangeDetectorRef // Inyección de ChangeDetectorRef
-
   ) {
-    // Inicializa el formulario con los datos del evento
     this.eventForm = this.fb.group({
       title: [data.title, [Validators.required]],
       start: [this.toLocalDateTime(data.startDateTime), [Validators.required]],
       end: [this.toLocalDateTime(data.endDateTime), [Validators.required]],
       description: [data.description],
-      locationType: [data.locationType || null, [Validators.required]], // Usa el valor del evento o 'Presential'
+      locationType: [data.locationType || null, [Validators.required]],
       locationId: [data.locationId || null],
-      onlineLink: [data.onlineLink || ''], // Control para enlace online
+      onlineLink: [data.onlineLink || ''],
       courseId: [data.courseId, [Validators.required]],
       subjectId: [data.subjectId, [Validators.required]],
       professorId: [data.professorId, [Validators.required]],
@@ -62,10 +59,9 @@ export class CalendarEditEventComponent implements OnInit {
       isRead: [data.isRead || false],
     });
 
-    // Inicializa selectedModality
     this.selectedModality = data.locationType;
-
   }
+
   ngOnInit(): void {
     this.loadCoursesByProfessor();
     this.listenToCourseSelection();
@@ -76,18 +72,20 @@ export class CalendarEditEventComponent implements OnInit {
 
     this.loadModalities();
 
-    // Asegúrate de que selectedModality coincida con el valor inicial del formulario
     const locationTypeValue = this.eventForm.get('locationType')?.value;
-    if (locationTypeValue) {
-      this.selectedModality = locationTypeValue;
+    const onlineLinkValue = this.eventForm.get('onlineLink')?.value;
+
+    if (onlineLinkValue) {
+      this.selectedModality = 'Online';
     } else {
-      this.selectedModality = 'Presential'; // Valor predeterminado si no hay valor inicial
-      this.eventForm.patchValue({ locationType: this.selectedModality });
+      this.selectedModality = locationTypeValue || 'Presential';
     }
 
-    console.log('selectedModality después de inicialización:', this.selectedModality);
-  }
+    this.eventForm.patchValue({ locationType: this.selectedModality });
 
+    console.log('Llamando a loadLocationDisplay');
+    this.loadLocationDisplay();
+  }
 
 
 
@@ -95,22 +93,21 @@ export class CalendarEditEventComponent implements OnInit {
     const utcDate = new Date(date);
     return utcDate.toISOString().slice(0, 16);
   }
+
   onModalityChange(modality: string): void {
     this.selectedModality = modality;
-    this.eventForm.patchValue({ locationType: modality }); // Actualiza el valor en el formulario
+    this.eventForm.patchValue({ locationType: modality });
 
     if (modality === 'Presential') {
-      this.eventForm.patchValue({
-        onlineLink: '', // Limpia el enlace online
-      });
+      // Preserva el enlace online, pero lo oculta
+      this.eventForm.patchValue({ locationId: this.eventForm.get('locationId')?.value });
     } else if (modality === 'Online') {
-      this.eventForm.patchValue({
-        locationType: '', // Limpia la ubicación física
-      });
+      // Preserva la ubicación física, pero la oculta
+      this.eventForm.patchValue({ onlineLink: this.eventForm.get('onlineLink')?.value });
     }
+
+    this.loadLocationDisplay();
   }
-
-
 
 
   loadModalities(): void {
@@ -120,8 +117,6 @@ export class CalendarEditEventComponent implements OnInit {
       })
       .catch((err) => console.error('Error al cargar las modalidades:', err));
   }
-
-
 
   loadCoursesByProfessor(): void {
     const userString = localStorage.getItem('user');
@@ -133,27 +128,19 @@ export class CalendarEditEventComponent implements OnInit {
     this.calendarService.getCoursesByProfessorId(professorId).subscribe({
       next: (courses) => {
         this.courses = courses;
-
-        // Si hay un curso preseleccionado, asegúrate de seleccionarlo
-        const selectedCourseId = this.eventForm.get('courseId')?.value;
-        if (selectedCourseId) {
-          const courseExists = this.courses.some((c) => c.id === selectedCourseId);
-          if (!courseExists) {
-            this.eventForm.patchValue({ courseId: null });
-          }
-        }
       },
       error: (err) => console.error('Error al cargar los cursos:', err),
     });
   }
-
 
   listenToCourseSelection(): void {
     this.eventForm.get('courseId')?.valueChanges.subscribe((selectedCourseId) => {
       if (selectedCourseId) {
         this.loadSubjectsByCourse(selectedCourseId);
       } else {
-        this.subjects = []; // Limpia las asignaturas si no hay curso seleccionado
+        // Limpia las asignaturas si no hay curso seleccionado
+        this.subjects = [];
+        this.eventForm.patchValue({ subjectId: null });
       }
     });
   }
@@ -161,42 +148,49 @@ export class CalendarEditEventComponent implements OnInit {
   loadSubjectsByCourse(courseId: number): void {
     this.calendarService.getSubjectsByCourseId(courseId).subscribe({
       next: (subjects) => {
-        if (subjects && subjects.length > 0) {
-          this.subjects = subjects;
-
-          // Si hay una asignatura preseleccionada, asegúrate de seleccionarla
-          const selectedSubjectId = this.eventForm.get('subjectId')?.value;
-          if (selectedSubjectId) {
-            const subjectExists = this.subjects.some((s) => s.id === selectedSubjectId);
-            if (!subjectExists) {
-              this.eventForm.patchValue({ subjectId: null });
-            }
-          }
-        } else {
-          console.warn('No se encontraron asignaturas para el curso seleccionado.');
-          this.subjects = [];
-          this.eventForm.patchValue({ subjectId: null });
+        this.subjects = subjects;
+        if (subjects.length === 0) {
+          console.log('No se encontraron asignaturas para el curso seleccionado.');
         }
       },
       error: (err) => {
         console.error('Error al cargar las asignaturas:', err);
-        this.subjects = [];
-        this.eventForm.patchValue({ subjectId: null });
       },
     });
   }
 
 
+
+  loadLocationDisplay(): void {
+    if (this.selectedModality === 'Presential') {
+      const locationId = this.eventForm.get('locationId')?.value;
+
+      if (locationId) {
+        this.calendarService.getCourseLocation(locationId).subscribe({
+          next: (location) => {
+            this.locationDisplay = location.address || 'Dirección no especificada';
+          },
+          error: (err) => {
+            console.error('Error al cargar la ubicación:', err);
+            this.locationDisplay = 'Dirección no especificada';
+          },
+        });
+      } else {
+        this.locationDisplay = 'Dirección no especificada';
+      }
+    } else if (this.selectedModality === 'Online') {
+      const onlineLink = this.eventForm.get('onlineLink')?.value;
+      this.locationDisplay = onlineLink || 'Enlace no especificado';
+    }
+  }
+
+
+
   deleteEvent(): void {
     if (confirm('¿Estás seguro de que deseas eliminar este evento?')) {
       this.calendarService.deleteCalendarEvent(Number(this.data.id)).subscribe({
-        next: () => {
-          console.log('Evento eliminado exitosamente');
-          this.dialogRef.close({ deleted: true, id: this.data.id });
-        },
-        error: (err) => {
-          console.error('Error al eliminar el evento:', err);
-        },
+        next: () => this.dialogRef.close({ deleted: true, id: this.data.id }),
+        error: (err) => console.error('Error al eliminar el evento:', err),
       });
     }
   }
@@ -217,13 +211,8 @@ export class CalendarEditEventComponent implements OnInit {
         : this.calendarService.createCalendarEvent(updatedEvent);
 
       saveObservable.subscribe({
-        next: (result) => {
-          console.log('Evento guardado:', result);
-          this.dialogRef.close(result);
-        },
-        error: (err) => {
-          console.error('Error al guardar el evento:', err);
-        },
+        next: (result) => this.dialogRef.close(result),
+        error: (err) => console.error('Error al guardar el evento:', err),
       });
     }
   }

@@ -2,10 +2,9 @@ import { Request, Response } from 'express';
 import CourseEvent from '../models/CourseEvent';
 import Subject from '../models/Subject';
 import Course from '../models/Course';
-
+import CourseLocation from '../models/CourseLocation';
 
 export const getAllCourseEvent = async (req: Request, res: Response) => {
-    console.log('Obteniendo datos del calendario');
     try {
         const events = await CourseEvent.findAll({
             include: [
@@ -19,6 +18,11 @@ export const getAllCourseEvent = async (req: Request, res: Response) => {
                     as: 'subject',
                     attributes: ['id', 'name'],
                 },
+                {
+                    model: CourseLocation,
+                    as: 'location', // Usa el alias definido en la asociación
+                    attributes: ['address'], // Incluye solo los campos necesarios
+                },
             ],
         });
         res.status(200).json(events);
@@ -27,6 +31,26 @@ export const getAllCourseEvent = async (req: Request, res: Response) => {
         res.status(500).json({ message: 'Error al obtener los eventos' });
     }
 };
+export const getCourseLocationById = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
+        const location = await CourseLocation.findByPk(id);
+
+        if (!location) {
+            return res.status(200).json({ address: '', onlineLink: '' }); // Objeto vacío como respuesta válida
+        }
+
+        res.status(200).json(location);
+    } catch (error) {
+        console.error('Error al obtener la ubicación:', error);
+        res.status(500).json({ message: 'Error interno del servidor' });
+    }
+};
+
+
+
+
+
 export const getCoursesByProfessor = async (req, res) => {
     console.log('Parámetros recibidos:', req.params); // Agrega este log para depuración
 
@@ -54,14 +78,13 @@ export const getCoursesByProfessor = async (req, res) => {
 
 export const getSubjectsByCourse = async (req: Request, res: Response) => {
     try {
-        const { courseId } = req.params; // Extrae el parámetro courseId
+        const { courseId } = req.params;
         if (!courseId) {
-            return res.status(400).json({ message: 'No se proporcionó el ID del curso' });
+            return res.status(400).json({ message: 'El ID del curso es obligatorio' });
         }
 
         const subjects = await Subject.findAll({
-            where: { courseId: Number(courseId) }, // Clave foránea en la tabla 'Subject'
-            attributes: ['id', 'name'],
+            where: { courseId: Number(courseId) },
         });
 
         if (!subjects.length) {
@@ -74,6 +97,7 @@ export const getSubjectsByCourse = async (req: Request, res: Response) => {
         res.status(500).json({ message: 'Error al obtener las asignaturas' });
     }
 };
+
 
 
 
