@@ -2,7 +2,6 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CalendarService } from '../../../../service/calendar.service';
-import { CourseService } from '../../../../service/course.service';
 import { ICourseEvent } from '../../../../interfaces/iCourseEvent';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
@@ -10,8 +9,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { SearchServiceService } from '../../../../service/search-service.service';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-
 
 @Component({
   selector: 'app-calendar-edit-event',
@@ -30,22 +29,24 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 })
 export class CalendarEditEventComponent implements OnInit {
   eventForm: FormGroup;
-  courses: any[] = []; //Almacena los cursos del profesor
-  locations: { id: number; name: string }[] = [];
-  subjects: { id: number; name: string }[] = [];
+  courses: any[] = []; // Almacena los cursos del profesor
+  locations: { id: number; type: string }[] = [];
+  subjects: { id: number; name: string }[] = []; // Almacena las asignaturas por curso seleccionado
+
   constructor(
     public dialogRef: MatDialogRef<CalendarEditEventComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ICourseEvent,
     private fb: FormBuilder,
     private calendarService: CalendarService,
+    private searchService: SearchServiceService
   ) {
-    //Inicializa el formulario con los datos del evento
+    // Inicializa el formulario con los datos del evento
     this.eventForm = this.fb.group({
       title: [data.title, [Validators.required]],
       start: [this.toLocalDateTime(data.startDateTime), [Validators.required]],
       end: [this.toLocalDateTime(data.endDateTime), [Validators.required]],
       description: [data.description],
-      locationType: [data.locationType || 'physical', [Validators.required]], // Predeterminado: 'physical'
+      locationType: [data.locationType, [Validators.required]], // Predeterminado: 'physical'
       locationId: [data.locationId || null], // Opcional si es físico
       onlineLink: [data.onlineLink || ''], // Opcional si es online
       courseId: [data.courseId, [Validators.required]],
@@ -54,14 +55,12 @@ export class CalendarEditEventComponent implements OnInit {
       allDay: [data.allDay || false],
       isRead: [data.isRead || false],
     });
-    console.log('locationType en constructor:', this.eventForm.get('locationType')?.value);
-
-    console.log(data.description)
   }
 
   ngOnInit(): void {
-    this.loadCoursesByProfessor();
-    console.log('locationType en constructor:', this.eventForm.get('locationType')?.value);
+    this.loadCoursesByProfessor(); // Carga los cursos al inicializar el componente
+    this.listenToCourseSelection(); // Configura la escucha de cambios en el curso seleccionado
+    this.loadModalities();
   }
 
   toLocalDateTime(date: string): string {
@@ -70,18 +69,31 @@ export class CalendarEditEventComponent implements OnInit {
   }
 
 
+
+  loadModalities(): void {
+    this.searchService.getAllModalities()
+      .then((modalities) => {
+        this.locations = modalities; // Almacena las modalidades en `locations`
+        console.log('Modalidades cargadas:', this.locations);
+      })
+      .catch((err) => {
+        console.error('Error al cargar las modalidades:', err);
+      });
+  }
+
+
+
+
   async loadCoursesByProfessor() {
     try {
       console.log('Cargando cursos por profesor...');
 
-      // Obtener el usuario desde localStorage
       const userString = localStorage.getItem('user');
       if (!userString) {
         console.error('No se encontró el usuario en localStorage.');
         return;
       }
 
-      // Parsear el objeto usuario y obtener el ID
       const user = JSON.parse(userString);
       const professorId = user.id;
 
@@ -90,13 +102,12 @@ export class CalendarEditEventComponent implements OnInit {
         return;
       }
 
-      // Llamar al servicio con el ID del profesor
       this.calendarService.getCoursesByProfessorId(professorId).subscribe({
-        next: (response: ICourseEvent[]) => {
-          console.log('Respuesta del servidor:', response);
-          this.courses = response; // Asignar los cursos obtenidos
+        next: (response: any[]) => {
+          console.log('Cursos cargados:', response);
+          this.courses = response;
         },
-        error: (error: any) => {
+        error: (error) => {
           console.error('Error al cargar los cursos:', error);
         }
       });
@@ -105,20 +116,27 @@ export class CalendarEditEventComponent implements OnInit {
     }
   }
 
-
-
-
-  formatDateTime(date: string): string {
-    const d = new Date(date);
-    const localDate = new Date(d.getTime() - d.getTimezoneOffset() * 60000); // Corrige el desfase horario
-    return `${localDate.getFullYear()}-${this.pad(localDate.getMonth() + 1)}-${this.pad(localDate.getDate())}T${this.pad(localDate.getHours())}:${this.pad(localDate.getMinutes())}`;
+  listenToCourseSelection(): void {
+    this.eventForm.get('courseId')?.valueChanges.subscribe((selectedCourseId) => {
+      if (selectedCourseId) {
+        this.loadSubjectsByCourse(selectedCourseId);
+      } else {
+        this.subjects = []; // Limpia las asignaturas si no hay curso seleccionado
+      }
+    });
   }
 
-
-  pad(value: number): string {
-    return value.toString().padStart(2, '0');
+  loadSubjectsByCourse(courseId: number): void {
+    this.calendarService.getSubjectsByCourseId(courseId).subscribe({
+      next: (subjects) => {
+        console.log('Asignaturas cargadas:', subjects);
+        this.subjects = subjects;
+      },
+      error: (err) => {
+        console.error('Error al cargar las asignaturas:', err);
+      },
+    });
   }
-
 
   deleteEvent(): void {
     if (confirm('¿Estás seguro de que deseas eliminar este evento?')) {
@@ -134,11 +152,9 @@ export class CalendarEditEventComponent implements OnInit {
     }
   }
 
-
   closeDialog(): void {
     this.dialogRef.close();
   }
-
 
   save(): void {
     if (this.eventForm.valid) {

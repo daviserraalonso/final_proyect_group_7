@@ -61,13 +61,14 @@
           </mat-form-field>
         </div>
 
-        <!-- Tipo de Ubicación -->
+        <!-- Modalidad -->
         <div class="col-md-6">
           <mat-form-field appearance="fill" class="w-100">
-            <mat-label>Tipo de Ubicación</mat-label>
-            <mat-select formControlName="locationType">
-              <mat-option value="physical">Presencial</mat-option>
-              <mat-option value="online">En línea</mat-option>
+            <mat-label>Modalidad</mat-label>
+            <mat-select formControlName="locationId">
+              <mat-option *ngFor="let modality of locations" [value]="modality.id">
+                {{ modality.type }}
+              </mat-option>
             </mat-select>
           </mat-form-field>
         </div>
@@ -78,7 +79,7 @@
             <mat-label>Ubicación Física</mat-label>
             <mat-select formControlName="locationId">
               <mat-option *ngFor="let location of locations" [value]="location.id">
-                {{ location.name }}
+                {{ location.type }}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -103,6 +104,7 @@
             </mat-select>
           </mat-form-field>
         </div>
+
         <!-- Materia (desplegable) -->
         <div class="col-md-6">
           <mat-form-field appearance="fill" class="w-100">
@@ -119,27 +121,15 @@
         <div class="col-12">
           <mat-checkbox formControlName="allDay">¿Todo el Día?</mat-checkbox>
         </div>
-
       </form>
     </div>
 
     <!-- Pie de Página -->
     <div class="modal-footer">
-      <button
-        type="button"
-        mat-button
-        class="btn btn-secondary"
-        (click)="deleteEvent()"
-      >
+      <button type="button" mat-button class="btn btn-secondary" (click)="deleteEvent()">
         Eliminar
       </button>
-      <button
-        type="button"
-        mat-button
-        class="btn btn-primary"
-        [disabled]="eventForm.invalid"
-        (click)="save()"
-      >
+      <button type="button" mat-button class="btn btn-primary" [disabled]="eventForm.invalid" (click)="save()">
         Guardar
       </button>
     </div>

@@ -160,18 +160,13 @@ export class CalendarComponent implements OnInit {
       data: event,
     });
 
-    dialogRef.afterClosed().subscribe((result: ICourseEvent | null) => {
+    dialogRef.afterClosed().subscribe((result: any) => {
       if (result) {
-        const saveObservable = result.id
-          ? this.calendarService.updateCalendarEvent(result)
-          : this.calendarService.createCalendarEvent(result);
-
-        saveObservable.subscribe({
-          next: () => this.loadEvents(),
-          error: (err) => console.error('Error al guardar el evento:', err),
-        });
+        // Si el diálogo devuelve algo, solo recarga los eventos.
+        this.loadEvents();
       }
     });
+
   }
 
 

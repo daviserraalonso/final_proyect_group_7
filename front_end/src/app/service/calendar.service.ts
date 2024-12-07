@@ -23,6 +23,18 @@ export class CalendarService {
     );
   }
 
+
+
+
+
+  getSubjectsByCourseId(courseId: number): Observable<any[]> {
+    const url = `${this.apiUrl}/course/${courseId}/subjects`;
+    return this.http.get<any[]>(url).pipe(
+      catchError(this.handleError<any[]>('getSubjectsByCourseId', []))
+    );
+  }
+
+
   getCoursesByProfessorId(professorId: number): Observable<ICourseEvent[]> {
     const url = `${this.apiUrl}/professor/${professorId}`;
     return this.http.get<ICourseEvent[]>(url).pipe(
