@@ -23,10 +23,12 @@ export class CalendarService {
     );
   }
 
-
-
-
-
+  getEventsByProfessorId(professorId: number): Observable<ICourseEvent[]> {
+    const url = `${this.apiUrl}/professor/${professorId}/events`; // Asegúrate de que la ruta esté configurada correctamente en el backend
+    return this.http.get<ICourseEvent[]>(url).pipe(
+      catchError(this.handleError<ICourseEvent[]>('getEventsByProfessorId'))
+    );
+  }
   getSubjectsByCourseId(courseId: number): Observable<any[]> {
     const url = `${this.apiUrl}/course/${courseId}/subjects`;
     return this.http.get<any[]>(url).pipe(
@@ -69,6 +71,13 @@ export class CalendarService {
       catchError(this.handleError<void>('deleteCalendarEvent'))
     );
   }
+
+  getCourseLocation(courseId: number): Observable<{ address: string }> {
+    return this.http.get<{ address: string }>(`/api/course-location/${courseId}`).pipe(
+      catchError(this.handleError<{ address: string }>('getCourseLocation'))
+    );
+  }
+
 
 
 

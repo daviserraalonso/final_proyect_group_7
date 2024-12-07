@@ -4,6 +4,7 @@ import {
     getCourseEventById,
     getCoursesByProfessor,
     getSubjectsByCourse,
+    getEventsByProfessor
 } from '../controllers/CalendarController';
 import ModalityController from '../controllers/ModalityController';
 
@@ -16,6 +17,7 @@ router.get('/:id', getCourseEventById); // Obtener un evento por ID
 // Nueva ruta para obtener cursos por profesor
 router.get('/professor/:id', getCoursesByProfessor); // Obtener cursos por ID de profesor
 router.get('/course/:courseId/subjects', getSubjectsByCourse);
+router.get('/professor/:id/events', getEventsByProfessor);
 
 
 module.exports = router;

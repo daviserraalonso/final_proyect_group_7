@@ -60,7 +60,7 @@ CourseEvent.init(
       allowNull: false,
     },
     locationType: {
-      type: DataTypes.ENUM('physical', 'online'),
+      type: DataTypes.ENUM('Presential', 'Online'),
       allowNull: false,
     },
     locationId: {

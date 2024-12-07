@@ -54,7 +54,7 @@ module.exports = {
         allowNull: false,
       },
       locationType: {
-        type: Sequelize.ENUM("physical", "online"),
+        type: Sequelize.ENUM("Presential", "Online"),
         allowNull: false,
       },
       locationId: {

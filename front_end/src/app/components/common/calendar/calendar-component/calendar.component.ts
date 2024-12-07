@@ -59,10 +59,11 @@ export class CalendarComponent implements OnInit {
       if (!userString) throw new Error('Usuario no encontrado en localStorage.');
 
       const user = JSON.parse(userString);
-      const userId = user.id;
-      if (!userId) throw new Error('ID del usuario no encontrado.');
+      const professorId = user.id;
+      if (!professorId) throw new Error('ID del usuario no encontrado.');
 
-      const response = await lastValueFrom(this.calendarService.getCalendarEvents());
+      const response = await lastValueFrom(this.calendarService.getEventsByProfessorId(professorId));
+
 
       if (Array.isArray(response)) {
         // Limpia los eventos previos para evitar duplicados
@@ -76,6 +77,9 @@ export class CalendarComponent implements OnInit {
           color: this.getEventColor(event.locationType || 'default'),
           extendedProps: {
             description: event.description || '',
+            locationType: event.locationType || null, // Valor predeterminado
+            courseId: event.courseId || null,
+            subjectId: event.subjectId || null, // Incluye subjectId si está disponible
           },
         }));
 
@@ -91,9 +95,9 @@ export class CalendarComponent implements OnInit {
 
   private getEventColor(locationType: string): string {
     switch (locationType) {
-      case 'physical':
+      case 'Presential':
         return 'red';
-      case 'online':
+      case 'Online':
         return 'green';
       default:
         return 'orange';
@@ -114,7 +118,7 @@ export class CalendarComponent implements OnInit {
       startDateTime: selectInfo.startStr,
       endDateTime: selectInfo.endStr,
       allDay: selectInfo.allDay,
-      locationType: 'physical', // Cambia 'default' a 'physical'
+      locationType: '',
       isRead: false,
       courseId: 0,
       subjectId: 0,
@@ -126,6 +130,10 @@ export class CalendarComponent implements OnInit {
 
 
   private handleEventClick(clickInfo: EventClickArg): void {
+    // Recupera y parsea el usuario desde localStorage
+    const userString = localStorage.getItem('user');
+    const user = userString ? JSON.parse(userString) : null;
+
     const event: ICourseEvent = {
       id: Number(clickInfo.event.id),
       title: clickInfo.event.title,
@@ -133,11 +141,11 @@ export class CalendarComponent implements OnInit {
       startDateTime: clickInfo.event.start?.toISOString() || '',
       endDateTime: clickInfo.event.end?.toISOString() || '',
       allDay: clickInfo.event.allDay,
-      locationType: clickInfo.event.extendedProps['locationType'] || 'physical', // Cambia 'default' a 'physical'
-      isRead: false,
-      courseId: 0,
-      subjectId: 0,
-      professorId: 0,
+      locationType: clickInfo.event.extendedProps['locationType'] || null,
+      courseId: clickInfo.event.extendedProps['courseId'] || 0,
+      subjectId: clickInfo.event.extendedProps['subjectId'] || 0,
+      professorId: user?.id || 0, // Usa el ID del profesor, o 0 si no está disponible
+      isRead: clickInfo.event.extendedProps['isRead'] || false,
     };
 
     if (!this.canEditEvents()) {
@@ -148,10 +156,12 @@ export class CalendarComponent implements OnInit {
   }
 
 
+
+
   private openEventEditDialog(event: ICourseEvent): void {
     // Validar y corregir locationType si es 'default'
     if (event.locationType === 'default') {
-      event.locationType = 'physical'; // Valor predeterminado
+      event.locationType = 'Presential'; // Valor predeterminado
     }
 
     const dialogRef = this.dialog.open(CalendarEditEventComponent, {
