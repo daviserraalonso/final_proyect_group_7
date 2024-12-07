@@ -28,6 +28,7 @@ import { AuthService } from './service/auth-service.service';
 export class AppComponent implements OnInit {
   isAuthenticated: boolean = false;
   userRole: string | null = null;
+  isSidebarOpen = false;
 
   constructor(private authService: AuthService) {}
 
@@ -40,5 +41,10 @@ export class AppComponent implements OnInit {
         this.isAuthenticated = isAuthenticated;
       }
     );
+  }
+ 
+  toggleSideBar(): void {
+    this.isAuthenticated = !this.isAuthenticated; // Esto es un ejemplo. Actualízalo según tu lógica.
+    this.isSidebarOpen = !this.isSidebarOpen;
   }
 }

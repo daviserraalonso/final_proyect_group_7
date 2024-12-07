@@ -1,7 +1,7 @@
-<div class="sidebar-container">
 
-    
+  <div class="sidebar-container" [class.open]="isSidebarOpen">
     <!-- User Profile Section -->
+     
     <div class="user-profile" *ngIf="isAuthenticated">
       <img src="https://github.com/mdo.png" alt="mdo" class="rounded-circle">
     </div>
@@ -9,72 +9,115 @@
     <!-- Navigation Menu -->
     <mat-nav-list>
       <!-- General Options -->
-      <mat-list-item routerLink="/dashboard" routerLinkActive="active">
+      <mat-list-item routerLink="/index" routerLinkActive="active">
+        <div class="center">
         <mat-icon matListItemIcon>home</mat-icon>
-        <a href="/dashboard">HOME</a>
+        <a routerLink="/index">HOME</a>
+      </div>
       </mat-list-item>
 
       <!-- Admin Role Options -->
       <ng-container *ngIf="isAuthenticated && role === '1'">
         <mat-list-item routerLink="/all-users" routerLinkActive="active">
+          <div class="center">
           <mat-icon matListItemIcon>people</mat-icon>
-          <a href="/all-users">USUARIOS</a>
+          <a routerLink="/all-users">USUARIOS</a>
+        </div>
         </mat-list-item>
         <mat-list-item routerLink="/subjects" routerLinkActive="active">
+          <div class="center">
           <mat-icon matListItemIcon>book</mat-icon>
-          <a href="/subjects">ASIGNATURAS</a>
+          <a routerLink="/subjects">ASIGNATURAS</a>
+        </div>
+        </mat-list-item>
+        <mat-list-item routerLink="/all-courses" routerLinkActive="active">
+          <div class="center">
+          <mat-icon>content_paste</mat-icon>
+          <a routerLink="/all-courses">TODOS LOS CURSOS</a>
+        </div>
+        </mat-list-item>
+        <mat-list-item 
+        routerLink="/inbox" class="nav-link" matTooltip="Bandeja de entrada" matTooltipPosition="right" >
+        <div class="center">
+          <mat-icon>email</mat-icon>
+          <a routerLink="/inbox">MIS MENSAJES</a>
+        </div>
+        </mat-list-item>
+        <mat-list-item routerLink="/admin" routerLinkActive="active">
+          <div class="center">
+          <mat-icon>dashboard</mat-icon>
+          <a routerLink="/admin">PERFIL</a>
+        </div>
         </mat-list-item>
       </ng-container>
 
       <!-- Teacher Role Options -->
       <ng-container *ngIf="isAuthenticated && role === '2'">
-        <mat-list-item routerLink="/my-classes" routerLinkActive="active">
+        <mat-list-item routerLink="/mis-alumnos" routerLinkActive="active">
+          <div class="center">
           <mat-icon matListItemIcon>class</mat-icon>
-          <a href="/my-classes">MIS CLASES</a>
+          <a routerLink="/mis-alumnos">MIS ALUMNOS</a>
+        </div>
         </mat-list-item>
         <mat-list-item routerLink="/calendar" routerLinkActive="active">
+          <div class="center">
           <mat-icon matListItemIcon>calendar_today</mat-icon>
-          <a href="/calendar">CALENDARIO</a>
+          <a routerLink="/calendar">CALENDARIO</a>
+        </div>
+        </mat-list-item>
+        <mat-list-item 
+        routerLink="/inbox" class="nav-link" matTooltip="Bandeja de entrada" matTooltipPosition="right">
+        <div class="center">
+          <mat-icon>email</mat-icon>
+          <a routerLink="/inbox">MIS MENSAJES</a>
+        </div>
+        </mat-list-item>
+        <mat-list-item routerLink="/teacher" routerLinkActive="active">
+          <div class="center">
+          <mat-icon>dashboard</mat-icon>
+          <a routerLink="/teacher">PERFIL</a>
+        </div>
         </mat-list-item>
       </ng-container>
 
       <!-- Student Role Options -->
       <ng-container *ngIf="isAuthenticated && role === '3'">
-        <mat-list-item routerLink="/my-courses" routerLinkActive="active">
-          <mat-icon matListItemIcon>school</mat-icon>
-          <a href="/my-classes">MIS CLASES</a>
+        <mat-list-item routerLink="/courses" routerLinkActive="active">
+          <div class="center">
+          <mat-icon>library_books</mat-icon>
+          <a routerLink="/courses">CURSOS</a>
+        </div>
         </mat-list-item>
         <mat-list-item routerLink="/calendar" routerLinkActive="active">
+          <div class="center">
           <mat-icon matListItemIcon>calendar_today</mat-icon>
-          <a href="/calendar">CALENDARIO</a>
+          <a routerLink="/calendar">CALENDARIO</a>
+        </div>
+        </mat-list-item>
+        <mat-list-item 
+        routerLink="/inbox" class="nav-link" matTooltip="Bandeja de entrada" matTooltipPosition="right">
+        <div class="center">
+          <mat-icon>email</mat-icon>
+          <a routerLink="/inbox">MIS MENSAJES</a>
+        </div>
+        </mat-list-item>
+        <mat-list-item routerLink="/student" routerLinkActive="active">
+          <div class="center">
+          <mat-icon>dashboard</mat-icon>
+          <a routerLink="/student">PERFIL</a>
+        </div>
         </mat-list-item>
       </ng-container>
 
-      <!-- Notifications -->
-      <mat-list-item 
-        [matMenuTriggerFor]="notificationsMenu" 
-        *ngIf="isAuthenticated">
-        <mat-icon matListItemIcon>notifications</mat-icon>
-        <a href="/my-classes">MIS CLASES</a>
-      </mat-list-item>
-
-      <mat-list-item 
-        [routerLink]="['/inbox']" class="nav-link" matTooltip="Bandeja de entrada" matTooltipPosition="right">
-          <mat-icon>email</mat-icon>
-          <a href="/my-classes">MIS CLASES</a>
-        </mat-list-item>
-
       <!-- Logout -->
       <mat-list-item (click)="logout()">
+        <div class="center">
         <mat-icon matListItemIcon>logout</mat-icon>
-        <a href="/my-classes">MIS CLASES</a>
+        <span class="text">Cerrar Sesión</span>
+      </div>
       </mat-list-item>
     </mat-nav-list>
 
     <!-- Notifications Menu -->
-    <mat-menu #notificationsMenu="matMenu">
-      <div mat-menu-item *ngFor="let notification of notifications" disabled>
-        {{ notification }}
-      </div>
-    </mat-menu>
+   
   </div>

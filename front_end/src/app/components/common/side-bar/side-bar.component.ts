@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule } from '@angular/material/menu';
@@ -27,29 +27,8 @@ import { CommonModule } from '@angular/common';
 export class SideBarComponent implements OnInit {
   isAuthenticated: boolean = false;
   role: string = '';
+  @Input() isSidebarOpen: boolean = false;
 
-  studentProfile = {
-    name: 'Juan Pérez',
-    email: 'juan.perez@example.com',
-    phone: '+123456789',
-    address: 'Calle Falsa 123, Ciudad, País',
-    photoUrl: 'https://via.placeholder.com/150'
-  };
-
-  courses = [
-    {
-      name: 'Matemáticas Avanzadas',
-      teacher: 'Prof. Ana Gómez',
-      progress: 60
-    },
-    // ... other courses
-  ];
-
-  notifications = [
-    'Tienes una nueva tarea en el curso de Matemáticas Avanzadas.',
-    'El profesor Carlos López ha publicado una nueva lección en Historia del Arte.',
-    'Tu progreso en Ciencias Naturales ha sido actualizado.'
-  ];
 
   constructor(
     private authService: AuthService, 
@@ -65,6 +44,11 @@ export class SideBarComponent implements OnInit {
         this.role = role;
       }
     }
+  }
+  
+
+  toggleSideBar() {
+    this.isSidebarOpen = !this.isSidebarOpen; // Alterna el estado del menú lateral
   }
 
   logout() {

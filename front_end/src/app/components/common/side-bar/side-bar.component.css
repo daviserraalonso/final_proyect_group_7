@@ -1,84 +1,53 @@
-/* Sidebar fijo con menor altura */
 .sidebar-container {
-  
-  left: 0;
-             
-  max-height: 520px;           
-  width: 260px;             
-  background-color: #f5f5f5;
-  
-  transition: all 0.3s ease;
-  
+  display: inline-block; /* Permite que el tamaño dependa del contenido */
+  padding: 10px; /* Espaciado interno */
+
+  color: white;/* Borde para delimitar */
+  background-color: #343a40;
+  transition: left 0.3s ease;
+ 
 }
 
-/* Ajustes específicos para vista de escritorio */
-.sidebar-desktop {
-  width: 60px; 
+.user-profile {
+ display: flex;
+  justify-content: center;
+  margin-bottom: 20px; 
+}
+.center {
+  display: flex; /* Usa Flexbox para alinear el contenido */
+  align-items: center; /* Centra verticalmente los elementos dentro del div */
+  gap: 10px; /* Espaciado entre el ícono y el texto */
+}
+.center:hover{
+  color: white;
+}
+mat-icon:hover {
+  font-size: 24px; /* Asegura un tamaño consistente del ícono */
+  color: white; /* Color del ícono, opcional */
 }
 
-/* Estilos del menú móvil */
-.sidebar-mobile {
-  position: fixed;
-  top: 0;
-  left: -100%;
-  width: 0;
-  z-index: 1000;
-  overflow-x: hidden;
-  transition: left 0.3s ease; /* Transición suave para apertura */
+a , .text{
+  text-decoration: none; /* Elimina el subrayado de los enlaces */
+  color: rgba(255, 255, 255, 0.55); /* Color del texto */
+  font-size: 16px; /* Tamaño del texto */
+}
+a:hover , .text:hover{
+  color: white;
+}
+mat-list-item {
+  padding: 8px 16px; /* Ajusta el espaciado del item */
 }
 
-.sidebar-mobile-open {
-  top: 50%;
-  transform: translateY(-50%);  
-  left: 0;                    /* Abre el sidebar móvil */
-  width: 80%;                /* Ocupará todo el ancho disponible */
-  max-width: 300px;           /* Máximo ancho del menú móvil */
-}
-
-/* Botón para abrir menú móvil */
-.mobile-menu-toggle {
-  position: fixed;
-  top: 10px;
-  left: 10px;
-  z-index: 1001;
-  display: block;             /* Se muestra siempre en móvil */
-  background-color: #f5f5f5;  /* Fondo del botón */
-}
 
 img{
-  
-   width: 24px;
-   height: 24px;
+ 
+   width: 40px;
+   height: 40px;
+}
+.active{
+  color: #00594F;
 }
 /* Mantener la versión móvil funcional */
 @media (max-width: 768px) {
-  .sidebar-desktop {
-    display: none;            /* Ocultar el sidebar de escritorio */
-  }
 
-  .sidebar-mobile {
-    display: block;           /* Mostrar versión móvil */
-  }
-
-  .sidebar-mobile .user-profile {
-    display: flex;
-    align-items: center;
-    padding: 15px;
-    background-color: #e0e0e0;
-  }
-
-  .sidebar-mobile .profile-details {
-    margin-left: 15px;
-  }
-
-  .sidebar-mobile .profile-details h3 {
-    margin: 0;
-    font-size: 1rem;
-  }
-
-  .sidebar-mobile .profile-details p {
-    margin: 0;
-    font-size: 0.8rem;
-    color: #666;
-  }
 }

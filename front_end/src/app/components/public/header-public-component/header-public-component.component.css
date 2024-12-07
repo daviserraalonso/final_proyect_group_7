@@ -1,7 +1,11 @@
 header{
   background-color: #343a40;
+  
 }
-
+nav-link{
+  color: white;
+ 
+}
 .dropdown-menu {
     background-color: #f8f9fa;
     border: 1px solid #ddd;
@@ -100,4 +104,11 @@ header{
     height: 25px;
     margin: 3px;
   }
-  
+  .toggle-button {
+    display: none; /* El botón es visible por defecto */
+  }
+  @media (min-width: 1200px) {
+    .toggle-button {
+      display: block; /* Oculta el botón en pantallas más anchas */
+    }
+  }

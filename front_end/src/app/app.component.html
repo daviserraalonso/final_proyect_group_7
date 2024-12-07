@@ -1,20 +1,25 @@
 <div class="full">
-<header>
-  <app-header-public-component></app-header-public-component>
-</header>
+  <header>
+    <app-header-public-component (toggle)="toggleSideBar()"></app-header-public-component>
+  </header>
 
-<div class="container">
-  <div class="row justify-content-center">
-    <aside class="col-md-3 col-lg-2 mb-5 mt-5" *ngIf="isAuthenticated">
-      <app-side-bar></app-side-bar>
-    </aside>
-    <main class="col-md-9 col-lg-10">
-      <router-outlet></router-outlet>
-    </main>
+  <div class="container">
+    <div class="row justify-content-center">
+      <aside 
+  class="col-md-3 left-sidebar" 
+  [class.open]="isSidebarOpen"
+  *ngIf="isAuthenticated">
+  <app-side-bar [isSidebarOpen]="isSidebarOpen"></app-side-bar>
+</aside>
+      <main 
+        [ngClass]="{'with-sidebar': isAuthenticated, 'full-width': !isAuthenticated}" 
+        class="col-md-9 col-lg-10">
+        <router-outlet></router-outlet>
+      </main>
+    </div>
   </div>
-</div>
 
-<footer>
-  <app-footer-public-component></app-footer-public-component>
-</footer>
+  <footer>
+    <app-footer-public-component></app-footer-public-component>
+  </footer>
 </div>
