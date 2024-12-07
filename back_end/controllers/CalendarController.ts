@@ -77,6 +77,42 @@ export const getSubjectsByCourse = async (req: Request, res: Response) => {
 
 
 
+export const getEventsByProfessor = async (req: Request, res: Response) => {
+    const { id: professorId } = req.params;
+    if (!professorId) {
+        return res.status(400).json({ message: 'ID del profesor no proporcionado' });
+    }
+
+    try {
+        const events = await CourseEvent.findAll({
+            where: { professorId },
+            include: [
+                {
+                    model: Course,
+                    as: 'course',
+                    attributes: ['id', 'name'],
+                },
+                {
+                    model: Subject,
+                    as: 'subject',
+                    attributes: ['id', 'name'],
+                },
+            ],
+        });
+
+        if (!events.length) {
+            return res.status(404).json({ message: 'No se encontraron eventos para este profesor' });
+        }
+
+        res.status(200).json(events);
+    } catch (error) {
+        console.error('Error al obtener los eventos:', error);
+        res.status(500).json({ message: 'Error al obtener los eventos', error });
+    }
+};
+
+
+
 
 export const getCourseEventById = async (req: Request, res: Response) => {
     try {
