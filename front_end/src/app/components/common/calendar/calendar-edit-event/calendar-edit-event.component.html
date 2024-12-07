@@ -65,8 +65,8 @@
         <div class="col-md-6">
           <mat-form-field appearance="fill" class="w-100">
             <mat-label>Modalidad</mat-label>
-            <mat-select formControlName="locationId">
-              <mat-option *ngFor="let modality of locations" [value]="modality.id">
+            <mat-select (selectionChange)="onModalityChange($event.value)">
+              <mat-option *ngFor="let modality of locations" [value]="modality.type">
                 {{ modality.type }}
               </mat-option>
             </mat-select>
@@ -74,22 +74,18 @@
         </div>
 
         <!-- Selección de Ubicación Física -->
-        <div class="col-md-6" *ngIf="eventForm.get('locationType')?.value === 'physical'">
+        <div class="col-md-6" *ngIf="selectedModality === 'Presential'">
           <mat-form-field appearance="fill" class="w-100">
             <mat-label>Ubicación Física</mat-label>
-            <mat-select formControlName="locationId">
-              <mat-option *ngFor="let location of locations" [value]="location.id">
-                {{ location.type }}
-              </mat-option>
-            </mat-select>
+            <input matInput formControlName="physicalLocation" placeholder="Ingrese la ubicación física" />
           </mat-form-field>
         </div>
 
-        <!-- Enlace en caso de Ubicación en Línea -->
-        <div class="col-md-6" *ngIf="eventForm.get('locationType')?.value === 'online'">
+        <!-- Enlace en caso de Modalidad en Línea -->
+        <div class="col-md-6" *ngIf="selectedModality === 'Online'">
           <mat-form-field appearance="fill" class="w-100">
             <mat-label>Enlace de Reunión</mat-label>
-            <input matInput formControlName="onlineLink" placeholder="Enlace de reunión" />
+            <input matInput formControlName="onlineLink" placeholder="Ingrese el enlace de reunión" />
           </mat-form-field>
         </div>
 
@@ -107,15 +103,21 @@
 
         <!-- Materia (desplegable) -->
         <div class="col-md-6">
-          <mat-form-field appearance="fill" class="w-100">
-            <mat-label>Materia</mat-label>
-            <mat-select formControlName="subjectId">
-              <mat-option *ngFor="let subject of subjects" [value]="subject.id">
-                {{ subject.name }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+          <ng-container *ngIf="subjects.length > 0; else noSubjects">
+            <mat-form-field appearance="fill" class="w-100">
+              <mat-label>Materia</mat-label>
+              <mat-select formControlName="subjectId">
+                <mat-option *ngFor="let subject of subjects" [value]="subject.id">
+                  {{ subject.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </ng-container>
+          <ng-template #noSubjects>
+            <p>No hay asignaturas disponibles para el curso seleccionado.</p>
+          </ng-template>
         </div>
+
 
         <!-- Evento Todo el Día -->
         <div class="col-12">

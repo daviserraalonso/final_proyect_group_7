@@ -1,6 +1,6 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { CalendarService } from '../../../../service/calendar.service';
 import { ICourseEvent } from '../../../../interfaces/iCourseEvent';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -19,6 +19,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
   imports: [
     CommonModule,
     MatFormFieldModule,
+    FormsModule,
     MatInputModule,
     MatButtonModule,
     ReactiveFormsModule,
@@ -29,16 +30,21 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 })
 export class CalendarEditEventComponent implements OnInit {
   eventForm: FormGroup;
-  courses: any[] = []; // Almacena los cursos del profesor
+  courses: any[] = [];
   locations: { id: number; type: string }[] = [];
-  subjects: { id: number; name: string }[] = []; // Almacena las asignaturas por curso seleccionado
+  subjects: { id: number; name: string }[] = [];
+  selectedModality: string | null = null;
+  physicalLocation: string = '';
+  onlineLink: string = '';
 
   constructor(
     public dialogRef: MatDialogRef<CalendarEditEventComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ICourseEvent,
     private fb: FormBuilder,
     private calendarService: CalendarService,
-    private searchService: SearchServiceService
+    private searchService: SearchServiceService,
+    private cdr: ChangeDetectorRef // Inyección de ChangeDetectorRef
+
   ) {
     // Inicializa el formulario con los datos del evento
     this.eventForm = this.fb.group({
@@ -46,9 +52,10 @@ export class CalendarEditEventComponent implements OnInit {
       start: [this.toLocalDateTime(data.startDateTime), [Validators.required]],
       end: [this.toLocalDateTime(data.endDateTime), [Validators.required]],
       description: [data.description],
-      locationType: [data.locationType, [Validators.required]], // Predeterminado: 'physical'
-      locationId: [data.locationId || null], // Opcional si es físico
-      onlineLink: [data.onlineLink || ''], // Opcional si es online
+      locationType: ['Presential', [Validators.required]], // Valor predeterminado
+      locationId: [data.locationId || null],
+      onlineLink: [data.onlineLink || ''], // Control para enlace online
+      physicalLocation: [data.locationType || ''], // Control para ubicación física
       courseId: [data.courseId, [Validators.required]],
       subjectId: [data.subjectId, [Validators.required]],
       professorId: [data.professorId, [Validators.required]],
@@ -58,14 +65,30 @@ export class CalendarEditEventComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadCoursesByProfessor(); // Carga los cursos al inicializar el componente
-    this.listenToCourseSelection(); // Configura la escucha de cambios en el curso seleccionado
+    this.loadCoursesByProfessor();
+    this.listenToCourseSelection();
     this.loadModalities();
   }
 
   toLocalDateTime(date: string): string {
     const utcDate = new Date(date);
     return utcDate.toISOString().slice(0, 16);
+  }
+
+  onModalityChange(modality: string): void {
+    this.selectedModality = modality;
+
+    if (modality === 'Presential') {
+      this.eventForm.patchValue({
+        onlineLink: '',
+        physicalLocation: '',
+      });
+    } else if (modality === 'Online') {
+      this.eventForm.patchValue({
+        onlineLink: '',
+        physicalLocation: '',
+      });
+    }
   }
 
 
@@ -129,11 +152,17 @@ export class CalendarEditEventComponent implements OnInit {
   loadSubjectsByCourse(courseId: number): void {
     this.calendarService.getSubjectsByCourseId(courseId).subscribe({
       next: (subjects) => {
-        console.log('Asignaturas cargadas:', subjects);
-        this.subjects = subjects;
+        if (subjects && subjects.length > 0) {
+          this.subjects = subjects; // Asigna las asignaturas si hay datos
+          console.log('Asignaturas cargadas:', this.subjects);
+        } else {
+          console.warn('No se encontraron asignaturas para el curso seleccionado.');
+          this.subjects = []; // Limpia la lista si no hay asignaturas
+        }
       },
       error: (err) => {
         console.error('Error al cargar las asignaturas:', err);
+        this.subjects = []; // Limpia la lista en caso de error
       },
     });
   }
