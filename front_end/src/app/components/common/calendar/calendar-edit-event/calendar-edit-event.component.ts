@@ -34,7 +34,7 @@ export class CalendarEditEventComponent implements OnInit {
   locations: { id: number; type: string }[] = [];
   subjects: { id: number; name: string }[] = [];
   selectedModality: string | null = null;
-  physicalLocation: string = '';
+  modality: string = '';
   onlineLink: string = '';
 
   constructor(
@@ -52,92 +52,101 @@ export class CalendarEditEventComponent implements OnInit {
       start: [this.toLocalDateTime(data.startDateTime), [Validators.required]],
       end: [this.toLocalDateTime(data.endDateTime), [Validators.required]],
       description: [data.description],
-      locationType: ['Presential', [Validators.required]], // Valor predeterminado
+      locationType: [data.locationType || null, [Validators.required]], // Usa el valor del evento o 'Presential'
       locationId: [data.locationId || null],
       onlineLink: [data.onlineLink || ''], // Control para enlace online
-      physicalLocation: [data.locationType || ''], // Control para ubicación física
       courseId: [data.courseId, [Validators.required]],
       subjectId: [data.subjectId, [Validators.required]],
       professorId: [data.professorId, [Validators.required]],
       allDay: [data.allDay || false],
       isRead: [data.isRead || false],
     });
-  }
 
+    // Inicializa selectedModality
+    this.selectedModality = data.locationType;
+
+  }
   ngOnInit(): void {
     this.loadCoursesByProfessor();
     this.listenToCourseSelection();
+
+    if (this.eventForm.get('courseId')?.value) {
+      this.loadSubjectsByCourse(this.eventForm.get('courseId')?.value);
+    }
+
     this.loadModalities();
+
+    // Asegúrate de que selectedModality coincida con el valor inicial del formulario
+    const locationTypeValue = this.eventForm.get('locationType')?.value;
+    if (locationTypeValue) {
+      this.selectedModality = locationTypeValue;
+    } else {
+      this.selectedModality = 'Presential'; // Valor predeterminado si no hay valor inicial
+      this.eventForm.patchValue({ locationType: this.selectedModality });
+    }
+
+    console.log('selectedModality después de inicialización:', this.selectedModality);
   }
+
+
+
 
   toLocalDateTime(date: string): string {
     const utcDate = new Date(date);
     return utcDate.toISOString().slice(0, 16);
   }
-
   onModalityChange(modality: string): void {
     this.selectedModality = modality;
+    this.eventForm.patchValue({ locationType: modality }); // Actualiza el valor en el formulario
 
     if (modality === 'Presential') {
       this.eventForm.patchValue({
-        onlineLink: '',
-        physicalLocation: '',
+        onlineLink: '', // Limpia el enlace online
       });
     } else if (modality === 'Online') {
       this.eventForm.patchValue({
-        onlineLink: '',
-        physicalLocation: '',
+        locationType: '', // Limpia la ubicación física
       });
     }
   }
+
 
 
 
   loadModalities(): void {
     this.searchService.getAllModalities()
       .then((modalities) => {
-        this.locations = modalities; // Almacena las modalidades en `locations`
-        console.log('Modalidades cargadas:', this.locations);
+        this.locations = modalities;
       })
-      .catch((err) => {
-        console.error('Error al cargar las modalidades:', err);
-      });
+      .catch((err) => console.error('Error al cargar las modalidades:', err));
   }
 
 
 
+  loadCoursesByProfessor(): void {
+    const userString = localStorage.getItem('user');
+    if (!userString) return;
 
-  async loadCoursesByProfessor() {
-    try {
-      console.log('Cargando cursos por profesor...');
+    const user = JSON.parse(userString);
+    const professorId = user.id;
 
-      const userString = localStorage.getItem('user');
-      if (!userString) {
-        console.error('No se encontró el usuario en localStorage.');
-        return;
-      }
+    this.calendarService.getCoursesByProfessorId(professorId).subscribe({
+      next: (courses) => {
+        this.courses = courses;
 
-      const user = JSON.parse(userString);
-      const professorId = user.id;
-
-      if (!professorId) {
-        console.error('El ID del profesor no está definido.');
-        return;
-      }
-
-      this.calendarService.getCoursesByProfessorId(professorId).subscribe({
-        next: (response: any[]) => {
-          console.log('Cursos cargados:', response);
-          this.courses = response;
-        },
-        error: (error) => {
-          console.error('Error al cargar los cursos:', error);
+        // Si hay un curso preseleccionado, asegúrate de seleccionarlo
+        const selectedCourseId = this.eventForm.get('courseId')?.value;
+        if (selectedCourseId) {
+          const courseExists = this.courses.some((c) => c.id === selectedCourseId);
+          if (!courseExists) {
+            this.eventForm.patchValue({ courseId: null });
+          }
         }
-      });
-    } catch (error) {
-      console.error('Error en loadCoursesByProfessor:', error);
-    }
+      },
+      error: (err) => console.error('Error al cargar los cursos:', err),
+    });
   }
+
 
   listenToCourseSelection(): void {
     this.eventForm.get('courseId')?.valueChanges.subscribe((selectedCourseId) => {
@@ -153,19 +162,30 @@ export class CalendarEditEventComponent implements OnInit {
     this.calendarService.getSubjectsByCourseId(courseId).subscribe({
       next: (subjects) => {
         if (subjects && subjects.length > 0) {
-          this.subjects = subjects; // Asigna las asignaturas si hay datos
-          console.log('Asignaturas cargadas:', this.subjects);
+          this.subjects = subjects;
+
+          // Si hay una asignatura preseleccionada, asegúrate de seleccionarla
+          const selectedSubjectId = this.eventForm.get('subjectId')?.value;
+          if (selectedSubjectId) {
+            const subjectExists = this.subjects.some((s) => s.id === selectedSubjectId);
+            if (!subjectExists) {
+              this.eventForm.patchValue({ subjectId: null });
+            }
+          }
         } else {
           console.warn('No se encontraron asignaturas para el curso seleccionado.');
-          this.subjects = []; // Limpia la lista si no hay asignaturas
+          this.subjects = [];
+          this.eventForm.patchValue({ subjectId: null });
         }
       },
       error: (err) => {
         console.error('Error al cargar las asignaturas:', err);
-        this.subjects = []; // Limpia la lista en caso de error
+        this.subjects = [];
+        this.eventForm.patchValue({ subjectId: null });
       },
     });
   }
+
 
   deleteEvent(): void {
     if (confirm('¿Estás seguro de que deseas eliminar este evento?')) {
