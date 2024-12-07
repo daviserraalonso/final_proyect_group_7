@@ -1,12 +1,15 @@
-body{
-    min-height: 100vh;
-    min-height: -webkit-fill-available;
+
+/* Opcionales: enlaces dentro del footer */
+footer a {
+  color: #7c4dff;
+  text-decoration: none;
 }
-.container-fluid {
-    display: flex;
-    flex-wrap: nowrap;
-  }
-  
+
+footer a:hover {
+  color: #5a2dff;
+  text-decoration: underline;
+}
+
  aside {
     position: sticky;
     height: 100vh; 

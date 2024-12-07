@@ -19,6 +19,7 @@ import { AuthService } from './service/auth-service.service';
     FooterPublicComponentComponent, 
     SideBarComponent, 
     CommonModule,
+    
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'] // Cambiado a styleUrls

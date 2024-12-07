@@ -1,18 +1,10 @@
-html, body { 
-  height: 100%; /* El diseño ocupará siempre el 100% de la altura de la pantalla */
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-}
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;
-background-color: #00594F;
 
-}
-.container {
-  flex: 1; /* Este flex ocupa el espacio disponible entre el header y el footer */
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+.full {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: #00594F;
+  display: grid;
+  min-height: 100vh;
+  grid-template-rows: auto 1fr auto;
 }
 
 /* Footer que se pega al fondo */
@@ -20,26 +12,12 @@ footer {
   background-color: #343a40;
   color: white;
   text-align: center;
-  padding: 20px 0;
-  flex-shrink: 0; /* No permite que el footer se reduzca en tamaño */
+  padding: 1em 0;
+
+
+  /* No permite que el footer se reduzca en tamaño */
 }
 header{
   background-color: #343a40;
 }
-
-.custom-modal .mat-mdc-dialog-container {
-  box-sizing: border-box; /* Asegura que el padding no reduzca el tamaño del contenido */
-  border-radius: 8px; /* Bordes redondeados */
-  width: 100%; /* Ancho personalizado */
-  max-width: 900px; /* Ancho máximo */
-}
-
-.custom-modal .mat-mdc-dialog-content {
-  padding: 50px; /* Espaciado para el contenido */
-}
-
-.custom-modal .mat-mdc-dialog-actions {
-  padding: 16px 24px; /* Espaciado para los botones */
-}
-
 
