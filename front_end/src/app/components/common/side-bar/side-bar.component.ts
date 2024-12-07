@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule } from '@angular/material/menu';
@@ -27,8 +27,6 @@ import { CommonModule } from '@angular/common';
 export class SideBarComponent implements OnInit {
   isAuthenticated: boolean = false;
   role: string = '';
-  screenWidth: number;
-  isMobileMenuOpen: boolean = false;
 
   studentProfile = {
     name: 'Juan Pérez',
@@ -56,19 +54,7 @@ export class SideBarComponent implements OnInit {
   constructor(
     private authService: AuthService, 
     private router: Router
-  ) {
-    this.screenWidth = window.innerWidth;
-  }
-
-  @HostListener('window:resize', ['$event'])
-  onResize(event: any) {
-    this.screenWidth = event.target.innerWidth;
-    
-    // Close mobile menu when switching to desktop view
-    if (!this.isMobileView()) {
-      this.isMobileMenuOpen = false;
-    }
-  }
+  ) {}
 
   ngOnInit(): void {
     this.isAuthenticated = this.authService.isAuthenticated();
@@ -79,14 +65,6 @@ export class SideBarComponent implements OnInit {
         this.role = role;
       }
     }
-  }
-
-  isMobileView(): boolean {
-    return this.screenWidth <= 768;
-  }
-
-  toggleMobileMenu() {
-    this.isMobileMenuOpen = !this.isMobileMenuOpen;
   }
 
   logout() {

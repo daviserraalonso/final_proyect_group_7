@@ -1,15 +1,14 @@
 /* Sidebar fijo con menor altura */
-.sidebar {
-  position: fixed;
+.sidebar-container {
+  
   left: 0;
-  top: 50%;
-  transform: translateY(-50%);             /* Altura dinámica según el contenido */          /* Altura mínima reducida */
-  max-height: 520px;           /* Altura máxima para evitar desbordamiento */
-  width: 60px;              /* Ancho suficiente para el contenido */
+             
+  max-height: 520px;           
+  width: 260px;             
   background-color: #f5f5f5;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  
   transition: all 0.3s ease;
-    /* Scroll si el contenido excede la altura */
+  
 }
 
 /* Ajustes específicos para vista de escritorio */

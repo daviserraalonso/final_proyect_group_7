@@ -1,21 +1,5 @@
 <div class="sidebar-container">
-  <!-- Mobile Menu Toggle -->
-  <button 
-    mat-icon-button 
-    class="mobile-menu-toggle" 
-    (click)="toggleMobileMenu()"
-    *ngIf="isMobileView()">
-    <mat-icon>menu</mat-icon>
-  </button>
 
-  <!-- Sidebar Container -->
-  <div 
-    class="sidebar" 
-    [ngClass]="{
-      'sidebar-desktop': !isMobileView(),
-      'sidebar-mobile': isMobileView(),
-      'sidebar-mobile-open': isMobileView() && isMobileMenuOpen
-    }">
     
     <!-- User Profile Section -->
     <div class="user-profile" *ngIf="isAuthenticated">
@@ -27,18 +11,18 @@
       <!-- General Options -->
       <mat-list-item routerLink="/dashboard" routerLinkActive="active">
         <mat-icon matListItemIcon>home</mat-icon>
-        <span matListItemTitle *ngIf="isMobileView()">Dashboard</span>
+        <a href="/dashboard">HOME</a>
       </mat-list-item>
 
       <!-- Admin Role Options -->
       <ng-container *ngIf="isAuthenticated && role === '1'">
         <mat-list-item routerLink="/all-users" routerLinkActive="active">
           <mat-icon matListItemIcon>people</mat-icon>
-          <span matListItemTitle *ngIf="isMobileView()">All Users</span>
+          <a href="/all-users">USUARIOS</a>
         </mat-list-item>
         <mat-list-item routerLink="/subjects" routerLinkActive="active">
           <mat-icon matListItemIcon>book</mat-icon>
-          <span matListItemTitle *ngIf="isMobileView()">Subjects</span>
+          <a href="/subjects">ASIGNATURAS</a>
         </mat-list-item>
       </ng-container>
 
@@ -46,11 +30,11 @@
       <ng-container *ngIf="isAuthenticated && role === '2'">
         <mat-list-item routerLink="/my-classes" routerLinkActive="active">
           <mat-icon matListItemIcon>class</mat-icon>
-          <span matListItemTitle *ngIf="isMobileView()">My Classes</span>
+          <a href="/my-classes">MIS CLASES</a>
         </mat-list-item>
         <mat-list-item routerLink="/calendar" routerLinkActive="active">
           <mat-icon matListItemIcon>calendar_today</mat-icon>
-          <span matListItemTitle *ngIf="isMobileView()">Calendar</span>
+          <a href="/calendar">CALENDARIO</a>
         </mat-list-item>
       </ng-container>
 
@@ -58,11 +42,11 @@
       <ng-container *ngIf="isAuthenticated && role === '3'">
         <mat-list-item routerLink="/my-courses" routerLinkActive="active">
           <mat-icon matListItemIcon>school</mat-icon>
-          <span matListItemTitle *ngIf="isMobileView()">My Courses</span>
+          <a href="/my-classes">MIS CLASES</a>
         </mat-list-item>
         <mat-list-item routerLink="/calendar" routerLinkActive="active">
           <mat-icon matListItemIcon>calendar_today</mat-icon>
-          <span matListItemTitle *ngIf="isMobileView()">Calendar</span>
+          <a href="/calendar">CALENDARIO</a>
         </mat-list-item>
       </ng-container>
 
@@ -71,18 +55,19 @@
         [matMenuTriggerFor]="notificationsMenu" 
         *ngIf="isAuthenticated">
         <mat-icon matListItemIcon>notifications</mat-icon>
-        <span matListItemTitle *ngIf="isMobileView()">Notifications</span>
+        <a href="/my-classes">MIS CLASES</a>
       </mat-list-item>
 
       <mat-list-item 
-        [routerLink]="['/inbox']" class="nav-link py-2 border-bottom" matTooltip="Bandeja de entrada" matTooltipPosition="right">
+        [routerLink]="['/inbox']" class="nav-link" matTooltip="Bandeja de entrada" matTooltipPosition="right">
           <mat-icon>email</mat-icon>
+          <a href="/my-classes">MIS CLASES</a>
         </mat-list-item>
 
       <!-- Logout -->
       <mat-list-item (click)="logout()">
         <mat-icon matListItemIcon>logout</mat-icon>
-        <span matListItemTitle *ngIf="isMobileView()">Logout</span>
+        <a href="/my-classes">MIS CLASES</a>
       </mat-list-item>
     </mat-nav-list>
 
@@ -93,4 +78,3 @@
       </div>
     </mat-menu>
   </div>
-</div>
