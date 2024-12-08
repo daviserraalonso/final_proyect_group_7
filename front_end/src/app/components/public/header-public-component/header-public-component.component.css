@@ -111,7 +111,20 @@ nav-link{
   }
   .toggle-button {
     display: none;
-    padding: 2px; /* El botón es visible por defecto */
+    padding: 4px; 
+    transition: all 0.3s ease-in-out; /* Suavidad en las transiciones */
+  cursor: pointer;
+    
+  }
+  .toggle-button:hover {
+    background-color: #f0f0f0; /* Cambiar fondo en hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra elegante */
+  }
+  .mat-icon {
+    transition: color 0.3s ease-in-out; /* Suavidad en el cambio de color */
+  }
+  .hidden {
+    display: none !important;
   }
   @media (min-width: 1300px) {
     .toggle-button {

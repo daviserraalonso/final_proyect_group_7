@@ -9,12 +9,12 @@
         </button>
         <div class="toggle-button" data-bs-toggle="collapse" data-bs-target="#navbarNav" *ngIf="isAuthenticated">
           <button mat-icon-button (click)="toggleSideBar()">
-            menu
+            <mat-icon>menu</mat-icon>
           </button>
         </div>
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item dropdown" *ngIf="isAuthenticated">
+          <li class="nav-item dropdown" *ngIf="isAuthenticated"  [ngClass]="{'hidden': !showDropdown}">
             <a
               class="nav-link dropdown-toggle"
               id="MenuDropdown"

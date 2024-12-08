@@ -1,26 +1,31 @@
-import { Component, EventEmitter, Output, OnInit } from '@angular/core';
+import { Component, HostListener, EventEmitter, Output, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../../service/auth-service.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-
+import { MatIconModule } from '@angular/material/icon';
 @Component({
   selector: 'app-header-public-component',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, CommonModule, RouterModule],
+  imports: [RouterLink, RouterLinkActive, CommonModule, RouterModule, MatIconModule],
   templateUrl: './header-public-component.component.html',
   styleUrls: ['./header-public-component.component.css'] // Corregido: styleUrls
 })
 export class HeaderPublicComponentComponent implements OnInit {
     isAuthenticated: boolean = false;
+    showDropdown: boolean = false;
   userName: string | null = null;
   role: string = '';
   @Output() toggle = new EventEmitter<void>(); // Asegúrate de importar Output y EventEmitter
-
+  @HostListener('window:resize', [])
+  onResize() {
+    this.showDropdown = window.innerWidth <= 1300;
+  }
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
     this.isAuthenticated = this.authService.isAuthenticated();
+    this.showDropdown = window.innerWidth <= 1300;
     this.authService.isAuthenticated$.subscribe((authStatus) => {
       this.isAuthenticated = authStatus;
       this.userName = this.isAuthenticated ? this.getUserName() : null;
