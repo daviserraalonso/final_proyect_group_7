@@ -18,10 +18,14 @@
     font-size: 1.25rem;
     font-weight: 600;
   }
+  mat-card-header {
+    padding-bottom: 10px;
+  }
   
   .card-text {
     font-size: 0.95rem;
     margin-bottom: 16px;
+    
   }
   
   .btn-outline-primary {
@@ -38,8 +42,11 @@
   .text-muted {
     font-size: 0.85rem;
   }
-
   
+  .btn-no-border {
+    border: none;
+    box-shadow: none;
+  }
   /* Ajustes para pantallas pequeñas */
   @media (max-width: 768px) {
     .card-title {

@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container p-4">
   <h2>Listado de cursos Online</h2>
 
   <mat-divider class="mb-4"></mat-divider>
@@ -8,7 +8,6 @@
     <div class="col-md-4" *ngFor="let course of courses$ | async">
       <mat-card class="example-card" appearance="outlined">
         <mat-card-header>
-          <div mat-card-avatar class="example-header-image"></div>
           <mat-card-title>{{ course.name }}</mat-card-title>
         </mat-card-header>
         <img mat-card-image [src]="'https://picsum.photos/300/200?random=' + course.id" alt="Imagen del curso {{ course.name }}">
@@ -18,7 +17,7 @@
           </p>
         </mat-card-content>
         <mat-card-actions>
-          <button mat-raised-button color="info" (click)="openModal(course)">
+          <button mat-raised-button class="btn-no-border" color="info" (click)="openModal(course)">
             Inscribirse
           </button>
         </mat-card-actions>
