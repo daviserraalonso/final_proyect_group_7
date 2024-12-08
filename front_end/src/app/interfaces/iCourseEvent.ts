@@ -9,6 +9,7 @@ export interface ICourseEvent {
     onlineLink?: string;
     description?: string;
     isRead: boolean;
+    eventType: string;
     courseId: number;
     subjectId: number;
     professorId: number;

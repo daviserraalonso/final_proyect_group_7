@@ -1,0 +1,15 @@
+.custom-dialog .modal-content {
+    max-width: 900px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+.custom-dialog .modal-header h3 {
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+.custom-dialog .modal-footer {
+    border-top: 1px solid #e9ecef;
+    padding-top: 1rem;
+}

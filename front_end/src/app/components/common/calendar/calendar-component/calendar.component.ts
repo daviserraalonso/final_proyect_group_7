@@ -42,7 +42,6 @@ export class CalendarComponent implements OnInit {
 
   currentEvents: EventApi[] = [];
 
-
   constructor(
     private calendarService: CalendarService,
     private changeDetector: ChangeDetectorRef,
@@ -64,9 +63,7 @@ export class CalendarComponent implements OnInit {
 
       const response = await lastValueFrom(this.calendarService.getEventsByProfessorId(professorId));
 
-
       if (Array.isArray(response)) {
-        // Limpia los eventos previos para evitar duplicados
         const events = response.map((event) => ({
           id: event.id.toString(),
           title: event.title,
@@ -78,14 +75,15 @@ export class CalendarComponent implements OnInit {
           extendedProps: {
             description: event.description || '',
             locationType: event.locationType || null,
-            locationId: event.locationId || null, // Incluye locationId
-            onlineLink: event.onlineLink || '',   // Incluye onlineLink
+            locationId: event.locationId || null,
+            onlineLink: event.onlineLink || '',
             courseId: event.courseId || null,
             subjectId: event.subjectId || null,
+            eventType: event.eventType,
           },
         }));
 
-        this.calendarOptions = { ...this.calendarOptions, events }; // Actualiza eventos de manera reactiva
+        this.calendarOptions = { ...this.calendarOptions, events };
       } else {
         console.error('Error: La respuesta no es un array.');
       }
@@ -93,7 +91,6 @@ export class CalendarComponent implements OnInit {
       console.error('Error al cargar eventos:', err);
     }
   }
-
 
   private getEventColor(locationType: string): string {
     switch (locationType) {
@@ -125,14 +122,13 @@ export class CalendarComponent implements OnInit {
       courseId: 0,
       subjectId: 0,
       professorId: 0,
+      eventType: 'Class', // Forzamos el tipo de evento a "Class"
     };
 
-    this.openEventEditDialog(newEvent);
+    this.openEventEditDialog(newEvent, true);
   }
 
-
   private handleEventClick(clickInfo: EventClickArg): void {
-    // Recupera y parsea el usuario desde localStorage
     const userString = localStorage.getItem('user');
     const user = userString ? JSON.parse(userString) : null;
 
@@ -144,46 +140,31 @@ export class CalendarComponent implements OnInit {
       endDateTime: clickInfo.event.end?.toISOString() || '',
       allDay: clickInfo.event.allDay,
       locationType: clickInfo.event.extendedProps['locationType'] || null,
-      locationId: clickInfo.event.extendedProps['locationId'] || null, // Recupera locationId
-      onlineLink: clickInfo.event.extendedProps['onlineLink'] || '',   // Recupera onlineLink
+      locationId: clickInfo.event.extendedProps['locationId'] || null,
+      onlineLink: clickInfo.event.extendedProps['onlineLink'] || '',
       courseId: clickInfo.event.extendedProps['courseId'] || 0,
       subjectId: clickInfo.event.extendedProps['subjectId'] || 0,
       professorId: user?.id || 0,
       isRead: clickInfo.event.extendedProps['isRead'] || false,
+      eventType: clickInfo.event.extendedProps['eventType'] || null,
     };
 
-
-    if (!this.canEditEvents()) {
-      this.openEventDetailsDialog(event);
-    } else {
-      this.openEventEditDialog(event);
-    }
+    this.openEventEditDialog(event, false);
   }
 
-
-
-
-  private openEventEditDialog(event: ICourseEvent): void {
-    // Validar y corregir locationType si es 'default'
-    if (event.locationType === 'default') {
-      event.locationType = 'Presential'; // Valor predeterminado
-    }
-
+  private openEventEditDialog(event: ICourseEvent, isNew: boolean): void {
     const dialogRef = this.dialog.open(CalendarEditEventComponent, {
-      width: '800px',
-      height: '600px',
-      data: event,
+      width: '900px',
+      height: '700px',
+      data: { event, isNew }, // Pasamos el evento y la bandera
     });
 
     dialogRef.afterClosed().subscribe((result: any) => {
       if (result) {
-        // Si el diálogo devuelve algo, solo recarga los eventos.
         this.loadEvents();
       }
     });
-
   }
-
 
   private openEventDetailsDialog(event: ICourseEvent): void {
     this.dialog.open(CalendarEventComponent, {

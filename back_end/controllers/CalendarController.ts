@@ -20,8 +20,8 @@ export const getAllCourseEvent = async (req: Request, res: Response) => {
                 },
                 {
                     model: CourseLocation,
-                    as: 'location', // Usa el alias definido en la asociación
-                    attributes: ['address'], // Incluye solo los campos necesarios
+                    as: 'location',
+                    attributes: ['address', 'onlineLink'], // Incluye los campos necesarios
                 },
             ],
         });
@@ -31,24 +31,30 @@ export const getAllCourseEvent = async (req: Request, res: Response) => {
         res.status(500).json({ message: 'Error al obtener los eventos' });
     }
 };
-export const getCourseLocationById = async (req: Request, res: Response) => {
+export const getCourseLocationByCourseId = async (req: Request, res: Response) => {
     try {
-        const { id } = req.params;
-        const location = await CourseLocation.findByPk(id);
+        const { courseId } = req.params;
+        console.log('Obteniendo ubicación para CourseID:', courseId); // Log para depurar
 
-        if (!location) {
-            return res.status(200).json({ address: '', onlineLink: '' }); // Objeto vacío como respuesta válida
+        if (!courseId) {
+            return res.status(400).json({ message: 'El ID del curso es obligatorio' });
         }
 
+        const location = await CourseLocation.findOne({
+            where: { courseId: Number(courseId) },
+        });
+
+        if (!location) {
+            return res.status(200).json({ address: null, onlineLink: null });
+        }
+
+        console.log('Ubicación encontrada:', location);
         res.status(200).json(location);
     } catch (error) {
         console.error('Error al obtener la ubicación:', error);
         res.status(500).json({ message: 'Error interno del servidor' });
     }
 };
-
-
-
 
 
 export const getCoursesByProfessor = async (req, res) => {

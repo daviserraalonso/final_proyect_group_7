@@ -1,12 +1,50 @@
-
-<h1 mat-dialog-title>Detalle del Evento</h1>
-<div mat-dialog-content>
-  <p><strong>TITULO:</strong> {{ data.title }}</p>
-  <p><strong>DESCRIPCION: </strong> {{data.description}}</p>
-  <p><strong>INICIO:</strong> {{ data.start }}</p>
-  <p><strong>FIN:</strong> {{ data.end }}</p>
-
-</div>
-<div mat-dialog-actions>
-  <button mat-button (click)="closeDialog()">Cerrar</button>
+<div class="dialog-container">
+  <h1 mat-dialog-title class="dialog-title">Detalle del Evento</h1>
+  <div mat-dialog-content class="dialog-content">
+    <mat-list>
+      <mat-list-item>
+        <mat-icon mat-list-icon>event</mat-icon>
+        <div mat-line><strong>Título:</strong> {{ data.title }}</div>
+      </mat-list-item>
+      <mat-list-item>
+        <mat-icon mat-list-icon>description</mat-icon>
+        <div mat-line><strong>Descripción:</strong> {{ data.description }}</div>
+      </mat-list-item>
+      <mat-list-item>
+        <mat-icon mat-list-icon>schedule</mat-icon>
+        <div mat-line><strong>Inicio:</strong> {{ data.start }}</div>
+      </mat-list-item>
+      <mat-list-item>
+        <mat-icon mat-list-icon>schedule</mat-icon>
+        <div mat-line><strong>Fin:</strong> {{ data.end }}</div>
+      </mat-list-item>
+      <mat-list-item>
+        <mat-icon mat-list-icon>school</mat-icon>
+        <div mat-line><strong>Curso:</strong> {{ data.course }}</div>
+      </mat-list-item>
+      <mat-list-item>
+        <mat-icon mat-list-icon>book</mat-icon>
+        <div mat-line><strong>Materia:</strong> {{ data.subject }}</div>
+      </mat-list-item>
+      <mat-list-item>
+        <mat-icon mat-list-icon>person</mat-icon>
+        <div mat-line><strong>Profesor:</strong> {{ data.professor }}</div>
+      </mat-list-item>
+      <mat-list-item>
+        <mat-icon mat-list-icon>group</mat-icon>
+        <div mat-line><strong>Tipo de Evento:</strong> {{ data.eventType }}</div>
+      </mat-list-item>
+      <mat-list-item *ngIf="data.locationType === 'Presential'">
+        <mat-icon mat-list-icon>place</mat-icon>
+        <div mat-line><strong>Ubicación:</strong> {{ data.location }}</div>
+      </mat-list-item>
+      <mat-list-item *ngIf="data.locationType === 'Online'">
+        <mat-icon mat-list-icon>link</mat-icon>
+        <div mat-line><strong>Enlace:</strong> <a [href]="data.onlineLink" target="_blank">{{ data.onlineLink }}</a></div>
+      </mat-list-item>
+    </mat-list>
+  </div>
+  <div mat-dialog-actions class="dialog-actions">
+    <button mat-button class="btn-close" (click)="closeDialog()">Cerrar</button>
+  </div>
 </div>
