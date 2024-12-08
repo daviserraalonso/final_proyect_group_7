@@ -3,6 +3,17 @@
     border-radius: 10px;
     padding: 0 15px;
 }
+.custom-card {
+  background-color: #D8CEC2;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.custom-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
 
 .course-card {
     border-radius: 8px;
@@ -13,11 +24,12 @@
     transform: translateY(-5px);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
   }
-  
-  .card-title {
-    font-size: 1.25rem;
-    font-weight: 600;
+  .custom-card-title {
+    font-weight: bold;
+    font-size: 1.3rem;
+    color: #343a40;
   }
+  
   mat-card-header {
     padding-bottom: 10px;
   }
@@ -42,11 +54,14 @@
   .text-muted {
     font-size: 0.85rem;
   }
-  
-  .btn-no-border {
-    border: none;
-    box-shadow: none;
+  .btn-inscribirse {
+    background-color: #007bff;
+    color: white;
+    width: 100%;
+    border-radius: 8px;
   }
+  
+  
   /* Ajustes para pantallas pequeñas */
   @media (max-width: 768px) {
     .card-title {
