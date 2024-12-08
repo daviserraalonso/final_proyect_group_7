@@ -8,7 +8,6 @@
     <div class="col-lg-4 col-md-6 col-sm-12 mb-4" *ngFor="let course of courses$ | async">
       <mat-card class="custom-card">
         <mat-card-header>
-          <div mat-card-avatar class="example-header-image"></div>
           <mat-card-title class="custom-card-title">{{ course.name }}</mat-card-title>
         </mat-card-header>
         <img mat-card-image [src]="'https://picsum.photos/300/200?random=' + course.id" alt="Imagen del curso {{ course.name }}" class="custom-img">
