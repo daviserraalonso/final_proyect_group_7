@@ -3,6 +3,7 @@ import CourseEvent from '../models/CourseEvent';
 import Subject from '../models/Subject';
 import Course from '../models/Course';
 import CourseLocation from '../models/CourseLocation';
+import StudentCourse from '../models/StudentCourse';
 
 export const getAllCourseEvent = async (req: Request, res: Response) => {
     try {
@@ -55,6 +56,68 @@ export const getCourseLocationByCourseId = async (req: Request, res: Response) =
         res.status(500).json({ message: 'Error interno del servidor' });
     }
 };
+
+export const getEventsByStudentId = async (req: Request, res: Response) => {
+    const { id: studentId } = req.params;
+
+    if (!studentId) {
+        return res.status(400).json({ message: 'ID del estudiante no proporcionado' });
+    }
+
+    try {
+        // Buscar los cursos en los que está inscrito el estudiante
+        const studentCourses = await StudentCourse.findAll({
+            where: { studentId },
+            attributes: ['courseId'],
+            raw: true, // Asegura que los datos devueltos sean planos
+        });
+
+        console.log('Raw StudentCourses:', studentCourses);
+
+        if (!studentCourses || !studentCourses.length) {
+            return res.status(404).json({ message: 'El estudiante no está inscrito en ningún curso' });
+        }
+
+        const courseIds = studentCourses.map((sc) => sc.courseId);
+
+        console.log('Extracted Course IDs:', courseIds);
+
+        if (!courseIds || !courseIds.length) {
+            return res.status(404).json({ message: 'El estudiante no está inscrito en cursos válidos' });
+        }
+
+        // Buscar eventos relacionados con esos cursos
+        const events = await CourseEvent.findAll({
+            where: {
+                courseId: courseIds, // Filtrar eventos por los cursos del estudiante
+            },
+            include: [
+                {
+                    model: Course,
+                    as: 'course',
+                    attributes: ['id', 'name'],
+                },
+                {
+                    model: Subject,
+                    as: 'subject',
+                    attributes: ['id', 'name'],
+                },
+            ],
+        });
+
+        console.log('Events for student:', events);
+
+        if (!events || !events.length) {
+            return res.status(404).json({ message: 'No se encontraron eventos para este estudiante' });
+        }
+
+        res.status(200).json(events);
+    } catch (error) {
+        console.error('Error al obtener los eventos del estudiante:', error);
+        res.status(500).json({ message: 'Error interno del servidor', error });
+    }
+};
+
 
 
 export const getCoursesByProfessor = async (req, res) => {

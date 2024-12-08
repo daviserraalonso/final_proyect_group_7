@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { lastValueFrom, Observable, throwError, catchError, map, of } from 'rxjs';
+import { lastValueFrom, Observable, throwError, catchError, map, of, tap } from 'rxjs';
 import { ICourseEvent } from '../interfaces/iCourseEvent';
 
 @Injectable({
@@ -12,10 +12,29 @@ export class CalendarService {
   constructor(private http: HttpClient) { }
 
   getCalendarEvents(): Observable<ICourseEvent[]> {
+    console.log('Fetching all calendar events...');
     return this.http.get<ICourseEvent[]>(`${this.apiUrl}`).pipe(
+      tap(events => console.log('All events:', events)), // Log de eventos
       catchError(this.handleError<ICourseEvent[]>('getCalendarEvents'))
     );
   }
+
+  getEventsByProfessorId(professorId: number): Observable<ICourseEvent[]> {
+    console.log(`Fetching events for professorId: ${professorId}`);
+    return this.http.get<ICourseEvent[]>(`${this.apiUrl}/professor/${professorId}/events`).pipe(
+      tap(events => console.log('Professor events:', events)), // Log de eventos
+      catchError(this.handleError<ICourseEvent[]>('getEventsByProfessorId'))
+    );
+  }
+
+  getEventsByStudentId(studentId: number): Observable<ICourseEvent[]> {
+    console.log(`Fetching events for studentId: ${studentId}`);
+    return this.http.get<ICourseEvent[]>(`${this.apiUrl}/student/${studentId}/events`).pipe(
+      tap(events => console.log('Student events:', events)), // Log de eventos
+      catchError(this.handleError<ICourseEvent[]>('getEventsByStudentId'))
+    );
+  }
+
 
   getCalendarEventById(eventId: number): Observable<ICourseEvent> {
     return this.http.get<ICourseEvent>(`${this.apiUrl}/${eventId}`).pipe(
@@ -23,12 +42,6 @@ export class CalendarService {
     );
   }
 
-  getEventsByProfessorId(professorId: number): Observable<ICourseEvent[]> {
-    const url = `${this.apiUrl}/professor/${professorId}/events`; // Asegúrate de que la ruta esté configurada correctamente en el backend
-    return this.http.get<ICourseEvent[]>(url).pipe(
-      catchError(this.handleError<ICourseEvent[]>('getEventsByProfessorId'))
-    );
-  }
 
 
   getSubjectsByCourseId(courseId: number): Observable<any[]> {
@@ -90,12 +103,6 @@ export class CalendarService {
       })
     );
   }
-
-
-
-
-
-
 
   //Manejo de errores
   private handleError<T>(operation = 'operation', result?: T) {

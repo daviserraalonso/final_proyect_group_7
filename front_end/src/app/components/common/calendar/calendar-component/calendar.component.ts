@@ -49,8 +49,15 @@ export class CalendarComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    const userString = localStorage.getItem('user');
+    const role = localStorage.getItem('role');
+
+    console.log('User from localStorage:', userString);
+    console.log('Role from localStorage:', role);
+
     this.loadEvents();
   }
+
 
   private async loadEvents(): Promise<void> {
     try {
@@ -58,32 +65,45 @@ export class CalendarComponent implements OnInit {
       if (!userString) throw new Error('Usuario no encontrado en localStorage.');
 
       const user = JSON.parse(userString);
-      const professorId = user.id;
-      if (!professorId) throw new Error('ID del usuario no encontrado.');
+      const roleId = Number(localStorage.getItem('role'));
+      const userId = user.id;
 
-      const response = await lastValueFrom(this.calendarService.getEventsByProfessorId(professorId));
+      let events: any[] = [];
 
-      if (Array.isArray(response)) {
-        const events = response.map((event) => ({
-          id: event.id.toString(),
-          title: event.title,
-          description: event.description || '',
-          start: new Date(event.startDateTime).toISOString(),
-          end: event.endDateTime ? new Date(event.endDateTime).toISOString() : undefined,
-          allDay: event.allDay || false,
-          color: this.getEventColor(event.locationType || 'default'),
-          extendedProps: {
+      if (roleId === 1) {
+        // Cargar todos los eventos
+        events = await lastValueFrom(this.calendarService.getCalendarEvents());
+      } else if (roleId === 2) {
+        // Cargar eventos asociados al profesor
+        events = await lastValueFrom(this.calendarService.getEventsByProfessorId(userId));
+      } else if (roleId === 3) {
+        // Cargar eventos asociados al estudiante
+        events = await lastValueFrom(this.calendarService.getEventsByStudentId(userId));
+      }
+
+
+      if (Array.isArray(events)) {
+        this.calendarOptions = {
+          ...this.calendarOptions,
+          events: events.map((event) => ({
+            id: event.id.toString(),
+            title: event.title,
             description: event.description || '',
-            locationType: event.locationType || null,
-            locationId: event.locationId || null,
-            onlineLink: event.onlineLink || '',
-            courseId: event.courseId || null,
-            subjectId: event.subjectId || null,
-            eventType: event.eventType,
-          },
-        }));
-
-        this.calendarOptions = { ...this.calendarOptions, events };
+            start: new Date(event.startDateTime).toISOString(),
+            end: event.endDateTime ? new Date(event.endDateTime).toISOString() : undefined,
+            allDay: event.allDay || false,
+            color: this.getEventColor(event.locationType || 'default'),
+            extendedProps: {
+              description: event.description || '',
+              locationType: event.locationType || null,
+              locationId: event.locationId || null,
+              onlineLink: event.onlineLink || '',
+              courseId: event.courseId || null,
+              subjectId: event.subjectId || null,
+              eventType: event.eventType,
+            },
+          })),
+        };
       } else {
         console.error('Error: La respuesta no es un array.');
       }
@@ -91,6 +111,7 @@ export class CalendarComponent implements OnInit {
       console.error('Error al cargar eventos:', err);
     }
   }
+
 
   private getEventColor(locationType: string): string {
     switch (locationType) {
@@ -104,10 +125,14 @@ export class CalendarComponent implements OnInit {
   }
 
   private handleDateSelect(selectInfo: DateSelectArg): void {
+    const roleId = Number(localStorage.getItem('role'));
+
+    if (roleId === 3) {
+      // No permitir seleccionar fechas si el rol es 3
+      return;
+    }
+
     const calendarApi = selectInfo.view.calendar;
-
-    if (!this.canEditEvents()) return;
-
     calendarApi.unselect();
 
     const newEvent: ICourseEvent = {
@@ -128,9 +153,11 @@ export class CalendarComponent implements OnInit {
     this.openEventEditDialog(newEvent, true);
   }
 
+
   private handleEventClick(clickInfo: EventClickArg): void {
     const userString = localStorage.getItem('user');
     const user = userString ? JSON.parse(userString) : null;
+    const roleId = Number(localStorage.getItem('role'));
 
     const event: ICourseEvent = {
       id: Number(clickInfo.event.id),
@@ -149,8 +176,15 @@ export class CalendarComponent implements OnInit {
       eventType: clickInfo.event.extendedProps['eventType'] || null,
     };
 
-    this.openEventEditDialog(event, false);
+    if (roleId === 3) {
+      // Si el rol es 3, abrir los detalles del evento
+      this.openEventDetailsDialog(event);
+    } else {
+      // De lo contrario, permitir edición
+      this.openEventEditDialog(event, false);
+    }
   }
+
 
   private openEventEditDialog(event: ICourseEvent, isNew: boolean): void {
     const dialogRef = this.dialog.open(CalendarEditEventComponent, {
