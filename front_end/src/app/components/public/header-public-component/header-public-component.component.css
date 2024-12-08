@@ -2,10 +2,14 @@ header{
   background-color: #343a40;
   
 }
+a.navbar-brand{
+ align-items: center;
+}
 nav-link{
   color: white;
  
 }
+
 .dropdown-menu {
     background-color: #f8f9fa;
     border: 1px solid #ddd;
@@ -102,12 +106,14 @@ nav-link{
   }
   .img {
     height: 25px;
-    margin: 3px;
+    padding-top: 2px;
+    padding-right: 5px;
   }
   .toggle-button {
-    display: none; /* El botón es visible por defecto */
+    display: none;
+    padding: 2px; /* El botón es visible por defecto */
   }
-  @media (min-width: 1200px) {
+  @media (min-width: 1300px) {
     .toggle-button {
       display: block; /* Oculta el botón en pantallas más anchas */
     }

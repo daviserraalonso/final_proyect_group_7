@@ -24,14 +24,14 @@ footer a:hover {
 }
 
 /* En pantallas pequeñas: aside se coloca encima de main */
-@media (max-width: 1200px) {
+@media (max-width: 1400px) {
   
 }
   
   /* Ajuste para el contenedor principal */
 
   /* Cuando aside está presente */
-  @media (max-width: 1200px) {
+  @media (max-width: 1300px) {
     aside {
       position: fixed;
       top: 0;
