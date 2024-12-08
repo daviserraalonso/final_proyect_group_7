@@ -36,6 +36,14 @@ mat-card:hover {
   font-weight: 700;
 }
 
+.column {
+  text-align: center; /* Alinea el contenido a la derecha */
+  padding-right: 16px; /* Ajusta el espaciado al fondo */
+}
+
+.actions-column button {
+  margin-right: 0; /* Asegúrate de que el botón esté alineado correctamente */
+}
 /* Buttons */
 button.mat-button,
 button.mat-raised-button {
@@ -60,6 +68,12 @@ button.mat-fab {
   background-color: #28a745 !important;
 }
 
+.button-more{
+  display: flex;
+  justify-content: flex-end; /* Mueve el contenido al final horizontalmente */
+  align-items: flex-end; /* Opcional: Alinea verticalmente si hay más contenido */
+  height: 100%; 
+}
 /* List Groups */
 .list-group-item {
   background-color: #ffffff;
