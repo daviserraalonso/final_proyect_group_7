@@ -56,6 +56,7 @@ export class StudentCoursesComponent implements OnInit {
       const params = new HttpParams().set('studentId', userId).set('idCourse', cursoId)
 
       const scoreValid = await this.scoreServices.getScoreByIds(params)
+      console.log(scoreValid)
       if(!scoreValid) {
       this.dialog.open(ScoreTeachersComponent, {
         width: '400px',

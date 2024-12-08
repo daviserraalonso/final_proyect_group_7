@@ -353,6 +353,7 @@ export const searchTeachers = async (req: Request, res: Response) => {
     console.log(`filtro: ${userId}`)
     const teachers = await User.findAll({
       where: filters,
+      attributes: ['id', 'name', 'email', 'roleId', 'isValidated' ],
       include: [
         {
           model: UserDetails,

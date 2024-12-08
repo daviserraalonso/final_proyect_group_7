@@ -2,22 +2,22 @@
     "development": {
         "username": "root",
         "password": "",
-        "database": "TeacherAppDB",
+        "database": "teacherappdb",
         "host": "127.0.0.1",
-        "port": 3306,
-        "dialect": "mysql"
+        "dialect": "mysql",
+        "port": "3307"
     },
     "test": {
         "username": "root",
         "password": "",
-        "database": "TeacherAppDB",
+        "database": "database_test",
         "host": "127.0.0.1",
         "dialect": "mysql"
     },
     "production": {
         "username": "root",
         "password": "",
-        "database": "TeacherAppDB",
+        "database": "database_production",
         "host": "127.0.0.1",
         "dialect": "mysql"
     }
