@@ -11,11 +11,12 @@
   *ngIf="isAuthenticated">
   <app-side-bar [isSidebarOpen]="isSidebarOpen"></app-side-bar>
 </aside>
-      <main 
-        [ngClass]="{'with-sidebar': isAuthenticated, 'full-width': !isAuthenticated}" 
-        class="col-md-9 col-lg-10">
-        <router-outlet></router-outlet>
-      </main>
+<main 
+[ngClass]="{'with-sidebar': isAuthenticated && isSidebarOpen, 'full-width': !isAuthenticated || !isSidebarOpen}" 
+class="col-md-9 col-lg-10">
+<router-outlet></router-outlet>
+</main>
+
     </div>
   </div>
 

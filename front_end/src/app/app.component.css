@@ -22,11 +22,19 @@ footer a:hover {
   display: flex;
   flex-wrap: nowrap;
 }
-
-/* En pantallas pequeñas: aside se coloca encima de main */
-@media (max-width: 1400px) {
-  
+main.with-sidebar {
+  margin-left: 0; /* Ajusta según el diseño */
+  margin-right: 0; /* Ajusta según el diseño */
+  width: auto; /* Restaura el ancho */
 }
+
+/* Cuando aside está cerrado, centramos el main */
+main.full-width {
+  margin: 0 auto; /* Centro horizontal */
+  /* O ajusta un ancho deseado */
+   /* Opcional: limita el ancho para pantallas grandes */
+}
+
   
   /* Ajuste para el contenedor principal */
 
@@ -42,7 +50,11 @@ footer a:hover {
       transform: translateX(-100%);
       transition: transform 0.3s ease-in-out;
     }
-  
+    @media (max-width: 768px) {
+      main.full-width {
+        width: 100%;
+      }
+    }
     aside.open {
       transform: translateX(0);
     }

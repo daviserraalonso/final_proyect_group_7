@@ -115,7 +115,7 @@ export class AdminComponent {
 
   // Fecha seleccionada
   selectedDate: Date | null = null;
-
+  selectedFile: File | null = null;
   constructor(public dialog: MatDialog, private snackBar: MatSnackBar) {}
 
   get recentMessages() {
@@ -181,6 +181,21 @@ export class AdminComponent {
   reviewTask(task: any): void {
     console.log('Revisar Tarea:', task);
     // Aquí podrías implementar lógica adicional, como abrir un diálogo para revisar o actualizar el estado de la tarea
+  }
+
+  onFileSelected(event: any): void {
+    if (event.target.files && event.target.files.length > 0) {
+      this.selectedFile = event.target.files[0];
+    }
+  }
+  onSave(): void {
+    if (this.selectedFile) {
+      const formData = new FormData();
+      formData.append('file', this.selectedFile);
+  }
+  }
+  onCancel(): void {
+    this.selectedFile = null;
   }
 }
 

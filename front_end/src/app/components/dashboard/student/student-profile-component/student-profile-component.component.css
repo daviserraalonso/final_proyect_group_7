@@ -1,11 +1,7 @@
 /* Estilo general del contenedor principal */
 .main-content {
-  padding: 20px;
-  background-color: #f5f7fa;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  padding: 4px;
+  width: 100%; 
 }
 
 /* Tarjetas */
@@ -120,6 +116,7 @@ button.mat-button {
   background-color: #f3e5f5;
 }
 
+
 mat-list-item {
   padding: 1rem;
   border-bottom: 1px solid #e0e0e0;
@@ -136,6 +133,10 @@ mat-list-item:hover {
 
 /* Responsividad */
 @media (max-width: 768px) {
+
+  .row {
+    flex-direction: column; /* Cambia a diseño de una sola columna */
+  }
   .large-title {
     font-size: 2rem;
   }
