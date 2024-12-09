@@ -35,26 +35,9 @@ export class CalendarEventComponent implements OnInit {
 
   ngOnInit(): void {
     this.selectedModality = this.data.event.locationType;
-    this.loadCoursesByProfessor();
     this.loadSubjectsByCourse(this.data.event.courseId);
   }
 
-  private loadCoursesByProfessor(): void {
-    const userString = localStorage.getItem('user');
-    if (!userString) return;
-
-    const user = JSON.parse(userString);
-    const professorId = user.id;
-
-    this.calendarService.getCoursesByProfessorId(professorId).subscribe({
-      next: (courses) => {
-        this.courses = courses;
-        const course = courses.find((c) => c.id === this.data.event.courseId);
-        //this.courseName = course ? course.name : 'Curso no encontrado';
-      },
-      error: (err) => console.error('Error al cargar los cursos:', err),
-    });
-  }
 
   private loadSubjectsByCourse(courseId: number): void {
     this.calendarService.getSubjectsByCourseId(courseId).subscribe({
