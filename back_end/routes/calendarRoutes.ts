@@ -6,7 +6,10 @@ import {
     getSubjectsByCourse,
     getEventsByProfessor,
     getCourseLocationByCourseId,
-    getEventsByStudentId
+    getEventsByStudentId,
+    updateCourseEvent,
+    deleteCourseEvent,
+    createCourseEvent
 } from '../controllers/CalendarController';
 import ModalityController from '../controllers/ModalityController';
 
@@ -22,6 +25,9 @@ router.get('/course/:courseId/subjects', getSubjectsByCourse);
 router.get('/professor/:id/events', getEventsByProfessor);
 router.get('/location/:id', getCourseLocationByCourseId); // Obtener la ubicación de un curso por ID
 router.get('/student/:id/events', getEventsByStudentId);
+router.put('/:id', updateCourseEvent); // Endpoint para actualizar un evento
+router.delete('/:id', deleteCourseEvent); // Endpoint para eliminar un evento
+router.post('/', createCourseEvent);
 
 
 module.exports = router;

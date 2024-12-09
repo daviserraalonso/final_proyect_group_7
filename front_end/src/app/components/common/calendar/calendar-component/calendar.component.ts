@@ -202,14 +202,8 @@ export class CalendarComponent implements OnInit {
 
   private openEventDetailsDialog(event: ICourseEvent): void {
     this.dialog.open(CalendarEventComponent, {
-      width: '800px',
-      data: {
-        id: event.id,
-        title: event.title,
-        description: event.description,
-        start: event.startDateTime,
-        end: event.endDateTime,
-      },
+      width: '1000px',
+      data: { event }, // Pasar el evento completo
     });
   }
 

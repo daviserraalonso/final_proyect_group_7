@@ -19,6 +19,7 @@ export class CalendarService {
     );
   }
 
+
   getEventsByProfessorId(professorId: number): Observable<ICourseEvent[]> {
     console.log(`Fetching events for professorId: ${professorId}`);
     return this.http.get<ICourseEvent[]>(`${this.apiUrl}/professor/${professorId}/events`).pipe(
@@ -34,6 +35,7 @@ export class CalendarService {
       catchError(this.handleError<ICourseEvent[]>('getEventsByStudentId'))
     );
   }
+
 
 
   getCalendarEventById(eventId: number): Observable<ICourseEvent> {
@@ -61,6 +63,7 @@ export class CalendarService {
 
 
 
+
   getCoursesByProfessorId(professorId: number): Observable<ICourseEvent[]> {
     const url = `${this.apiUrl}/professor/${professorId}`;
     return this.http.get<ICourseEvent[]>(url).pipe(
@@ -69,11 +72,8 @@ export class CalendarService {
   }
 
 
-  createCalendarEvent(event: ICourseEvent): Observable<ICourseEvent> {
-    if (!this.isEventValid(event)) {
-      return throwError(() => new Error('El evento no tiene todos los campos obligatorios.'));
-    }
 
+  createCalendarEvent(event: ICourseEvent): Observable<ICourseEvent> {
     return this.http.post<ICourseEvent>(`${this.apiUrl}`, event).pipe(
       catchError(this.handleError<ICourseEvent>('createCalendarEvent'))
     );
@@ -81,10 +81,6 @@ export class CalendarService {
 
 
   updateCalendarEvent(event: ICourseEvent): Observable<ICourseEvent> {
-    if (!this.isEventValid(event)) {
-      return throwError(() => new Error('El evento no tiene todos los campos obligatorios.'));
-    }
-
     return this.http.put<ICourseEvent>(`${this.apiUrl}/${event.id}`, event).pipe(
       catchError(this.handleError<ICourseEvent>('updateCalendarEvent'))
     );
@@ -95,6 +91,7 @@ export class CalendarService {
       catchError(this.handleError<void>('deleteCalendarEvent'))
     );
   }
+
   getCourseLocation(locationId: number): Observable<{ address: string; onlineLink?: string }> {
     return this.http.get<{ address: string; onlineLink?: string }>(`${this.apiUrl}/location/${locationId}`).pipe(
       catchError((error) => {

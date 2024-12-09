@@ -33,7 +33,7 @@ export class CalendarEditEventComponent implements OnInit {
   subjects: { id: number; name: string }[] = [];
   selectedModality: string | null = null;
 
-  eventTypes: string[] = ['Task', 'Class']; // Opciones para el desplegable de tipo de evento
+  eventTypes: string[] = ['task', 'class']; // Opciones para el desplegable de tipo de evento
 
   isNewEvent: boolean = false;
 
@@ -57,10 +57,12 @@ export class CalendarEditEventComponent implements OnInit {
       courseId: [data.event.courseId, [Validators.required]],
       subjectId: [data.event.subjectId, [Validators.required]],
       professorId: [data.event.professorId, [Validators.required]],
-      eventType: [{ value: this.capitalizeFirstLetter(data.event.eventType || 'Class'), disabled: true }],
+      eventType: [data.event.eventType || null], // Si no hay valor, se establece como null
       allDay: [data.event.allDay || false],
       isRead: [data.event.isRead || false],
     });
+
+
 
     this.selectedModality = data.event.locationType;
   }
@@ -85,7 +87,11 @@ export class CalendarEditEventComponent implements OnInit {
       console.log(`Cargando asignaturas para el curso ID: ${courseId}`);
       this.loadSubjectsByCourse(courseId);
     }
+
+    // Forzar detección de cambios después de inicializar valores
+    this.cdr.detectChanges();
   }
+
 
 
 
@@ -111,6 +117,26 @@ export class CalendarEditEventComponent implements OnInit {
       this.eventForm.get('onlineLink')?.enable(); // Habilitar enlace online
     }
   }
+
+  deleteEvent(): void {
+    const confirmation = confirm('¿Estás seguro de que deseas eliminar este evento?');
+    if (confirmation) {
+      // Convertir el ID a número si es un string
+      const eventId = typeof this.data.event.id === 'string' ? Number(this.data.event.id) : this.data.event.id;
+
+      this.calendarService.deleteCalendarEvent(eventId).subscribe({
+        next: () => {
+          alert('Evento eliminado correctamente.');
+          this.dialogRef.close('deleted');
+        },
+        error: (err) => {
+          console.error('Error al eliminar el evento:', err);
+          alert('Ocurrió un error al intentar eliminar el evento.');
+        },
+      });
+    }
+  }
+
 
   loadCoursesByProfessor(): void {
     const userString = localStorage.getItem('user');
@@ -156,18 +182,26 @@ export class CalendarEditEventComponent implements OnInit {
       const updatedEvent: ICourseEvent = {
         ...this.data.event, // Mantener las propiedades originales del evento
         ...this.eventForm.value, // Reemplazar con los valores del formulario
+        startDateTime: new Date(this.eventForm.value.start).toISOString(),
+        endDateTime: new Date(this.eventForm.value.end).toISOString(),
       };
 
       const saveObservable = this.isNewEvent
-        ? this.calendarService.createCalendarEvent(updatedEvent)
-        : this.calendarService.updateCalendarEvent(updatedEvent);
+        ? this.calendarService.createCalendarEvent(updatedEvent) // Crear nuevo evento
+        : this.calendarService.updateCalendarEvent(updatedEvent); // Actualizar evento existente
 
       saveObservable.subscribe({
-        next: (result) => this.dialogRef.close(result),
+        next: (result) => {
+          console.log('Evento guardado:', result);
+          this.dialogRef.close(result); // Cierra el diálogo tras guardar
+        },
         error: (err) => console.error('Error al guardar el evento:', err),
       });
     }
   }
+
+
+
 
 
   private capitalizeFirstLetter(value: string): string {

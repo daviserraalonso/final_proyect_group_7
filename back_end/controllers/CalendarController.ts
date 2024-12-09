@@ -168,6 +168,85 @@ export const getSubjectsByCourse = async (req: Request, res: Response) => {
 };
 
 
+export const updateCourseEvent = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params; // ID del evento a actualizar
+        const updatedData = req.body; // Datos actualizados del evento
+
+        // Buscar el evento por su ID
+        const event = await CourseEvent.findByPk(id);
+        if (!event) {
+            return res.status(404).json({ message: 'Evento no encontrado' });
+        }
+
+        // Actualizar el evento con los datos recibidos
+        await event.update(updatedData);
+
+        res.status(200).json(event);
+    } catch (error) {
+        console.error('Error al actualizar el evento:', error);
+        res.status(500).json({ message: 'Error al actualizar el evento', error });
+    }
+};
+
+export const createCourseEvent = async (req: Request, res: Response) => {
+    try {
+        const {
+            title,
+            description,
+            startDateTime,
+            endDateTime,
+            locationType,
+            locationId,
+            onlineLink,
+            courseId,
+            subjectId,
+            professorId,
+            eventType,
+        } = req.body;
+
+        const newEvent = await CourseEvent.create({
+            title,
+            description,
+            startDateTime: new Date(startDateTime), // Convertir a objeto Date
+            endDateTime: new Date(endDateTime), // Convertir a objeto Date
+            locationType,
+            locationId,
+            onlineLink,
+            courseId,
+            subjectId,
+            professorId,
+            eventType,
+        });
+
+        res.status(201).json(newEvent);
+    } catch (error) {
+        console.error('Error al crear el evento:', error);
+        res.status(500).json({ message: 'Error al crear el evento', error });
+    }
+};
+
+export const deleteCourseEvent = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params; // ID del evento a eliminar
+
+        // Buscar el evento por su ID
+        const event = await CourseEvent.findByPk(id);
+        if (!event) {
+            return res.status(404).json({ message: 'Evento no encontrado' });
+        }
+
+        // Eliminar el evento
+        await event.destroy();
+
+        res.status(200).json({ message: 'Evento eliminado correctamente' });
+    } catch (error) {
+        console.error('Error al eliminar el evento:', error);
+        res.status(500).json({ message: 'Error al eliminar el evento', error });
+    }
+};
+
+
 
 
 export const getEventsByProfessor = async (req: Request, res: Response) => {

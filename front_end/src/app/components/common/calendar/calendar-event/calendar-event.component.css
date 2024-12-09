@@ -26,11 +26,30 @@
     font-weight: bold;
 }
 
+/* Ajuste del diseño de los elementos de lista */
 .mat-list-item {
-    display: flex;
-    align-items: center;
+    display: flex !important;
+    /* Aseguramos que flexbox se aplique correctamente */
+    align-items: center !important;
+    /* Íconos y texto centrados verticalmente */
+    gap: 12px;
+    /* Espaciado entre ícono y texto */
 }
 
-.mat-icon {
-    margin-right: 10px;
+mat-icon {
+    font-size: 24px !important;
+    /* Íconos uniformes */
+    color: #757575 !important;
+    /* Color de los íconos */
+    margin-right: 0 !important;
+    /* Eliminar margen adicional */
+}
+
+.list-content {
+    flex-grow: 1;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: left;
 }
