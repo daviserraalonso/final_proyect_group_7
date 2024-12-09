@@ -3,20 +3,17 @@
     <app-header-public-component (toggle)="toggleSideBar()"></app-header-public-component>
   </header>
 
-  <div class="container">
-    <div class="row justify-content-center">
-      <aside 
-  class="col-md-3 left-sidebar" 
-  [class.open]="isSidebarOpen"
-  *ngIf="isAuthenticated">
-  <app-side-bar [isSidebarOpen]="isSidebarOpen"></app-side-bar>
-</aside>
-<main 
-[ngClass]="{'with-sidebar': isAuthenticated && isSidebarOpen, 'full-width': !isAuthenticated || !isSidebarOpen}" 
-class="col-md-9 col-lg-10">
-<router-outlet></router-outlet>
-</main>
-
+  <div class="layout">
+    <aside 
+      class="sidebar"
+      [class.open]="isSidebarOpen"
+      *ngIf="isAuthenticated">
+      <app-side-bar [isSidebarOpen]="isSidebarOpen"></app-side-bar>
+    </aside>
+    <div class="container">
+      <main class="content">
+        <router-outlet></router-outlet>
+      </main>
     </div>
   </div>
 

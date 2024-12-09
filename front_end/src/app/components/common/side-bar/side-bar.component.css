@@ -1,10 +1,10 @@
 .sidebar-container {
-  display: inline-block; /* Permite que el tamaño dependa del contenido */
+ /* Permite que el tamaño dependa del contenido */
   padding: 10px; /* Espaciado interno */
 
   color: white;/* Borde para delimitar */
   background-color: #343a40;
-  transition: left 0.3s ease;
+  
  
 }
 
