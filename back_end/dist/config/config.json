@@ -16,10 +16,11 @@
         "dialect": "mysql"
     },
     "production": {
-        "username": "root",
-        "password": "",
-        "database": "TeacherAppDB",
-        "host": "127.0.0.1",
+        "username": "u5rrx9lzvqwajn95",
+        "password": "b7IBEDThfgWjldUOvjf0",
+        "database": "bnalvemznhiklxdel8dq",
+        "host": "bnalvemznhiklxdel8dq-mysql.services.clever-cloud.com",
+        "port": 3306,
         "dialect": "mysql"
     }
 }

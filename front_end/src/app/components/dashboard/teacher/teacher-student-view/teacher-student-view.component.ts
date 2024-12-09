@@ -43,7 +43,7 @@ export class TeacherStudentViewComponent implements OnInit {
       this.userId = user.id || 6; // asign id or use deafult value
       console.log('User ID:', this.userId);
     try {
-      this.students = await this.serviceTeacherDetails.getStudentsByProfessorId(this.userId);
+      this.students = await this.serviceTeacherDetails.getStudentsByProfessorId(6);
       console.log('Estudiantes obtenidos:', this.students); //
     } catch (error) {
       console.error('Error al obtener los datos de los estudiantes:', error);
@@ -53,6 +53,7 @@ export class TeacherStudentViewComponent implements OnInit {
   sendTask(student: IStudent): void {
     this.dialog.open(TaskFormComponent, {
       width: '400px',
+      height: '400px',
       data: { 
         studentId: student.student_id,
         subjectId: student.subject_id

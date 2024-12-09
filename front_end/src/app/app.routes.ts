@@ -25,6 +25,7 @@ import { ScoreTeachersComponent } from './components/dashboard/student/score-tea
 import { TeacherStudentViewComponent } from './components/dashboard/teacher/teacher-student-view/teacher-student-view.component';
 import { TeacherViewComponent } from './components/common/teacher-view/teacher-view.component';
 import { CourseViewComponent } from './components/common/course-view/course-view.component';
+import { loginGuard } from './guards/login.guard';
 
 
 export const routes: Routes = [
@@ -48,7 +49,7 @@ export const routes: Routes = [
     { path: 'all-users', component: AllUsersComponent },
     { path: 'subjects', component: SubjectListComponent },
     { path: 'courses', component: CourseListComponent },
-    {path: 'mis-alumnos', component: TeacherStudentViewComponent},
+    {path: 'mis-alumnos', component: TeacherStudentViewComponent,canActivate:[loginGuard]},
     {path: 'teacher/:id', component: TeacherViewComponent, 
         children: [
         {path: 'course/:idcourse', component: CourseViewComponent, runGuardsAndResolvers: 'paramsChange'}

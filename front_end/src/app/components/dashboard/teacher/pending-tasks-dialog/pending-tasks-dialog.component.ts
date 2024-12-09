@@ -53,20 +53,24 @@ export class PendingTasksDialogComponent implements OnInit {
     try {
       const user = JSON.parse(localStorage.getItem('user') || '{}');
       const userId = user.id || 6; // asign id or use default value
-      this.pendingTasks = await this.teacherService.getPendingTasks(3);
-      this.taskdetails = await this.teacherService.getTaskDetails(3)
+      this.pendingTasks = await this.teacherService.getPendingTasks(userId);
       console.log('Tareas pendientes:', this.pendingTasks);
     } catch (error) {
       console.error('Error al obtener las tareas pendientes:', error);
     }
   }
 
-  selectTask(task: any): void {
+  async selectTask(task: IPendingTask): Promise<void> {
     this.selectedTask = task;
-    this.feedbackForm.patchValue({
-      submission: this.taskdetails?.submission || ''
-    });
-    console.log('Tarea seleccionada:', this.selectedTask); // Añadir log para verificar el id
+    try {
+      this.taskdetails = await this.teacherService.getTaskDetails(task.taskId);
+      this.feedbackForm.patchValue({
+        submission: this.taskdetails.submission || ''
+      });
+      console.log('Tarea seleccionada:', this.selectedTask); // Añadir log para verificar el id
+    } catch (error) {
+      console.error('Error al obtener los detalles de la tarea:', error);
+    }
   }
 
   async onSubmit(): Promise<void> {

@@ -2,15 +2,7 @@ import { Model, DataTypes } from 'sequelize';
 import sequelize from '../config/database';
 
 class Task extends Model {
-  public id!: number;
-  public subjectId!: number;
-  public userId!: number;
-  public comments?: string;
-  public punctuation?: number;
-  public submission?: string; // Nuevo: Respuesta del estudiante
-  public feedback?: string; // Nuevo: Comentarios del profesor
-  public creationDate!: Date;
-  public deadline?: Date;
+  
 }
 
 Task.init(
