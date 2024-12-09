@@ -59,11 +59,11 @@ export const createCourse = async (req: Request, res: Response) => {
   const { body } = req.body;
   
   try {
-    const { name, categoryId, modalityId, teacherId } = req.body;
+    const { name, categoryId, modalityId, teacherId, price } = req.body;
   
     // Validar campos requeridos
-    if (!name || !categoryId || !modalityId || !teacherId ) {
-      return res.status(400).json({ message: 'Todos los campos son obligatorios: name, categoryId, modalityId' });
+    if (!name || !categoryId || !modalityId || !teacherId || !price ) {
+      return res.status(400).json({ message: 'Todos los campos son obligatorios: name, categoryId, modalityId, price' });
     }
   
     console.log('Intentando crear el curso con:', {
@@ -71,6 +71,7 @@ export const createCourse = async (req: Request, res: Response) => {
       category_id: categoryId,
       modality_id: modalityId,
       professor_id: teacherId,
+      price: price
     });
   
     const newCourse = await Course.create({
@@ -78,6 +79,7 @@ export const createCourse = async (req: Request, res: Response) => {
       category_id: categoryId,
       modality_id: modalityId,
       professor_id: teacherId,
+      price: price
     });
   
     res.status(201).json(newCourse);

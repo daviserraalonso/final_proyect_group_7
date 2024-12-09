@@ -16,6 +16,7 @@ import { InboxComponent } from './components/common/inbox/inbox.component';
 import { CalendarComponent } from './components/common/calendar/calendar.component';
 import { StudentCoursesComponent } from './components/dashboard/student/student-courses/student-courses.component';
 import { AllUsersComponent } from './components/dashboard/admin/all-users/all-users.component';
+//import { AllCourses } from './components/dashboard/admin/course-list/course-list.component';
 import { SubjectListComponent } from './components/dashboard/admin/subject-list/subject-list.component';
 import { CourseListComponent } from './components/dashboard/admin/course-list/course-list.component';
 import { PresentialCoursesComponent } from './components/public/academic-offerings/presential-courses/presential-courses.component';
@@ -47,6 +48,7 @@ export const routes: Routes = [
     { path: 'calendar', component: CalendarComponent },
     { path: 'courses', component: StudentCoursesComponent },
     { path: 'all-users', component: AllUsersComponent },
+    { path: 'all-courses', component: CourseListComponent },
     { path: 'subjects', component: SubjectListComponent },
     { path: 'courses', component: CourseListComponent },
     {path: 'mis-alumnos', component: TeacherStudentViewComponent,canActivate:[loginGuard]},

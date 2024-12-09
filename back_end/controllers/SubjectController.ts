@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-const Subject = require('../models/Subject');
+import Subject from '../models/Subject';
 import { Sequelize } from 'sequelize';
 
 
