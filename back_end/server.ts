@@ -40,13 +40,13 @@ app.use(express.json());
 setupAssociations();
 
 // syncronize db
-sequelize.sync({ alter: false })
-  .then(() => {
-    console.log('Base de datos sincronizada');
-  })
-  .catch((error: any) => {
-    console.error('Error al sincronizar la base de datos:', error);
-  });
+// sequelize.sync({ force: false })
+//   .then(() => {
+//     console.log('Base de datos sincronizada');
+//   })
+//   .catch((error: any) => {
+//     console.error('Error al sincronizar la base de datos:', error);
+//   });
 
 // routes
 app.use('/api/users', userRoutes);

@@ -46,6 +46,12 @@ const sequelize = new sequelize_1.Sequelize(dbConfig.database, dbConfig.username
     port: dbConfig.port,
     dialect: dbConfig.dialect,
     logging: false,
+    pool: {
+        max: 5, // Número máximo de conexiones en el pool
+        min: 0,
+        acquire: 30000,
+        idle: 10000,
+    },
 });
 // authenticate coneection
 sequelize.authenticate()
@@ -56,7 +62,7 @@ sequelize.authenticate()
     console.error('No se pudo conectar a la base de datos:', err);
 });
 // syncronyce db
-sequelize.sync({ alter: true })
-    .then(() => console.log('Base de datos sincronizada sin forzar.'))
-    .catch((error) => console.error('Error al sincronizar la base de datos:', error));
+// sequelize.sync({ alter: true })
+//   .then(() => console.log('Base de datos sincronizada sin forzar.'))
+//   .catch((error) => console.error('Error al sincronizar la base de datos:', error));
 exports.default = sequelize;

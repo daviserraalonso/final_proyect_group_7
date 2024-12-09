@@ -59,13 +59,10 @@ function setupAssociations() {
     });
     // ** Relation Course -> Modality**
     Course_1.default.belongsTo(Modality_1.default, {
-        foreignKey: {
-            name: 'modality_id',
-            allowNull: false,
-        },
-        as: 'modality',
+        foreignKey: 'modality_id',
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
+        constraints: false, // Desactiva la creación automática de claves foráneas
     });
     // association StudentCourse -> Course
     StudentCourse_1.default.belongsTo(Course_1.default, {

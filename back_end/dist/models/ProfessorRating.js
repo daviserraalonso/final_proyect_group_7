@@ -7,20 +7,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = require("sequelize");
 const database_1 = __importDefault(require("../config/database"));
 class ProfessorRating extends sequelize_1.Model {
-    id;
-    professorId;
-    studentId;
-    courseId;
-    rating_teacher;
-    rating_course;
-    comments;
-    ratingDate;
 }
 ProfessorRating.init({
     id: {
         type: sequelize_1.DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: false,
+        autoIncrement: true, // Cambiar a true para que se auto-incremente
     },
     professorId: {
         type: sequelize_1.DataTypes.INTEGER,

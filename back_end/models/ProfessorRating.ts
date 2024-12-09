@@ -3,14 +3,7 @@ import { Model, DataTypes } from 'sequelize';
 import sequelize from '../config/database';
 
 class ProfessorRating extends Model {
-    public id!: number;
-    public professorId!: number;
-    public studentId!: number;
-    public courseId!: number;
-    public rating_teacher?: number;
-    public rating_course?: number
-    public comments?: string;
-    public ratingDate!: Date;
+  // Eliminar las declaraciones de campos públicos
 }
 
 ProfessorRating.init(
@@ -18,7 +11,7 @@ ProfessorRating.init(
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      autoIncrement: false,
+      autoIncrement: true, // Asegúrate de que autoIncrement esté configurado como true
     },
     professorId: {
       type: DataTypes.INTEGER,
@@ -63,5 +56,10 @@ ProfessorRating.init(
     timestamps: false,
   }
 );
+
+// Eliminar la sincronización forzada
+// sequelize.sync({ force: true }).then(() => {
+//   console.log("La tabla 'professor_rating' ha sido recreada.");
+// });
 
 export default ProfessorRating;

@@ -25,7 +25,7 @@ Modality.init(
   {
     sequelize,
     modelName: 'Modality',
-    tableName: 'Modality',
+    tableName: 'modality',
     timestamps: true,
   }
 );

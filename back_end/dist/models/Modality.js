@@ -27,7 +27,7 @@ Modality.init({
 }, {
     sequelize: database_1.default,
     modelName: 'Modality',
-    tableName: 'Modality',
+    tableName: 'modality',
     timestamps: true,
 });
 exports.default = Modality;

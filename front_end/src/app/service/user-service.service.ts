@@ -27,8 +27,8 @@ export class UserServiceService {
     return this.http.get<any[]>(`${this.apiUrl}/teachers`);
   }
 
-  getFavoriteTeachers(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/teachers/favorites`);
+  getFavoriteTeachers(): Promise<any[]> {
+    return firstValueFrom(this.http.get<any[]>(`${this.apiUrl}/teachers/favorites`));
   }
 
   getUserDetails(userId: number): Promise<any> {

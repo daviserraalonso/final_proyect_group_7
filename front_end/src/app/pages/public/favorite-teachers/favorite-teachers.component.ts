@@ -16,16 +16,14 @@ export class FavoriteTeachersComponent implements OnInit {
 
   constructor(private UserServiceService: UserServiceService) {}
 
-  ngOnInit(): void {
-    this.UserServiceService.getFavoriteTeachers().subscribe(
-      (data) => {
-        console.log('Datos recibidos:', data); // Verifica los datos
-        this.favoriteTeachers = data;
-      },
-      (error) => {
-        console.error('Error al obtener profesores favoritos:', error);
-      }
-    );
+  async ngOnInit(): Promise<void> {
+    try {
+      const data = await this.UserServiceService.getFavoriteTeachers();
+      console.log('Datos recibidos:', data); // Verifica los datos
+      this.favoriteTeachers = data;
+    } catch (error) {
+      console.error('Error al obtener profesores favoritos:', error);
+    }
   }
   
 }
