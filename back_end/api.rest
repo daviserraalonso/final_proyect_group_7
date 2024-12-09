@@ -43,7 +43,7 @@ Content-Type: application/json
 
 ###
 ### Obtener estudiantes por profesor
-GET http://localhost:3000/api/professors/7/students
+GET http://localhost:3000/api/professors/2/students
 Content-Type: application/json
 
 ###
