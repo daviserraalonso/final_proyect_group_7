@@ -9,6 +9,10 @@ import { CourseService } from '../../../../service/course.service';
 import { ScoreService } from '../../../../service/score.service';
 import Swal from 'sweetalert2';
 
+export type ScoreValid = {
+  id: number
+}
+
 @Component({
   selector: 'app-student-courses',
   standalone: true,

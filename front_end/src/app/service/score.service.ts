@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { Comments } from '../components/common/comments/comments.component';
+import { ScoreValid } from '../components/dashboard/student/student-courses/student-courses.component';
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +16,8 @@ export class ScoreService {
     return firstValueFrom(this.http.post<number>(this.baseUrl, body))
   }
 
-  getScoreByIds(params: HttpParams): Promise<any> {
-    return firstValueFrom(this.http.get<any>(this.baseUrl, {params: params}))
+  getScoreByIds(params: HttpParams): Promise<ScoreValid> {
+    return firstValueFrom(this.http.get<ScoreValid>(this.baseUrl, {params: params}))
   }
   getComments(userId: number): Promise<Comments[]> {
     return firstValueFrom(this.http.get<Comments[]>(`${this.baseUrl}/${userId}/comments`))

@@ -49,6 +49,7 @@ export class LoginComponent {
               console.log(id)
               this.router.navigate(['/teacher', id])
              this.dialog.close()
+             localStorage.removeItem('teacherid')
             } else {
               this.router.navigate([response.redirectTo || '/']);
             }

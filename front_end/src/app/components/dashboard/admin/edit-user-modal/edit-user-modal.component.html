@@ -16,12 +16,15 @@
       <input matInput formControlName="password" type="password" />
     </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Rol</mat-label>
-      <mat-select formControlName="roleId">
-        <mat-option *ngFor="let role of roles" [value]="role.id">{{ role.name }}</mat-option>
-      </mat-select>
-    </mat-form-field>
+      @if(role === "1") {
+        <mat-form-field appearance="outline">
+          <mat-label>Rol</mat-label>
+          <mat-select formControlName="roleId">
+            <mat-option *ngFor="let role of roles" [value]="role.id">{{ role.name }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      }
 
     <h3>Detalles del Usuario</h3>
     <mat-form-field appearance="outline">
@@ -30,8 +33,8 @@
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <mat-label>Dirección</mat-label>
-      <input matInput formControlName="address" />
+      <mat-label>Introduce tu poblacion</mat-label>
+      <input matInput formControlName="address" id="city" (input)="autocomplet()" #cityInput>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
