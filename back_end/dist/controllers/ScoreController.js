@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getScore = exports.insertScore = void 0;
+exports.getComments = exports.getScore = exports.insertScore = void 0;
 const ProfessorRating_1 = __importDefault(require("../models/ProfessorRating"));
 const insertScore = async (req, res, next) => {
     const { studentId, scoreTeacher, scoreCourse, idTeacher, idCourse, opinion } = req.body;
@@ -45,3 +45,18 @@ const getScore = async (req, res, next) => {
     }
 };
 exports.getScore = getScore;
+const getComments = async (req, res, next) => {
+    const { userId } = req.params;
+    try {
+        const comments = await ProfessorRating_1.default.findAll({
+            where: {
+                professorId: userId
+            },
+            attributes: ['comments', 'rating_teacher']
+        });
+        res.status(200).json(comments);
+    }
+    catch (error) {
+    }
+};
+exports.getComments = getComments;

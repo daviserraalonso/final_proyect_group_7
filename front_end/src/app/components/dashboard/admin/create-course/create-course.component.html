@@ -32,6 +32,12 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Precio</mat-label>
+    <input matInput [(ngModel)]="course.price" placeholder="Precio del curso" />
+  </mat-form-field>
+
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">

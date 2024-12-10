@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getFavoriteTeachers = exports.getUserSubscribedCourses = exports.cityCords = exports.cities = exports.names = exports.searchTeachers = exports.getTeachers = exports.deleteUser = exports.modifyUser = exports.getUserDetails = exports.getAllUsers = exports.createUser = exports.confirmEmail = exports.registerUser = void 0;
+exports.getFavoriteTeachers = exports.validate = exports.getUserSubscribedCourses = exports.cityCords = exports.cities = exports.names = exports.searchTeachers = exports.getTeachers = exports.deleteUser = exports.modifyUser = exports.getUserDetails = exports.getAllUsers = exports.createUser = exports.confirmEmail = exports.registerUser = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const emailService_1 = require("../services/emailService");
 const UserDetails_1 = __importDefault(require("../models/UserDetails"));
@@ -12,6 +12,7 @@ const sequelize_1 = require("sequelize");
 const StudentCourse_1 = __importDefault(require("../models/StudentCourse"));
 const avg_teacher_1 = __importDefault(require("../models/avg_teacher"));
 const User_1 = __importDefault(require("../models/User"));
+const Category_1 = __importDefault(require("../models/Category"));
 const jwt = require('jsonwebtoken');
 /**
  * Function to register user
@@ -263,10 +264,11 @@ const getTeachers = async (req, res) => {
 exports.getTeachers = getTeachers;
 const searchTeachers = async (req, res) => {
     console.log(req.query);
-    const { inputName, inputCity, selectedCategory, minPrice, maxPrice, score, southWestLat, southWestLng, northEastLat, northEastLng, type } = req.query;
+    const { userId, inputName, inputCity, selectedCategory, minPrice, maxPrice, score, southWestLat, southWestLng, northEastLat, northEastLng, type } = req.query;
     const filters = {
         roleId: 2,
         isValidated: 1,
+        ...(userId && { id: userId }),
         ...(type && {
             '$coursesTaught.modality_id$': type,
         }),
@@ -289,7 +291,7 @@ const searchTeachers = async (req, res) => {
         })
     };
     try {
-        console.log(filters);
+        console.log(`filtro: ${userId}`);
         const teachers = await User_1.default.findAll({
             where: filters,
             include: [
@@ -301,7 +303,14 @@ const searchTeachers = async (req, res) => {
                 {
                     model: Course_1.default,
                     as: 'coursesTaught',
-                    attributes: ['price', 'modality_id', 'category_id'],
+                    attributes: ['id', 'name', 'price', 'modality_id', 'category_id'],
+                    include: [
+                        {
+                            model: Category_1.default,
+                            as: 'category',
+                            attributes: ['category_name']
+                        }
+                    ]
                 },
                 {
                     model: avg_teacher_1.default,
@@ -408,6 +417,25 @@ const getUserSubscribedCourses = async (req, res) => {
     }
 };
 exports.getUserSubscribedCourses = getUserSubscribedCourses;
+const validate = async (req, res, next) => {
+    try {
+        const { userId } = req.params;
+        const userUpdateData = {
+            isValidated: 1
+        };
+        await User_1.default.update(userUpdateData, {
+            where: {
+                id: userId
+            }
+        });
+        res.status(200).json('Usuario Validado');
+    }
+    catch (error) {
+        next(error);
+        res.json('error');
+    }
+};
+exports.validate = validate;
 const getFavoriteTeachers = async (req, res) => {
     try {
         const teachers = await avg_teacher_1.default.findAll({

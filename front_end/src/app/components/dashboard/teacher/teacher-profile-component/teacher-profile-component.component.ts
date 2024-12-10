@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { Component, inject, OnInit } from '@angular/core';
+import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarConfig, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -20,8 +20,18 @@ import { CustomSnackbarComponent } from '../../../common/custom-snackbar/custom-
 import { CalendarDialogComponent } from '../../../common/calendar-dialog/calendar-dialog.component';
 import { FormsModule } from '@angular/forms';
 import { TaskManagerComponentComponent } from '../../../common/task-manager-component/task-manager-component.component';
-
-
+import { IUser } from '../../../../interfaces/iUser';
+import { Task } from '../../../../interfaces/itask';
+import { UserServiceService } from '../../../../service/user-service.service';
+import { DashboardStudentService } from '../../../../service/dashboard-student.service';
+import { TaskService } from '../../../../service/task.service';
+import { ProgressResponse } from '../../../../interfaces/iProgressResponse';
+import { Color, NgxChartsModule, ScaleType } from '@swimlane/ngx-charts';
+import { Task_ejemplo } from '../../../../interfaces/iTask_1';
+import { PendingTasksDialogComponent } from '../pending-tasks-dialog/pending-tasks-dialog.component';
+import { TeacherServiceService } from '../../../../service/teacher-service.service';
+import { IEarnings } from '../../../../interfaces/iearnings';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-teacher-profile-component',
@@ -37,104 +47,114 @@ import { TaskManagerComponentComponent } from '../../../common/task-manager-comp
     MatButtonModule,
     MatListModule,
     MatGridListModule,
-    NgFor,
     MatDialogModule,
     MatSnackBarModule,
-    MessageComponentComponent,
-    CalendarDialogComponent,
     MatNativeDateModule,
     MatFormFieldModule,
     MatDatepickerModule,
     FormsModule,
-    
-
-    
+    NgxChartsModule,
   ],
   templateUrl: './teacher-profile-component.component.html',
   styleUrl: './teacher-profile-component.component.css'
 })
-export class TeacherProfileComponentComponent {
-  teacherProfile = {
-    name: 'Ana Gómez',
-    email: 'ana.gomez@example.com',
-    phone: '+123456789',
-    address: 'Calle Falsa 123, Ciudad, País',
-    photoUrl: 'https://via.placeholder.com/150'
+
+export class TeacherProfileComponentComponent implements OnInit {
+  serviceStudentDetails = inject(UserServiceService);
+  serviceStudentProfile = inject(DashboardStudentService);
+  taskService = inject(TaskService);
+  teacherService = inject(TeacherServiceService);
+
+  userId: number = 0; // Almacenamos el ID del usuario
+  teacherProfile: IUser = {
+    id: 0,
+    name: '',
+    email: '',
+    details: {
+      phone: '',
+      address: '',
+      img_url: '',
+      description: ''
+    }
   };
+  arrCourses: ProgressResponse[] = [];
 
-  //TAREAS
-  tasks: any[] = [];
-  // Alumnos inscritos
-  students = [
-    {
-      name: 'Juan Pérez',
-      progress: 60
-    },
-    {
-      name: 'María López',
-      progress: 75
-    },
-    {
-      name: 'Carlos Fernández',
-      progress: 90
-    }
-  ];
-  //tareas
-  studentTasks = [
-    {
-      title: 'Ensayo sobre la Revolución Francesa',
-      student: 'Juan Pérez',
-      description: '.......................',
-      status: 'Pendiente'
-    },
-    {
-      title: 'Ejercicios de Matemáticas',
-      student: 'María López',
-      description: '..............',
-      status: 'Pendiente'
-    }
-  ];
-  // Mensajes
-  messages = [
-    {
-      subject: 'Reunión de Padres',
-      content: 'Recordatorio de la reunión .'
-    },
-    {
-      subject: 'Entrega de Tareas',
-      content: 'La fecha límite para la entrega de tareas es el viernes.'
-    }
-  ];
+  tasks:Task_ejemplo [] = [];
+  
+  pendingTasksData: { name: string; value: number }[] = []; // Inicializa como un array vacío y especifica el tipo
+  
+  
+  
 
-  // Notificaciones
-  notifications = [
-    'Tienes una nueva tarea para revisar.',
-    'El alumno Carlos Fernández ha completado una lección.',
-    'Tu progreso en el curso de Historia del Arte ha sido actualizado.'
-  ];
+  
 
   // Fecha seleccionada
   selectedDate: Date | null = null;
 
-  constructor(public dialog: MatDialog, private snackBar: MatSnackBar) {}
+  
+  earningsData: { name: string; value: number }[] = []; // Especifica el tipo explícitamente
 
-  get recentMessages() {
-    return this.messages.slice(-5).reverse();
+  colorScheme: Color = {
+    name: 'default',
+    selectable: true,
+    group: ScaleType.Ordinal,
+    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
+  };
+
+  data = [
+    {
+      name: 'Estudiantes',
+      value: 25 // Número total de alumnos del profesor
+    }
+  ];
+
+  constructor(public dialog: MatDialog, private snackBar: MatSnackBar, private router: Router) {}
+  async ngOnInit() {
+    try {
+      const user = JSON.parse(localStorage.getItem('user') || '{}');
+      this.userId = user.id || 6; // asign id or use deafult value
+
+      // call to services
+      this.teacherProfile = await this.serviceStudentDetails.getUserDetails(this.userId);
+      console.log(this.userId)
+      
+      this.arrCourses = await this.serviceStudentProfile.getProgressByUserId(this.userId);
+    
+  
+      this.loadPendingTasksData(this.userId); // Llama a la función aquí
+
+      // Llama al nuevo método para obtener el conteo de estudiantes
+      const studentCountResponse = await this.teacherService.getStudentCount(this.userId);
+      this.data = [
+        {
+          name: 'Estudiantes',
+          value: studentCountResponse.studentCount // Actualiza el valor con la respuesta del servicio
+        }
+      ];
+
+      // Llama al nuevo método para obtener las ganancias
+      const earningsResponse = await this.teacherService.getEarnings(this.userId);
+      this.earningsData = earningsResponse.map((earning: IEarnings) => ({
+        name: earning.name,
+        value: parseFloat(earning.totalEarnings) || 0 // Asegúrate de que los valores "0" se muestren correctamente
+      }));
+    } catch (error) {
+      console.error('Error al obtener los datos:', error);
+    }
   }
 
-  openMessageDialog(): void {
-    const dialogRef = this.dialog.open(MessageComponentComponent, {
-      width: '600px',
-      data: { students: this.students.map(student => student.name) }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.messages.push(result);
-        this.showCustomSnackBar('Mensaje enviado');
-      }
+  loadPendingTasksData(professorId: number) {
+    this.teacherService.getTaskCounts(professorId).then(taskCounts => {
+      this.pendingTasksData = [
+        { name: 'Pendientes', value: taskCounts.pendingTasks },
+        { name: 'Calificadas', value: taskCounts.gradedTasks }
+      ];
     });
   }
+
+  
+
+  
 
   showCustomSnackBar(message: string): void { 
     // Abre la snackbar con el componente personalizado
@@ -144,43 +164,32 @@ export class TeacherProfileComponentComponent {
       panelClass: ['custom-snackbar']
     });
   }
-  openTaskManagerDialog(): void {
-    const dialogRef = this.dialog.open(TaskManagerComponentComponent, {
-      width: '1000px',
-      data: { students: this.students.map(student => student.name) }
-    });
+ 
+  updatePendingTasksData() {
+    const pending = this.tasks.filter(task => task.status === 'Pendiente').length;
+    const graded = this.tasks.length - pending;
+    this.pendingTasksData = [
+      { name: 'Pendientes', value: pending },
+      { name: 'Calificadas', value: graded }
+    ];
+  }
 
+  openPendingTasksDialog(): void {
+    const pendingTasks = this.tasks.filter(task => task.status === 'Pendiente');
+    const dialogRef = this.dialog.open(PendingTasksDialogComponent, {
+      width: '600px',
+      height:'600px', // Asegúrate de que el tamaño sea adecuado
+      data: { tasks: pendingTasks },
+    });
+  
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.messages.push(result);
-        this.showCustomSnackBar('Tarea enviada');
+        this.showCustomSnackBar('Tarea revisada');
       }
     });
   }
-  navigateToSection(notification: string, event?: MouseEvent): void {
-    // Evitar que el evento de clic del botón cause un problema con el clic en el mat-list-item
-    if (event) {
-      event.stopPropagation();
-    }
-
-    if (notification.includes('tarea')) {
-      this.scrollToSection('tasksSection');
-    } else if (notification.includes('lección')) {
-      this.scrollToSection('studentsSection');
-    } else if (notification.includes('progreso')) {
-      this.scrollToSection('profileSection');
-    }
-  }
-
-  scrollToSection(sectionId: string): void {
-    const section = document.getElementById(sectionId);
-    if (section) {
-      section.scrollIntoView({ behavior: 'smooth' });
-    }
-  }
-  reviewTask(task: any): void {
-    console.log('Revisar Tarea:', task);
-    // Aquí podrías implementar lógica adicional, como abrir un diálogo para revisar o actualizar el estado de la tarea
+  openStudents() {
+    this.router.navigate(['/mis-alumnos']); // Reemplaza '/ruta-deseada' con la ruta a la que deseas redirigir
   }
 }
 

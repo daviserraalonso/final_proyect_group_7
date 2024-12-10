@@ -23,7 +23,9 @@
         <mat-header-cell *matHeaderCellDef> Validado </mat-header-cell>
         <mat-cell *matCellDef="let user">
           {{ user.isValidated === 1 ? 'Sí' : 'No' }}
-        </mat-cell>
+          @if (user.isValidated === 0) {
+            <button (click)="validateUser(user.id)" mat-button>Validar</button>
+          }        </mat-cell>
       </ng-container>
   
       <!-- Rol -->

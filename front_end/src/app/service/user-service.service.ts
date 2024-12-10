@@ -59,4 +59,8 @@ export class UserServiceService {
     return firstValueFrom(this.http.post<UserAttributes>(`${this.baseUrl}/register`, body));
   }
 
+  validate(id: number): Promise<any> {
+    return firstValueFrom(this.http.put(`${this.baseUrl}/${id}/validate`, null))
+  }
+
 }

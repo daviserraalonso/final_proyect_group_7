@@ -12,15 +12,14 @@ GET http://localhost:3000/api/tasks/progress/6
 
 
 ### POST nueva tarea
-POST http://localhost:3000/api/tasks
+POST http://localhost:3000/api/tasks/assign
 Content-Type: application/json
 
 {
-  "subjectId": 12,
-  "userId": 6,
-  "comments": "Completar ejercicios de matemáticas.",
-  "punctuation": 100,
-  "deadline": "2024-11-30"
+  "studentId": 3,
+  "subjectId": 1,
+  "comments": "Completar el capítulo 3.",
+  "deadline": "2024-12-10"
 }
 
 ###### PUT actualizar tarea
@@ -30,7 +29,8 @@ Content-Type: application/json
 
 {
   "punctuation": 9,
-  "submission": "Contenido de la entrega"
+  "submission": "Contenido de la entrega",
+  "feedback": "Contenido de la entrega"
 }
 
 ### DELETE tarea
@@ -43,5 +43,25 @@ Content-Type: application/json
 
 ###
 ### Obtener estudiantes por profesor
-GET http://localhost:3000/api/professors/3/students
+GET http://localhost:3000/api/professors/7/students
+Content-Type: application/json
+
+###
+### Obtener tareas pendientes de un profesor
+GET http://localhost:3000/api/tasks/profesor/2/pending-tasks
+Content-Type: application/json
+###detalles de la tarea
+###
+GET http://localhost:3000/api/tasks/details/65
+Content-Type: application/json
+###
+### Obtener el conteo de tareas calificadas y no calificadas para un profesor
+GET http://localhost:3000/api/tasks/counts/7
+Content-Type: application/json
+
+#### Obtener el conteo de alumnos del profesor
+GET http://localhost:3000/api/tasks/profesor/7/student-count
+Content-Type: application/json
+### Obtener ingresos de un profesor específico
+GET http://localhost:3000/api/tasks/profesor/3/earnings
 Content-Type: application/json

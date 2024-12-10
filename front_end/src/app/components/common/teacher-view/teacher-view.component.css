@@ -1,0 +1,63 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  position: relative;
+  height: 100%;
+  max-height: fit-content;
+
+}
+
+.card-content {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.info {
+  flex: 1;
+  text-align: left;
+}
+
+.img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-bottom: 8px;
+}
+
+.info-dates h2 {
+  margin: 0;
+  font-size: 1.5em;
+}
+
+.courses {
+  flex: 2;
+  padding-left: 16px;
+}
+
+.divider {
+  width: 2px;
+  background-color: black;
+  height: 100%;
+  margin: 0 16px;
+}
+
+.comments {
+  margin-top: 16px;
+  border-top: 1px solid #e0e0e0;
+  padding-top: 16px;
+}
+
+.close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  color: #757575;
+  cursor: pointer;
+}
+
+.course {
+  width: max-content;
+  
+}

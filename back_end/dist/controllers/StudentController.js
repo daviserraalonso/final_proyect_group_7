@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getStudentCourses = void 0;
+exports.inscription = exports.getStudentCourses = void 0;
 const StudentCourse_1 = __importDefault(require("../models/StudentCourse"));
 const Course_1 = __importDefault(require("../models/Course"));
 const Category_1 = __importDefault(require("../models/Category"));
@@ -61,3 +61,22 @@ const getStudentCourses = async (req, res) => {
     }
 };
 exports.getStudentCourses = getStudentCourses;
+const inscription = async (req, res, next) => {
+    const { studentId, courseId } = req.body;
+    const date = new Date();
+    if (!studentId || !courseId) {
+        return res.status(400).json('Algo ha fallado');
+    }
+    try {
+        const studentInscription = await StudentCourse_1.default.create({
+            studentId: studentId,
+            courseId: courseId,
+            enrollmentDate: date
+        });
+        return res.status(200).json(studentInscription);
+    }
+    catch (error) {
+        next(error);
+    }
+};
+exports.inscription = inscription;
