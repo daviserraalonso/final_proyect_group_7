@@ -6,6 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogContent } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-course-enrollment',
@@ -57,7 +58,16 @@ export class CourseEnrollmentComponent {
   
       this.userService.insert(formData).then(
         (response) => {
-          alert(`Usuario registrado y curso "${this.courseName}" asignado con éxito`);
+          Swal.fire({
+            text: `Usuario registrado y curso "${this.courseName}" asignado con éxito`,
+            width: 400,
+            showConfirmButton: false,
+            imageUrl: 'assets/logo.png',
+            imageAlt: 'Icon image',
+            imageHeight: 80,
+            imageWidth: 60,
+            timer: 2500
+          });
           this.formSubmitted.emit(response);
         },
         (error) => {
