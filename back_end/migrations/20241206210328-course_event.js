@@ -17,6 +17,15 @@ module.exports = {
         },
         onDelete: "CASCADE",
       },
+      professorId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: "user",
+          key: "id",
+        },
+        onDelete: "CASCADE",
+      },
       subjectId: {
         type: Sequelize.INTEGER,
         references: {
@@ -45,7 +54,7 @@ module.exports = {
         allowNull: false,
       },
       locationType: {
-        type: Sequelize.ENUM("physical", "online"),
+        type: Sequelize.ENUM("Presential", "Online"),
         allowNull: false,
       },
       locationId: {
@@ -59,9 +68,6 @@ module.exports = {
       },
       onlineLink: {
         type: Sequelize.STRING,
-      },
-      deadline: {
-        type: Sequelize.DATEONLY,
       },
       isRead: {
         type: Sequelize.BOOLEAN,

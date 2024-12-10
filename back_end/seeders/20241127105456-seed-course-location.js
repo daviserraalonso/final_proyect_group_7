@@ -25,7 +25,7 @@ module.exports = {
         courseId: 3,
         lat: null,
         lng: null,
-        address: null,
+        address: 'Madrid',
         onlineLink: 'https://online-course-3.com',
         createdAt: new Date(),
         updatedAt: new Date(),

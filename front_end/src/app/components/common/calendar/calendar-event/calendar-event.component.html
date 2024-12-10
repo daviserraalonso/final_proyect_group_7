@@ -1,0 +1,59 @@
+<div class="dialog-container">
+  <h1 mat-dialog-title class="dialog-title">Detalle del Evento</h1>
+  <div mat-dialog-content class="dialog-content">
+    <mat-list>
+      <mat-list-item class="list-item">
+        <mat-icon>event</mat-icon>
+        <div class="list-content">
+          <strong>Título:</strong> {{ data.event.title }}
+        </div>
+      </mat-list-item>
+      <mat-list-item class="list-item">
+        <mat-icon>description</mat-icon>
+        <div class="list-content">
+          <strong>Descripción:</strong> {{ data.event.description }}
+        </div>
+      </mat-list-item>
+      <mat-list-item class="list-item">
+        <mat-icon>schedule</mat-icon>
+        <div class="list-content">
+          <strong>Inicio:</strong> {{ data.event.startDateTime | date:'short' }}
+        </div>
+      </mat-list-item>
+      <mat-list-item class="list-item">
+        <mat-icon>schedule</mat-icon>
+        <div class="list-content">
+          <strong>Fin:</strong> {{ data.event.endDateTime | date:'short' }}
+        </div>
+      </mat-list-item>
+      <mat-list-item class="list-item">
+        <mat-icon>place</mat-icon>
+        <div class="list-content">
+          <strong>Modalidad:</strong> {{ selectedModality }}
+        </div>
+      </mat-list-item>
+      <mat-list-item class="list-item">
+        <mat-icon>link</mat-icon>
+        <div class="list-content">
+          <strong>Enlace:</strong>
+          <a [href]="data.event.onlineLink" target="_blank">{{ data.event.onlineLink }}</a>
+        </div>
+      </mat-list-item>
+      <mat-list-item class="list-item">
+        <mat-icon>book</mat-icon>
+        <div class="list-content">
+          <strong>Materia:</strong> {{ subjectName }}
+        </div>
+      </mat-list-item>
+      <mat-list-item class="list-item">
+        <mat-icon>group</mat-icon>
+        <div class="list-content">
+          <strong>Tipo de Evento:</strong> {{ data.event.eventType }}
+        </div>
+      </mat-list-item>
+    </mat-list>
+  </div>
+  <div mat-dialog-actions class="dialog-actions">
+    <button mat-button class="btn-close" (click)="closeDialog()"></button>
+  </div>
+</div>

@@ -279,18 +279,16 @@ const searchTeachers = async (req, res) => {
         ...(selectedCategory && {
             '$coursesTaught.category_id$': selectedCategory,
         }),
-        ...(minPrice && { [sequelize_1.Op.or]: [
-                { '$coursesTaught.price$': { [sequelize_1.Op.between]: [minPrice, maxPrice] } },
-                { '$coursesTaught.price$': null }
-            ] }),
+        ...(minPrice && {
+            [sequelize_1.Op.or]: [
+                { '$course.price$': { [sequelize_1.Op.between]: [minPrice, maxPrice] } },
+                { '$course.price$': null }
+            ]
+        }),
         ...(southWestLat && southWestLng && northEastLat && northEastLng && {
             '$details.lat$': { [sequelize_1.Op.between]: [southWestLat, northEastLat] },
             '$details.lng$': { [sequelize_1.Op.between]: [southWestLng, northEastLng] },
-        }),
-        ...(score && { [sequelize_1.Op.or]: [
-                { '$averageTeacher.avg$': { [sequelize_1.Op.gte]: score } },
-                { '$averageTeacher.avg$': null }
-            ] }),
+        })
     };
     try {
         console.log(`filtro: ${userId}`);
