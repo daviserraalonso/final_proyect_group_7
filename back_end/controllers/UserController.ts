@@ -6,7 +6,7 @@ import Course from '../models/Course';
 import { Op, Sequelize, where } from 'sequelize';
 import StudentCourse from '../models/StudentCourse';
 import AvgTeacher from '../models/avg_teacher';
-import User from '../models/User';
+import User from '../models/user';
 import Category from '../models/Category';
 import { isValidDate } from '@fullcalendar/core/internal';
 const jwt = require('jsonwebtoken');

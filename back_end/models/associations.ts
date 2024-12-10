@@ -11,7 +11,7 @@ import Category from './Category';
 import ProfessorRating from './ProfessorRating';
 import AvgTeacher from './avg_teacher'
 import AvgCourse from './avg_course';
-import User from './User';
+import User from './user';
 import Task from './Task';
 
 export default function setupAssociations() {

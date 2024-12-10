@@ -1,7 +1,7 @@
 import { Model, DataTypes } from 'sequelize';
 import sequelize from '../config/database';
 import Course from './Course';
-import User from './User';
+import User from './user';
 class StudentCourse extends Model {
   // Métodos de Sequelize
   public getCourse!: () => Promise<Course>;
