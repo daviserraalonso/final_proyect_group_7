@@ -1,5 +1,5 @@
 <div class="dialog-container">
-  <h1 mat-dialog-title class="dialog-title">Detalle del Evento</h1>
+  <h1 mat-dialog-title class="dialog-title">📅 Detalle del Evento</h1>
   <div mat-dialog-content class="dialog-content">
     <mat-list>
       <mat-list-item class="list-item">
@@ -11,28 +11,28 @@
       <mat-list-item class="list-item">
         <mat-icon>description</mat-icon>
         <div class="list-content">
-          <strong>Descripción:</strong> {{ data.event.description }}
+          <strong>Descripción:</strong> {{ data.event.description || 'Sin descripción disponible' }}
         </div>
       </mat-list-item>
       <mat-list-item class="list-item">
         <mat-icon>schedule</mat-icon>
         <div class="list-content">
-          <strong>Inicio:</strong> {{ data.event.startDateTime | date:'short' }}
+          <strong>Inicio:</strong> {{ localStartDateTime | date: 'dd/MM/yyyy, HH:mm' }}
         </div>
       </mat-list-item>
       <mat-list-item class="list-item">
         <mat-icon>schedule</mat-icon>
         <div class="list-content">
-          <strong>Fin:</strong> {{ data.event.endDateTime | date:'short' }}
+          <strong>Fin:</strong> {{ localEndDateTime | date: 'dd/MM/yyyy, HH:mm' }}
         </div>
       </mat-list-item>
       <mat-list-item class="list-item">
         <mat-icon>place</mat-icon>
         <div class="list-content">
-          <strong>Modalidad:</strong> {{ selectedModality }}
+          <strong>Modalidad:</strong> {{ selectedModality === 'Presential' ? 'Presencial' : 'Online' }}
         </div>
       </mat-list-item>
-      <mat-list-item class="list-item">
+      <mat-list-item class="list-item" *ngIf="data.event.onlineLink">
         <mat-icon>link</mat-icon>
         <div class="list-content">
           <strong>Enlace:</strong>
@@ -42,18 +42,18 @@
       <mat-list-item class="list-item">
         <mat-icon>book</mat-icon>
         <div class="list-content">
-          <strong>Materia:</strong> {{ subjectName }}
+          <strong>Materia:</strong> {{ subjectName || 'Materia no especificada' }}
         </div>
       </mat-list-item>
       <mat-list-item class="list-item">
         <mat-icon>group</mat-icon>
         <div class="list-content">
-          <strong>Tipo de Evento:</strong> {{ data.event.eventType }}
+          <strong>Tipo de Evento:</strong> {{ data.event.eventType === 'task' ? 'Tarea' : 'Clase' }}
         </div>
       </mat-list-item>
     </mat-list>
   </div>
   <div mat-dialog-actions class="dialog-actions">
-    <button mat-button class="btn-close" (click)="closeDialog()"></button>
+    <button mat-button class="btn-close" matTooltip="Cerrar ventana" (click)="closeDialog()"></button>
   </div>
 </div>
