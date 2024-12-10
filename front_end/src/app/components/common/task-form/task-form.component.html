@@ -1,18 +1,30 @@
-<h2 mat-dialog-title>Enviar Tarea</h2>
+<h2 mat-dialog-title class="dialog-title">Enviar Tarea</h2>
 <mat-dialog-content>
-  <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
-    <mat-form-field appearance="outline" class="full-width">
+  <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="form-container">
+    <mat-form-field appearance="fill" class="form-field">
       <mat-label>Comentarios</mat-label>
-      <textarea matInput formControlName="comments" placeholder="Ingrese los detalles de la tarea"></textarea>
+      <textarea 
+        matInput 
+        formControlName="comments" 
+        placeholder="Ingrese los detalles de la tarea"
+        rows="4">
+      </textarea>
     </mat-form-field>
 
-    <mat-form-field>
+    <mat-form-field appearance="fill" class="form-field">
       <mat-label>Fecha Límite</mat-label>
       <input matInput formControlName="deadline" type="date">
     </mat-form-field>
-    <mat-dialog-actions align="end">
-      <button mat-button type="button" (click)="onCancel()">Cancelar</button>
-      <button mat-button type="submit" [disabled]="taskForm.invalid">Enviar</button>
-    </mat-dialog-actions>
+
+    <div class="actions">
+      <button mat-button type="button" class="btn-cancel" (click)="onCancel()">Cancelar</button>
+      <button 
+        mat-raised-button 
+        color="primary" 
+        type="submit" 
+        [disabled]="taskForm.invalid">
+        Enviar
+      </button>
+    </div>
   </form>
 </mat-dialog-content>

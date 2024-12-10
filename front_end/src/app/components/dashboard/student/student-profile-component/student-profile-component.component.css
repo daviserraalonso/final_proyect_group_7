@@ -7,8 +7,6 @@
 /* Tarjetas */
 mat-card {
   background-color: #ffffff;
-  border-radius: 15px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
   padding: 25px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   
@@ -21,6 +19,10 @@ mat-card:hover {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
+.mat-elevation-z8{
+background-color: white;
+border: none;
+}
 /* Encabezado del Dashboard */
 .dashboard-header {
   color: black;
