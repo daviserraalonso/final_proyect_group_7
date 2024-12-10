@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 const { Op } = require('sequelize');
 import Chat from '../models/Chat';
 import Message from '../models/Message';
-import User from '../models/user';
+import User from '../models/User';
 
 class MessagesController {
 
