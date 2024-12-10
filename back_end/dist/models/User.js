@@ -59,6 +59,7 @@ User.init({
     },
 }, {
     sequelize: database_1.default,
+    modelName: 'User',
     tableName: 'user',
 });
 exports.default = User;

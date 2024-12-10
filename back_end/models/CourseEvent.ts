@@ -1,12 +1,23 @@
-// models/CourseEvent.ts
 import { Model, DataTypes } from 'sequelize';
 import sequelize from '../config/database';
 
 class CourseEvent extends Model {
   public id!: number;
   public courseId!: number;
+  public subjectId!: number | null;
   public professorId!: number;
-  public studentId!: number;
+  public eventType!: 'class' | 'task';
+  public title!: string;
+  public description!: string | null;
+  public startDateTime!: Date;
+  public endDateTime!: Date;
+  public locationType!: 'physical' | 'online';
+  public locationId!: number | null;
+  public onlineLink!: string | null;
+  public deadline!: Date | null;
+  public isRead!: boolean;
+  public createdAt!: Date;
+  public updatedAt!: Date;
 }
 
 CourseEvent.init(
@@ -14,73 +25,63 @@ CourseEvent.init(
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      autoIncrement: false,
+      autoIncrement: true,
     },
     courseId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      field: 'courseId',
     },
     subjectId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      field: 'subjectId',
+      allowNull: true,
+    },
+    professorId: {
+      type: DataTypes.INTEGER,
+      allowNull: false, // Este campo es obligatorio
     },
     eventType: {
-      type: DataTypes.STRING,
+      type: DataTypes.ENUM('class', 'task'),
       allowNull: false,
-      field: 'eventType',
     },
-
     title: {
       type: DataTypes.STRING,
       allowNull: false,
-      field: 'title',
     },
     description: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      field: 'description',
+      type: DataTypes.TEXT,
+      allowNull: true,
     },
     startDateTime: {
       type: DataTypes.DATE,
       allowNull: false,
-      field: 'startDateTime',
     },
     endDateTime: {
       type: DataTypes.DATE,
       allowNull: false,
-      field: 'endDateTime',
     },
     locationType: {
-      type: DataTypes.STRING,
+      type: DataTypes.ENUM('Presential', 'Online'),
       allowNull: false,
-      field: 'locationType',
     },
     locationId: {
       type: DataTypes.INTEGER,
       allowNull: true,
-      field: 'locationId',
     },
     onlineLink: {
       type: DataTypes.STRING,
-      allowNull: false,
-      field: 'onlineLink',
-    },
-    deadline: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      field: 'deadline',
+      allowNull: true,
     },
     isRead: {
       type: DataTypes.BOOLEAN,
-      allowNull: false,
-      field: 'isRead',
+      defaultValue: false,
     },
-    studentId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      field: 'studentId',
+    createdAt: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
     },
   },
   {

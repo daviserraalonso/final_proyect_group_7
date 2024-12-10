@@ -42,8 +42,8 @@ class LoginController {
             break;
         }
 
-        res.json({ 
-          user: { id: user.get('id'), role: user.get('roleId'), name: user.get('name') }, 
+        res.json({
+          user: { id: user.get('id'), role: user.get('roleId'), name: user.get('name') },
           token,
           redirectTo
         });
