@@ -7,14 +7,14 @@ import { ICourseEvent } from '../interfaces/iCourseEvent';
   providedIn: 'root',
 })
 export class CalendarService {
-  private apiUrl = 'http://localhost:3000/api/course-event'; // Base URL para la API del calendario
+  private apiUrl = 'http://localhost:3000/api/course-event';
 
   constructor(private http: HttpClient) { }
 
   getCalendarEvents(): Observable<ICourseEvent[]> {
     console.log('Fetching all calendar events...');
     return this.http.get<ICourseEvent[]>(`${this.apiUrl}`).pipe(
-      tap(events => console.log('All events:', events)), // Log de eventos
+      tap(events => console.log('All events:', events)), //Log de eventos
       catchError(this.handleError<ICourseEvent[]>('getCalendarEvents'))
     );
   }
@@ -23,7 +23,7 @@ export class CalendarService {
   getEventsByProfessorId(professorId: number): Observable<ICourseEvent[]> {
     console.log(`Fetching events for professorId: ${professorId}`);
     return this.http.get<ICourseEvent[]>(`${this.apiUrl}/professor/${professorId}/events`).pipe(
-      tap(events => console.log('Professor events:', events)), // Log de eventos
+      tap(events => console.log('Professor events:', events)), //Log de eventos
       catchError(this.handleError<ICourseEvent[]>('getEventsByProfessorId'))
     );
   }
@@ -31,7 +31,7 @@ export class CalendarService {
   getEventsByStudentId(studentId: number): Observable<ICourseEvent[]> {
     console.log(`Fetching events for studentId: ${studentId}`);
     return this.http.get<ICourseEvent[]>(`${this.apiUrl}/student/${studentId}/events`).pipe(
-      tap(events => console.log('Student events:', events)), // Log de eventos
+      tap(events => console.log('Student events:', events)), //Log de eventos
       catchError(this.handleError<ICourseEvent[]>('getEventsByStudentId'))
     );
   }
@@ -51,9 +51,9 @@ export class CalendarService {
     return this.http.get<any[]>(url).pipe(
       catchError((error) => {
         if (error.status === 404) {
-          // Si no hay asignaturas, devolvemos un array vacío
+          //Si no hay asignaturas, devolvemos un array vaico
           console.warn(`No se encontraron asignaturas para el curso ${courseId}:`, error.message);
-          return of([]); // Devuelve un observable con un array vacío
+          return of([]);
         }
         return throwError(() => new Error(`Error en getSubjectsByCourseId: ${error.message}`));
       })
@@ -96,12 +96,11 @@ export class CalendarService {
     return this.http.get<{ address: string; onlineLink?: string }>(`${this.apiUrl}/location/${locationId}`).pipe(
       catchError((error) => {
         console.error(`Error en getCourseLocation:`, error);
-        return of({ address: '', onlineLink: '' }); // Devuelve un objeto vacío si hay error
+        return of({ address: '', onlineLink: '' }); //Devuelve un objeto vacío si hay error
       })
     );
   }
 
-  //Manejo de errores
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(`${operation} failed:`, error);
@@ -109,7 +108,7 @@ export class CalendarService {
     };
   }
 
-  //Método auxiliar para validar campos obligatorios
+  //Método auxiliar para validar campos obligatorios - NO EN USO
   private isEventValid(event: ICourseEvent): boolean {
     if (!event.title) throw new Error('El título es obligatorio.');
     if (!event.startDateTime) throw new Error('La fecha de inicio es obligatoria.');

@@ -33,7 +33,7 @@ export class CalendarEditEventComponent implements OnInit {
   subjects: { id: number; name: string }[] = [];
   selectedModality: string | null = null;
 
-  eventTypes: string[] = ['task', 'class']; // Opciones para el desplegable de tipo de evento
+  eventTypes: string[] = ['task', 'class'];
 
   isNewEvent: boolean = false;
 
@@ -46,12 +46,12 @@ export class CalendarEditEventComponent implements OnInit {
   ) {
     this.isNewEvent = data.isNew;
     const userString = localStorage.getItem('user');
-    let professorId = 0; // Valor predeterminado
+    let professorId = 0;
 
     if (userString) {
       try {
         const user = JSON.parse(userString);
-        professorId = user?.id || 0; // Obtiene el ID del profesor del usuario
+        professorId = user?.id || 0;
       } catch (error) {
         console.error('Error al parsear el usuario desde localStorage:', error);
       }
@@ -67,7 +67,7 @@ export class CalendarEditEventComponent implements OnInit {
       onlineLink: [{ value: data.event.onlineLink || null, disabled: data.event.locationType === 'Presential' }],
       courseId: [data.event.courseId, [Validators.required]],
       subjectId: [data.event.subjectId, [Validators.required]],
-      professorId: [data.event.professorId || professorId, [Validators.required]], // Usar el valor existente o el predeterminado
+      professorId: [data.event.professorId || professorId, [Validators.required]],
       eventType: [data.event.eventType || null],
       allDay: [data.event.allDay || false],
       isRead: [data.event.isRead || false],
@@ -79,59 +79,56 @@ export class CalendarEditEventComponent implements OnInit {
   ngOnInit(): void {
     console.log('Datos iniciales del formulario:', this.eventForm.value);
 
-    // Asegúrate de inicializar las fechas en el formato local
     this.eventForm.patchValue({
       start: this.toLocalDateTime(this.data.event.startDateTime),
       end: this.toLocalDateTime(this.data.event.endDateTime),
     });
 
-    // Configura los estados de los campos según la modalidad inicial
     this.updateFieldStates();
 
-    // Cargar datos relacionados
+
     this.loadCoursesByProfessor();
     this.listenToCourseSelection();
 
-    // Si ya hay un curso seleccionado, carga las asignaturas
+
     const courseId = this.eventForm.get('courseId')?.value;
     if (courseId) {
       this.loadSubjectsByCourse(courseId);
     }
 
-    // Forzar la detección de cambios en el formulario
     this.cdr.detectChanges();
   }
 
 
   toLocalDateTime(date: string): string {
-    const utcDate = new Date(date); // Convierte el string UTC en un objeto Date
+    const utcDate = new Date(date); //Convierte el string UTC en un objeto Date
     const localYear = utcDate.getFullYear();
-    const localMonth = String(utcDate.getMonth() + 1).padStart(2, '0'); // Mes comienza en 0
+    const localMonth = String(utcDate.getMonth() + 1).padStart(2, '0');
     const localDay = String(utcDate.getDate()).padStart(2, '0');
     const localHours = String(utcDate.getHours()).padStart(2, '0');
     const localMinutes = String(utcDate.getMinutes()).padStart(2, '0');
 
-    return `${localYear}-${localMonth}-${localDay}T${localHours}:${localMinutes}`; // Formato ISO para <input type="datetime-local">
+    return `${localYear}-${localMonth}-${localDay}T${localHours}:${localMinutes}`; //Formato ISO para <input type="datetime-local">
   }
 
   toUtcDateTime(date: string): string {
-    const localDate = new Date(date); // Fecha ingresada en el formulario en la zona local
+    const localDate = new Date(date); //Fecha ingresada en el formulario en la zona local
     return localDate.toISOString(); // Convierte a formato UTC para el backend
   }
 
   onModalityChange(modality: string): void {
-    this.selectedModality = modality; // Actualiza la modalidad seleccionada
-    this.eventForm.patchValue({ locationType: modality }); // Actualiza el valor del formulario
-    this.updateFieldStates(); // Ajusta los estados de los campos
+    this.selectedModality = modality; //Actualiza la modalidad seleccionada
+    this.eventForm.patchValue({ locationType: modality }); //Actualiza el valor del formulario
+    this.updateFieldStates(); //Ajusta los estados de los campos
   }
 
   updateFieldStates(): void {
     if (this.selectedModality === 'Presential') {
-      this.eventForm.get('onlineLink')?.disable(); // Deshabilitar enlace online
-      this.eventForm.get('locationId')?.enable(); // Habilitar ubicación física
+      this.eventForm.get('onlineLink')?.disable();
+      this.eventForm.get('locationId')?.enable();
     } else if (this.selectedModality === 'Online') {
-      this.eventForm.get('locationId')?.disable(); // Deshabilitar ubicación física
-      this.eventForm.get('onlineLink')?.enable(); // Habilitar enlace online
+      this.eventForm.get('locationId')?.disable();
+      this.eventForm.get('onlineLink')?.enable();
     }
   }
 
@@ -198,8 +195,8 @@ export class CalendarEditEventComponent implements OnInit {
       const updatedEvent: ICourseEvent = {
         ...this.data.event,
         ...this.eventForm.value,
-        startDateTime: this.toUtcDateTime(this.eventForm.value.start), // Convierte a UTC
-        endDateTime: this.toUtcDateTime(this.eventForm.value.end), // Convierte a UTC
+        startDateTime: this.toUtcDateTime(this.eventForm.value.start),
+        endDateTime: this.toUtcDateTime(this.eventForm.value.end),
       };
 
       console.log('Datos enviados al backend:', updatedEvent);

@@ -139,7 +139,7 @@ export class CalendarComponent implements OnInit {
 
     const newEvent: ICourseEvent = {
       id: 0,
-      title: 'Nuevo Evento',
+      title: '',
       description: '',
       startDateTime: selectInfo.startStr,
       endDateTime: selectInfo.endStr,
@@ -149,7 +149,7 @@ export class CalendarComponent implements OnInit {
       courseId: 0,
       subjectId: 0,
       professorId: 0,
-      eventType: 'Class', // Forzamos el tipo de evento a "Class"
+      eventType: 'class',
     };
 
     this.openEventEditDialog(newEvent, true);
@@ -179,10 +179,8 @@ export class CalendarComponent implements OnInit {
     };
 
     if (roleId === 3) {
-      // Si el rol es 3, abrir los detalles del evento
       this.openEventDetailsDialog(event);
     } else {
-      // De lo contrario, permitir edición
       this.openEventEditDialog(event, false);
     }
   }
@@ -192,7 +190,7 @@ export class CalendarComponent implements OnInit {
     const dialogRef = this.dialog.open(CalendarEditEventComponent, {
       width: '900px',
       height: '700px',
-      data: { event, isNew }, // Pasamos el evento y la bandera
+      data: { event, isNew }, //Pasamos el evento y la flag
     });
 
     dialogRef.afterClosed().subscribe((result: any) => {
@@ -205,7 +203,7 @@ export class CalendarComponent implements OnInit {
   private openEventDetailsDialog(event: ICourseEvent): void {
     this.dialog.open(CalendarEventComponent, {
       width: '1000px',
-      data: { event }, // Pasar el evento completo
+      data: { event }, //Pasar el evento completo
     });
   }
 
