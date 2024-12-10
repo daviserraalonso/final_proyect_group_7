@@ -12,6 +12,7 @@ import { CalendarEditEventComponent } from '../calendar-edit-event/calendar-edit
 import listPlugin from '@fullcalendar/list';
 import { lastValueFrom } from 'rxjs';
 import { ICourseEvent } from '../../../../interfaces/iCourseEvent';
+import { EventType } from '@angular/router';
 
 @Component({
   selector: 'app-calendar',
@@ -92,7 +93,7 @@ export class CalendarComponent implements OnInit {
             start: new Date(event.startDateTime).toISOString(),
             end: event.endDateTime ? new Date(event.endDateTime).toISOString() : undefined,
             allDay: event.allDay || false,
-            color: this.getEventColor(event.locationType || 'default'),
+            color: this.getEventColor(event.eventType || 'default'),
             extendedProps: {
               description: event.description || '',
               locationType: event.locationType || null,
@@ -104,6 +105,7 @@ export class CalendarComponent implements OnInit {
             },
           })),
         };
+
       } else {
         console.error('Error: La respuesta no es un array.');
       }
@@ -113,11 +115,11 @@ export class CalendarComponent implements OnInit {
   }
 
 
-  private getEventColor(locationType: string): string {
-    switch (locationType) {
-      case 'Presential':
+  private getEventColor(eventType: string): string {
+    switch (eventType) {
+      case 'task':
         return 'red';
-      case 'Online':
+      case 'class':
         return 'green';
       default:
         return 'orange';
