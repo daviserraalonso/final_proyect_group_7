@@ -91,9 +91,9 @@
     </div>
 
     <div class="modal-footer d-flex justify-content-between">
-      <button mat-button class="btn btn-danger btn-lg" (click)="closeDialog()">Cancelar</button>
-      <button mat-button class="btn btn-warning btn-lg" *ngIf="!isNewEvent" (click)="deleteEvent()">Eliminar</button>
-      <button mat-button class="btn btn-success btn-lg" [disabled]="eventForm.invalid" (click)="save()">Guardar</button>
+      <button mat-button class="btn btn-lg" (click)="closeDialog()">Cancelar</button>
+      <button mat-button class="btn btn-lg" *ngIf="!isNewEvent" (click)="deleteEvent()">Eliminar</button>
+      <button mat-button class="btn btn-lg" [disabled]="eventForm.invalid" (click)="save()">Guardar</button>
     </div>
     
   </div>

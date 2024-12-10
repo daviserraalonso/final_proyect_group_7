@@ -2,12 +2,16 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 20px;
 }
 
 .demo-app-main {
   width: 100%;
   max-width: 900px;
+  background-color: white; /* Fondo blanco para el calendario */
+  border-radius: 8px; /* Bordes redondeados */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+  padding: 15px;
+  overflow: hidden;
 }
 
 .event-important {
@@ -23,4 +27,78 @@
 .event-light {
   background-color: green !important;
   border-color: green !important;
+}
+
+
+
+
+
+
+/* Estilo para el calendario */
+.full-calendar {
+  border-radius: 8px;
+  font-family: 'Roboto', sans-serif; /* Fuente moderna y profesional */
+  background-color: #ffffff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  border: 1px solid #e0e0e0; /* Borde suave */
+}
+
+/* Estilo para los días de la semana */
+.fc-day-header {
+  background-color: #333333;
+  color: white;
+  font-weight: bold;
+  padding: 10px;
+  text-align: center;
+}
+
+/* Estilo para las celdas de los días */
+.fc-day {
+  background-color: #fafafa;
+  color: #333333;
+  border: 1px solid #e0e0e0;
+  transition: background-color 0.3s ease;
+}
+
+.fc-day:hover {
+  background-color: #f1f1f1; /* Efecto hover sutil */
+}
+
+/* Estilo para los días seleccionados */
+.fc-day.fc-day-today {
+  background-color: #3498db; /* Azul para el día actual */
+  color: white;
+  font-weight: bold;
+}
+
+/* Estilo para los eventos */
+.fc-event {
+  background-color: #3498db;
+  color: white;
+  border-radius: 4px;
+  padding: 5px 10px;
+  font-size: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo para el encabezado del mes */
+.fc-toolbar-title {
+  font-size: 50px;
+  font-weight: bold;
+  color: #333333;
+}
+
+/* Botones de navegación */
+.fc-prev-button, .fc-next-button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 50%;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.fc-prev-button:hover, .fc-next-button:hover {
+  background-color: #2980b9;
 }
