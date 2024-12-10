@@ -8,8 +8,15 @@ const database_1 = __importDefault(require("../config/database"));
 class StudentCourse extends sequelize_1.Model {
     // Métodos de Sequelize
     getCourse;
+    getStudent;
+    // Propiedades
+    id;
+    studentId;
+    courseId;
+    enrollmentDate;
     // Propiedades de asociación
     course;
+    student; // Propiedad de la asociación con User
 }
 StudentCourse.init({
     id: {

@@ -9,6 +9,7 @@ class CourseEvent extends sequelize_1.Model {
     id;
     courseId;
     subjectId;
+    professorId;
     eventType;
     title;
     description;
@@ -36,6 +37,10 @@ CourseEvent.init({
         type: sequelize_1.DataTypes.INTEGER,
         allowNull: true,
     },
+    professorId: {
+        type: sequelize_1.DataTypes.INTEGER,
+        allowNull: false, // Este campo es obligatorio
+    },
     eventType: {
         type: sequelize_1.DataTypes.ENUM('class', 'task'),
         allowNull: false,
@@ -57,7 +62,7 @@ CourseEvent.init({
         allowNull: false,
     },
     locationType: {
-        type: sequelize_1.DataTypes.ENUM('physical', 'online'),
+        type: sequelize_1.DataTypes.ENUM('Presential', 'Online'),
         allowNull: false,
     },
     locationId: {
