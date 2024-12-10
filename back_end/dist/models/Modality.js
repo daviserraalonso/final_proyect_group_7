@@ -12,7 +12,7 @@ Modality.init({
     id: {
         type: sequelize_1.DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: false,
+        autoIncrement: true,
     },
     type: {
         type: sequelize_1.DataTypes.STRING,
@@ -27,7 +27,7 @@ Modality.init({
 }, {
     sequelize: database_1.default,
     modelName: 'Modality',
-    tableName: 'Modality',
+    tableName: 'modality',
     timestamps: true,
 });
 exports.default = Modality;

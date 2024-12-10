@@ -1,15 +1,21 @@
 import { Model, DataTypes } from 'sequelize';
 import sequelize from '../config/database';
 import Course from './Course';
-
+import User from './user';
 class StudentCourse extends Model {
-  // No declares propiedades públicas aquí
-
   // Métodos de Sequelize
   public getCourse!: () => Promise<Course>;
+  public getStudent!: () => Promise<User>;
+
+  // Propiedades
+  public readonly id!: number;
+  public studentId!: number;
+  public courseId!: number;
+  public enrollmentDate!: Date;
 
   // Propiedades de asociación
   public readonly course?: Course;
+  public readonly student?: User; // Propiedad de la asociación con User
 }
 
 StudentCourse.init(

@@ -3,85 +3,87 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-// models/CourseEvent.ts
 const sequelize_1 = require("sequelize");
 const database_1 = __importDefault(require("../config/database"));
 class CourseEvent extends sequelize_1.Model {
     id;
     courseId;
+    subjectId;
     professorId;
-    studentId;
+    eventType;
+    title;
+    description;
+    startDateTime;
+    endDateTime;
+    locationType;
+    locationId;
+    onlineLink;
+    deadline;
+    isRead;
+    createdAt;
+    updatedAt;
 }
 CourseEvent.init({
     id: {
         type: sequelize_1.DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: false,
+        autoIncrement: true,
     },
     courseId: {
         type: sequelize_1.DataTypes.INTEGER,
         allowNull: false,
-        field: 'courseId',
     },
     subjectId: {
         type: sequelize_1.DataTypes.INTEGER,
-        allowNull: false,
-        field: 'subjectId',
+        allowNull: true,
+    },
+    professorId: {
+        type: sequelize_1.DataTypes.INTEGER,
+        allowNull: false, // Este campo es obligatorio
     },
     eventType: {
-        type: sequelize_1.DataTypes.STRING,
+        type: sequelize_1.DataTypes.ENUM('class', 'task'),
         allowNull: false,
-        field: 'eventType',
     },
     title: {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false,
-        field: 'title',
     },
     description: {
-        type: sequelize_1.DataTypes.STRING,
-        allowNull: false,
-        field: 'description',
+        type: sequelize_1.DataTypes.TEXT,
+        allowNull: true,
     },
     startDateTime: {
         type: sequelize_1.DataTypes.DATE,
         allowNull: false,
-        field: 'startDateTime',
     },
     endDateTime: {
         type: sequelize_1.DataTypes.DATE,
         allowNull: false,
-        field: 'endDateTime',
     },
     locationType: {
-        type: sequelize_1.DataTypes.STRING,
+        type: sequelize_1.DataTypes.ENUM('Presential', 'Online'),
         allowNull: false,
-        field: 'locationType',
     },
     locationId: {
         type: sequelize_1.DataTypes.INTEGER,
         allowNull: true,
-        field: 'locationId',
     },
     onlineLink: {
         type: sequelize_1.DataTypes.STRING,
-        allowNull: false,
-        field: 'onlineLink',
-    },
-    deadline: {
-        type: sequelize_1.DataTypes.DATE,
-        allowNull: false,
-        field: 'deadline',
+        allowNull: true,
     },
     isRead: {
         type: sequelize_1.DataTypes.BOOLEAN,
-        allowNull: false,
-        field: 'isRead',
+        defaultValue: false,
     },
-    studentId: {
-        type: sequelize_1.DataTypes.INTEGER,
-        allowNull: false,
-        field: 'studentId',
+    createdAt: {
+        type: sequelize_1.DataTypes.DATE,
+        defaultValue: sequelize_1.DataTypes.NOW,
+    },
+    updatedAt: {
+        type: sequelize_1.DataTypes.DATE,
+        defaultValue: sequelize_1.DataTypes.NOW,
     },
 }, {
     sequelize: database_1.default,
