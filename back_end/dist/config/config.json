@@ -10,15 +10,15 @@
     "test": {
         "username": "root",
         "password": "",
-        "database": "TeacherAppDB",
-        "host": "127.0.0.1",
+        "database": "database_test",
+        "host": "localhost",
         "dialect": "mysql"
     },
     "production": {
         "username": "root",
         "password": "",
-        "database": "TeacherAppDB",
-        "host": "127.0.0.1",
+        "database": "database_production",
+        "host": "localhost",
         "dialect": "mysql"
     }
 }
