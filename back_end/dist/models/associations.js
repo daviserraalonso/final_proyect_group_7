@@ -3,6 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = setupAssociations;
 const UserDetails_1 = __importDefault(require("./UserDetails"));
 const Course_1 = __importDefault(require("./Course"));
 const StudentCourse_1 = __importDefault(require("./StudentCourse"));
@@ -38,6 +39,15 @@ function setupAssociations() {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
     });
+    CourseEvent_1.default.belongsTo(Course_1.default, {
+        foreignKey: {
+            name: 'courseId',
+            allowNull: false,
+        },
+        as: 'course',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+    });
     // ** Relation Course -> User (Profesor)**
     Course_1.default.belongsTo(User_1.default, {
         foreignKey: {
@@ -57,6 +67,24 @@ function setupAssociations() {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
     });
+    CourseEvent_1.default.belongsTo(User_1.default, {
+        foreignKey: {
+            name: 'professorId',
+            allowNull: false,
+        },
+        as: 'professor',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+    });
+    User_1.default.hasMany(CourseEvent_1.default, {
+        foreignKey: {
+            name: 'professorId',
+            allowNull: false,
+        },
+        as: 'events',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+    });
     // ** Relation Course -> Modality**
     Course_1.default.belongsTo(Modality_1.default, {
         foreignKey: {
@@ -71,6 +99,15 @@ function setupAssociations() {
     StudentCourse_1.default.belongsTo(Course_1.default, {
         foreignKey: 'courseId',
         as: 'course',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+    });
+    Course_1.default.hasMany(CourseEvent_1.default, {
+        foreignKey: {
+            name: 'courseId',
+            allowNull: false,
+        },
+        as: 'events',
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
     });
@@ -264,4 +301,3 @@ function setupAssociations() {
         onUpdate: 'CASCADE',
     });
 }
-exports.default = setupAssociations;
