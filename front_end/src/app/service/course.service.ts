@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, lastValueFrom } from 'rxjs';
 import { ICourse } from '../interfaces/iCourse';
 
 
@@ -47,6 +47,10 @@ export class CourseService {
 
   getUserSubscribedCourses(userId: number): Observable<{ courses: ICourse[] }> {
     return this.http.get<{ courses: ICourse[] }>(`${this.coursesUrl}users/${userId}/courses`);
+  }
+
+  getTotalCourses(): Promise<any> {
+    return lastValueFrom(this.http.get<number>(`${this.apiUrl}/total`));
   }
 }
 

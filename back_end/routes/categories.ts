@@ -3,7 +3,13 @@ import CategoriesController from '../controllers/CategoriesController';
 
 const router = express.Router();
 
-router.get('/', CategoriesController.getAllCategories);
+router.get('/', async (req: Request, res: Response) => {
+    try {
+        await CategoriesController.getAllCategories(req, res);
+    } catch (error) {
+        res.status(500).json({ message: 'Error al obtener las categorías' });
+    }
+});
 
 router.post('/', CategoriesController.createCategory);
 

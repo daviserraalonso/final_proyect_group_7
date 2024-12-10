@@ -37,36 +37,59 @@ Content-Type: application/json
 DELETE http://localhost:3000/api/tasks/26
 Content-Type: application/json
 
-###
+### 
 GET http://localhost:3000/api/users/6/details
 Content-Type: application/json
 
-###
+### 
 ### Obtener estudiantes por profesor
 GET http://localhost:3000/api/professors/2/students
 Content-Type: application/json
 
-###
+### 
 ### Obtener tareas pendientes de un profesor
 GET http://localhost:3000/api/tasks/profesor/4/pending-tasks
 Content-Type: application/json
+
 ###detalles de la tarea
-###
+### 
 GET http://localhost:3000/api/tasks/details/963
 Content-Type: application/json
-###
+
+### 
 ### Obtener el conteo de tareas calificadas y no calificadas para un profesor
 GET http://localhost:3000/api/tasks/counts/4
+Content-Type: application/json
+
+### Obtener el número total de usuarios
+GET http://localhost:3000/api/users/total-users
+Content-Type: application/json
+
+### Obtener el número total de estudiantes
+GET http://localhost:3000/api/users/total-students
+Content-Type: application/json
+
+### Obtener el número total de profesores
+GET http://localhost:3000/api/users/total-professors
+Content-Type: application/json
+
+### Obtener la cantidad total de cursos
+GET http://localhost:3000/api/courses/total
 Content-Type: application/json
 
 #### Obtener el conteo de alumnos del profesor
 GET http://localhost:3000/api/tasks/profesor/4/student-count
 Content-Type: application/json
+
 ### Obtener ingresos de un profesor específico
 GET http://localhost:3000/api/tasks/profesor/4/earnings
 Content-Type: application/json
 
-####
+### GET todas las categorías
+GET http://localhost:3000/api/categories
+Content-Type: application/json
+
+#### 
 POST http://localhost:3000/api/score
 Content-Type: application/json
 
@@ -79,5 +102,5 @@ Content-Type: application/json
   "opinion": "Excelente curso"
 }
 
-####
+#### 
 http://localhost:3000/api/users/teachers/favorites

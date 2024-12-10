@@ -1,13 +1,14 @@
 import { Router, Request, Response } from 'express';
 
-const { 
+const {
   getPresentialCourses,
   getOnlineCourses,
-  getCourses, 
-  getCourseById, 
-  createCourse, 
-  updateCourse, 
-  deleteCourse 
+  getCourses,
+  getCourseById,
+  createCourse,
+  updateCourse,
+  deleteCourse,
+  getTotalCourses
 } = require('../controllers/CourseController');
 
 const router = Router();
@@ -15,6 +16,7 @@ const router = Router();
 router.get('/', getCourses);
 router.get('/presential', getPresentialCourses);
 router.get('/online', getOnlineCourses);
+router.get('/total', getTotalCourses);
 router.get('/:id', getCourseById);
 router.post('/', createCourse);
 router.put('/:id', updateCourse);

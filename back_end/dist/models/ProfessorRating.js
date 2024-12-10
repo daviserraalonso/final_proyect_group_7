@@ -12,7 +12,7 @@ ProfessorRating.init({
     id: {
         type: sequelize_1.DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true, // Cambiar a true para que se auto-incremente
+        autoIncrement: true, // Asegúrate de que autoIncrement esté configurado como true
     },
     professorId: {
         type: sequelize_1.DataTypes.INTEGER,
@@ -55,4 +55,8 @@ ProfessorRating.init({
     tableName: 'professor_rating',
     timestamps: false,
 });
+// Eliminar la sincronización forzada
+// sequelize.sync({ force: true }).then(() => {
+//   console.log("La tabla 'professor_rating' ha sido recreada.");
+// });
 exports.default = ProfessorRating;

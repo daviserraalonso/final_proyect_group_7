@@ -13,7 +13,9 @@ import {
   getTeachers,
   getUserSubscribedCourses,
   getFavoriteTeachers, // Importa la nueva función
-  validate
+  validate,
+  getTotalStudents, // Importa la nueva función
+  getTotalProfessors // Importa la nueva función
 } from '../controllers/UserController';
 
 import LoginController from '../controllers/LoginController';
@@ -31,6 +33,8 @@ router.get('/teachers/favorites', getFavoriteTeachers);
 router.get('/search', searchTeachers);
 router.get('/names', names);
 router.get('/cities', cities);
+router.get('/total-students', getTotalStudents); // Nueva ruta para obtener el número total de estudiantes
+router.get('/total-professors', getTotalProfessors); // Nueva ruta para obtener el número total de profesores
 router.get('/:city', cityCords);
 
 // other routes

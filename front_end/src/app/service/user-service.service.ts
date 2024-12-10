@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, lastValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { UserAttributes } from '../interfaces/userAttributes';
 import { MatDialog } from '@angular/material/dialog';
@@ -63,4 +63,11 @@ export class UserServiceService {
     return firstValueFrom(this.http.put(`${this.baseUrl}/${id}/validate`, null))
   }
 
+  getTotalStudents(): Promise<any> {
+    return lastValueFrom(this.http.get<any>(`${this.baseUrl}/total-students`));
+  }
+
+  getTotalProfessors(): Promise<any> {
+    return lastValueFrom(this.http.get<any>(`${this.baseUrl}/total-professors`));
+  }
 }

@@ -17,6 +17,8 @@ router.get('/teachers/favorites', UserController_1.getFavoriteTeachers);
 router.get('/search', UserController_1.searchTeachers);
 router.get('/names', UserController_1.names);
 router.get('/cities', UserController_1.cities);
+router.get('/total-students', UserController_1.getTotalStudents); // Nueva ruta para obtener el número total de estudiantes
+router.get('/total-professors', UserController_1.getTotalProfessors); // Nueva ruta para obtener el número total de profesores
 router.get('/:city', UserController_1.cityCords);
 // other routes
 router.post('/register', UserController_1.registerUser);

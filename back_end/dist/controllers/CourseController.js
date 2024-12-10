@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getOnlineCourses = exports.getPresentialCourses = exports.deleteCourse = exports.updateCourse = exports.createCourse = exports.getCourseById = exports.getCourses = void 0;
+exports.getOnlineCourses = exports.getPresentialCourses = exports.deleteCourse = exports.updateCourse = exports.createCourse = exports.getTotalCourses = exports.getCourseById = exports.getCourses = void 0;
 const Course_1 = __importDefault(require("../models/Course"));
 const Category_1 = __importDefault(require("../models/Category"));
 const Modality_1 = __importDefault(require("../models/Modality"));
@@ -55,6 +55,18 @@ const getCourseById = async (req, res) => {
     }
 };
 exports.getCourseById = getCourseById;
+// Obtener la cantidad total de cursos
+const getTotalCourses = async (req, res) => {
+    try {
+        const totalCourses = await Course_1.default.count();
+        res.status(200).json({ totalCourses });
+    }
+    catch (error) {
+        console.error('Error al obtener la cantidad total de cursos:', error);
+        res.status(500).json({ message: 'Error al obtener la cantidad total de cursos.' });
+    }
+};
+exports.getTotalCourses = getTotalCourses;
 // Crear un nuevo curso
 const createCourse = async (req, res) => {
     console.log('Datos recibidos:', req.body);
