@@ -1,8 +1,8 @@
-<div class="container-fluid px-4">
+<div class="container-fluid">
   <div class="row">
     <!-- Main Content -->
      
-    <main class="">
+    <main>
       <mat-card class="align-items-center pt-3 pb-2 mb-3 border-bottom">
         <mat-card-header class="dashboard-header">
           <mat-card-title class="large-title">Dashboard del Admin</mat-card-title>
@@ -10,13 +10,13 @@
       </mat-card>
 
       <!-- Alumnos Section -->
-      <mat-card class="mb-4 shadow-sm">
+      <mat-card class="mb-4">
         <mat-card-header>
           <mat-card-title>Alumnos Inscritos</mat-card-title>
         </mat-card-header>
         <mat-card-content>
           <div class="table-responsive">
-            <table mat-table [dataSource]="students" class="mat-elevation-z8 w-100">
+            <table mat-table [dataSource]="students" class="mat-elevation-z8 ">
               <!-- Nombre de Alumno -->
               <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef class="column"> Alumno </th>
@@ -58,7 +58,7 @@
       </mat-card>
 
       <!-- Mensajes Section -->
-      <mat-card class="mb-4 shadow-sm">
+      <mat-card class="mb-4">
         <mat-card-header>
           <mat-card-title>Mensajes Recientes</mat-card-title>
         </mat-card-header>
@@ -82,9 +82,9 @@
       </mat-card>
 
       <!-- Calendario Section -->
-      <mat-card class="mb-4 shadow-sm">
+      <mat-card class="mb-4">
         <mat-card-header>
-          <mat-icon class="me-2">event</mat-icon>
+          <mat-icon class="m-1">event</mat-icon>
           <mat-card-title>Calendario</mat-card-title>
         </mat-card-header>
         <mat-card-content>
@@ -99,9 +99,9 @@
       </mat-card>
 
       <!-- Tareas Section -->
-      <mat-card class="mb-4 shadow-sm">
+      <mat-card class="mb-4">
         <mat-card-header>
-          <mat-icon class="me-2">assignment</mat-icon>
+          <mat-icon class="m-1">assignment</mat-icon>
           <mat-card-title>Tareas</mat-card-title>
         </mat-card-header>
         <mat-card-content>
@@ -121,7 +121,7 @@
             </div>
           </div>
           <div class="button-more">
-            <button mat-fab color="accent" class="more mt-3" (click)="openTaskManagerDialog()">+</button>
+            <button mat-fab color="accent" class="more mt-3" (click)="openTaskManagerDialog()">+ Tarea</button>
           </div>
         </mat-card-content>
       </mat-card>
@@ -129,7 +129,7 @@
       <!-- Documentos Section -->
       <mat-card class="mb-4 shadow-sm">
         <mat-card-header class="d-flex align-items-center">
-          <mat-icon class="me-2">folder</mat-icon>
+          <mat-icon class="m-1">folder</mat-icon>
           <mat-card-title>Gestión de Documentos</mat-card-title>
         </mat-card-header>
         <mat-card-content>
@@ -153,9 +153,9 @@
       
 
       <!-- Notificaciones Section -->
-      <mat-card class="mb-4 shadow-sm">
+      <mat-card class="mb-4">
         <mat-card-header>
-          <mat-icon class="me-2">notifications</mat-icon>
+          <mat-icon class="m-1">notifications</mat-icon>
           <mat-card-title>Notificaciones</mat-card-title>
         </mat-card-header>
         <mat-card-content>

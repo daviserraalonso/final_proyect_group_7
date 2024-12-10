@@ -106,7 +106,7 @@ mat-icon {
 
 table.mat-elevation-z8 {
   width: 100%;
-  border-collapse: collapse;
+  background-color: #ffffff;
 }
 
 th.mat-header-cell, td.mat-cell {
@@ -116,7 +116,7 @@ th.mat-header-cell, td.mat-cell {
 
 th.mat-header-cell {
   font-weight: bold;
-  background-color: #f1f1f1;
+
 }
 
 td.mat-cell {
