@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const { Op } = require('sequelize');
 const Chat_1 = __importDefault(require("../models/Chat"));
 const Message_1 = __importDefault(require("../models/Message"));
-const user_1 = __importDefault(require("../models/user"));
+const User_1 = __importDefault(require("../models/User"));
 class MessagesController {
     /**
      * GET MENSSAGES BY USER
@@ -36,19 +36,19 @@ class MessagesController {
                         as: 'messages',
                         include: [
                             {
-                                model: user_1.default,
+                                model: User_1.default,
                                 as: 'sender',
                                 attributes: ['id', 'name'],
                             },
                         ],
                     },
                     {
-                        model: user_1.default,
+                        model: User_1.default,
                         as: 'professor',
                         attributes: ['id', 'name'],
                     },
                     {
-                        model: user_1.default,
+                        model: User_1.default,
                         as: 'student',
                         attributes: ['id', 'name'],
                     },
