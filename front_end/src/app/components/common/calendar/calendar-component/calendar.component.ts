@@ -72,13 +72,10 @@ export class CalendarComponent implements OnInit {
       let events: any[] = [];
 
       if (roleId === 1) {
-        // Cargar todos los eventos
         events = await lastValueFrom(this.calendarService.getCalendarEvents());
       } else if (roleId === 2) {
-        // Cargar eventos asociados al profesor
         events = await lastValueFrom(this.calendarService.getEventsByProfessorId(userId));
       } else if (roleId === 3) {
-        // Cargar eventos asociados al estudiante
         events = await lastValueFrom(this.calendarService.getEventsByStudentId(userId));
       }
 
