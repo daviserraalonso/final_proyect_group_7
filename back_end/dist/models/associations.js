@@ -47,6 +47,15 @@ function setupAssociations() {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
     });
+    CourseEvent_1.default.belongsTo(Course_1.default, {
+        foreignKey: {
+            name: 'courseId',
+            allowNull: false,
+        },
+        as: 'course',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+    });
     // ** Relation Course -> User (Profesor)**
     Course_1.default.belongsTo(user_1.default, {
         foreignKey: {
@@ -66,7 +75,11 @@ function setupAssociations() {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
     });
+<<<<<<<<< Temporary merge branch 1
     CourseEvent_1.default.belongsTo(user_1.default, {
+=========
+    CourseEvent_1.default.belongsTo(User_1.default, {
+>>>>>>>>> Temporary merge branch 2
         foreignKey: {
             name: 'professorId',
             allowNull: false,
@@ -75,7 +88,11 @@ function setupAssociations() {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
     });
+<<<<<<<<< Temporary merge branch 1
     user_1.default.hasMany(CourseEvent_1.default, {
+=========
+    User_1.default.hasMany(CourseEvent_1.default, {
+>>>>>>>>> Temporary merge branch 2
         foreignKey: {
             name: 'professorId',
             allowNull: false,
