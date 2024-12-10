@@ -27,6 +27,10 @@ export class CalendarEventComponent implements OnInit {
   subjectName: string = '';
   selectedModality: string | null = null;
 
+  //manejadores de fechas convertidas
+  localStartDateTime: string = '';
+  localEndDateTime: string = '';
+
   constructor(
     public dialogRef: MatDialogRef<CalendarEventComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { event: ICourseEvent },
@@ -34,9 +38,24 @@ export class CalendarEventComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    console.log('Fecha UTC recibida (start):', this.data.event.startDateTime);
+    console.log('Fecha UTC recibida (end):', this.data.event.endDateTime);
+
+    //convertir a hora local usando zona explícita
+    this.localStartDateTime = this.toLocalDateTime(this.data.event.startDateTime);
+    this.localEndDateTime = this.toLocalDateTime(this.data.event.endDateTime);
+
+    console.log('Fecha local ajustada (start):', this.localStartDateTime);
+    console.log('Fecha local ajustada (end):', this.localEndDateTime);
+
     this.selectedModality = this.data.event.locationType;
     this.loadSubjectsByCourse(this.data.event.courseId);
   }
+
+  toLocalDateTime(date: string): string {
+    return date.slice(0, 16); //formato iso compatible con datetime-local
+  }
+
 
 
   private loadSubjectsByCourse(courseId: number): void {

@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @Component({
@@ -19,6 +20,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     CommonModule,
     MatFormFieldModule,
     FormsModule,
+    MatIconModule,
     MatInputModule,
     MatButtonModule,
     ReactiveFormsModule,
@@ -101,25 +103,19 @@ export class CalendarEditEventComponent implements OnInit {
 
 
   toLocalDateTime(date: string): string {
-    const utcDate = new Date(date); //Convierte el string UTC en un objeto Date
-    const localYear = utcDate.getFullYear();
-    const localMonth = String(utcDate.getMonth() + 1).padStart(2, '0');
-    const localDay = String(utcDate.getDate()).padStart(2, '0');
-    const localHours = String(utcDate.getHours()).padStart(2, '0');
-    const localMinutes = String(utcDate.getMinutes()).padStart(2, '0');
-
-    return `${localYear}-${localMonth}-${localDay}T${localHours}:${localMinutes}`; //Formato ISO para <input type="datetime-local">
+    return date.slice(0, 16);
   }
+
 
   toUtcDateTime(date: string): string {
     const localDate = new Date(date); //Fecha ingresada en el formulario en la zona local
-    return localDate.toISOString(); // Convierte a formato UTC para el backend
+    return localDate.toISOString(); //Convierte a formato UTC para el backend
   }
 
   onModalityChange(modality: string): void {
     this.selectedModality = modality; //Actualiza la modalidad seleccionada
-    this.eventForm.patchValue({ locationType: modality }); //Actualiza el valor del formulario
-    this.updateFieldStates(); //Ajusta los estados de los campos
+    this.eventForm.patchValue({ locationType: modality }); //actualizamos el formulario
+    this.updateFieldStates(); //ajustamos los estados de los campos
   }
 
   updateFieldStates(): void {
@@ -135,7 +131,7 @@ export class CalendarEditEventComponent implements OnInit {
   deleteEvent(): void {
     const confirmation = confirm('¿Estás seguro de que deseas eliminar este evento?');
     if (confirmation) {
-      // Convertir el ID a número si es un string
+      //Se convierte el ID a número si es un string para cuadrar
       const eventId = typeof this.data.event.id === 'string' ? Number(this.data.event.id) : this.data.event.id;
 
       this.calendarService.deleteCalendarEvent(eventId).subscribe({
