@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 
 
 import { IndexComponent } from './pages/public/home/index.component'
-import { AcademicOfferingComponent } from './components/public/academic-offering/academic-offering.component'
 import { SearchTeachersComponent } from './components/public/search-teachers/search-teachers.component'
 import { HowWorkComponentComponent } from './components/public/how-work-component/how-work-component.component'
 import { ContactComponentComponent } from './components/public/contact-component/contact-component.component'
@@ -31,7 +30,6 @@ import { CourseViewComponent } from './components/common/course-view/course-view
 export const routes: Routes = [
     { path: '', redirectTo: '/index', pathMatch: 'full' },
     { path: 'index', component: IndexComponent },
-    { path: 'academic-offerings', component: AcademicOfferingComponent },
     { path: 'academic-offerings/presential', component: PresentialCoursesComponent },
     { path: 'academic-offerings/online', component: OnlineCoursesComponent },
     { path: 'looking-teachers', component: MapComponentComponent },
