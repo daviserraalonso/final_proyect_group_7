@@ -7,7 +7,7 @@
 
   <div class="table-container">
     <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-      <!-- Nombre -->
+      <!-- Name -->
       <ng-container matColumnDef="name">
         <mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
         <mat-cell *matCellDef="let user">{{ user.name }}</mat-cell>
@@ -19,7 +19,7 @@
         <mat-cell *matCellDef="let user">{{ user.email }}</mat-cell>
       </ng-container>
 
-      <!-- Validado -->
+      <!-- Validated -->
       <ng-container matColumnDef="isValidated">
         <mat-header-cell *matHeaderCellDef> Validado </mat-header-cell>
         <mat-cell *matCellDef="let user">
@@ -35,7 +35,7 @@
         <mat-cell *matCellDef="let user">{{ getRoleName(user.roleId) }}</mat-cell>
       </ng-container>
 
-      <!-- Acciones -->
+      <!-- Actions -->
       <ng-container matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
         <mat-cell *matCellDef="let user">

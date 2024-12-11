@@ -1,7 +1,7 @@
 mat-dialog-content {
   display: flex;
   flex-direction: column;
-  gap: 16px; /* Espaciado entre campos */
+  gap: 16px; 
 }
   
 mat-dialog-actions {

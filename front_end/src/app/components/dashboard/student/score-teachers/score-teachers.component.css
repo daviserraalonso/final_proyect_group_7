@@ -1,11 +1,11 @@
 mat-icon {
     cursor: pointer;
-    color: gray;  /* Color por defecto */
+    color: gray;
     transition: color 0.3s ease;
     font-size: 16px;
   }
   
   mat-icon.active {
-    color: gold;  /* Color de los íconos activos */
+    color: gold;
   }
   

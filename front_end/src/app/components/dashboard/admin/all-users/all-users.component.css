@@ -28,7 +28,7 @@ h2 {
 .mat-elevation-z8{
   background-color: white;
 }
-/* Contenedor de la tabla para el scroll horizontal */
+
 .table-container {
   overflow-x: auto;
   width: 100%;
@@ -60,12 +60,10 @@ h2 {
   font-size: 16px;
 }
 
-/* Botones y iconos */
 .mat-icon {
   font-size: 25px;
 }
 
-/* Ajustes responsivos */
 @media (max-width: 768px) {
   .mat-cell, .mat-header-cell {
     font-size: 12px;

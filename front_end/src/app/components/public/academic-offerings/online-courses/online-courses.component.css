@@ -9,7 +9,7 @@
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   transition: transform 0.3s, box-shadow 0.3s;
-  height: 350px; /* Establece una altura fija para todas las tarjetas */
+  height: 350px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -20,10 +20,10 @@
   border-radius: 12px 12px 0 0;
 }
 .custom-card-content {
-  flex-grow: 1; /* Permite que el contenido ocupe espacio proporcional */
-  height: 100px; /* Altura máxima para mantener el diseño uniforme */
-  overflow: hidden; /* Oculta el contenido que exceda el tamaño */
-  margin-bottom: 4px; /* Espaciado inferior para separarlo del botón */
+  flex-grow: 1;
+  height: 100px;
+  overflow: hidden;
+  margin-bottom: 4px;
   padding: 8px;
 }
 .custom-card:hover {
@@ -75,10 +75,9 @@
     color: white;
     width: 100%;
     border-radius: 8px;
-    margin-top: auto; /* Empuja el botón hacia la parte inferior */
+    margin-top: auto;
   }
   
-  /* Ajustes para pantallas pequeñas */
   @media (max-width: 768px) {
     .card-title {
       font-size: 1.1rem;
@@ -102,7 +101,6 @@
     }
   }
   
-  /* Ajustes para pantallas extra pequeñas */
   @media (max-width: 576px) {
     .card-text {
       font-size: 0.85rem;

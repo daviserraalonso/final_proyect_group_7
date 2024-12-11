@@ -7,15 +7,11 @@
   grid-template-rows: auto 1fr auto;
 }
 
-/* Footer que se pega al fondo */
 footer {
   background-color: #343a40;
   color: white;
   text-align: center;
   padding: 1em 0;
-
-
-  /* No permite que el footer se reduzca en tamaño */
 }
 header{
   background-color: #343a40;

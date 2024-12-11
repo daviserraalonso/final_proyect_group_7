@@ -22,7 +22,7 @@ import { AuthService } from './service/auth-service.service';
     
   ],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'] // Cambiado a styleUrls
+  styleUrls: ['./app.component.css']
 })
 
 export class AppComponent implements OnInit {
@@ -44,7 +44,7 @@ export class AppComponent implements OnInit {
   }
  
   toggleSideBar(): void {
-    this.isAuthenticated = !this.isAuthenticated; // Esto es un ejemplo. Actualízalo según tu lógica.
+    this.isAuthenticated = !this.isAuthenticated;
     this.isSidebarOpen = !this.isSidebarOpen;
   }
 }

@@ -1,10 +1,7 @@
-/* Estilo general del contenedor principal */
 .main-content {
   padding: 4px;
   width: 100%; 
 }
-
-/* Tarjetas */
 mat-card {
   background-color: #ffffff;
   padding: 25px;
@@ -23,7 +20,7 @@ mat-card:hover {
 background-color: white;
 border: none;
 }
-/* Encabezado del Dashboard */
+
 .dashboard-header {
   color: black;
   text-align: center;
@@ -35,7 +32,6 @@ border: none;
   font-weight: 700;
 }
 
-/* Perfil del estudiante */
 .profile-card mat-card-header {
   background-color: #e3f2fd;
 }
@@ -57,8 +53,6 @@ border: none;
   transform: scale(1.1);
 }
 
-
-/* Información del perfil */
 .profile-info {
   display: flex;
   align-items: center;
@@ -72,14 +66,12 @@ border: none;
   font-size: 1.8rem;
 }
 
-/* Botón de editar perfil */
 .edit-profile-btn {
   display: flex;
   justify-content: flex-end;
   margin-top: 10px;
 }
 
-/* Tabla de tareas */
 
 
 th.mat-header-cell {
@@ -100,7 +92,7 @@ mat-progress-bar {
   background-color: #e0e0e0;
 }
 
-/* Botones de acciones en la tabla */
+
 .actions-buttons {
   display: flex;
   gap: 10px;
@@ -113,7 +105,6 @@ button.mat-button {
   border-radius: 50%;
 }
 
-/* Notificaciones */
 .notification-card mat-card-header {
   background-color: #f3e5f5;
 }
@@ -129,15 +120,14 @@ mat-list-item {
 }
 
 mat-list-item:hover {
-  background-color: #f5f5f5; /* Cambia el color de fondo al pasar el mouse */
+  background-color: #f5f5f5; 
 }
 
 
-/* Responsividad */
 @media (max-width: 768px) {
 
   .row {
-    flex-direction: column; /* Cambia a diseño de una sola columna */
+    flex-direction: column; 
   }
   .large-title {
     font-size: 2rem;
@@ -161,8 +151,8 @@ mat-list-item:hover {
     padding: 10px;
   }
   mat-list-item {
-    padding: 0.8rem; /* Menos padding en pantallas medianas */
-    font-size: 0.95rem; /* Ajusta el tamaño de fuente para tabletas */
+    padding: 0.8rem; 
+    font-size: 0.95rem;
   }
 }
 
@@ -180,8 +170,8 @@ mat-list-item:hover {
     font-size: 0.9rem;
   }
   mat-list-item {
-    padding: 0.6rem; /* Menor padding para dispositivos móviles */
-    font-size: 0.9rem; /* Reduce el tamaño de fuente en pantallas pequeñas */
+    padding: 0.6rem; 
+    font-size: 0.9rem; 
     
   }
 }

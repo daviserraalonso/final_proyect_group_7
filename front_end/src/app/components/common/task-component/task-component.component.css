@@ -1,10 +1,8 @@
-/* Estilo general del contenedor */
 .container {
     padding: 20px;
     background-color: #f8f9fa;
   }
   
-  /* Tabla completa en pantallas grandes */
   table.mat-table {
     width: 100%;
     background-color: #ffffff;
@@ -13,7 +11,6 @@
 
   }
   
-  /* Celda y encabezado */
   th.mat-header-cell,
   td.mat-cell {
     padding: 15px;
@@ -27,22 +24,18 @@
     font-weight: bold;
   }
   
-  /* Estilos para las filas alternas */
   tr.mat-row:nth-child(even) {
     background-color: #f2f2f2;
   }
   
-  /* Botón de acción */
   button.mat-button {
     color: #1e88e5;
     font-weight: bold;
   }
   
-  /* Responsividad */
   @media (max-width: 768px) {
-    /* Convertimos las filas de la tabla en tarjetas */
     .mat-header-row {
-      display: none; /* Ocultar encabezados en móviles */
+      display: none; 
     }
   
     .mat-row {
@@ -62,7 +55,6 @@
       justify-content: space-between;
     }
   
-    /* Muestra la etiqueta de cada celda */
     td.mat-cell::before {
       content: attr(data-label);
       font-weight: bold;

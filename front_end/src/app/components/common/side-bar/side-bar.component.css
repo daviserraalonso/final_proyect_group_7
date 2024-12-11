@@ -1,8 +1,6 @@
 .sidebar-container {
- /* Permite que el tamaño dependa del contenido */
-  padding: 10px; /* Espaciado interno */
-
-  color: white;/* Borde para delimitar */
+  padding: 10px; 
+  color: white;
   background-color: #343a40;
   
  
@@ -14,40 +12,36 @@
   margin-bottom: 20px; 
 }
 .center {
-  display: flex; /* Usa Flexbox para alinear el contenido */
-  align-items: center; /* Centra verticalmente los elementos dentro del div */
-  gap: 10px; /* Espaciado entre el ícono y el texto */
+  display: flex;
+  align-items: center; 
+  gap: 10px; 
 }
 .center:hover{
   color: white;
 }
 mat-icon:hover {
-  font-size: 24px; /* Asegura un tamaño consistente del ícono */
-  color: white; /* Color del ícono, opcional */
+  font-size: 24px;
+  color: white; 
 }
 
 a , .text{
-  text-decoration: none; /* Elimina el subrayado de los enlaces */
-  color: rgba(255, 255, 255, 0.55); /* Color del texto */
-  font-size: 16px; /* Tamaño del texto */
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.55); 
+  font-size: 16px;
 }
 a:hover , .text:hover{
   color: white;
 }
 mat-list-item {
-  padding: 8px 16px; /* Ajusta el espaciado del item */
+  padding: 8px 16px;
 }
 
-
 img{
- 
+
    width: 40px;
    height: 40px;
 }
 .active{
   color: #00594F;
 }
-/* Mantener la versión móvil funcional */
-@media (max-width: 768px) {
 
-}

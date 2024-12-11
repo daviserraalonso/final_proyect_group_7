@@ -22,31 +22,31 @@
 
   <div class="table-container">
     <table mat-table [dataSource]="dataSource" class="responsive-table">
-      <!-- Nombre Column -->
+      <!-- Name Column -->
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef>Nombre</th>
         <td mat-cell *matCellDef="let subject">{{ subject.name }}</td>
       </ng-container>
 
-      <!-- Curso Column -->
+      <!-- Course Column -->
       <ng-container matColumnDef="course">
         <th mat-header-cell *matHeaderCellDef>Curso</th>
         <td mat-cell *matCellDef="let subject">{{ subject.course?.name }}</td>
       </ng-container>
 
-      <!-- Descripción Column -->
+      <!-- Description Column -->
       <ng-container matColumnDef="description">
         <th mat-header-cell *matHeaderCellDef>Descripción</th>
         <td mat-cell *matCellDef="let subject">{{ subject.description }}</td>
       </ng-container>
 
-      <!-- Nota Final Column -->
+      <!-- final Grade Column -->
       <ng-container matColumnDef="finalGrade">
         <th mat-header-cell *matHeaderCellDef>Nota Final</th>
         <td mat-cell *matCellDef="let subject">{{ subject.finalGrade }}</td>
       </ng-container>
 
-      <!-- Acciones Column -->
+      <!-- Actions Column -->
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef>Acciones</th>
         <td mat-cell *matCellDef="let subject">

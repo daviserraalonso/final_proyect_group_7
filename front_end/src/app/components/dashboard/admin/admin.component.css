@@ -6,7 +6,6 @@ h1, h2, h3, h4, h5, h6 {
   padding: 4px;
 }
 
-/* Mat-card styling */
 mat-card {
   border-radius: 10px;
   background: #ffffff;
@@ -37,17 +36,17 @@ mat-card:hover {
 }
 
 .column {
-  text-align: center; /* Alinea el contenido a la derecha */
-  padding-right: 16px; /* Ajusta el espaciado al fondo */
+  text-align: center; 
+  padding-right: 16px; 
 }
 
 .actions-column button {
-  margin-right: 0; /* Asegúrate de que el botón esté alineado correctamente */
+  margin-right: 0; 
 }
-/* Buttons */
+
 button.mat-button,
 button.mat-raised-button {
-  text-transform: none; /* Evita texto en mayúsculas */
+  text-transform: none;
 }
 
 button.mat-fab {
@@ -58,7 +57,6 @@ button.mat-fab {
   color: #fff;
 }
 
-/* Progress Bar */
 .progress-bar {
   transition: width 0.4s ease-in-out;
   font-size: 0.75rem;
@@ -70,11 +68,11 @@ button.mat-fab {
 
 .button-more{
   display: flex;
-  justify-content: flex-end; /* Mueve el contenido al final horizontalmente */
-  align-items: flex-end; /* Opcional: Alinea verticalmente si hay más contenido */
+  justify-content: flex-end; 
+  align-items: flex-end; 
   height: 100%; 
 }
-/* List Groups */
+
 .list-group-item {
   background-color: #ffffff;
   border: 1px solid #dee2e6;
@@ -86,20 +84,19 @@ button.mat-fab {
   background-color: #f8f9fa;
 }
 
-/* Notifications */
+
 .notification-content {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-/* Mat-icon */
 mat-icon {
   font-size: 1.5rem;
   color: #6200ea;
 }
 
-/* Table Styling */
+
 .table-responsive {
   margin-top: 20px;
 }
@@ -123,21 +120,18 @@ td.mat-cell {
   border-bottom: 1px solid #ddd;
 }
 
-/* Input Field */
 input[type="date"].form-control {
   border: 1px solid #ced4da;
   border-radius: 5px;
   padding: 10px;
 }
 
-/* Snackbar */
 .custom-snackbar {
   background-color: #4caf50;
   color: white;
   font-size: 16px;
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
   .list-group-item {
     flex-direction: column;

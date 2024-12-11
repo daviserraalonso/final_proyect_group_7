@@ -5,9 +5,9 @@
 
   .category-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Columnas automáticas */
-    gap: 15px; /* Espaciado entre tarjetas */
-    justify-items: center; /* Centra el contenido de cada tarjeta */
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px; 
+    justify-items: center; 
   }
   
   .category-item {

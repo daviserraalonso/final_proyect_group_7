@@ -48,7 +48,7 @@ export class SideBarComponent implements OnInit {
   
 
   toggleSideBar() {
-    this.isSidebarOpen = !this.isSidebarOpen; // Alterna el estado del menú lateral
+    this.isSidebarOpen = !this.isSidebarOpen;
   }
 
   logout() {
