@@ -39,7 +39,8 @@ import Course from "../models/Course";
                 where: {
                     studentId: studentId,
                     courseId: idCourse
-                }
+                },
+                attributes: ['id']
             })
             res.status(200).json(score)
         } catch (error) {

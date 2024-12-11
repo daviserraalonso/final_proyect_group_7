@@ -16,6 +16,7 @@ import { FormsModule } from '@angular/forms'
 import { MatDividerModule } from '@angular/material/divider';
 import { CommonModule } from '@angular/common';
 import { InboxService } from '../../../service/inbox.service';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -75,7 +76,16 @@ export class MessageDialogComponent {
         })
         .catch((error) => {
           console.error('Error al enviar el mensaje:', error);
-          alert('Hubo un error al enviar el mensaje');
+          Swal.fire({
+            text: 'Hubo un error al enviar el mensaje',
+            width: 400,
+            showConfirmButton: false,
+            imageUrl: 'assets/logo.png',
+            imageAlt: 'Icon image',
+            imageHeight: 80,
+            imageWidth: 60,
+            timer: 2500
+          });
         });
     }
   }

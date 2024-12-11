@@ -164,7 +164,16 @@ let RegisterTeacherComponentComponent = (() => {
                 try {
                     const user = await this.userServices.update(this.registerTeacher.value);
                     if (user.id) {
-                        alert('Usuario actualizado');
+                        Swal.fire({
+                            text: 'Usuario actualizado correctamente',
+                            width: 400,
+                            showConfirmButton: false,
+                            imageUrl: 'assets/logo.png',
+                            imageAlt: 'Icon image',
+                            imageHeight: 80,
+                            imageWidth: 60,
+                            timer: 2500
+                          });
                         this.router.navigate(['']);
                     }
                 }

@@ -9,6 +9,10 @@ import { CourseService } from '../../../../service/course.service';
 import { ScoreService } from '../../../../service/score.service';
 import Swal from 'sweetalert2';
 
+export type ScoreValid = {
+  id: number
+}
+
 @Component({
   selector: 'app-student-courses',
   standalone: true,
@@ -56,6 +60,7 @@ export class StudentCoursesComponent implements OnInit {
       const params = new HttpParams().set('studentId', userId).set('idCourse', cursoId)
 
       const scoreValid = await this.scoreServices.getScoreByIds(params)
+      console.log(scoreValid)
       if(!scoreValid) {
       this.dialog.open(ScoreTeachersComponent, {
         width: '400px',

@@ -11,6 +11,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-calendar-edit-event',
@@ -136,12 +137,30 @@ export class CalendarEditEventComponent implements OnInit {
 
       this.calendarService.deleteCalendarEvent(eventId).subscribe({
         next: () => {
-          alert('Evento eliminado correctamente.');
+          Swal.fire({
+            text: 'Evento eliminado correctamente.',
+            width: 400,
+            showConfirmButton: false,
+            imageUrl: 'assets/logo.png',
+            imageAlt: 'Icon image',
+            imageHeight: 80,
+            imageWidth: 60,
+            timer: 2500
+          });
           this.dialogRef.close('deleted');
         },
         error: (err) => {
           console.error('Error al eliminar el evento:', err);
-          alert('Ocurrió un error al intentar eliminar el evento.');
+          Swal.fire({
+            text: 'Ocurrió un error al intentar eliminar el evento.',
+            width: 400,
+            showConfirmButton: false,
+            imageUrl: 'assets/logo.png',
+            imageAlt: 'Icon image',
+            imageHeight: 80,
+            imageWidth: 60,
+            timer: 2500
+          });
         },
       });
     }

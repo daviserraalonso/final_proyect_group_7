@@ -337,14 +337,18 @@ export const searchTeachers = async (req: Request, res: Response) => {
     }),
     ...(minPrice && {
       [Op.or]: [
-        { '$course.price$': { [Op.between]: [minPrice, maxPrice] } },
-        { '$course.price$': null }
+        { '$coursesTaught.price$': { [Op.between]: [minPrice, maxPrice] } },
+        { '$coursesTaught.price$': null }
       ]
     }),
     ...(southWestLat && southWestLng && northEastLat && northEastLng && {
       '$details.lat$': { [Op.between]: [southWestLat, northEastLat] },
       '$details.lng$': { [Op.between]: [southWestLng, northEastLng] },
-    })
+    }),
+    ...(score && { [Op.or] : [
+      {'$averageTeacher.avg$': {[Op.gte]: score}},
+      {'$averageTeacher.avg$': null } 
+    ]}),
 
   }
 
@@ -353,6 +357,7 @@ export const searchTeachers = async (req: Request, res: Response) => {
     console.log(`filtro: ${userId}`)
     const teachers = await User.findAll({
       where: filters,
+      attributes: ['id', 'name', 'email', 'roleId', 'isValidated' ],
       include: [
         {
           model: UserDetails,

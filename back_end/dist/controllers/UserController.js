@@ -281,19 +281,24 @@ const searchTeachers = async (req, res) => {
         }),
         ...(minPrice && {
             [sequelize_1.Op.or]: [
-                { '$course.price$': { [sequelize_1.Op.between]: [minPrice, maxPrice] } },
-                { '$course.price$': null }
+                { '$coursesTaught.price$': { [sequelize_1.Op.between]: [minPrice, maxPrice] } },
+                { '$coursesTaught.price$': null }
             ]
         }),
         ...(southWestLat && southWestLng && northEastLat && northEastLng && {
             '$details.lat$': { [sequelize_1.Op.between]: [southWestLat, northEastLat] },
             '$details.lng$': { [sequelize_1.Op.between]: [southWestLng, northEastLng] },
-        })
+        }),
+        ...(score && { [sequelize_1.Op.or]: [
+                { '$averageTeacher.avg$': { [sequelize_1.Op.gte]: score } },
+                { '$averageTeacher.avg$': null }
+            ] }),
     };
     try {
         console.log(`filtro: ${userId}`);
         const teachers = await user_1.default.findAll({
             where: filters,
+            attributes: ['id', 'name', 'email', 'roleId', 'isValidated'],
             include: [
                 {
                     model: UserDetails_1.default,

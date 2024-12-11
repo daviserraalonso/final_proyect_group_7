@@ -1,6 +1,7 @@
 <h2 mat-dialog-title>Editar Usuario</h2>
-<mat-dialog-content>
-  <form class="mt-2" [formGroup]="editUserForm">
+
+<mat-dialog-content class="dialog_flex">
+  <form class="mt-2 dialog_flex" [formGroup]="editUserForm">
     <mat-form-field  appearance="outline">
       <mat-label>Nombre</mat-label>
       <input matInput formControlName="name" />
@@ -16,12 +17,15 @@
       <input matInput formControlName="password" type="password" />
     </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Rol</mat-label>
-      <mat-select formControlName="roleId">
-        <mat-option *ngFor="let role of roles" [value]="role.id">{{ role.name }}</mat-option>
-      </mat-select>
-    </mat-form-field>
+      @if(role === "1") {
+        <mat-form-field appearance="outline">
+          <mat-label>Rol</mat-label>
+          <mat-select formControlName="roleId">
+            <mat-option *ngFor="let role of roles" [value]="role.id">{{ role.name }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      }
 
     <h3>Detalles del Usuario</h3>
     <mat-form-field appearance="outline">
@@ -30,8 +34,8 @@
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <mat-label>Dirección</mat-label>
-      <input matInput formControlName="address" />
+      <mat-label>Introduce tu poblacion</mat-label>
+      <input matInput formControlName="address" id="city" (input)="autocomplet()" #cityInput>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
