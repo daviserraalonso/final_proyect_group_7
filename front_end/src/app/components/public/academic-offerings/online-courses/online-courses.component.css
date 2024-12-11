@@ -9,6 +9,22 @@
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   transition: transform 0.3s, box-shadow 0.3s;
+  height: 350px; /* Establece una altura fija para todas las tarjetas */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.custom-card img {
+  height: 150px;
+  object-fit: cover;
+  border-radius: 12px 12px 0 0;
+}
+.custom-card-content {
+  flex-grow: 1; /* Permite que el contenido ocupe espacio proporcional */
+  height: 100px; /* Altura máxima para mantener el diseño uniforme */
+  overflow: hidden; /* Oculta el contenido que exceda el tamaño */
+  margin-bottom: 4px; /* Espaciado inferior para separarlo del botón */
+  padding: 8px;
 }
 .custom-card:hover {
   transform: translateY(-5px);
@@ -59,8 +75,8 @@
     color: white;
     width: 100%;
     border-radius: 8px;
+    margin-top: auto; /* Empuja el botón hacia la parte inferior */
   }
-  
   
   /* Ajustes para pantallas pequeñas */
   @media (max-width: 768px) {
@@ -78,6 +94,11 @@
   
     .course-card {
       margin-bottom: 20px;
+    }
+    .custom-card-content {
+      height: 80px;
+      margin-bottom: 6px;
+      padding: 6px;
     }
   }
   
@@ -99,6 +120,11 @@
   
     .text-muted {
       margin-top: 10px;
+    }
+    .custom-card-content {
+      height: 60px;
+      margin-bottom: 8px; 
+      padding: 4px;
     }
   }
   

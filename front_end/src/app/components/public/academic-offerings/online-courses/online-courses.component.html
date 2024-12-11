@@ -11,9 +11,9 @@
           <mat-card-title class="custom-card-title">{{ course.name }}</mat-card-title>
         </mat-card-header>
         <img mat-card-image [src]="'https://picsum.photos/300/200?random=' + course.id" alt="Imagen del curso {{ course.name }}">
-        <mat-card-content>
-          <p class="p-2">
-            Aprende más sobre {{ course.name.toLowerCase() }} con este curso especializado.
+        <mat-card-content class="custom-card-content">
+          <p>
+            Aprende más sobre {{ course.name.toLowerCase() }} con este curso especializado y profundiza en los temas claves.
           </p>
         </mat-card-content>
         <mat-card-actions>
