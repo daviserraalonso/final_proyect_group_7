@@ -11,7 +11,8 @@ import { CommonModule } from '@angular/common';
 import { IPendingTask } from '../../../../interfaces/ipending-task';
 import { TeacherServiceService } from '../../../../service/teacher-service.service';
 import { ITaskDetails } from '../../../../interfaces/itask-details';
-
+import { MatDialogContent } from '@angular/material/dialog';
+import { MatDialogActions } from '@angular/material/dialog';
 @Component({
   selector: 'app-pending-tasks-dialog',
   standalone: true,
@@ -22,7 +23,9 @@ import { ITaskDetails } from '../../../../interfaces/itask-details';
     ReactiveFormsModule,
     CommonModule,
     MatError,
-    MatListModule
+    MatListModule,
+    MatDialogContent,
+    MatDialogActions
   ],
   templateUrl: './pending-tasks-dialog.component.html',
   styleUrls: ['./pending-tasks-dialog.component.css']
