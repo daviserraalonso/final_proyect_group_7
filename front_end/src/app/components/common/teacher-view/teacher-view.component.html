@@ -1,57 +1,31 @@
 <mat-card class="container">
-   
-    
-
-
- 
-  
-    <div class="card-content">
-
-      <div class="info">
-        <img mat-card-avatar class="img" src="URL_DE_LA_FOTO" alt="Foto del profesor">
-        <div class="info-dates">
-          <h2>{{teacherdata?.name}}</h2>
-          <p><strong>Teléfono:</strong> {{teacherdata?.details.phone}}</p>
-          <p><strong>Email:</strong> {{teacherdata?.email}}</p>
-          <p><strong>Dirección:</strong> {{teacherdata?.details.address}}</p>
-          <p><strong>Puntuación:</strong> {{teacherdata?.averageTeacher?.avg}}</p>
-          <p><strong>Descripción:</strong> {{teacherdata?.details.description}}</p>
-        </div>
-      
-      </div>
-  
-
-      <div class="divider"></div>
-  
-
-      <div class="courses">
-        <app-comments></app-comments>
+  <div class="card-content">
+    <div class="info">
+      <img mat-card-avatar class="img" src="URL_DE_LA_FOTO" alt="Foto del profesor">
+      <div class="info-dates">
+        <h2>{{teacherdata?.name}}</h2>
+        <p><strong>Teléfono:</strong> {{teacherdata?.details.phone}}</p>
+        <p><strong>Email:</strong> {{teacherdata?.email}}</p>
+        <p><strong>Dirección:</strong> {{teacherdata?.details.address}}</p>
+        <p><strong>Puntuación:</strong> {{teacherdata?.averageTeacher?.avg}}</p>
+        <p><strong>Descripción:</strong> {{teacherdata?.details.description}}</p>
       </div>
     </div>
-  
-
-    <div class="comments">
-      
+    <div class="divider"></div>
+    <div class="courses">
       <h3>Cursos Ofrecidos</h3>
-      <div class="d-flex gap-2">
-
-         @for (course of teacherdata?.coursesTaught; track $index) {
+      <div class="course-list">
+        <ng-container *ngFor="let course of teacherdata?.coursesTaught">
           <mat-card class="course">
-            <div>
-              <p>{{course?.name}}</p>
-
-            </div>
-
-            <div>
-              <button (click)="viewCurse(course.id, teacherdata.id)" mat-button>Ver Curso</button>
-            </div>
+            <p>{{course?.name}}</p>
+            <button (click)="viewCurse(course.id, teacherdata.id)" mat-button>Ver Curso</button>
           </mat-card>
-         }
-        </div>
+        </ng-container>
+      </div>
     </div>
-    <div class="mt-2">
+  </div>
+ <div class="mt-2">
      
       <router-outlet></router-outlet>
     </div>
-  </mat-card>
-
+</mat-card>
