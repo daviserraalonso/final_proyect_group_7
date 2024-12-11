@@ -1,5 +1,5 @@
 <h1 mat-dialog-title>Gestionar Tarea</h1>
-<div mat-dialog-content>
+<mat-dialog-content>
   <!-- Selección del Alumno -->
   <mat-form-field class="full-width">
     <mat-label>Alumno</mat-label>
@@ -27,10 +27,10 @@
     <label for="fileInput">Subir Documento:</label>
     <input type="file" id="fileInput" (change)="onFileSelected($event)">
   </div>
-</div>
+</mat-dialog-content>
 
 <!-- Botones de Acciones -->
-<div mat-dialog-actions>
+<mat-dialog-actions>
   <button mat-button (click)="onCancel()">Cancelar</button>
   <button mat-button color="primary" (click)="onSave()">Guardar</button>
-</div>
+</mat-dialog-actions>
