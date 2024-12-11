@@ -1,12 +1,12 @@
 <h2 mat-dialog-title>Editar Asignatura</h2>
 
-<mat-dialog-content class="mat-typography">
-  <mat-form-field appearance="fill" class="full-width">
+<mat-dialog-content class="mat-typography dialog_flex">
+  <mat-form-field appearance="fill" class="full-width mat-body-1">
     <mat-label>Nombre</mat-label>
     <input matInput [(ngModel)]="subject.name" />
   </mat-form-field>
 
-  <mat-form-field appearance="fill" class="full-width">
+  <mat-form-field appearance="fill" class="full-width mat-body-1">
     <mat-label>Curso</mat-label>
     <mat-select [(ngModel)]="subject.courseId">
       <mat-option *ngFor="let course of courses" [value]="course.id">
@@ -15,16 +15,18 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field appearance="fill" class="full-width">
+  <mat-form-field appearance="fill" class="full-width mat-body-1">
     <mat-label>Descripción</mat-label>
     <textarea matInput [(ngModel)]="subject.description"></textarea>
   </mat-form-field>
 
-  <mat-form-field appearance="fill" class="full-width">
+  <mat-form-field appearance="fill" class="full-width mat-body-1">
     <mat-label>Nota Final</mat-label>
     <input matInput type="number" [(ngModel)]="subject.finalGrade" />
   </mat-form-field>
 </mat-dialog-content>
+
+
 
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cancelar</button>

@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatDividerModule } from '@angular/material/divider';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -67,7 +68,16 @@ export class NewMessageDialogComponent {
   
     this.inboxService.createNewChat(this.selectedUserId, creatorId, content)
     .then((response) => {
-      alert('Chat creado');
+      Swal.fire({
+        text: 'Chat creado',
+        width: 400,
+        showConfirmButton: false,
+        imageUrl: 'assets/logo.png',
+        imageAlt: 'Icon image',
+        imageHeight: 80,
+        imageWidth: 60,
+        timer: 2500
+      });
       location.reload();
 
       this.dialogRef.close(true);

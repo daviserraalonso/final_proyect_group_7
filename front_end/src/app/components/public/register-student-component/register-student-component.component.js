@@ -152,7 +152,16 @@ let RegisterStudentComponentComponent = (() => {
                 try {
                     const user = await this.userServices.update(this.registerStudent.value);
                     if (user.id) {
-                        alert('Usuario actualizado correctamente');
+                        Swal.fire({
+                            text: 'Usuario actualizado correctamente',
+                            width: 400,
+                            showConfirmButton: false,
+                            imageUrl: 'assets/logo.png',
+                            imageAlt: 'Icon image',
+                            imageHeight: 80,
+                            imageWidth: 60,
+                            timer: 2500
+                          });
                         this.router.navigate(['']);
                     }
                 }
@@ -165,7 +174,17 @@ let RegisterStudentComponentComponent = (() => {
                 try {
                     const user = await this.userServices.insert(this.registerStudent.value);
                     if (user.id) {
-                        alert('Usuario creado correctamente');
+                        Swal.fire({
+                            text: 'Usuario creado correctamente',
+                            width: 400,
+                            showConfirmButton: false,
+                            imageUrl: 'assets/logo.png',
+                            imageAlt: 'Icon image',
+                            imageHeight: 80,
+                            imageWidth: 60,
+                            timer: 2500
+                          });
+                        
                         this.router.navigate(['']);
                     }
                 }

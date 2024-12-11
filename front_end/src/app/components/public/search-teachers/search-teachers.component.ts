@@ -74,6 +74,7 @@ export class SearchTeachersComponent {
 
 
 
+
   // Form initialization
   constructor() {
     this.searchForm = new FormGroup({
@@ -129,6 +130,7 @@ export class SearchTeachersComponent {
   // Get list of cities name
   async getCityName() {
     const data =  await this.searchServices.getCitiesName()
+    console.log(data)
     this.citiesName = data.map((city: {details?: {address?: string}}) => city.details?.address).filter((address: string): address is string => address !== null)
   }
 

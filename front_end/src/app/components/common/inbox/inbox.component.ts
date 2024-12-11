@@ -12,6 +12,7 @@ import { MatButton } from '@angular/material/button';
 import { MessageDialogComponent } from '../message-dialog/message-dialog.component';
 import { CommonModule } from '@angular/common';
 import { NewMessageDialogComponent } from '../new-message-dialog/new-message-dialog.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-inbox',
@@ -97,7 +98,16 @@ export class InboxComponent {
   
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        alert('Mensaje enviado con éxito');
+        Swal.fire({
+          text: 'Mensaje enviado con éxito',
+          width: 400,
+          showConfirmButton: false,
+          imageUrl: 'assets/logo.png',
+          imageAlt: 'Icon image',
+          imageHeight: 80,
+          imageWidth: 60,
+          timer: 2500
+        });
       }
     });
   }

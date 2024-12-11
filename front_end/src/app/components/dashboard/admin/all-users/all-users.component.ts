@@ -135,8 +135,7 @@ export class AllUsersComponent implements OnInit {
         // Eliminar el usuario del dataSource localmente
         this.dataSource.data = this.dataSource.data.filter(user => user.id !== userId);
         Swal.fire({
-          title: "Deleted!",
-          text: "Your file has been deleted.",
+          text: "Usuario eliminado correctamente.",
           icon: "success"
         });
       }).catch((error) => {

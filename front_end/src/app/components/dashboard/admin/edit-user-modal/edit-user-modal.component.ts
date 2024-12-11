@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, ElementRef, Inject, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -25,6 +25,11 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./edit-user-modal.component.css'],
 })
 export class EditUserModalComponent {
+
+  @ViewChild('cityInput') cityInput!: ElementRef
+
+  role!: string | null 
+  
   editUserForm: FormGroup;
   roles = [
     { id: 1, name: 'Admin' },
@@ -50,6 +55,28 @@ export class EditUserModalComponent {
       lat: [data.details?.lat || ''],
       lng: [data.details?.lng || ''],
     });
+  }
+
+  ngOnInit() {
+    this.role = localStorage.getItem('role')
+    console.log(this.role)
+  }
+
+
+  selectedPlace: any;
+  autocomplet() {
+    const autocomplete = new google.maps.places.Autocomplete(this.cityInput.nativeElement);
+    autocomplete.setTypes(['(cities)']); // to show only cities
+    autocomplete.addListener('place_changed', () => {
+      this.selectedPlace = autocomplete.getPlace();
+      //add data to the form
+      this.editUserForm.patchValue({
+        lat: this.selectedPlace.geometry.location.lat(),
+        lng: this.selectedPlace.geometry.location.lng(),
+        address: this.selectedPlace.name
+      }) 
+    });
+
   }
 
   save(): void {
