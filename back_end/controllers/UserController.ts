@@ -344,7 +344,11 @@ export const searchTeachers = async (req: Request, res: Response) => {
     ...(southWestLat && southWestLng && northEastLat && northEastLng && {
       '$details.lat$': { [Op.between]: [southWestLat, northEastLat] },
       '$details.lng$': { [Op.between]: [southWestLng, northEastLng] },
-    })
+    }),
+    ...(score && { [Op.or] : [
+      {'$averageTeacher.avg$': {[Op.gte]: score}},
+      {'$averageTeacher.avg$': null } 
+    ]}),
 
   }
 
