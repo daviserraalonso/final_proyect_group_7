@@ -14,7 +14,6 @@ import { MessageComponentComponent } from '../../../common/message/message-compo
 import { StudentCardComponent } from '../../student/student-card/student-card.component';
 import { TeacherServiceService } from '../../../../service/teacher-service.service';
 import { TaskFormComponent } from '../../../common/task-form/task-form.component';
-
 @Component({
   selector: 'app-teacher-student-view',
   standalone: true,
@@ -35,19 +34,42 @@ export class TeacherStudentViewComponent implements OnInit {
   serviceTeacherDetails = inject(TeacherServiceService);
   students: IStudent[] = [];
   userId: number = 0
-
+  currentPage: number = 1;
+  itemsPerPage: number = 8;
+  
   constructor(private dialog: MatDialog) {}
 
   async ngOnInit() {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
-      this.userId = user.id || 6; // asign id or use deafult value
-      console.log('User ID:', this.userId);
+  this.userId = user.id || 6;
+  console.log('User ID:', this.userId);
+  await this.loadStudents();
     try {
       this.students = await this.serviceTeacherDetails.getStudentsByProfessorId(this.userId);
       console.log('Estudiantes obtenidos:', this.students); //
     } catch (error) {
       console.error('Error al obtener los datos de los estudiantes:', error);
     }
+  }
+
+  async loadStudents() {
+    try {
+      const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+      const endIndex = startIndex + this.itemsPerPage;
+      this.students = await this.serviceTeacherDetails.getStudentsByProfessorId(this.userId);
+      this.students = this.students.slice(startIndex, endIndex);
+    } catch (error) {
+      console.error('Error al obtener los datos de los estudiantes:', error);
+    }
+  }
+
+
+  get totalPages(): number[] {
+    return Array.from({ length: Math.ceil(this.students.length / this.itemsPerPage) }, (_, i) => i + 1);
+  }
+  goToPage(page: number): void {
+    this.currentPage = page;
+    this.loadStudents();
   }
 
   sendTask(student: IStudent): void {
