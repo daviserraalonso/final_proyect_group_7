@@ -281,8 +281,8 @@ const searchTeachers = async (req, res) => {
         }),
         ...(minPrice && {
             [sequelize_1.Op.or]: [
-                { '$course.price$': { [sequelize_1.Op.between]: [minPrice, maxPrice] } },
-                { '$course.price$': null }
+                { '$coursesTaught.price$': { [sequelize_1.Op.between]: [minPrice, maxPrice] } },
+                { '$coursesTaught.price$': null }
             ]
         }),
         ...(southWestLat && southWestLng && northEastLat && northEastLng && {

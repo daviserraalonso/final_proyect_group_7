@@ -337,8 +337,8 @@ export const searchTeachers = async (req: Request, res: Response) => {
     }),
     ...(minPrice && {
       [Op.or]: [
-        { '$course.price$': { [Op.between]: [minPrice, maxPrice] } },
-        { '$course.price$': null }
+        { '$coursesTaught.price$': { [Op.between]: [minPrice, maxPrice] } },
+        { '$coursesTaught.price$': null }
       ]
     }),
     ...(southWestLat && southWestLng && northEastLat && northEastLng && {
