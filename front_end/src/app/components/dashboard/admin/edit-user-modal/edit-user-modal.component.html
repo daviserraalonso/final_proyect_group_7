@@ -1,6 +1,7 @@
 <h2 mat-dialog-title>Editar Usuario</h2>
-<mat-dialog-content>
-  <form class="mt-2" [formGroup]="editUserForm">
+
+<mat-dialog-content class="dialog_flex">
+  <form class="mt-2 dialog_flex" [formGroup]="editUserForm">
     <mat-form-field  appearance="outline">
       <mat-label>Nombre</mat-label>
       <input matInput formControlName="name" />
