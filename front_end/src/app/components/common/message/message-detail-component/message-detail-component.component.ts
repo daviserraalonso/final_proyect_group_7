@@ -13,8 +13,7 @@ import { NgFor } from '@angular/common';
     MatDialogModule,
     MatSnackBarModule,
     MatListModule,
-    MatIconModule,
-
+    MatIconModule
   ],
   templateUrl: './message-detail-component.component.html',
   styleUrl: './message-detail-component.component.css'
