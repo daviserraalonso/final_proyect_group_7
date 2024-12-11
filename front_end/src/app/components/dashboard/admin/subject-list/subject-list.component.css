@@ -16,10 +16,8 @@
   .action-container {
     flex-shrink: 0;
   }
-  
-  .search-container {
-    flex-grow: 1;
-    margin-left: 16px;
+  .responsive-table{
+    background-color: white;
   }
   
   mat-form-field {

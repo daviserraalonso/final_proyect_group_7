@@ -1,11 +1,6 @@
 <div class="main-card">
+  <h2 class="mb-3 text-center">Listado de Asignaturas</h2>
   <div class="header-container">
-    <div class="action-container">
-      <button mat-raised-button color="primary" (click)="openCreateSubjectModal()">
-        <mat-icon>add</mat-icon> Crear Asignatura
-      </button>
-    </div>
-
     <div class="search-container">
       <mat-form-field appearance="outline">
         <mat-label>Buscar Asignaturas</mat-label>
@@ -17,6 +12,11 @@
         />
         <mat-icon matSuffix>search</mat-icon>
       </mat-form-field>
+    </div>
+    <div class="action-container">
+      <button mat-raised-button color="primary" (click)="openCreateSubjectModal()">
+        <mat-icon>add</mat-icon> Crear Asignatura
+      </button>
     </div>
   </div>
 
