@@ -82,39 +82,33 @@
 
       <!-- option to role student -->
       <ng-container *ngIf="role === '3'">
-        <li class="nav-item mb-3">
           <mat-list-item routerLink="/courses" routerLinkActive="router-link-active" matTooltip="Mis Cursos" matTooltipPosition="right">
             <div class="center">
             <mat-icon>library_books</mat-icon>
             CURSOS
             </div>
           </mat-list-item>
-        </li>
 
-        <li class="nav-item mb-3">
           <mat-list-item routerLink="/calendar" routerLinkActive="router-link-active" matTooltip="Calendario" matTooltipPosition="right">
             <div class="center">
             <mat-icon>event</mat-icon>
             CALENDARIO
           </div>
           </mat-list-item>
-        </li>
-        <li class="nav-item mb-3">
+
           <mat-list-item [routerLink]="['/inbox']" matTooltip="Bandeja de entrada" matTooltipPosition="right">
             <div class="center">
             <mat-icon>email</mat-icon>
             MIS MENSAJES
           </div>
           </mat-list-item>
-        </li>
-        <li class="nav-item mb-3">
+
           <mat-list-item routerLink="/student" routerLinkActive="router-link-active" aria-current="page" matTooltip="Dashboard" matTooltipPosition="right">
             <div class="center">
             <mat-icon>dashboard</mat-icon>
             PERFIL
           </div>
           </mat-list-item>
-        </li>
       </ng-container>
 
       <!-- Logout -->
