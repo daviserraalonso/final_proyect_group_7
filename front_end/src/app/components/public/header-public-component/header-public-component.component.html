@@ -40,6 +40,9 @@
               <li>
                 <a  class="dropdown-item" [routerLink]="['/admin']">Perfil</a>
               </li>
+              <li>
+                <a  class="dropdown-item" [routerLink]="['/login']" (click)="logout()">Cerrar Sesion</a>
+              </li>
             </ul>
             <ul class="dropdown-menu" aria-labelledby="MenuDropdown" *ngIf="isAuthenticated && role === '2'">
               <li>
@@ -54,6 +57,9 @@
               <li>
                 <a  class="dropdown-item" [routerLink]="['/teacher']">Perfil</a>
               </li>
+              <li>
+                <a  class="dropdown-item" [routerLink]="['/login']" (click)="logout()">Cerrar Sesion</a>
+              </li>
             </ul>
             <ul class="dropdown-menu" aria-labelledby="MenuDropdown" *ngIf="isAuthenticated && role === '3'">
               <li>
@@ -67,6 +73,9 @@
               </li>
               <li>
                 <a  class="dropdown-item" [routerLink]="['/student']">Perfil</a>
+              </li>
+              <li>
+                <a  class="dropdown-item" [routerLink]="['/login']" (click)="logout()">Cerrar Sesion</a>
               </li>
             </ul>
           </li>

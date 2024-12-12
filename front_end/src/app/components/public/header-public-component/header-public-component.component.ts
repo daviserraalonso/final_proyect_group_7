@@ -1,5 +1,5 @@
 import { Component, HostListener, EventEmitter, Output, OnInit, Inject, PLATFORM_ID } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { AuthService } from '../../../service/auth-service.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -22,6 +22,7 @@ export class HeaderPublicComponentComponent implements OnInit {
 
     constructor(
       private authService: AuthService,
+      private router: Router,
       @Inject(PLATFORM_ID) private platformId: Object
     ) {}
 
@@ -64,5 +65,9 @@ export class HeaderPublicComponentComponent implements OnInit {
         }
       }
       return null;
+    }
+    logout() {
+      this.authService.logout();
+      this.router.navigate(['/login']);
     }
 }
