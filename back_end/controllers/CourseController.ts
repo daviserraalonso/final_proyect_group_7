@@ -51,7 +51,16 @@ export const getCourseById = async (req: Request, res: Response) => {
   }
 };
 
-
+// Obtener la cantidad total de cursos
+export const getTotalCourses = async (req: Request, res: Response) => {
+  try {
+    const totalCourses = await Course.count();
+    res.status(200).json({ totalCourses });
+  } catch (error) {
+    console.error('Error al obtener la cantidad total de cursos:', error);
+    res.status(500).json({ message: 'Error al obtener la cantidad total de cursos.' });
+  }
+};
 
 // Crear un nuevo curso
 export const createCourse = async (req: Request, res: Response) => {

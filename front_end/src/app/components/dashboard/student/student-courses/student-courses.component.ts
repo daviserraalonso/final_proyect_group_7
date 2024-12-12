@@ -54,6 +54,7 @@ export class StudentCoursesComponent implements OnInit {
 
   openScoreModal(cursoId: number): void {
     this.courseServices.getCourseById(cursoId).subscribe(async (response) => {
+      console.log('Curso recibido:', response);
       this.curse = response
       const user = localStorage.getItem('user');
       const userId = user ? JSON.parse(user).id : null; 

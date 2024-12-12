@@ -179,11 +179,13 @@ export class TeacherProfileComponentComponent implements OnInit {
   openPendingTasksDialog(): void {
     const pendingTasks = this.tasks.filter(task => task.status === 'Pendiente');
     const dialogRef = this.dialog.open(PendingTasksDialogComponent, {
-      width: '600px',
-      height:'600px', // Asegúrate de que el tamaño sea adecuado
+      width: '800px',
+      height:'800px', // Asegúrate de que el tamaño sea adecuado
       data: { tasks: pendingTasks },
     });
-  
+
+    console.log('Datos enviados al diálogo de tareas pendientes:', pendingTasks); // Agregar esta línea para ver los datos
+
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.showCustomSnackBar('Tarea revisada');

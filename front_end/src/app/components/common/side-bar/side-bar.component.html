@@ -80,33 +80,29 @@
         </mat-list-item>
       </ng-container>
 
-      <!-- Student Role Options -->
-      <ng-container *ngIf="isAuthenticated && role === '3'">
-        <mat-list-item routerLink="/courses" routerLinkActive="active">
-          <div class="center">
-          <mat-icon>library_books</mat-icon>
-          <a routerLink="/courses">CURSOS</a>
-        </div>
-        </mat-list-item>
-        <mat-list-item routerLink="/calendar" routerLinkActive="active">
-          <div class="center">
-          <mat-icon matListItemIcon>calendar_today</mat-icon>
-          <a routerLink="/calendar">CALENDARIO</a>
-        </div>
-        </mat-list-item>
-        <mat-list-item 
-        routerLink="/inbox" class="nav-link" matTooltip="Bandeja de entrada" matTooltipPosition="right">
-        <div class="center">
-          <mat-icon>email</mat-icon>
-          <a routerLink="/inbox">MIS MENSAJES</a>
-        </div>
-        </mat-list-item>
-        <mat-list-item routerLink="/student" routerLinkActive="active">
-          <div class="center">
-          <mat-icon>dashboard</mat-icon>
-          <a routerLink="/student">PERFIL</a>
-        </div>
-        </mat-list-item>
+      <!-- option to role student -->
+      <ng-container *ngIf="role === '3'">
+        <li class="nav-item mb-3">
+          <a routerLink="/courses" routerLinkActive="router-link-active" class="nav-link py-2 border-bottom" matTooltip="Mis Cursos" matTooltipPosition="right">
+            <mat-icon>library_books</mat-icon>
+          </a>
+        </li>
+
+        <li class="nav-item mb-3">
+          <a routerLink="/calendar" routerLinkActive="router-link-active" class="nav-link py-2 border-bottom" matTooltip="Calendario" matTooltipPosition="right">
+            <mat-icon>event</mat-icon>
+          </a>
+        </li>
+        <li class="nav-item mb-3">
+          <a [routerLink]="['/inbox']" class="nav-link py-2 border-bottom" matTooltip="Bandeja de entrada" matTooltipPosition="right">
+            <mat-icon>email</mat-icon>
+          </a>
+        </li>
+        <li class="nav-item mb-3">
+          <a routerLink="/student" routerLinkActive="router-link-active" class="nav-link py-2 border-bottom" aria-current="page" matTooltip="Dashboard" matTooltipPosition="right">
+            <mat-icon>dashboard</mat-icon>
+          </a>
+        </li>
       </ng-container>
 
       <!-- Logout -->

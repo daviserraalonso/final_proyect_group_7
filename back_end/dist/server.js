@@ -36,13 +36,13 @@ app.use(express.json());
 // config associations
 (0, associations_1.default)();
 // syncronize db
-sequelize.sync({ alter: true })
-    .then(() => {
-    console.log('Base de datos sincronizada');
-})
-    .catch((error) => {
-    console.error('Error al sincronizar la base de datos:', error);
-});
+// sequelize.sync({ force: false })
+//   .then(() => {
+//     console.log('Base de datos sincronizada');
+//   })
+//   .catch((error: any) => {
+//     console.error('Error al sincronizar la base de datos:', error);
+//   });
 // routes
 app.use('/api/users', userRoutes);
 app.use('/api/subjects', subjectRoutes);
@@ -56,6 +56,10 @@ app.use('/api/score', scoreRoutes);
 app.use('/api/chats', ChatRoutes);
 app.use('/api/professors', professorRoutes);
 app.use('/api/course-event', calendarRoutes);
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({ message: 'Internal Server Error', error: err.message });
+});
 // init server
 app.listen(port, () => {
     console.log(`Servidor Node escuchando en http://localhost:${port}`);

@@ -9,6 +9,7 @@ import AvgTeacher from '../models/avg_teacher';
 import User from '../models/User';
 import Category from '../models/Category';
 import { isValidDate } from '@fullcalendar/core/internal';
+import sequelize from '../config/database';
 const jwt = require('jsonwebtoken');
 
 
@@ -84,6 +85,7 @@ export const registerUser = async (req: Request, res: Response): Promise<void> =
     `;
 
     await sendConfirmationEmail(email, subject, htmlContent);
+
 
 
     res.status(201).json(userWithoutPassword);
@@ -408,6 +410,7 @@ export const names = async (req: any, res: any, next: any) => {
 
 }
 
+
 export const cities = async (req: Request, res: Response, next: any) => {
   try {
     const names = await User.findAll({
@@ -420,8 +423,10 @@ export const cities = async (req: Request, res: Response, next: any) => {
       }]
     }
 
+
     )
     res.status(200).json(names)
+
 
   } catch (error) {
     next(error)
@@ -499,6 +504,7 @@ export const validate = async (req: Request, res: Response, next: any) => {
     const userUpdateData = {
       isValidated: 1
 
+
     };
     await User.update(userUpdateData, {
       where: {
@@ -515,7 +521,6 @@ export const validate = async (req: Request, res: Response, next: any) => {
 
 export const getFavoriteTeachers = async (req: Request, res: Response) => {
   try {
-
     const teachers = await AvgTeacher.findAll({
       where: {
         avg: { [Op.gte]: 6 } // avg >= 6
@@ -524,33 +529,60 @@ export const getFavoriteTeachers = async (req: Request, res: Response) => {
         {
           model: User,
           as: 'User',
-          attributes: ['id', 'name']
+          attributes: ['id', 'name'],
+          include: [
+            {
+              model: UserDetails,
+              as: 'details',
+              attributes: ['description', 'img_url']
+            }
+          ]
         }
       ]
     });
 
-
-    console.log('Resultados de la consulta:', teachers);
-
-    // Formatear la respuesta
-    const favoriteTeachers = teachers.map((teacher: any) => ({
-      id: teacher.User?.id,
-      name: teacher.User?.name,
-      description: teacher.User?.description || 'Sin descripción disponible.',
-      image: teacher.User?.image || `https://randomuser.me/api/portraits/men/${teacher.User?.id % 100}.jpg`,
-      avg: teacher.avg
-    }));
-
-    console.log('Profesores formateados:', favoriteTeachers);
-
-    res.status(200).json(favoriteTeachers);
+    
+    res.status(200).json(teachers);
   } catch (error) {
     console.error('Error al obtener profesores favoritos:', error);
     res.status(500).json({ message: 'Error al obtener profesores favoritos' });
   }
+};
 
 
+export const getTotalStudents = async (req: Request, res: Response): Promise<void> => {
+  try {
+    // Realiza una consulta SQL para contar usuarios con el rol de estudiante (roleId = 3)
+    const [results] = await sequelize.query(`
+      SELECT COUNT(*) AS totalStudents
+      FROM user
+      WHERE roleId = 3;
+    `);
 
-}; // end class
+    // Responde con el total de estudiantes
+    const totalStudents = (results as any)[0].totalStudents;
+    res.status(200).json({ totalStudents });
+  } catch (error) {
+    console.error('Error al obtener el número de estudiantes:', error);
+    res.status(500).json({ error: 'Error al obtener el número de estudiantes' });
+  }
+};
 
+export const getTotalProfessors = async (req: Request, res: Response): Promise<void> => {
+  try {
+    // Realiza una consulta SQL para contar usuarios con el rol de "profesor"
+    const [results] = await sequelize.query(`
+      SELECT COUNT(*) AS totalProfessors
+      FROM user
+      WHERE roleId = 2; 
+    `);
+
+    // Responde con el total de profesores
+    const totalProfessors = (results as any)[0].totalProfessors;
+    res.status(200).json({ totalProfessors });
+  } catch (error) {
+    console.error('Error al obtener el número de profesores:', error);
+    res.status(500).json({ error: 'Error al obtener el número de profesores' });
+  }
+};
 

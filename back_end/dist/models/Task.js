@@ -6,15 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = require("sequelize");
 const database_1 = __importDefault(require("../config/database"));
 class Task extends sequelize_1.Model {
-    id;
-    subjectId;
-    userId;
-    comments;
-    punctuation;
-    submission; // Nuevo: Respuesta del estudiante
-    feedback; // Nuevo: Comentarios del profesor
-    creationDate;
-    deadline;
 }
 Task.init({
     id: {

@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getFavoriteTeachers = exports.validate = exports.getUserSubscribedCourses = exports.cityCords = exports.cities = exports.names = exports.searchTeachers = exports.getTeachers = exports.deleteUser = exports.modifyUser = exports.getUserDetails = exports.getAllUsers = exports.createUser = exports.confirmEmail = exports.registerUser = void 0;
+exports.getTotalProfessors = exports.getTotalStudents = exports.getFavoriteTeachers = exports.validate = exports.getUserSubscribedCourses = exports.cityCords = exports.cities = exports.names = exports.searchTeachers = exports.getTeachers = exports.deleteUser = exports.modifyUser = exports.getUserDetails = exports.getAllUsers = exports.createUser = exports.confirmEmail = exports.registerUser = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const emailService_1 = require("../services/emailService");
 const UserDetails_1 = __importDefault(require("../models/UserDetails"));
@@ -13,6 +13,7 @@ const StudentCourse_1 = __importDefault(require("../models/StudentCourse"));
 const avg_teacher_1 = __importDefault(require("../models/avg_teacher"));
 const User_1 = __importDefault(require("../models/User"));
 const Category_1 = __importDefault(require("../models/Category"));
+const database_1 = __importDefault(require("../config/database"));
 const jwt = require('jsonwebtoken');
 /**
  * Function to register user
@@ -451,25 +452,58 @@ const getFavoriteTeachers = async (req, res) => {
                 {
                     model: User_1.default,
                     as: 'User',
-                    attributes: ['id', 'name']
+                    attributes: ['id', 'name'],
+                    include: [
+                        {
+                            model: UserDetails_1.default,
+                            as: 'details',
+                            attributes: ['description', 'img_url']
+                        }
+                    ]
                 }
             ]
         });
-        console.log('Resultados de la consulta:', teachers);
-        // Formatear la respuesta
-        const favoriteTeachers = teachers.map((teacher) => ({
-            id: teacher.User?.id,
-            name: teacher.User?.name,
-            description: teacher.User?.description || 'Sin descripción disponible.',
-            image: teacher.User?.image || `https://randomuser.me/api/portraits/men/${teacher.User?.id % 100}.jpg`,
-            avg: teacher.avg
-        }));
-        console.log('Profesores formateados:', favoriteTeachers);
-        res.status(200).json(favoriteTeachers);
+        res.status(200).json(teachers);
     }
     catch (error) {
         console.error('Error al obtener profesores favoritos:', error);
         res.status(500).json({ message: 'Error al obtener profesores favoritos' });
     }
-}; // end class
+};
 exports.getFavoriteTeachers = getFavoriteTeachers;
+const getTotalStudents = async (req, res) => {
+    try {
+        // Realiza una consulta SQL para contar usuarios con el rol de estudiante (roleId = 3)
+        const [results] = await database_1.default.query(`
+      SELECT COUNT(*) AS totalStudents
+      FROM user
+      WHERE roleId = 3;
+    `);
+        // Responde con el total de estudiantes
+        const totalStudents = results[0].totalStudents;
+        res.status(200).json({ totalStudents });
+    }
+    catch (error) {
+        console.error('Error al obtener el número de estudiantes:', error);
+        res.status(500).json({ error: 'Error al obtener el número de estudiantes' });
+    }
+};
+exports.getTotalStudents = getTotalStudents;
+const getTotalProfessors = async (req, res) => {
+    try {
+        // Realiza una consulta SQL para contar usuarios con el rol de "profesor"
+        const [results] = await database_1.default.query(`
+      SELECT COUNT(*) AS totalProfessors
+      FROM user
+      WHERE roleId = 2; 
+    `);
+        // Responde con el total de profesores
+        const totalProfessors = results[0].totalProfessors;
+        res.status(200).json({ totalProfessors });
+    }
+    catch (error) {
+        console.error('Error al obtener el número de profesores:', error);
+        res.status(500).json({ error: 'Error al obtener el número de profesores' });
+    }
+};
+exports.getTotalProfessors = getTotalProfessors;

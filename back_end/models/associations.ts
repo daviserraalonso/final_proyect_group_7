@@ -91,15 +91,13 @@ export default function setupAssociations() {
 
   // ** Relation Course -> Modality**
   Course.belongsTo(Modality, {
-    foreignKey: {
-      name: 'modality_id',
-      allowNull: false,
-    },
-    as: 'modality',
+    foreignKey: 'modality_id',
+    as: 'modality', // 
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
+    constraints: false, 
   });
-
+  
   // association StudentCourse -> Course
   StudentCourse.belongsTo(Course, {
     foreignKey: 'courseId',

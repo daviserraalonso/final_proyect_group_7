@@ -5,26 +5,63 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getComments = exports.getScore = exports.insertScore = void 0;
 const ProfessorRating_1 = __importDefault(require("../models/ProfessorRating"));
+const database_1 = __importDefault(require("../config/database"));
+const sequelize_1 = require("sequelize");
 const insertScore = async (req, res, next) => {
     const { studentId, scoreTeacher, scoreCourse, idTeacher, idCourse, opinion } = req.body;
-    console.log(req.body);
     try {
-        if (!studentId || !scoreTeacher || !scoreCourse || !idTeacher || !idCourse) {
-            return res.status(400).json({ message: 'Todos los campos son obligatorios' });
+        // Validar campos obligatorios
+        if (!studentId || !idTeacher || !idCourse || !scoreCourse || !scoreTeacher) {
+            return res.status(400).json({ message: 'Campos obligatorios faltantes.' });
         }
-        const newScoreTeacher = await ProfessorRating_1.default.create({
-            professorId: idTeacher,
-            studentId: studentId,
-            rating_teacher: scoreTeacher,
-            rating_course: scoreCourse,
-            courseId: idCourse,
-            comments: opinion
+        // Comprobar si ya existe el registro
+        const existingRating = await database_1.default.query(`
+        SELECT * 
+        FROM professor_rating 
+        WHERE professorId = :idTeacher AND studentId = :studentId AND courseId = :idCourse;
+      `, {
+            replacements: { idTeacher, studentId, idCourse },
+            type: sequelize_1.QueryTypes.SELECT,
         });
-        res.status(201).json(newScoreTeacher);
+        if (existingRating.length > 0) {
+            return res.status(400).json({ message: 'El estudiante ya ha calificado este curso y profesor.' });
+        }
+        // Inserción en la tabla
+        const newScore = await database_1.default.query(`
+        INSERT INTO professor_rating (professorId, studentId, courseId, rating_teacher, rating_course, comments, ratingDate)
+        VALUES (:idTeacher, :studentId, :idCourse, :scoreTeacher, :scoreCourse, :opinion, NOW());
+      `, {
+            replacements: { idTeacher, studentId, idCourse, scoreTeacher, scoreCourse, opinion },
+        });
+        // Actualizar promedio en avg_course
+        await database_1.default.query(`
+        UPDATE avg_course
+        SET avg = (
+          SELECT AVG(rating_course)
+          FROM professor_rating
+          WHERE courseId = :idCourse
+        )
+        WHERE courseId = :idCourse;
+      `, {
+            replacements: { idCourse },
+        });
+        // Actualizar promedio en avg_teacher
+        await database_1.default.query(`
+        UPDATE avg_teacher
+        SET avg = (
+          SELECT AVG(rating_teacher)
+          FROM professor_rating
+          WHERE professorId = :idTeacher
+        )
+        WHERE professorId = :idTeacher;
+      `, {
+            replacements: { idTeacher },
+        });
+        res.status(201).json({ message: 'Calificación registrada y promedios actualizados exitosamente.', newScore });
     }
     catch (error) {
-        next(error);
-        console.log(error);
+        console.error('Error al insertar puntaje y actualizar promedios:', error);
+        res.status(500).json({ message: 'Error al insertar puntaje y actualizar promedios.' });
     }
 };
 exports.insertScore = insertScore;
@@ -36,8 +73,7 @@ const getScore = async (req, res, next) => {
             where: {
                 studentId: studentId,
                 courseId: idCourse
-            },
-            attributes: ['id']
+            }
         });
         res.status(200).json(score);
     }

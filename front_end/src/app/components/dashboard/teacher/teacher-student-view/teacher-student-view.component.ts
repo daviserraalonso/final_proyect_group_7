@@ -75,6 +75,7 @@ export class TeacherStudentViewComponent implements OnInit {
   sendTask(student: IStudent): void {
     this.dialog.open(TaskFormComponent, {
       width: '400px',
+      height: '400px',
       data: { 
         studentId: student.student_id,
         subjectId: student.subject_id

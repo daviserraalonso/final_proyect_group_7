@@ -3,6 +3,16 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError, lastValueFrom } from 'rxjs';
 import { Task } from '../interfaces/itask';
 
+export interface TaskUpdate {
+  id?: number;
+  subjectId?: number;
+  userId?: number;
+  comments?: string;
+  punctuation?: number;
+  submission?: string;
+  feedback?: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -70,10 +80,10 @@ export class TaskService {
   }
 
   // Actualizar una tarea por ID
-  async updateTask(id: number, task: Task): Promise<any> {
-    const url = `${this.apiUrl}/${id}`;
+  async updateTask(taskId: number, data: TaskUpdate): Promise<any> {
+    console.log('Enviando solicitud PUT a:', `${this.apiUrl}/${taskId}`, 'con datos:', JSON.stringify(data)); // Añadir log para verificar la solicitud
     try {
-      const response = await lastValueFrom(this.http.put(url, task, this.httpOptions));
+      const response = await lastValueFrom(this.http.put<any>(`${this.apiUrl}/${taskId}`, data, this.httpOptions));
       return response;
     } catch (error) {
       this.handleError<any>('updateTask');

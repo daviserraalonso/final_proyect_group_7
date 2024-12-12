@@ -4,6 +4,7 @@ import Course from '../models/Course';
 import Category from '../models/Category';
 import User from '../models/User';
 
+
 export const getStudentCourses = async (req: Request, res: Response): Promise<void> => {
   try {
     // get user if rom url

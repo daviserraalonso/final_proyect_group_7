@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Task } from '../../../interfaces/itask';
 import { TaskFormComponent } from '../task-form/task-form.component';
+import { TasksResponseComponent } from '../tasks-response/tasks-response.component';
 
 @Component({
   selector: 'app-task-component',
@@ -35,15 +36,17 @@ export class TaskComponentComponent implements OnInit {
   }
 
   openTaskForm(task: Task): void {
-    this.dialog.open(TaskFormComponent, {
-      data: {
-        taskId: task.tarea_id,
-        tarea_comentarios: task.tarea_comentarios,
-        materia_nombre: task.materia_nombre,
-        profesor_nombre: task.profesor_nombre
-      },
-      width: '100%',
-      height: '100%'
+    const dialogData = {
+      taskId: task.tarea_id,
+      tarea_comentarios: task.tarea_comentarios,
+      materia_nombre: task.materia_nombre,
+      profesor_nombre: task.profesor_nombre
+    };
+    console.log('Data sent to TasksResponseComponent:', dialogData);
+    this.dialog.open(TasksResponseComponent, {
+      data: dialogData,
+      width: '80%',
+      height: '80%'
     });
   }
 }

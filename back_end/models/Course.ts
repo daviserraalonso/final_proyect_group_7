@@ -29,6 +29,10 @@ Course.init(
     modality_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      references: {
+        model: 'modality', // Asegúrate de que este nombre coincida con la tabla en la base de datos
+        key: 'id',
+      },
     },
     professor_id: {
       type: DataTypes.INTEGER,
@@ -38,7 +42,7 @@ Course.init(
   {
     sequelize,
     modelName: 'Course',
-    tableName: 'Course',
+    tableName: 'course',
     timestamps: true,
   }
 );

@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, lastValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { UserAttributes } from '../interfaces/userAttributes';
 import { MatDialog } from '@angular/material/dialog';
@@ -27,8 +27,8 @@ export class UserServiceService {
     return this.http.get<any[]>(`${this.apiUrl}/teachers`);
   }
 
-  getFavoriteTeachers(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/teachers/favorites`);
+  getFavoriteTeachers(): Promise<any[]> {
+    return firstValueFrom(this.http.get<any[]>(`${this.apiUrl}/teachers/favorites`));
   }
 
   getUserDetails(userId: number): Promise<any> {
@@ -46,8 +46,10 @@ export class UserServiceService {
   }
 
   //function to update user, url no complete
-  update(body: UserAttributes): Promise<UserAttributes> {
-    return firstValueFrom(this.http.put<UserAttributes>(this.baseUrl, body));
+  update(taskId: number, submission: string): Promise<any> {
+    const url = `http://localhost:3000/api/tasks/${taskId}`;
+    const body = { submission };
+    return firstValueFrom(this.http.put<any>(url, body));
   }
 
   updateUser(userId: number, userData: any): Promise<void> {
@@ -63,4 +65,11 @@ export class UserServiceService {
     return firstValueFrom(this.http.put(`${this.baseUrl}/${id}/validate`, null))
   }
 
+  getTotalStudents(): Promise<any> {
+    return lastValueFrom(this.http.get<any>(`${this.baseUrl}/total-students`));
+  }
+
+  getTotalProfessors(): Promise<any> {
+    return lastValueFrom(this.http.get<any>(`${this.baseUrl}/total-professors`));
+  }
 }
