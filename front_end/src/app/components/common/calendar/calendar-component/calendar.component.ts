@@ -122,24 +122,23 @@ export class CalendarComponent implements OnInit {
         return 'orange';
     }
   }
-
   private handleDateSelect(selectInfo: DateSelectArg): void {
     const roleId = Number(localStorage.getItem('role'));
 
     if (roleId === 3) {
-      // No permitir seleccionar fechas si el rol es 3
       return;
     }
 
     const calendarApi = selectInfo.view.calendar;
     calendarApi.unselect();
 
+    // Convertir las fechas al formato 'yyyy-MM-ddTHH:mm' esperado por el input 'datetime-local'
     const newEvent: ICourseEvent = {
       id: 0,
       title: '',
       description: '',
-      startDateTime: selectInfo.startStr,
-      endDateTime: selectInfo.endStr,
+      startDateTime: this.toLocalDateTime(selectInfo.start), // Conversión aquí
+      endDateTime: this.toLocalDateTime(selectInfo.end),     // Conversión aquí
       allDay: selectInfo.allDay,
       locationType: '',
       isRead: false,
@@ -149,7 +148,12 @@ export class CalendarComponent implements OnInit {
       eventType: 'class',
     };
 
+    console.log('Nuevo evento enviado al diálogo:', newEvent);
     this.openEventEditDialog(newEvent, true);
+  }
+
+  private toLocalDateTime(date: Date): string {
+    return date.toISOString().slice(0, 16); // Formato 'yyyy-MM-ddTHH:mm'
   }
 
 

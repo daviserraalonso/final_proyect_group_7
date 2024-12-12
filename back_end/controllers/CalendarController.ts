@@ -22,7 +22,7 @@ export const getAllCourseEvent = async (req: Request, res: Response) => {
                 {
                     model: CourseLocation,
                     as: 'location',
-                    attributes: ['address', 'onlineLink'], // Incluye los campos necesarios
+                    attributes: ['address', 'onlineLink'],
                 },
             ],
         });
@@ -35,7 +35,7 @@ export const getAllCourseEvent = async (req: Request, res: Response) => {
 export const getCourseLocationByCourseId = async (req: Request, res: Response) => {
     try {
         const { courseId } = req.params;
-        console.log('Obteniendo ubicación para CourseID:', courseId); // Log para depurar
+        console.log('Obteniendo ubicación para CourseID:', courseId);
 
         if (!courseId) {
             return res.status(400).json({ message: 'El ID del curso es obligatorio' });
@@ -65,11 +65,10 @@ export const getEventsByStudentId = async (req: Request, res: Response) => {
     }
 
     try {
-        // Buscar los cursos en los que está inscrito el estudiante
         const studentCourses = await StudentCourse.findAll({
             where: { studentId },
             attributes: ['courseId'],
-            raw: true, // Asegura que los datos devueltos sean planos
+            raw: true,
         });
 
         console.log('Raw StudentCourses:', studentCourses);
@@ -86,10 +85,9 @@ export const getEventsByStudentId = async (req: Request, res: Response) => {
             return res.status(404).json({ message: 'El estudiante no está inscrito en cursos válidos' });
         }
 
-        // Buscar eventos relacionados con esos cursos
         const events = await CourseEvent.findAll({
             where: {
-                courseId: courseIds, // Filtrar eventos por los cursos del estudiante
+                courseId: courseIds,
             },
             include: [
                 {
@@ -121,10 +119,10 @@ export const getEventsByStudentId = async (req: Request, res: Response) => {
 
 
 export const getCoursesByProfessor = async (req, res) => {
-    console.log('Parámetros recibidos:', req.params); // Agrega este log para depuración
+    console.log('Parámetros recibidos:', req.params);
 
     try {
-        const { id: professorId } = req.params; // Extrae el parámetro id
+        const { id: professorId } = req.params;
         if (!professorId) {
             return res.status(400).json({ message: 'No se proporcionó el ID del profesor' });
         }
@@ -170,16 +168,15 @@ export const getSubjectsByCourse = async (req: Request, res: Response) => {
 
 export const updateCourseEvent = async (req: Request, res: Response) => {
     try {
-        const { id } = req.params; // ID del evento a actualizar
-        const updatedData = req.body; // Datos actualizados del evento
+        const { id } = req.params;
+        const updatedData = req.body;
 
-        // Buscar el evento por su ID
         const event = await CourseEvent.findByPk(id);
         if (!event) {
             return res.status(404).json({ message: 'Evento no encontrado' });
         }
 
-        // Actualizar el evento con los datos recibidos
+
         await event.update(updatedData);
 
         res.status(200).json(event);
@@ -208,8 +205,8 @@ export const createCourseEvent = async (req: Request, res: Response) => {
         const newEvent = await CourseEvent.create({
             title,
             description,
-            startDateTime: new Date(startDateTime), // Convertir a objeto Date
-            endDateTime: new Date(endDateTime), // Convertir a objeto Date
+            startDateTime: new Date(startDateTime),
+            endDateTime: new Date(endDateTime),
             locationType,
             locationId,
             onlineLink,
@@ -228,15 +225,13 @@ export const createCourseEvent = async (req: Request, res: Response) => {
 
 export const deleteCourseEvent = async (req: Request, res: Response) => {
     try {
-        const { id } = req.params; // ID del evento a eliminar
+        const { id } = req.params;
 
-        // Buscar el evento por su ID
         const event = await CourseEvent.findByPk(id);
         if (!event) {
             return res.status(404).json({ message: 'Evento no encontrado' });
         }
 
-        // Eliminar el evento
         await event.destroy();
 
         res.status(200).json({ message: 'Evento eliminado correctamente' });

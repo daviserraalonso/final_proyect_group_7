@@ -15,7 +15,6 @@ import User from './User';
 import Task from './Task';
 
 export default function setupAssociations() {
-  // ** Relation User -> UserDetails**
   User.hasOne(UserDetails, {
     foreignKey: {
       name: 'userId',
@@ -46,7 +45,6 @@ export default function setupAssociations() {
     onUpdate: 'CASCADE',
   });
 
-  // ** Relation Course -> User (Profesor)**
   Course.belongsTo(User, {
     foreignKey: {
       name: 'professor_id',
@@ -89,16 +87,14 @@ export default function setupAssociations() {
   });
 
 
-  // ** Relation Course -> Modality**
   Course.belongsTo(Modality, {
     foreignKey: 'modality_id',
     as: 'modality', // 
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
-    constraints: false, 
+    constraints: false,
   });
-  
-  // association StudentCourse -> Course
+
   StudentCourse.belongsTo(Course, {
     foreignKey: 'courseId',
     as: 'course',
@@ -117,7 +113,6 @@ export default function setupAssociations() {
   });
 
 
-  // association Course -> StudentCourse
   Course.hasMany(StudentCourse, {
     foreignKey: 'courseId',
     as: 'studentCourses',
@@ -126,7 +121,6 @@ export default function setupAssociations() {
   });
 
 
-  // ** Relation Subject -> Course**
   Subject.belongsTo(Course, {
     foreignKey: {
       name: 'courseId',
@@ -147,7 +141,6 @@ export default function setupAssociations() {
     onUpdate: 'CASCADE',
   });
 
-  // ** Relation CourseEvent -> Subject**
   CourseEvent.belongsTo(Subject, {
     foreignKey: {
       name: 'subjectId',
@@ -168,7 +161,6 @@ export default function setupAssociations() {
     onUpdate: 'CASCADE',
   });
 
-  // ** Relation StudentCourse -> User (Estudiante)**
   StudentCourse.belongsTo(User, {
     foreignKey: {
       name: 'studentId',
@@ -189,7 +181,6 @@ export default function setupAssociations() {
     onUpdate: 'CASCADE',
   });
 
-  // ** Relation Chat -> User (Profesor)**
   Chat.belongsTo(User, {
     foreignKey: {
       name: 'professorId',
@@ -200,7 +191,6 @@ export default function setupAssociations() {
     onUpdate: 'CASCADE',
   });
 
-  // ** Relation Chat -> User (Estudiante)**
   Chat.belongsTo(User, {
     foreignKey: {
       name: 'studentId',
@@ -211,7 +201,6 @@ export default function setupAssociations() {
     onUpdate: 'CASCADE',
   });
 
-  // ** Relation Message -> Chat**
   Message.belongsTo(Chat, {
     foreignKey: {
       name: 'chatId',
@@ -233,7 +222,6 @@ export default function setupAssociations() {
     onUpdate: 'CASCADE',
   });
 
-  // ** Relation Message -> User (Sender)**
   Message.belongsTo(User, {
     foreignKey: {
       name: 'senderId',
@@ -254,7 +242,6 @@ export default function setupAssociations() {
     onUpdate: 'CASCADE',
   });
 
-  // ** Relation Course -> Category**
   Course.belongsTo(Category, {
     foreignKey: {
       name: 'category_id',
@@ -275,26 +262,23 @@ export default function setupAssociations() {
     onUpdate: 'CASCADE',
   });
 
-  // **Relación User -> Profesor Rating**
   User.hasOne(AvgTeacher, {
     as: 'averageTeacher',
     foreignKey: 'id'
   })
 
-  //**Relación Profesor Rating -> avg_teacher */
   ProfessorRating.hasOne(AvgTeacher, {
     foreignKey: 'professorId',
     as: 'averageTeacher'
   })
 
-  //**Relación Profesor Rating -> avg_course ->  */
   ProfessorRating.hasOne(AvgCourse, {
     foreignKey: 'courseId',
     as: 'averageCourse'
   })
 
 
-  // relation avgTeacher user
+
   AvgTeacher.belongsTo(User, {
     foreignKey: 'professorId',
     as: 'User'
@@ -310,8 +294,7 @@ export default function setupAssociations() {
     as: 'averageCourse'
   })
 
-  // ** Relation Task -> Course**
-  // ** Relation Task -> Course**
+
   Task.belongsTo(Course, {
     foreignKey: {
       name: 'subjectId',
