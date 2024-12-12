@@ -144,7 +144,6 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
   try {
 
   } catch (error) {
-  } catch (error) {
 
   }
 };
@@ -328,15 +327,11 @@ export const searchTeachers = async (req: Request, res: Response) => {
     roleId: 2,
     isValidated: 1,
     ...(userId && { id: userId }),
-    ...(userId && { id: userId }),
     ...(type && {
       '$coursesTaught.modality_id$': type,
     }),
     ...(inputName && { name: inputName }),
-    ...(inputName && { name: inputName }),
     ...(inputCity && {
-      '$details.address$': inputCity
-    }),
       '$details.address$': inputCity
     }),
     ...(selectedCategory && {
@@ -348,24 +343,17 @@ export const searchTeachers = async (req: Request, res: Response) => {
         { '$coursesTaught.price$': null }
       ]
     }),
-    ...(minPrice && {
-      [Op.or]: [
-        { '$coursesTaught.price$': { [Op.between]: [minPrice, maxPrice] } },
-        { '$coursesTaught.price$': null }
-      ]
-    }),
     ...(southWestLat && southWestLng && northEastLat && northEastLng && {
       '$details.lat$': { [Op.between]: [southWestLat, northEastLat] },
       '$details.lng$': { [Op.between]: [southWestLng, northEastLng] },
     }),
-    ...(score && {
-      [Op.or]: [
-        { '$averageTeacher.avg$': { [Op.gte]: score } },
-        { '$averageTeacher.avg$': null }
-      ]
-    }),
+    ...(score && { [Op.or] : [
+      {'$averageTeacher.avg$': {[Op.gte]: score}},
+      {'$averageTeacher.avg$': null } 
+    ]}),
 
   }
+
 
   try {
     console.log(`filtro: ${userId}`)
@@ -408,14 +396,11 @@ export const searchTeachers = async (req: Request, res: Response) => {
 };
 
 export const names = async (req: any, res: any, next: any) => {
-export const names = async (req: any, res: any, next: any) => {
   try {
     const names = await User.findAll({
       where: { roleId: 2 },
-      where: { roleId: 2 },
       attributes: ['name']
     }
-
 
     )
     res.status(200).json(names)
@@ -423,14 +408,12 @@ export const names = async (req: any, res: any, next: any) => {
     next(error)
   }
 
-
 }
 
-export const cities = async (req: Request, res: Response, next: any) => {
+
 export const cities = async (req: Request, res: Response, next: any) => {
   try {
     const names = await User.findAll({
-      where: { roleId: 2 },
       where: { roleId: 2 },
       attributes: [],
       include: [{
@@ -452,11 +435,9 @@ export const cities = async (req: Request, res: Response, next: any) => {
 
 export const cityCords = async (req: Request, res: Response, next: any) => {
   const { city } = req.params
-  const { city } = req.params
   console.log(city)
   try {
     const coords = await UserDetails.findOne({
-      where: { address: city },
       where: { address: city },
       attributes: ['lat', 'lng']
     })
@@ -519,15 +500,12 @@ export const getUserSubscribedCourses = async (req: Request, res: Response): Pro
 export const validate = async (req: Request, res: Response, next: any) => {
   try {
     const { userId } = req.params
-    const { userId } = req.params
 
     const userUpdateData = {
       isValidated: 1
 
-      isValidated: 1
 
     };
-    await User.update(userUpdateData, {
     await User.update(userUpdateData, {
       where: {
         id: userId
@@ -563,7 +541,7 @@ export const getFavoriteTeachers = async (req: Request, res: Response) => {
       ]
     });
 
-    // Aquí enviamos directamente los resultados de la consulta
+    
     res.status(200).json(teachers);
   } catch (error) {
     console.error('Error al obtener profesores favoritos:', error);

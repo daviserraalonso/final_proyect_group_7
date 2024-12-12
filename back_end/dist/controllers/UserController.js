@@ -290,12 +290,10 @@ const searchTeachers = async (req, res) => {
             '$details.lat$': { [sequelize_1.Op.between]: [southWestLat, northEastLat] },
             '$details.lng$': { [sequelize_1.Op.between]: [southWestLng, northEastLng] },
         }),
-        ...(score && {
-            [sequelize_1.Op.or]: [
+        ...(score && { [sequelize_1.Op.or]: [
                 { '$averageTeacher.avg$': { [sequelize_1.Op.gte]: score } },
                 { '$averageTeacher.avg$': null }
-            ]
-        }),
+            ] }),
     };
     try {
         console.log(`filtro: ${userId}`);
@@ -465,7 +463,6 @@ const getFavoriteTeachers = async (req, res) => {
                 }
             ]
         });
-        // Aquí enviamos directamente los resultados de la consulta
         res.status(200).json(teachers);
     }
     catch (error) {

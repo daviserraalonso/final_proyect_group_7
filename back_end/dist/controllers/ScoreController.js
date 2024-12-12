@@ -73,8 +73,7 @@ const getScore = async (req, res, next) => {
             where: {
                 studentId: studentId,
                 courseId: idCourse
-            },
-            attributes: ['id']
+            }
         });
         res.status(200).json(score);
     }
