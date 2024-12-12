@@ -64,7 +64,7 @@ export class CourseListComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         Swal.fire({
-          text: `Curso ${result.name} actualizado`,
+          text: `${result.name} actualizado`,
           width: 400,
           showConfirmButton: false,
           imageUrl: 'assets/logo.png',
