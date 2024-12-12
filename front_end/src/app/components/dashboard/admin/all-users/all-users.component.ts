@@ -103,13 +103,13 @@ export class AllUsersComponent implements OnInit {
     this.userService.getUserDetails(userId).then((data) => {
       const dialogRef = this.dialog.open(EditUserModalComponent, {
         width: '600px',
-        data, // Pasar los datos del usuario al modal
+        data,
       });
   
       dialogRef.afterClosed().subscribe((result) => {
         if (result) {
           console.log('Usuario actualizado');
-          this.loadUsers(); // Recargar la lista de usuarios
+          this.loadUsers();
         }
       });
     }).catch((error) => {
@@ -132,7 +132,6 @@ export class AllUsersComponent implements OnInit {
     { if(result.isConfirmed) {
       this.userService.delete(userId).then(() => {
         console.log(`Usuario con ID ${userId} eliminado`);
-        // Eliminar el usuario del dataSource localmente
         this.dataSource.data = this.dataSource.data.filter(user => user.id !== userId);
         Swal.fire({
           text: "Usuario eliminado correctamente.",

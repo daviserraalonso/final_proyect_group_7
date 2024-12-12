@@ -1,40 +1,68 @@
-import { Component } from '@angular/core';
+import { Component, HostListener, EventEmitter, Output, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../../service/auth-service.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-
+import { MatIconModule } from '@angular/material/icon';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-header-public-component',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, CommonModule, RouterModule],
+  imports: [RouterLink, RouterLinkActive, CommonModule, RouterModule, MatIconModule],
   templateUrl: './header-public-component.component.html',
-  styleUrl: './header-public-component.component.css'
+  styleUrls: ['./header-public-component.component.css']
 })
-export class HeaderPublicComponentComponent {
-  isAuthenticated = false;
-  userName: string | null = null;
+export class HeaderPublicComponentComponent implements OnInit {
+    isAuthenticated: boolean = false;
+    showDropdown: boolean = false;
+    userName: string | null = null;
+    role: string = '';
+    @Output() toggle = new EventEmitter<void>();
 
-  constructor(private authService: AuthService) {}
+    constructor(
+      private authService: AuthService,
+      @Inject(PLATFORM_ID) private platformId: Object
+    ) {}
 
-  ngOnInit(): void {
-    this.authService.isAuthenticated$.subscribe((authStatus) => {
-      this.isAuthenticated = authStatus;
-      this.userName = this.isAuthenticated ? this.getUserName() : null;
-    });
-  }
+    ngOnInit(): void {
+      if (isPlatformBrowser(this.platformId)) {
+        this.isAuthenticated = this.authService.isAuthenticated();
+        this.showDropdown = window.innerWidth <= 1300;
 
-  // get user name from local storage or sesion
-  private getUserName(): string | null {
-    const user = localStorage.getItem('user');
-    console.log(user)
-    if (user) {
-      const userData = JSON.parse(user);
-      return userData?.name || null;
+        this.authService.isAuthenticated$.subscribe((authStatus) => {
+          this.isAuthenticated = authStatus;
+          this.userName = this.isAuthenticated ? this.getUserName() : null;
+        });
+
+        if (this.isAuthenticated) {
+          const role = this.authService.getRole();
+          if (role) {
+            this.role = role;
+          }
+        }
+      }
     }
-    return null;
-  }
 
+    @HostListener('window:resize', [])
+    onResize() {
+      if (isPlatformBrowser(this.platformId)) {
+        this.showDropdown = window.innerWidth <= 1300;
+      }
+    }
 
+    toggleSideBar() {
+      this.toggle.emit();
+    }
+
+    private getUserName(): string | null {
+      if (isPlatformBrowser(this.platformId)) {
+        const user = localStorage.getItem('user');
+        if (user) {
+          const userData = JSON.parse(user);
+          return userData?.name || null;
+        }
+      }
+      return null;
+    }
 }

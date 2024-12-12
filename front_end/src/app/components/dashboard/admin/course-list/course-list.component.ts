@@ -63,7 +63,7 @@ export class CourseListComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         console.log('Curso actualizado:', result);
-        this.loadCourses(); // Recargar la lista tras editar
+        this.loadCourses();
       }
     });
   }
@@ -73,7 +73,7 @@ export class CourseListComponent implements OnInit {
       this.courseService.deleteCourse(id).subscribe(
         () => {
           console.log('Curso eliminado:', id);
-          this.loadCourses(); // Recargar la lista
+          this.loadCourses();
         },
         (error) => {
           console.error('Error al eliminar el curso:', error);
@@ -90,7 +90,7 @@ export class CourseListComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         console.log('Curso creado:', result);
-        this.loadCourses(); // Recargar la lista tras la creación
+        this.loadCourses();
       }
     });
   }

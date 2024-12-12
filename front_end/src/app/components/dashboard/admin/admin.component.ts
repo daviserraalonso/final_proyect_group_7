@@ -56,7 +56,7 @@ export class AdminComponent implements OnInit {
 
   // Fecha seleccionada
   selectedDate: Date | null = null;
-
+  selectedFile: File | null = null;
   constructor(public dialog: MatDialog, private snackBar: MatSnackBar) {}
 
   coursesSerivce = inject(CourseService);

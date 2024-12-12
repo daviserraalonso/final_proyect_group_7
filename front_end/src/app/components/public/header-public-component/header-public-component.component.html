@@ -1,14 +1,78 @@
 <div class="container-flex text-center">
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark w-100">
+    <nav class="navbar navbar-expand-xxl navbar-dark p-3 w-100">
       <div class="container-fluid">
         <img class="img" src="assets/logo.png" alt="">
-        <a class="navbar-brand" routerLink="/index">TeacherApp</a>
+        <a class="navbar-brand m-1" routerLink="/index">TeacherApp</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
+        <div class="toggle-button" data-bs-toggle="collapse" data-bs-target="#navbarNav" *ngIf="isAuthenticated">
+          <button mat-icon-button (click)="toggleSideBar()">
+            <mat-icon>menu</mat-icon>
+          </button>
+        </div>
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item dropdown" *ngIf="isAuthenticated"  [ngClass]="{'hidden': !showDropdown}">
+            <a
+              class="nav-link dropdown-toggle"
+              id="MenuDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Menu
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="MenuDropdown" *ngIf="isAuthenticated && role === '1'">
+              <li>
+                <a  class="dropdown-item" [routerLink]="['/all-users']">Usuarios</a>
+              </li>
+              <li>
+                <a  class="dropdown-item" [routerLink]="['/subjects']">Asignaturas</a>
+              </li>
+              <li>
+                <a  class="dropdown-item" [routerLink]="['/all-courses']">Todos los Cursos</a>
+              </li>
+              <li>
+                <a  class="dropdown-item" [routerLink]="['/inbox']">Mis Mensajes</a>
+              </li>
+              <li>
+                <a  class="dropdown-item" [routerLink]="['/admin']">Perfil</a>
+              </li>
+            </ul>
+            <ul class="dropdown-menu" aria-labelledby="MenuDropdown" *ngIf="isAuthenticated && role === '2'">
+              <li>
+                <a  class="dropdown-item" [routerLink]="['/mis-alumnos']">Mis Alumnos</a>
+              </li>
+              <li>
+                <a  class="dropdown-item" [routerLink]="['/calendar']">Calenadario</a>
+              </li>
+              <li>
+                <a  class="dropdown-item" [routerLink]="['/inbox']">Mis Mensajes</a>
+              </li>
+              <li>
+                <a  class="dropdown-item" [routerLink]="['/teacher']">Perfil</a>
+              </li>
+            </ul>
+            <ul class="dropdown-menu" aria-labelledby="MenuDropdown" *ngIf="isAuthenticated && role === '3'">
+              <li>
+                <a  class="dropdown-item" [routerLink]="['/courses']">Usuarios</a>
+              </li>
+              <li>
+                <a  class="dropdown-item" [routerLink]="['/calendar']">Calendario</a>
+              </li>
+              <li>
+                <a  class="dropdown-item" [routerLink]="['/inbox']">Mis Mensajes</a>
+              </li>
+              <li>
+                <a  class="dropdown-item" [routerLink]="['/student']">Perfil</a>
+              </li>
+            </ul>
+          </li>
+
+
+          
             <li data-bs-toggle="collapse" data-bs-target="#navbarNav" class="nav-item"><a class="nav-link" [routerLink]="['/index']">Inicio</a></li>
             <li class="nav-item dropdown">
               <a
@@ -22,10 +86,10 @@
               </a>
               <ul class="dropdown-menu" aria-labelledby="academicOfferingsDropdown">
                 <li>
-                  <a data-bs-toggle="collapse" data-bs-target="#navbarNav" class="dropdown-item" [routerLink]="['/academic-offerings/presential']">Cursos Presenciales</a>
+                  <a class="dropdown-item" [routerLink]="['/academic-offerings/presential']">Cursos Presenciales</a>
                 </li>
                 <li>
-                  <a data-bs-toggle="collapse" data-bs-target="#navbarNav" class="dropdown-item" [routerLink]="['/academic-offerings/online']">Cursos Online</a>
+                  <a class="dropdown-item" [routerLink]="['/academic-offerings/online']">Cursos Online</a>
                 </li>
               </ul>
             </li>
@@ -33,21 +97,16 @@
             <li data-bs-toggle="collapse" data-bs-target="#navbarNav" class="nav-item"><a class="nav-link" [routerLink]="['/how-works']">Cómo Funciona</a></li>
             <li data-bs-toggle="collapse" data-bs-target="#navbarNav" class="nav-item"><a class="nav-link" [routerLink]="['/contact']">Contacto</a></li>
           </ul>
+         
           <div>
-            <a data-bs-toggle="collapse" data-bs-target="#navbarNav" *ngIf="!isAuthenticated" [routerLink]="['/login']" class="btn btn-success me-2">
+            <a data-bs-toggle="collapse" data-bs-target="#navbarNav" *ngIf="!isAuthenticated" [routerLink]="['/login']" class="btn btn-outline-custom-green me-2">
               Iniciar Sesión
             </a>
-          
-            <!-- if user it´s logged, can show his profile -->
-            <a *ngIf="isAuthenticated"  [routerLink]="['/profile']" class="btn btn-primary me-2">
+            <a *ngIf="isAuthenticated"  [routerLink]="['/profile']" class="btn btn-outline-custom-green me-2">
               {{ userName }}
             </a>
-          
-
-            <a *ngIf="!isAuthenticated" data-bs-toggle="collapse" data-bs-target="#navbarNav" [routerLink]="['/register-student']" class="btn btn-outline-info m-2">Registrarse como alumno</a>
-            <a *ngIf="!isAuthenticated" data-bs-toggle="collapse" data-bs-target="#navbarNav" [routerLink]="['/register-teacher']" class="btn btn-outline-warning">Registrarse como profesor</a>
-            
-
+            <a *ngIf="!isAuthenticated" data-bs-toggle="collapse" data-bs-target="#navbarNav" [routerLink]="['/register-student']" class="btn btn-outline-custom-blue m-2">Registrarse como Alumno</a>
+            <a *ngIf="!isAuthenticated" data-bs-toggle="collapse" data-bs-target="#navbarNav" [routerLink]="['/register-teacher']" class="btn btn-outline-custom-orange">Registrarse como Profesor</a>
           </div>
         </div>
       </div>

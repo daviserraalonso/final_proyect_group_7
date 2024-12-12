@@ -1,11 +1,15 @@
 <div class="favorite-teachers">
-  <h2>Profesores Favoritos</h2>
+  <h2 class="fw-bold text-dark mt-3">Profesores Favoritos</h2>
+  <p class="description">
+    Encontrarás los profesores mas destacados de nuestra TeacherApp.
+  </p>
   <div class="teachers-container">
     <div class="teacher-card" *ngFor="let teacher of favoriteTeachers">
       <img [src]="teacher.image" alt="{{ teacher.name }}" />
       <div class="teacher-details">
         <h3>{{ teacher.name }}</h3>
-        <p>{{ teacher.description }}</p>
+        <p>{{ teacher.description }}
+        </p>
       </div>
     </div>
   </div>

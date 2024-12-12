@@ -1,5 +1,8 @@
 <div class="student-cards">
-  <mat-card *ngFor="let student of students" class="student-card animate__animated animate__fadeIn">
+  <mat-card
+    *ngFor="let student of students"
+    class="student-card animate__animated animate__fadeIn"
+  >
     <mat-card-header>
       <img mat-card-avatar [src]="student.student_image" alt="{{ student.student_name }}">
       <mat-card-title>{{ student.student_name }}</mat-card-title>
@@ -15,13 +18,24 @@
   </mat-card>
 </div>
 
-<style>
-  .student-card {
-    word-wrap: break-word;
-  }
-  .student-card mat-card-title,
-  .student-card mat-card-subtitle,
-  .student-card p {
-    white-space: normal;
-  }
-</style>
+<div class="pagination">
+  <button mat-button 
+          class="previous-button" 
+          (click)="goToPage(currentPage - 1)" 
+          [disabled]="currentPage === 1">
+    Anterior
+  </button>
+  <button mat-button 
+          *ngFor="let page of totalPages" 
+          [class.active]="page === currentPage" 
+          (click)="goToPage(page)">
+    {{ page }}
+  </button>
+  <button mat-button 
+          class="next-button" 
+          (click)="goToPage(currentPage + 1)" 
+          [disabled]="currentPage * itemsPerPage >= students.length">
+    Siguiente
+  </button>
+</div>
+

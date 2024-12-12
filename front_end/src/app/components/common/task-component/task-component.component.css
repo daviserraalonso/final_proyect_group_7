@@ -1,0 +1,80 @@
+.container {
+    padding: 20px;
+    background-color: #f8f9fa;
+  }
+  
+  table.mat-table {
+    width: 100%;
+    background-color: #ffffff;
+    border-radius: 10px;
+
+
+  }
+  
+  th.mat-header-cell,
+  td.mat-cell {
+    padding: 15px;
+    font-size: 1rem;
+    text-align: left;
+  }
+  
+  th.mat-header-cell {
+    background-color: #1976d2;
+    color: white;
+    font-weight: bold;
+  }
+  
+  tr.mat-row:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  button.mat-button {
+    color: #1e88e5;
+    font-weight: bold;
+  }
+  
+  @media (max-width: 768px) {
+    .mat-header-row {
+      display: none; 
+    }
+  
+    .mat-row {
+      display: flex;
+      flex-direction: column;
+      border: 1px solid #e0e0e0;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      padding: 10px;
+
+    }
+  
+    td.mat-cell {
+      padding: 8px;
+      border-bottom: none;
+      display: flex;
+      justify-content: space-between;
+    }
+  
+    td.mat-cell::before {
+      content: attr(data-label);
+      font-weight: bold;
+      color: #1e88e5;
+      flex: 1;
+    }
+  
+    td.mat-cell:last-child {
+      border-bottom: none;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    td.mat-cell {
+      font-size: 0.9rem;
+      padding: 6px;
+    }
+  
+    button.mat-button {
+      font-size: 0.8rem;
+    }
+  }
+  

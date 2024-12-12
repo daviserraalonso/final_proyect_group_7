@@ -26,23 +26,16 @@
     font-weight: bold;
 }
 
-/* Ajuste del diseño de los elementos de lista */
 .mat-list-item {
     display: flex !important;
-    /* Aseguramos que flexbox se aplique correctamente */
     align-items: center !important;
-    /* Íconos y texto centrados verticalmente */
     gap: 12px;
-    /* Espaciado entre ícono y texto */
 }
 
 mat-icon {
     font-size: 24px !important;
-    /* Íconos uniformes */
     color: #757575 !important;
-    /* Color de los íconos */
     margin-right: 0 !important;
-    /* Eliminar margen adicional */
 }
 
 .list-content {

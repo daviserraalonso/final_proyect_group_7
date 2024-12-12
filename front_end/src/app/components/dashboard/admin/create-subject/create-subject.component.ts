@@ -9,7 +9,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { SubjectService } from '../../../../service/subject.service'; // Asegúrate de tener el servicio importado
+import { SubjectService } from '../../../../service/subject.service';
 
 
 
@@ -53,7 +53,7 @@ export class CreateSubjectComponent implements OnInit {
   loadCourses(): void {
     this.courseService.getCourses().subscribe(
       (data) => {
-        this.courses = data; // Asignar cursos disponibles
+        this.courses = data; 
       },
       (error) => {
         console.error('Error cargando cursos:', error);
@@ -63,18 +63,15 @@ export class CreateSubjectComponent implements OnInit {
 
   save(): void {
     console.log('Intentando guardar asignatura:', this.subject);
-
-    // Valida campos requeridos antes de hacer la llamada
     if (!this.subject.name || !this.subject.courseId) {
       console.error('El nombre y el curso son obligatorios.');
       return;
     }
 
-    // Llama al servicio para guardar la asignatura
     this.subjectService.createSubject(this.subject).subscribe(
       (response) => {
         console.log('Asignatura creada en la base de datos:', response);
-        this.dialogRef.close(response); // Devuelve los datos al cerrar el modal
+        this.dialogRef.close(response);
       },
       (error) => {
         console.error('Error al guardar la asignatura:', error);
@@ -83,6 +80,6 @@ export class CreateSubjectComponent implements OnInit {
   }
 
   cancel(): void {
-    this.dialogRef.close(); // Cierra el modal sin guardar
+    this.dialogRef.close(); 
   }
 }

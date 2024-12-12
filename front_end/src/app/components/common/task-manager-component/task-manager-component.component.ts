@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule,  } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule, MatDialogContent } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
@@ -16,7 +16,8 @@ import { MatButtonModule } from '@angular/material/button';
     MatSelectModule,
     FormsModule,
     MatDialogModule,
-  CommonModule],
+  CommonModule,
+  MatDialogContent],
   templateUrl: './task-manager-component.component.html',
   styleUrl: './task-manager-component.component.css'
 })

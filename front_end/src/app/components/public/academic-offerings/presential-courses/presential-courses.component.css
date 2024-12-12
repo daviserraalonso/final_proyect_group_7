@@ -1,24 +1,113 @@
-.card {
-    border-radius: 8px;
-    overflow: hidden;
-  }
-  
+.container{
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+  margin: 2px;
+}
+mat-card-header {
+  padding-bottom: 10px;
+}
+.custom-card {
+  background-color: #D8CEC2;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+  height: 350px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.custom-card img {
+  height: 150px;
+  object-fit: cover;
+  border-radius: 12px 12px 0 0;
+}
+.custom-card-content {
+  flex-grow: 1;
+  height: 100px;
+  overflow: hidden;
+  margin-bottom: 4px;
+  padding: 8px;
+}
+
+.custom-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+.custom-card-title {
+  font-weight: bold;
+  font-size: 1.3rem;
+  color: #343a40;
+}
+
+.custom-img {
+  object-fit: cover;
+  height: 200px;
+}
+
+.custom-text {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.6;
+}
+
+.btn-inscribirse {
+  background-color: #007bff;
+  color: white;
+  width: 100%;
+  border-radius: 8px;
+}
+
+.btn-inscribirse:hover {
+  background-color: white;
+}
+
+@media (max-width: 768px) {
   .card-title {
-    font-weight: bold;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
   }
-  
+
   .card-text {
-    font-size: 0.95rem;
-    color: #6c757d;
+    font-size: 0.9rem;
   }
 
-  .custom-modal .mat-dialog-container {
-    padding: 24px; /* Espaciado interno */
-    border-radius: 8px; /* Opcional */
+  .btn-outline-primary {
+    font-size: 0.85rem;
   }
 
-  
+  .course-card {
+    margin-bottom: 20px;
+  }
+  .custom-card-content {
+    height: 80px;
+    margin-bottom: 6px;
+    padding: 6px;
+  }
+}
 
-  
-  
+@media (max-width: 576px) {
+  .card-text {
+    font-size: 0.85rem;
+  }
+
+  .btn-outline-primary {
+    width: 100%;
+    text-align: center;
+  }
+
+  .d-flex {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .text-muted {
+    margin-top: 10px;
+  }
+  .custom-card-content {
+    height: 60px;
+    margin-bottom: 8px; 
+    padding: 4px;
+  }
+}

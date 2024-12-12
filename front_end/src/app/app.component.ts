@@ -19,14 +19,16 @@ import { AuthService } from './service/auth-service.service';
     FooterPublicComponentComponent, 
     SideBarComponent, 
     CommonModule,
+    
   ],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'] // Cambiado a styleUrls
+  styleUrls: ['./app.component.css']
 })
 
 export class AppComponent implements OnInit {
   isAuthenticated: boolean = false;
   userRole: string | null = null;
+  isSidebarOpen = false;
 
   constructor(private authService: AuthService) {}
 
@@ -39,5 +41,10 @@ export class AppComponent implements OnInit {
         this.isAuthenticated = isAuthenticated;
       }
     );
+  }
+ 
+  toggleSideBar(): void {
+    this.isAuthenticated = !this.isAuthenticated;
+    this.isSidebarOpen = !this.isSidebarOpen;
   }
 }
