@@ -28,32 +28,43 @@ const fs_1 = require("fs");
 const path_1 = require("path");
 const dotenv = __importStar(require("dotenv"));
 dotenv.config();
-// Leer configuración desde config.json
-const configPath = (0, path_1.join)(process.cwd(), 'config', 'config.json');
-const config = JSON.parse((0, fs_1.readFileSync)(configPath, 'utf-8'));
 const env = process.env['NODE_ENV'] || 'development';
-const dbConfig = {
-    username: process.env.MYSQL_ADDON_USER || config[env].username,
-    password: process.env.MYSQL_ADDON_PASSWORD || config[env].password,
-    database: process.env.MYSQL_ADDON_DB || config[env].database,
-    host: process.env.MYSQL_ADDON_HOST || config[env].host,
-    port: Number(process.env.MYSQL_ADDON_PORT) || config[env].port,
-    dialect: config[env].dialect || 'mysql',
-};
-console.log('Configuración de la base de datos:', dbConfig);
+let dbConfig;
+if (env === 'development') {
+    // read config.json
+    const configPath = (0, path_1.join)(process.cwd(), 'config', 'config.json');
+    const config = JSON.parse((0, fs_1.readFileSync)(configPath, 'utf-8'));
+    dbConfig = config[env];
+}
+else if (env === 'production') {
+    // config environment variables
+    dbConfig = {
+        username: process.env.MYSQL_ADDON_USER || '',
+        password: process.env.MYSQL_ADDON_PASSWORD || '',
+        database: process.env.MYSQL_ADDON_DB || '',
+        host: process.env.MYSQL_ADDON_HOST || '',
+        port: Number(process.env.MYSQL_ADDON_PORT) || 3306,
+        dialect: 'mysql',
+        logging: false,
+    };
+}
+else {
+    throw new Error(`Entorno desconocido: ${env}`);
+}
+// create instance sequalize
 const sequelize = new sequelize_1.Sequelize(dbConfig.database, dbConfig.username, dbConfig.password, {
     host: dbConfig.host,
     port: dbConfig.port,
     dialect: dbConfig.dialect,
-    logging: false,
+    logging: dbConfig.logging || false, // show log queries
     pool: {
-        max: 5, // Número máximo de conexiones en el pool
+        max: 5, // pool max value
         min: 0,
         acquire: 30000,
         idle: 10000,
     },
 });
-// authenticate coneection
+// show message conection database
 sequelize.authenticate()
     .then(() => {
     console.log('Conexión a la base de datos exitosa.');
@@ -61,8 +72,10 @@ sequelize.authenticate()
     .catch((err) => {
     console.error('No se pudo conectar a la base de datos:', err);
 });
-// syncronyce db
-// sequelize.sync({ alter: true })
-//   .then(() => console.log('Base de datos sincronizada sin forzar.'))
-//   .catch((error) => console.error('Error al sincronizar la base de datos:', error));
+/*if (env === 'development') {
+  // syncronize database
+  sequelize.sync()
+    .then(() => console.log('Base de datos sincronizada sin forzar.'))
+    .catch((error) => console.error('Error al sincronizar la base de datos:', error));
+}*/
 exports.default = sequelize;

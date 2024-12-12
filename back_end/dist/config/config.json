@@ -1,12 +1,11 @@
 {
     "development": {
         "username": "root",
-        "password": "Lucas555",
-        "database": "TeacherAppDB",
+        "password": "",
+        "database": "teacherappdb",
         "host": "127.0.0.1",
         "port": 3306,
-        "dialect": "mysql",
-        "seeders-path": "./seeders"
+        "dialect": "mysql"
     },
     "test": {
         "username": "root",
@@ -16,11 +15,10 @@
         "dialect": "mysql"
     },
     "production": {
-        "username": "u5rrx9lzvqwajn95",
-        "password": "b7IBEDThfgWjldUOvjf0",
-        "database": "b0w0wcskvo09yrjg9wrw",
-        "host": "b0w0wcskvo09yrjg9wrw-mysql.services.clever-cloud.com",
-        "port": 21765,
+        "username": "root",
+        "password": "",
+        "database": "TeacherAppDB",
+        "host": "127.0.0.1",
         "dialect": "mysql"
     }
 }

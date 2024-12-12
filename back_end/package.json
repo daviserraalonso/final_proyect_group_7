@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node dist/server.js",
     "build": "tsc && copyfiles -u 1 config/config.json dist/config/",
-     "start:production": "cross-env NODE_ENV=production npm start",
+    "start:production": "cross-env NODE_ENV=production npm start",
     "dev": "nodemon src/server.ts"
   },
   "dependencies": {
