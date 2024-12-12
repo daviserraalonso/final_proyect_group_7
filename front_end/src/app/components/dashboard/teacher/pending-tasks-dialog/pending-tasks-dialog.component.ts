@@ -1,6 +1,6 @@
 import { TaskService } from './../../../../service/task.service';
 import { Component, OnInit, inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialogActions, MatDialogContent } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -22,7 +22,9 @@ import { ITaskDetails } from '../../../../interfaces/itask-details';
     ReactiveFormsModule,
     CommonModule,
     MatError,
-    MatListModule
+    MatListModule,
+    MatDialogActions,
+    MatDialogContent
   ],
   templateUrl: './pending-tasks-dialog.component.html',
   styleUrls: ['./pending-tasks-dialog.component.css']
@@ -33,9 +35,8 @@ export class PendingTasksDialogComponent implements OnInit {
   tasks: any[] = [];
   pendingTasks: IPendingTask[] = [];
   teacherService = inject(TeacherServiceService);
-   taskdetails: ITaskDetails | null = null;
-  TaskService= inject(TaskService);
-  
+  taskdetails: ITaskDetails | null = null;
+  TaskService = inject(TaskService);
 
   constructor(
     public dialogRef: MatDialogRef<PendingTasksDialogComponent>,
@@ -44,7 +45,7 @@ export class PendingTasksDialogComponent implements OnInit {
   ) {
     this.feedbackForm = this.fb.group({
       punctuation: [null, [Validators.required, Validators.min(1), Validators.max(10)]],
-      submission: ['', Validators.required],
+      submission: [''],
       feedback: ['', Validators.required]
     });
   }
@@ -76,8 +77,14 @@ export class PendingTasksDialogComponent implements OnInit {
   async onSubmit(): Promise<void> {
     if (this.feedbackForm.valid && this.selectedTask && this.selectedTask.taskId) {
       try {
-        await this.TaskService.updateTask(this.selectedTask.taskId, this.feedbackForm.value);
-        this.dialogRef.close(this.feedbackForm.value);
+        const formValue = {
+          punctuation: this.feedbackForm.value.punctuation,
+          feedback: this.feedbackForm.value.feedback
+        };
+        console.log('Datos enviados:', JSON.stringify(formValue), 'Task ID:', this.selectedTask.taskId); // Añadir log para verificar los datos enviados
+        const response = await this.TaskService.updateTask(this.selectedTask.taskId, formValue);
+        console.log('Respuesta de la API:', JSON.stringify(response)); // Añadir log para verificar la respuesta de la API
+        this.dialogRef.close(formValue);
       } catch (error) {
         console.error('Error al enviar la retroalimentación:', error);
       }

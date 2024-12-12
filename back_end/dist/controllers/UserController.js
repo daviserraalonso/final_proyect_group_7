@@ -453,27 +453,25 @@ const getFavoriteTeachers = async (req, res) => {
                 {
                     model: User_1.default,
                     as: 'User',
-                    attributes: ['id', 'name']
+                    attributes: ['id', 'name'],
+                    include: [
+                        {
+                            model: UserDetails_1.default,
+                            as: 'details',
+                            attributes: ['description', 'img_url']
+                        }
+                    ]
                 }
             ]
         });
-        console.log('Resultados de la consulta:', teachers);
-        // Formatear la respuesta
-        const favoriteTeachers = teachers.map((teacher) => ({
-            id: teacher.User?.id,
-            name: teacher.User?.name,
-            description: teacher.User?.description || 'Sin descripción disponible.',
-            image: teacher.User?.image || `https://randomuser.me/api/portraits/men/${teacher.User?.id % 100}.jpg`,
-            avg: teacher.avg
-        }));
-        console.log('Profesores formateados:', favoriteTeachers);
-        res.status(200).json(favoriteTeachers);
+        // Aquí enviamos directamente los resultados de la consulta
+        res.status(200).json(teachers);
     }
     catch (error) {
         console.error('Error al obtener profesores favoritos:', error);
         res.status(500).json({ message: 'Error al obtener profesores favoritos' });
     }
-}; // end class
+};
 exports.getFavoriteTeachers = getFavoriteTeachers;
 const getTotalStudents = async (req, res) => {
     try {

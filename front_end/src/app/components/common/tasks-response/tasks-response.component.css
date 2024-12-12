@@ -1,0 +1,49 @@
+/* General styles for the dialog */
+.dialog-title {
+    text-align: center;
+    color: #4CAF50; /* Green color for the title */
+    font-weight: bold;
+    margin-bottom: 16px;
+  }
+  
+  /* Form container styles */
+  .form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px; /* Space between fields */
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  /* Styling for Material fields */
+  .full-width {
+    width: 100%;
+  }
+  
+  .colorful-field {
+    border-radius: 8px;
+    background: linear-gradient(to right, #f9f9f9, #eaf4fc);
+    padding: 8px;
+  }
+  
+  .colorful-field mat-label {
+    color: #2196F3; /* Blue label color */
+    font-weight: bold;
+  }
+  
+  .colorful-field textarea {
+    font-size: 16px;
+  }
+  
+  /* Actions styling */
+  .dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+  
+  .dialog-actions button {
+    min-width: 120px;
+    font-weight: bold;
+  }
+  

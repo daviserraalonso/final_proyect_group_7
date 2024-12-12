@@ -35,7 +35,7 @@ export class TaskFormComponent {
   }
 
   async onSubmit() {
-    console.log('Formulario enviado:', this.taskForm.value); // Agrega este console.log para ver los datos del formulario
+    console.log('Formulario enviado:', this.taskForm.value); 
     if (this.taskForm.valid) {
       try {
         const response = await this.taskService.createTask(this.taskForm.value);

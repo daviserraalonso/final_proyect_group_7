@@ -90,11 +90,8 @@ const updateTask = async (req, res) => {
     try {
         const { id } = req.params;
         const { subjectId, userId, comments, punctuation, creationDate, deadline, submission, feedback } = req.body;
-        // Verifica que el campo feedback esté presente en el cuerpo de la solicitud
-        if (feedback === undefined) {
-            return res.status(400).json({ message: 'El campo feedback es obligatorio' });
-        }
-        const [updated] = await Task_1.default.update({ subjectId, userId, comments, punctuation, creationDate, deadline, submission, feedback }, { where: { id } });
+        const updateData = { subjectId, userId, comments, punctuation, creationDate, deadline, submission, feedback };
+        const [updated] = await Task_1.default.update(updateData, { where: { id } });
         if (updated) {
             const updatedTask = await Task_1.default.findByPk(id);
             return res.status(200).json(updatedTask);

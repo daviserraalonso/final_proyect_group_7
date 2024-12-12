@@ -516,7 +516,6 @@ export const validate = async (req: Request, res: Response, next: any) => {
 
 export const getFavoriteTeachers = async (req: Request, res: Response) => {
   try {
-
     const teachers = await AvgTeacher.findAll({
       where: {
         avg: { [Op.gte]: 6 } // avg >= 6
@@ -525,34 +524,25 @@ export const getFavoriteTeachers = async (req: Request, res: Response) => {
         {
           model: User,
           as: 'User',
-          attributes: ['id', 'name']
+          attributes: ['id', 'name'],
+          include: [
+            {
+              model: UserDetails,
+              as: 'details',
+              attributes: ['description', 'img_url']
+            }
+          ]
         }
       ]
     });
 
-
-    console.log('Resultados de la consulta:', teachers);
-
-    // Formatear la respuesta
-    const favoriteTeachers = teachers.map((teacher: any) => ({
-      id: teacher.User?.id,
-      name: teacher.User?.name,
-      description: teacher.User?.description || 'Sin descripción disponible.',
-      image: teacher.User?.image || `https://randomuser.me/api/portraits/men/${teacher.User?.id % 100}.jpg`,
-      avg: teacher.avg
-    }));
-
-    console.log('Profesores formateados:', favoriteTeachers);
-
-    res.status(200).json(favoriteTeachers);
+    // Aquí enviamos directamente los resultados de la consulta
+    res.status(200).json(teachers);
   } catch (error) {
     console.error('Error al obtener profesores favoritos:', error);
     res.status(500).json({ message: 'Error al obtener profesores favoritos' });
   }
-
-
-
-}; // end class
+};
 
 
 export const getTotalStudents = async (req: Request, res: Response): Promise<void> => {

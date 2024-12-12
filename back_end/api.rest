@@ -24,13 +24,13 @@ Content-Type: application/json
 
 ###### PUT actualizar tarea
 
-PUT http://localhost:3000/api/tasks/28
+PUT http://localhost:3000/api/tasks/960
 Content-Type: application/json
 
 {
-  "punctuation": 9,
-  "submission": "Contenido de la entrega",
-  "feedback": "Contenido de la entrega"
+  
+  "submission": "Contenido de la entrega"
+  
 }
 
 ### DELETE tarea
@@ -75,6 +75,10 @@ Content-Type: application/json
 
 ### Obtener la cantidad total de cursos
 GET http://localhost:3000/api/courses/total
+Content-Type: application/json
+
+### Obtener un curso específico
+GET http://localhost:3000/api/courses/7
 Content-Type: application/json
 
 #### Obtener el conteo de alumnos del profesor

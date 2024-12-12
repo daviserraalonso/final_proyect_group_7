@@ -60,10 +60,10 @@ export default function setupAssociations() {
   // ** Relation Course -> Modality**
   Course.belongsTo(Modality, {
     foreignKey: 'modality_id',
-    as: 'modality', // Cambia el alias a 'modality'
+    as: 'modality', // 
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
-    constraints: false, // Desactiva la creación automática de claves foráneas
+    constraints: false, 
   });
   
   // association StudentCourse -> Course

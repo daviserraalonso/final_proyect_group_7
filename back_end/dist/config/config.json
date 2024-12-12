@@ -18,9 +18,9 @@
     "production": {
         "username": "u5rrx9lzvqwajn95",
         "password": "b7IBEDThfgWjldUOvjf0",
-        "database": "bnalvemznhiklxdel8dq",
-        "host": "bnalvemznhiklxdel8dq-mysql.services.clever-cloud.com",
-        "port": 3306,
+        "database": "b0w0wcskvo09yrjg9wrw",
+        "host": "b0w0wcskvo09yrjg9wrw-mysql.services.clever-cloud.com",
+        "port": 21765,
         "dialect": "mysql"
     }
 }

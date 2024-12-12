@@ -46,8 +46,10 @@ export class UserServiceService {
   }
 
   //function to update user, url no complete
-  update(body: UserAttributes): Promise<UserAttributes> {
-    return firstValueFrom(this.http.put<UserAttributes>(this.baseUrl, body));
+  update(taskId: number, submission: string): Promise<any> {
+    const url = `http://localhost:3000/api/tasks/${taskId}`;
+    const body = { submission };
+    return firstValueFrom(this.http.put<any>(url, body));
   }
 
   updateUser(userId: number, userData: any): Promise<void> {

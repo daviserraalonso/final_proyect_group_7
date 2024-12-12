@@ -54,6 +54,10 @@ app.use('/api/student-courses', studentCoursesRoutes);
 app.use('/api/score', scoreRoutes);
 app.use('/api/chats', ChatRoutes);
 app.use('/api/professors', professorRoutes);
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({ message: 'Internal Server Error', error: err.message });
+});
 // init server
 app.listen(port, () => {
     console.log(`Servidor Node escuchando en http://localhost:${port}`);
