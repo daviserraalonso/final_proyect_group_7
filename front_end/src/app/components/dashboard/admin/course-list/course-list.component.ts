@@ -11,6 +11,7 @@ import { CourseService } from '../../../../service/course.service';
 import { ViewCourseComponent } from '../view-course/view-course.component';
 import { EditCourseComponent } from '../edit-course/edit-course.component';
 import { CreateCourseComponent } from '../create-course/create-course.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-course-list',
@@ -62,16 +63,46 @@ export class CourseListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
+        Swal.fire({
+          text: `Curso ${result.name} actualizado`,
+          width: 400,
+          showConfirmButton: false,
+          imageUrl: 'assets/logo.png',
+          imageAlt: 'Icon image',
+          imageHeight: 80,
+          imageWidth: 60,
+          timer: 2500
+        });
         console.log('Curso actualizado:', result);
         this.loadCourses();
       }
     });
   }
 
-  deleteCourse(id: number): void {
-    if (confirm('¿Estás seguro de que deseas eliminar este curso?')) {
+  deleteCourse(id: number, name: string): void {
+    Swal.fire({
+      title: "¿Estas seguro?",
+      text: `Vas a eliminar el curso ${name}`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si",
+      cancelButtonText: "No"
+    }).then((result) =>
+    { if(result.isConfirmed) {
       this.courseService.deleteCourse(id).subscribe(
         () => {
+          Swal.fire({
+            text: 'Curso eliminado correctamente.',
+            width: 400,
+            showConfirmButton: false,
+            imageUrl: 'assets/logo.png',
+            imageAlt: 'Icon image',
+            imageHeight: 80,
+            imageWidth: 60,
+            timer: 2500
+          });
           console.log('Curso eliminado:', id);
           this.loadCourses();
         },
@@ -80,7 +111,8 @@ export class CourseListComponent implements OnInit {
         }
       );
     }
-  }
+  })
+}
 
   openCreateCourseModal(): void {
     const dialogRef = this.dialog.open(CreateCourseComponent, {
@@ -89,6 +121,16 @@ export class CourseListComponent implements OnInit {
   
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
+        Swal.fire({
+          text: `Nuevo curso ${result.name} creado`,
+          width: 400,
+          showConfirmButton: false,
+          imageUrl: 'assets/logo.png',
+          imageAlt: 'Icon image',
+          imageHeight: 80,
+          imageWidth: 60,
+          timer: 2500
+        });
         console.log('Curso creado:', result);
         this.loadCourses();
       }

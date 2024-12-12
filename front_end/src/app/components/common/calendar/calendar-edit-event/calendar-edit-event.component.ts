@@ -130,11 +130,18 @@ export class CalendarEditEventComponent implements OnInit {
   }
 
   deleteEvent(): void {
-    const confirmation = confirm('¿Estás seguro de que deseas eliminar este evento?');
-    if (confirmation) {
-      //Se convierte el ID a número si es un string para cuadrar
+    Swal.fire({
+      title: "¿Estas seguro?",
+      text: `Vas a eliminar el evento`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si",
+      cancelButtonText: "No"
+    }).then((result) =>
+    { if(result.isConfirmed) {
       const eventId = typeof this.data.event.id === 'string' ? Number(this.data.event.id) : this.data.event.id;
-
       this.calendarService.deleteCalendarEvent(eventId).subscribe({
         next: () => {
           Swal.fire({
@@ -162,8 +169,9 @@ export class CalendarEditEventComponent implements OnInit {
             timer: 2500
           });
         },
-      });
-    }
+      })
+    }}
+  )
   }
 
 

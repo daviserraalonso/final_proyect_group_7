@@ -8,12 +8,11 @@ import { SubjectService } from '../../../../service/subject.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
-
-
 import { MatDialog } from '@angular/material/dialog';
 import { ViewSubjectComponent } from '../view-subject/view-subject.component';
 import { EditSubjectComponent } from '../edit-subject/edit-subject.component';
 import { CreateSubjectComponent } from '../create-subject/create-subject.component'
+import Swal from 'sweetalert2';
 
 
 
@@ -85,16 +84,47 @@ export class SubjectListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: any) => {
       if (result) {
+        Swal.fire({
+          text: `Asignatura ${result.name} actualizada`,
+          width: 400,
+          showConfirmButton: false,
+          imageUrl: 'assets/logo.png',
+          imageAlt: 'Icon image',
+          imageHeight: 80,
+          imageWidth: 60,
+          timer: 2500
+ 
+        });
         console.log('Asignatura actualizada:', result);
         // Lógica para actualizar la lista de asignaturas
       }
     });
   }
 
-  deleteSubject(id: number): void {
-    if (confirm('¿Estás seguro de que deseas eliminar esta asignatura?')) {
+  deleteSubject(id: number, name: string): void {
+    Swal.fire({
+      title: "¿Estas seguro?",
+      text: `Vas a eliminar la asignatura ${name}`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si",
+      cancelButtonText: "No"
+    }).then((result) =>
+    { if(result.isConfirmed) {
       this.subjectService.deleteSubject(id).subscribe(
         () => {
+          Swal.fire({
+            text: 'Asignatura eliminada correctamente.',
+            width: 400,
+            showConfirmButton: false,
+            imageUrl: 'assets/logo.png',
+            imageAlt: 'Icon image',
+            imageHeight: 80,
+            imageWidth: 60,
+            timer: 2500
+          });
           console.log('Asignatura eliminada:', id);
           this.loadSubjects(); // Recargar la lista
         },
@@ -102,7 +132,13 @@ export class SubjectListComponent implements OnInit {
           console.error('Error al eliminar asignatura:', error);
         }
       );
-    }
+
+
+    }})
+
+    
+
+
   }
 
   openCreateSubjectModal(): void {
@@ -112,6 +148,16 @@ export class SubjectListComponent implements OnInit {
   
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
+        Swal.fire({
+          text: `Nueva asignatura ${result.name} creada`,
+          width: 400,
+          showConfirmButton: false,
+          imageUrl: 'assets/logo.png',
+          imageAlt: 'Icon image',
+          imageHeight: 80,
+          imageWidth: 60,
+          timer: 2500
+        });
         console.log('Nueva asignatura creada:', result);
         this.loadSubjects(); // Recarga la lista de asignaturas tras crear una nueva
       }
