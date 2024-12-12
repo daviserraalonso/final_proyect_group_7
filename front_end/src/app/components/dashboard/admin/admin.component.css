@@ -1,13 +1,153 @@
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 500;
+}
+
+.container-fluid {
+  padding: 4px;
+}
+
+mat-card {
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+mat-card-header {
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
+
+mat-card-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+mat-card-content {
+  font-size: 0.9rem;
+}
+mat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+.large-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+.column {
+  text-align: center; 
+  padding-right: 16px; 
+}
+
+.actions-column button {
+  margin-right: 0; 
+}
+
+button.mat-button,
+button.mat-raised-button {
+  text-transform: none;
+}
+
+button.mat-fab {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #6200ea !important;
+  color: #fff;
+}
+
+.progress-bar {
+  transition: width 0.4s ease-in-out;
+  font-size: 0.75rem;
+}
+
+.progress-bar.bg-success {
+  background-color: #28a745 !important;
+}
+
+.button-more{
+  display: flex;
+  justify-content: flex-end; 
+  align-items: flex-end; 
+  height: 100%; 
+}
+
+.list-group-item {
+  background-color: #ffffff;
+  border: 1px solid #dee2e6;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.list-group-item:hover {
+  background-color: #f8f9fa;
+}
+
+
+.notification-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+mat-icon {
+  font-size: 1.5rem;
+  color: #6200ea;
+}
+
+
+.table-responsive {
+  margin-top: 20px;
+}
+
+table.mat-elevation-z8 {
+  width: 100%;
+  background-color: #ffffff;
+}
+
+th.mat-header-cell, td.mat-cell {
+  padding: 12px;
+  text-align: left;
+}
+
+th.mat-header-cell {
+  font-weight: bold;
+
+}
+
+td.mat-cell {
+  border-bottom: 1px solid #ddd;
+}
+
+input[type="date"].form-control {
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  padding: 10px;
+}
+
 .custom-snackbar {
-    background-color: #4caf50;
-    color: white;
-    font-size: 16px;
+  background-color: #4caf50;
+  color: white;
+  font-size: 16px;
+}
+
+@media (max-width: 768px) {
+  .list-group-item {
+    flex-direction: column;
+    align-items: flex-start;
   }
 
-  .full-width {
-    width: 100%;
+  button.mat-fab {
+    bottom: 10px;
+    right: 10px;
   }
-  
-  .mt-3 {
-    margin-top: 16px;
+
+  mat-card-title {
+    font-size: 1.1rem;
   }
+
+  mat-card-content {
+    font-size: 0.85rem;
+  }
+}

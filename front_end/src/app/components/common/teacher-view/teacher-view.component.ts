@@ -9,12 +9,13 @@ import { SearchTeachersComponent } from '../../public/search-teachers/search-tea
 import { SearchServiceService } from '../../../service/search-service.service';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
   selector: 'app-teacher-view',
   standalone: true,
-  imports: [CommentsComponent, MatCardModule, MatIconModule, MatDialogModule, MatButtonModule, RouterOutlet],
+  imports: [CommentsComponent, MatCardModule, MatIconModule, MatDialogModule, MatButtonModule, RouterOutlet, CommonModule],
   templateUrl: './teacher-view.component.html',
   styleUrl: './teacher-view.component.css'
 })

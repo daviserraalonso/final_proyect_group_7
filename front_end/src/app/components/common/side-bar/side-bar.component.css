@@ -1,35 +1,47 @@
-.sidebar {
-  width: 6rem; /* Ajusta el ancho del sidebar */
-  background-color: #f8f9fa; /* Color de fondo del sidebar */
-  flex-shrink: 0; /* Evita que el sidebar se reduzca */
-  height: 100vh; /* Asegura que el sidebar ocupe toda la altura de la pantalla */
+.sidebar-container {
+  padding: 10px; 
+  color: white;
+  background-color: #343a40;
+  
+ 
 }
 
-/* Ajustar el contenedor principal */
-.main-content {
-  flex-grow: 1;
-  padding: 20px;
-  overflow-y: auto; /* Permite el desplazamiento vertical si el contenido es largo */
+.user-profile {
+ display: flex;
+  justify-content: center;
+  margin-bottom: 20px; 
+}
+.center {
+  display: flex;
+  align-items: center; 
+  gap: 10px; 
+}
+.center:hover{
+  color: white;
+}
+mat-icon:hover {
+  font-size: 24px;
+  color: white; 
 }
 
-.dropdown-container {
-  position: relative;
-  display: inline-block;
-}
-
-.dropdown-container .dropdown-menu {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
-
-.dropdown-container .dropdown-menu a {
-  color: black;
-  padding: 12px 16px;
+a , .text{
   text-decoration: none;
-  display: block;
+  color: rgba(255, 255, 255, 0.55); 
+  font-size: 16px;
+}
+a:hover , .text:hover{
+  color: white;
+}
+mat-list-item {
+  padding: 8px 16px;
+}
+
+img{
+
+   width: 40px;
+   height: 40px;
+}
+.active{
+  color: #00594F;
 }
 

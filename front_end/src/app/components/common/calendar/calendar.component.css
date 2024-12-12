@@ -2,43 +2,31 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 20px;
+  background-color: #f7f7f7;
+  padding: 20px; 
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
 }
 
 .demo-app-main {
   width: 100%;
   max-width: 900px;
   background-color: white;
-  border-radius: 8px; 
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 15px;
   overflow: hidden;
 }
-
-.event-important {
-  background-color: red !important;
-  border-color: red !important;
-}
-
-.event-normal {
-  background-color: blue !important;
-  border-color: blue !important;
-}
-
-.event-light {
-  background-color: green !important;
-  border-color: green !important;
-}
-
-
-
 
 .full-calendar {
   border-radius: 8px;
   font-family: 'Roboto', sans-serif; 
   background-color: #ffffff;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
   border: 1px solid #e0e0e0; 
 }
+
 
 .fc-day-header {
   background-color: #333333;
@@ -60,7 +48,7 @@
 }
 
 .fc-day.fc-day-today {
-  background-color: #3498db;
+  background-color: #3498db; 
   color: white;
   font-weight: bold;
 }

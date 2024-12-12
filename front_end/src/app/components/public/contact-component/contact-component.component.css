@@ -1,22 +1,53 @@
+
 .form-container {
-    background: linear-gradient(to bottom, #e1bee7, #dce6f8);
-    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
-    padding: 2rem;
-    border-radius: 8px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  max-width: 500px;
+}
+
+mat-card {
+  width: 100%;
+  background-color: white;
+  border: none !important;
+  box-shadow: none;
+}
+
+mat-card-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  text-align: center;
+  color: #3f51b5;
+  padding: 4px 0;
+}
+
+mat-card-subtitle {
+  font-size: 1rem;
+  text-align: center;
+  color: #757575;
+  margin-bottom: 1rem;
+}
+
+mat-form-field {
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+button[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .form-container {
+    padding: 1.5rem;
   }
-  
-  mat-card {
-    width: 100%;
-    max-width: 400px;
-    padding: 1rem;
+
+  mat-card-title {
+    font-size: 1.5rem;
   }
-  
-  mat-form-field {
-    width: 100%;
-    margin-bottom: 1rem;
-  }
-  
+}

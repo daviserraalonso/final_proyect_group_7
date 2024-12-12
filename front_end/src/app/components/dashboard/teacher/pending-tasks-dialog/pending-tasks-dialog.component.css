@@ -1,3 +1,13 @@
+.title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  text-align: center;
+  height: 3rem; 
+}
 
 mat-form-field {
   width: 100%;

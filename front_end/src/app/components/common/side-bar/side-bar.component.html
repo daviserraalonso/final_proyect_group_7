@@ -1,68 +1,83 @@
-<div class="d-flex flex-column flex-shrink-0 bg-light sidebar mt-5 mb-5">
-  <ul class="nav nav-pills nav-flush flex-column mb-auto text-center mt-5">
-    <li class="nav-item mb-3">
-      <a href="/" class="d-block p-2 link-dark text-decoration-none" matTooltip="TeacherAPP" matTooltipPosition="right">
-        <mat-icon>school</mat-icon>
-        <span class="visually-hidden">TeacherAPP</span>
-      </a>
-    </li>
 
-    <!-- general option -->
-    <li class="nav-item mb-3">
-      <p [routerLink]="role_url"  routerLinkActive="router-link-active" class="nav-link py-2 border-bottom" aria-current="page">
-        <img src="https://github.com/mdo.png" alt="mdo" width="24" height="24" class="rounded-circle">
-      </p>
-    </li>
-    <li class="nav-item mb-3">
-      <a routerLink="/" routerLinkActive="router-link-active" class="nav-link py-2 border-bottom" aria-current="page" matTooltip="Home" matTooltipPosition="right">
-        <mat-icon>home</mat-icon>
-      </a>
-    </li>
+  <div class="sidebar-container" [class.open]="isSidebarOpen">
+    <!-- User Profile Section -->
+     
+    <div class="user-profile" *ngIf="isAuthenticated">
+      <img src="https://picsum.photos/300/200?random=" alt="mdo" class="rounded-circle">
+    </div>
 
-    <!-- Opciones exclusivas para usuarios autenticados -->
-    <ng-container *ngIf="isAuthenticated">
-      
-      <!-- option to role admin -->
-      <ng-container *ngIf="role === '1'">
-        <li class="nav-item mb-3">
-          <a routerLink="/all-users" routerLinkActive="router-link-active" class="nav-link py-2 border-bottom" matTooltip="Todos los Usuarios" matTooltipPosition="right">
-            <mat-icon>group</mat-icon>
-          </a>
-        </li>
-        <li class="nav-item mb-3">
-          <a routerLink="/subjects" routerLinkActive="router-link-active" class="nav-link py-2 border-bottom" matTooltip="Asignaturas" matTooltipPosition="right">
-            <mat-icon>class</mat-icon>
-          </a>
-        </li>
-        <li class="nav-item mb-3">
-          <a routerLink="/all-courses" routerLinkActive="router-link-active" class="nav-link py-2 border-bottom" matTooltip="Cursos" matTooltipPosition="right">
-            <mat-icon>content_paste</mat-icon>
-          </a>
-        </li>
+    <!-- Navigation Menu -->
+    <mat-nav-list>
+      <!-- General Options -->
+      <mat-list-item routerLink="/index" routerLinkActive="active">
+        <div class="center">
+        <mat-icon matListItemIcon>home</mat-icon>
+        <a routerLink="/index">HOME</a>
+      </div>
+      </mat-list-item>
+
+      <!-- Admin Role Options -->
+      <ng-container *ngIf="isAuthenticated && role === '1'">
+        <mat-list-item routerLink="/all-users" routerLinkActive="active">
+          <div class="center">
+          <mat-icon matListItemIcon>people</mat-icon>
+          <a routerLink="/all-users">USUARIOS</a>
+        </div>
+        </mat-list-item>
+        <mat-list-item routerLink="/subjects" routerLinkActive="active">
+          <div class="center">
+          <mat-icon matListItemIcon>book</mat-icon>
+          <a routerLink="/subjects">ASIGNATURAS</a>
+        </div>
+        </mat-list-item>
+        <mat-list-item routerLink="/all-courses" routerLinkActive="active">
+          <div class="center">
+          <mat-icon>content_paste</mat-icon>
+          <a routerLink="/all-courses">TODOS LOS CURSOS</a>
+        </div>
+        </mat-list-item>
+        <mat-list-item 
+        routerLink="/inbox" class="nav-link" matTooltip="Bandeja de entrada" matTooltipPosition="right" >
+        <div class="center">
+          <mat-icon>email</mat-icon>
+          <a routerLink="/inbox">MIS MENSAJES</a>
+        </div>
+        </mat-list-item>
+        <mat-list-item routerLink="/admin" routerLinkActive="active">
+          <div class="center">
+          <mat-icon>dashboard</mat-icon>
+          <a routerLink="/admin">PERFIL</a>
+        </div>
+        </mat-list-item>
       </ng-container>
 
-      <!-- option to role teacher -->
-      <ng-container *ngIf="role === '2'">
-        <li class="nav-item mb-3">
-          <a routerLink="/mis-alumnos" routerLinkActive="router-link-active" class="nav-link py-2 border-bottom" matTooltip="Mis Alumnos" matTooltipPosition="right">
-            <mat-icon>hotel_class</mat-icon>
-          </a>
-        </li>
-        <li class="nav-item mb-3">
-          <a routerLink="/calendar" routerLinkActive="router-link-active" class="nav-link py-2 border-bottom" matTooltip="Calendario" matTooltipPosition="right">
-            <mat-icon>event</mat-icon>
-          </a>
-        </li>
-        <li class="nav-item mb-3">
-          <a [routerLink]="['/inbox']" class="nav-link py-2 border-bottom" matTooltip="Bandeja de entrada" matTooltipPosition="right">
-            <mat-icon>email</mat-icon>
-          </a>
-        </li>
-        <li class="nav-item mb-3">
-          <a routerLink="/teacher" routerLinkActive="router-link-active" class="nav-link py-2 border-bottom" aria-current="page" matTooltip="Dashboard" matTooltipPosition="right">
-            <mat-icon>dashboard</mat-icon>
-          </a>
-        </li>
+      <!-- Teacher Role Options -->
+      <ng-container *ngIf="isAuthenticated && role === '2'">
+        <mat-list-item routerLink="/mis-alumnos" routerLinkActive="active">
+          <div class="center">
+          <mat-icon matListItemIcon>class</mat-icon>
+          <a routerLink="/mis-alumnos">MIS ALUMNOS</a>
+        </div>
+        </mat-list-item>
+        <mat-list-item routerLink="/calendar" routerLinkActive="active">
+          <div class="center">
+          <mat-icon matListItemIcon>calendar_today</mat-icon>
+          <a routerLink="/calendar">CALENDARIO</a>
+        </div>
+        </mat-list-item>
+        <mat-list-item 
+        routerLink="/inbox" class="nav-link" matTooltip="Bandeja de entrada" matTooltipPosition="right">
+        <div class="center">
+          <mat-icon>email</mat-icon>
+          <a routerLink="/inbox">MIS MENSAJES</a>
+        </div>
+        </mat-list-item>
+        <mat-list-item routerLink="/teacher" routerLinkActive="active">
+          <div class="center">
+          <mat-icon>dashboard</mat-icon>
+          <a routerLink="/teacher">PERFIL</a>
+        </div>
+        </mat-list-item>
       </ng-container>
 
       <!-- option to role student -->
@@ -70,32 +85,36 @@
         <li class="nav-item mb-3">
           <a routerLink="/courses" routerLinkActive="router-link-active" class="nav-link py-2 border-bottom" matTooltip="Mis Cursos" matTooltipPosition="right">
             <mat-icon>library_books</mat-icon>
+            CURSOS
           </a>
         </li>
 
         <li class="nav-item mb-3">
           <a routerLink="/calendar" routerLinkActive="router-link-active" class="nav-link py-2 border-bottom" matTooltip="Calendario" matTooltipPosition="right">
             <mat-icon>event</mat-icon>
+            CALENDARIO
           </a>
         </li>
         <li class="nav-item mb-3">
           <a [routerLink]="['/inbox']" class="nav-link py-2 border-bottom" matTooltip="Bandeja de entrada" matTooltipPosition="right">
             <mat-icon>email</mat-icon>
+            MIS MENSAJES
           </a>
         </li>
         <li class="nav-item mb-3">
           <a routerLink="/student" routerLinkActive="router-link-active" class="nav-link py-2 border-bottom" aria-current="page" matTooltip="Dashboard" matTooltipPosition="right">
             <mat-icon>dashboard</mat-icon>
+            PERFIL
           </a>
         </li>
       </ng-container>
 
-      <!--logout option -->
-      <li class="nav-item mb-3">
-        <span matTooltip="Cerrar sesión" matTooltipPosition="right" (click)="logout()" style="cursor: pointer;">
-          <mat-icon>logout</mat-icon>
-        </span>
-      </li>
-    </ng-container>
-  </ul>
-</div>
+      <!-- Logout -->
+      <mat-list-item (click)="logout()">
+        <div class="center">
+        <mat-icon matListItemIcon>logout</mat-icon>
+        <span class="text">Cerrar Sesión</span>
+      </div>
+      </mat-list-item>
+    </mat-nav-list>
+  </div>

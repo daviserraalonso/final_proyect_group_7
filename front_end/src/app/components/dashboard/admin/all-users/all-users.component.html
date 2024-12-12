@@ -1,24 +1,25 @@
 <div class="container">
-    <h2 class="mb-3">Listado de Usuarios</h2>
-    <mat-form-field appearance="fill" class="mb-4">
-        <mat-label>Buscar usuario</mat-label>
-        <input matInput (keyup)="applyFilter($event)" placeholder="Buscar por nombre, email o rol">
-    </mat-form-field>
+  <h2 class="mb-3 text-center">Listado de Usuarios</h2>
+  <mat-form-field appearance="fill" class="mb-4 search-field">
+    <mat-label>Buscar usuario</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Buscar por nombre, email o rol">
+  </mat-form-field>
 
+  <div class="table-container">
     <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-      <!-- Nombre -->
+      <!-- Name -->
       <ng-container matColumnDef="name">
-        <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
-        <mat-cell *matCellDef="let user"> {{ user.name }} </mat-cell>
+        <mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
+        <mat-cell *matCellDef="let user">{{ user.name }}</mat-cell>
       </ng-container>
-  
+
       <!-- Email -->
       <ng-container matColumnDef="email">
-        <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
-        <mat-cell *matCellDef="let user"> {{ user.email }} </mat-cell>
+        <mat-header-cell *matHeaderCellDef>Email</mat-header-cell>
+        <mat-cell *matCellDef="let user">{{ user.email }}</mat-cell>
       </ng-container>
 
-      <!-- validated -->
+      <!-- Validated -->
       <ng-container matColumnDef="isValidated">
         <mat-header-cell *matHeaderCellDef> Validado </mat-header-cell>
         <mat-cell *matCellDef="let user">
@@ -27,22 +28,21 @@
             <button (click)="validateUser(user.id)" mat-button>Validar</button>
           }        </mat-cell>
       </ng-container>
-  
+
       <!-- Rol -->
       <ng-container matColumnDef="role">
-        <mat-header-cell *matHeaderCellDef> Rol </mat-header-cell>
-        <mat-cell *matCellDef="let user">
-            {{ getRoleName(user.roleId) }}
-        </mat-cell>
+        <mat-header-cell *matHeaderCellDef>Rol</mat-header-cell>
+        <mat-cell *matCellDef="let user">{{ getRoleName(user.roleId) }}</mat-cell>
       </ng-container>
 
+      <!-- Actions -->
       <ng-container matColumnDef="actions">
-        <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
         <mat-cell *matCellDef="let user">
           <button mat-icon-button color="primary" (click)="viewUser(user.id)" matTooltip="Ver">
             <mat-icon>visibility</mat-icon>
           </button>
-          <button mat-icon-button color="warn" (click)="editUser(user.id)" matTooltip="Editar">
+          <button mat-icon-button color="accent" (click)="editUser(user.id)" matTooltip="Editar">
             <mat-icon>edit</mat-icon>
           </button>
           <button mat-icon-button color="warn" (click)="deleteUser(user.id)" matTooltip="Eliminar">
@@ -50,9 +50,9 @@
           </button>
         </mat-cell>
       </ng-container>
-  
+
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
   </div>
-  
+</div>
