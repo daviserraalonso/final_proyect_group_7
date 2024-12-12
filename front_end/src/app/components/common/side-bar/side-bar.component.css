@@ -14,10 +14,11 @@
 .center {
   display: flex;
   align-items: center; 
-  gap: 10px; 
+  gap: 10px;
+  color: #D8CEC2;
 }
 .center:hover{
-  color: white;
+  color: aquamarine;
 }
 mat-icon:hover {
   font-size: 24px;
@@ -29,9 +30,7 @@ a , .text{
   color: rgba(255, 255, 255, 0.55); 
   font-size: 16px;
 }
-a:hover , .text:hover{
-  color: white;
-}
+
 mat-list-item {
   padding: 8px 16px;
 }
