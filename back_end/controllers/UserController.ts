@@ -87,6 +87,7 @@ export const registerUser = async (req: Request, res: Response): Promise<void> =
     await sendConfirmationEmail(email, subject, htmlContent);
 
 
+
     res.status(201).json(userWithoutPassword);
 
   } catch (error) {
@@ -142,6 +143,7 @@ export const confirmEmail = async (req: Request, res: Response): Promise<void> =
 export const createUser = async (req: Request, res: Response): Promise<void> => {
   try {
 
+  } catch (error) {
   } catch (error) {
 
   }
@@ -326,15 +328,25 @@ export const searchTeachers = async (req: Request, res: Response) => {
     roleId: 2,
     isValidated: 1,
     ...(userId && { id: userId }),
+    ...(userId && { id: userId }),
     ...(type && {
       '$coursesTaught.modality_id$': type,
     }),
     ...(inputName && { name: inputName }),
+    ...(inputName && { name: inputName }),
     ...(inputCity && {
+      '$details.address$': inputCity
+    }),
       '$details.address$': inputCity
     }),
     ...(selectedCategory && {
       '$coursesTaught.category_id$': selectedCategory,
+    }),
+    ...(minPrice && {
+      [Op.or]: [
+        { '$coursesTaught.price$': { [Op.between]: [minPrice, maxPrice] } },
+        { '$coursesTaught.price$': null }
+      ]
     }),
     ...(minPrice && {
       [Op.or]: [
@@ -359,6 +371,7 @@ export const searchTeachers = async (req: Request, res: Response) => {
     console.log(`filtro: ${userId}`)
     const teachers = await User.findAll({
       where: filters,
+      attributes: ['id', 'name', 'email', 'roleId', 'isValidated' ],
       include: [
         {
           model: UserDetails,
@@ -395,11 +408,14 @@ export const searchTeachers = async (req: Request, res: Response) => {
 };
 
 export const names = async (req: any, res: any, next: any) => {
+export const names = async (req: any, res: any, next: any) => {
   try {
     const names = await User.findAll({
       where: { roleId: 2 },
+      where: { roleId: 2 },
       attributes: ['name']
     }
+
 
     )
     res.status(200).json(names)
@@ -407,11 +423,14 @@ export const names = async (req: any, res: any, next: any) => {
     next(error)
   }
 
+
 }
 
 export const cities = async (req: Request, res: Response, next: any) => {
+export const cities = async (req: Request, res: Response, next: any) => {
   try {
     const names = await User.findAll({
+      where: { roleId: 2 },
       where: { roleId: 2 },
       attributes: [],
       include: [{
@@ -421,8 +440,10 @@ export const cities = async (req: Request, res: Response, next: any) => {
       }]
     }
 
+
     )
     res.status(200).json(names)
+
 
   } catch (error) {
     next(error)
@@ -431,9 +452,11 @@ export const cities = async (req: Request, res: Response, next: any) => {
 
 export const cityCords = async (req: Request, res: Response, next: any) => {
   const { city } = req.params
+  const { city } = req.params
   console.log(city)
   try {
     const coords = await UserDetails.findOne({
+      where: { address: city },
       where: { address: city },
       attributes: ['lat', 'lng']
     })
@@ -496,11 +519,15 @@ export const getUserSubscribedCourses = async (req: Request, res: Response): Pro
 export const validate = async (req: Request, res: Response, next: any) => {
   try {
     const { userId } = req.params
+    const { userId } = req.params
 
     const userUpdateData = {
       isValidated: 1
 
+      isValidated: 1
+
     };
+    await User.update(userUpdateData, {
     await User.update(userUpdateData, {
       where: {
         id: userId

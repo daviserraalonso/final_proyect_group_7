@@ -19,6 +19,7 @@ const studentCoursesRoutes = require('./routes/strudentCoursesRoutes');
 const scoreRoutes = require('./routes/scoreRoutes');
 const ChatRoutes = require('./routes/ChatRoutes');
 const professorRoutes = require('./routes/professor');
+const calendarRoutes = require('./routes/calendarRoutes');
 // config dotenv
 dotenv.config();
 const app = express();
@@ -54,6 +55,7 @@ app.use('/api/student-courses', studentCoursesRoutes);
 app.use('/api/score', scoreRoutes);
 app.use('/api/chats', ChatRoutes);
 app.use('/api/professors', professorRoutes);
+app.use('/api/course-event', calendarRoutes);
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).json({ message: 'Internal Server Error', error: err.message });

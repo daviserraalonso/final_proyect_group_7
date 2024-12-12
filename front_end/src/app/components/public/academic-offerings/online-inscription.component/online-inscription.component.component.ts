@@ -3,7 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/materia
 import { CourseEnrollmentComponent } from '../course-enrollment/course-enrollment.component';
 
 @Component({
-  selector: 'app-presential-courses-inscription',
+  selector: 'online-courses-inscription',
   standalone: true,
   template: `
     <app-course-enrollment

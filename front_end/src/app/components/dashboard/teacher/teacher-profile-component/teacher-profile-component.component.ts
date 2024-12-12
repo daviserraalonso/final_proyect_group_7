@@ -32,6 +32,8 @@ import { PendingTasksDialogComponent } from '../pending-tasks-dialog/pending-tas
 import { TeacherServiceService } from '../../../../service/teacher-service.service';
 import { IEarnings } from '../../../../interfaces/iearnings';
 import { Router } from '@angular/router';
+import { EditUserModalComponent } from '../../admin/edit-user-modal/edit-user-modal.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-teacher-profile-component',
@@ -192,6 +194,35 @@ export class TeacherProfileComponentComponent implements OnInit {
   }
   openStudents() {
     this.router.navigate(['/mis-alumnos']); // Reemplaza '/ruta-deseada' con la ruta a la que deseas redirigir
+  }
+
+  openEditUserModal(): void {
+    const dialogRef = this.dialog.open(EditUserModalComponent, {
+      width: '400px',
+      data: this.teacherProfile
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // update student profile
+        this.serviceStudentDetails.getUserDetails(this.teacherProfile.id).then(updatedProfile => {
+          this.teacherProfile = updatedProfile;
+          Swal.fire({
+            text: 'Usuario actualizado',
+            width: 400,
+            showConfirmButton: false,
+            imageUrl: 'assets/logo.png',
+            imageAlt: 'Icon image',
+            imageHeight: 80,
+            imageWidth: 60,
+            timer: 2500
+   
+          });
+        }).catch(error => {
+          console.error('Error al actualizar el perfil del estudiante:', error);
+        });
+      }
+    });
   }
 }
 

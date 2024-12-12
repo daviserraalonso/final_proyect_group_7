@@ -2,14 +2,14 @@
 import { Model, DataTypes } from 'sequelize';
 import sequelize from '../config/database';
 
-class Modality extends Model {}
+class Modality extends Model { }
 
 Modality.init(
   {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      autoIncrement: false,
+      autoIncrement: true,
     },
     type: {
       type: DataTypes.STRING,

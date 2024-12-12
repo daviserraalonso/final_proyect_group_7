@@ -24,13 +24,13 @@ CourseLocation.init({
         field: 'courseId',
     },
     lat: {
-        type: sequelize_1.DataTypes.INTEGER,
-        allowNull: false,
+        type: sequelize_1.DataTypes.FLOAT,
+        allowNull: true,
         field: 'lat',
     },
     lang: {
-        type: sequelize_1.DataTypes.INTEGER,
-        allowNull: false,
+        type: sequelize_1.DataTypes.FLOAT,
+        allowNull: true,
         field: 'lang',
     },
     address: {
@@ -40,13 +40,13 @@ CourseLocation.init({
     },
     onlineLink: {
         type: sequelize_1.DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         field: 'onlineLink',
     },
 }, {
     sequelize: database_1.default,
     modelName: 'CourseLocation',
-    tableName: 'course_event',
+    tableName: 'course_location',
     timestamps: true,
 });
 exports.default = CourseLocation;

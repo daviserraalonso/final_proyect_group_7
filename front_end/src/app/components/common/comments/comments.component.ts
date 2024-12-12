@@ -4,6 +4,11 @@ import {MatCardModule} from '@angular/material/card';
 import { ScoreService } from '../../../service/score.service';
 import {MatIconModule} from '@angular/material/icon';
 
+export type Comments = {
+  comments: string,
+  rating_teacher: number
+}
+
 @Component({
   selector: 'app-comments',
   standalone: true,
@@ -13,10 +18,11 @@ import {MatIconModule} from '@angular/material/icon';
 })
 export class CommentsComponent {
 
-  arrComments: any[] = []
   scoreServices = inject(ScoreService)
 
   score = Array(5)
+  arrComments: Comments[] = []
+
 
   async ngOnInit() {
     const userId = 3

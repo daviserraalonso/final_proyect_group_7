@@ -301,6 +301,7 @@ const searchTeachers = async (req, res) => {
         console.log(`filtro: ${userId}`);
         const teachers = await User_1.default.findAll({
             where: filters,
+            attributes: ['id', 'name', 'email', 'roleId', 'isValidated'],
             include: [
                 {
                     model: UserDetails_1.default,

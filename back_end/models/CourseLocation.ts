@@ -3,10 +3,10 @@ import { Model, DataTypes } from 'sequelize';
 import sequelize from '../config/database';
 
 class CourseLocation extends Model {
-    public id!: number;
-    public courseId!: number;
-    public professorId!: number;
-    public studentId!: number;
+  public id!: number;
+  public courseId!: number;
+  public professorId!: number;
+  public studentId!: number;
 }
 
 CourseLocation.init(
@@ -22,16 +22,16 @@ CourseLocation.init(
       field: 'courseId',
     },
     lat: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
+      type: DataTypes.FLOAT,
+      allowNull: true,
       field: 'lat',
     },
     lang: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
+      type: DataTypes.FLOAT,
+      allowNull: true,
       field: 'lang',
     },
-    
+
     address: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -39,14 +39,14 @@ CourseLocation.init(
     },
     onlineLink: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       field: 'onlineLink',
     },
   },
   {
     sequelize,
     modelName: 'CourseLocation',
-    tableName: 'course_event',
+    tableName: 'course_location',
     timestamps: true,
   }
 );

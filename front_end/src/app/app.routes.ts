@@ -13,8 +13,8 @@ import { StudentProfileComponentComponent } from './components/dashboard/student
 import { TeacherProfileComponentComponent } from './components/dashboard/teacher/teacher-profile-component/teacher-profile-component.component';
 import { AdminComponent } from './components/dashboard/admin/admin.component';
 import { InboxComponent } from './components/common/inbox/inbox.component';
-import { CalendarComponent } from './components/common/calendar/calendar.component';
 import { StudentCoursesComponent } from './components/dashboard/student/student-courses/student-courses.component';
+import { CalendarComponent } from './components/common/calendar/calendar-component/calendar.component';
 import { AllUsersComponent } from './components/dashboard/admin/all-users/all-users.component';
 //import { AllCourses } from './components/dashboard/admin/course-list/course-list.component';
 import { SubjectListComponent } from './components/dashboard/admin/subject-list/subject-list.component';
@@ -51,13 +51,15 @@ export const routes: Routes = [
     { path: 'all-courses', component: CourseListComponent },
     { path: 'subjects', component: SubjectListComponent },
     { path: 'courses', component: CourseListComponent },
-    {path: 'mis-alumnos', component: TeacherStudentViewComponent,canActivate:[loginGuard]},
-    {path: 'teacher/:id', component: TeacherViewComponent, 
+    { path: 'mis-alumnos', component: TeacherStudentViewComponent,canActivate:[loginGuard] },
+    {
+        path: 'teacher/:id', component: TeacherViewComponent,
         children: [
-        {path: 'course/:idcourse', component: CourseViewComponent, runGuardsAndResolvers: 'paramsChange'}
-    ]},
+            { path: 'course/:idcourse', component: CourseViewComponent, runGuardsAndResolvers: 'paramsChange' }
+        ]
+    },
 
-    
+
 
 
 

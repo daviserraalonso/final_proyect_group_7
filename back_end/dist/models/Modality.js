@@ -12,7 +12,7 @@ Modality.init({
     id: {
         type: sequelize_1.DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: false,
+        autoIncrement: true,
     },
     type: {
         type: sequelize_1.DataTypes.STRING,

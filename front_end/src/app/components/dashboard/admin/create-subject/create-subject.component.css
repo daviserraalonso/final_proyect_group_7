@@ -1,10 +1,16 @@
 mat-dialog-content {
-    display: flex;
-    flex-direction: column;
-    gap: 16px; /* Espaciado entre campos */
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* Espaciado entre campos */
+}
   
-  mat-dialog-actions {
-    margin-top: 16px;
-  }
+mat-dialog-actions {
+  margin-top: 16px;
+}
+
+.dialog_flex{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
   

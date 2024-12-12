@@ -1,0 +1,26 @@
+.demo-app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
+}
+
+.demo-app-main {
+  width: 100%;
+  max-width: 900px;
+}
+
+.event-important {
+  background-color: red !important;
+  border-color: red !important;
+}
+
+.event-normal {
+  background-color: blue !important;
+  border-color: blue !important;
+}
+
+.event-light {
+  background-color: green !important;
+  border-color: green !important;
+}
