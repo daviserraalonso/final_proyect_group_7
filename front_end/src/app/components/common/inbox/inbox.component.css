@@ -1,3 +1,7 @@
+mat-card {
+  background-color: white;
+}
+
 .inbox-message-item {
     display: flex;
     align-items: center;

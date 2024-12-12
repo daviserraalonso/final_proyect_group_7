@@ -1,6 +1,46 @@
-.dialog_flex{
+.dialog_flex {
     display: flex;
-    justify-content: center;
     flex-direction: column;
-    padding-top: 60%;
+    justify-content: flex-start;
+    padding: 16px;
+    gap: 16px;
+    width: 100%;
+    max-width: 600px;
+    box-sizing: border-box;
+}
+
+mat-form-field {
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .dialog_flex {
+        padding: 12px;
+        gap: 12px;
+        max-width: 90%;
+    }
+
+    mat-dialog-content {
+        max-height: 75vh;
+        overflow-y: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .dialog_flex {
+        padding: 8px;
+        gap: 8px;
+        max-width: 100%;
+    }
+
+    mat-dialog-content {
+        max-height: 70vh;
+        overflow-y: auto;
+    }
+
+    mat-dialog-actions {
+        flex-direction: column;
+        gap: 8px;
+        align-items: stretch;
+    }
 }

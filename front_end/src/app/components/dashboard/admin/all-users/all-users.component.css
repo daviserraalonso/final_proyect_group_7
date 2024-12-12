@@ -1,5 +1,4 @@
 .container {
-  max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
   background-color: #ffffff;
@@ -25,15 +24,17 @@ h2 {
   border-radius: 5px;
   padding: 10px;
 }
-.mat-elevation-z8{
+.responsive-table{
   background-color: white;
 }
 
 .table-container {
   overflow-x: auto;
-  width: 100%;
 }
-
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
 .mat-header-row {
   background-color: #f1f1f1;
   font-weight: 600;
