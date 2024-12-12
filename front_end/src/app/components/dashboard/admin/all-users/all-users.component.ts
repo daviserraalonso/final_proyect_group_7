@@ -108,6 +108,17 @@ export class AllUsersComponent implements OnInit {
   
       dialogRef.afterClosed().subscribe((result) => {
         if (result) {
+          Swal.fire({
+            text: 'Usuario actualizado',
+            width: 400,
+            showConfirmButton: false,
+            imageUrl: 'assets/logo.png',
+            imageAlt: 'Icon image',
+            imageHeight: 80,
+            imageWidth: 60,
+            timer: 2500
+   
+          });
           console.log('Usuario actualizado');
           this.loadUsers();
         }
