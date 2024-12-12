@@ -210,8 +210,9 @@ export class CalendarEditEventComponent implements OnInit {
       const updatedEvent: ICourseEvent = {
         ...this.data.event,
         ...this.eventForm.value,
-        startDateTime: this.toUtcDateTime(this.eventForm.value.start),
-        endDateTime: this.toUtcDateTime(this.eventForm.value.end),
+        // Ajustar la hora antes de enviarla al backend
+        startDateTime: this.addOneHourToDate(this.eventForm.value.start),
+        endDateTime: this.addOneHourToDate(this.eventForm.value.end),
       };
 
       console.log('Datos enviados al backend:', updatedEvent);
@@ -229,6 +230,14 @@ export class CalendarEditEventComponent implements OnInit {
       });
     }
   }
+
+  // Función para agregar 1 hora a la fecha
+  addOneHourToDate(date: string): string {
+    const localDate = new Date(date);  // Crea un objeto Date con la fecha proporcionada
+    localDate.setHours(localDate.getHours() + 1);  // Suma una hora
+    return localDate.toISOString();  // Convierte la fecha a UTC y la devuelve en formato ISO
+  }
+
 
   private capitalizeFirstLetter(value: string): string {
     if (!value) return '';
