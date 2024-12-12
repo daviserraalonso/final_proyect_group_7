@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule, } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { CalendarService } from '../../../../service/calendar.service';
 import { ICourseEvent } from '../../../../interfaces/iCourseEvent';
@@ -27,6 +27,7 @@ import Swal from 'sweetalert2';
     ReactiveFormsModule,
     MatSelectModule,
     MatCheckboxModule,
+    MatDialogModule
   ],
   styleUrls: ['./calendar-edit-event.component.css'],
 })
@@ -80,32 +81,34 @@ export class CalendarEditEventComponent implements OnInit {
     this.selectedModality = data.event.locationType;
   }
   ngOnInit(): void {
-    console.log('Datos iniciales del formulario:', this.eventForm.value);
+    if (this.isNewEvent) {
+      // Convertir las fechas al formato esperado por el input datetime-local
+      this.eventForm.patchValue({
+        start: this.toLocalDateTime(this.data.event.startDateTime),
+        end: this.toLocalDateTime(this.data.event.endDateTime),
+      });
+    } else {
+      // En caso de edición, también asegurarse del formato
+      this.eventForm.patchValue({
+        start: this.toLocalDateTime(this.data.event.startDateTime),
+        end: this.toLocalDateTime(this.data.event.endDateTime),
+      });
+    }
 
-    this.eventForm.patchValue({
-      start: this.toLocalDateTime(this.data.event.startDateTime),
-      end: this.toLocalDateTime(this.data.event.endDateTime),
-    });
+    console.log('Formulario inicializado:', this.eventForm.value);
 
     this.updateFieldStates();
-
-
     this.loadCoursesByProfessor();
     this.listenToCourseSelection();
 
-
-    const courseId = this.eventForm.get('courseId')?.value;
-    if (courseId) {
-      this.loadSubjectsByCourse(courseId);
-    }
-
-    this.cdr.detectChanges();
+    this.cdr.detectChanges(); // Forzar la detección de cambios en Angular
   }
 
-
-  toLocalDateTime(date: string): string {
-    return date.slice(0, 16);
+  private toLocalDateTime(date: string): string {
+    const localDate = new Date(date); // Convertir el string ISO a objeto Date
+    return localDate.toISOString().slice(0, 16); // Formatear como 'yyyy-MM-ddTHH:mm'
   }
+
 
 
   toUtcDateTime(date: string): string {
