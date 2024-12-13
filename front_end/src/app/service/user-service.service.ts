@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { UserAttributes } from '../interfaces/userAttributes';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 
 
@@ -12,12 +13,12 @@ import { Observable } from 'rxjs';
 })
 export class UserServiceService {
 
-  private baseUrl: string = "http://localhost:3000/api/users";
-  private apiUrl = 'http://localhost:3000/api/users';
+  private baseUrl: string = environment.apiUrl + 'users';
+  private apiUrl = environment.apiUrl + 'users';
 
   private http = inject(HttpClient)
 
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog) { }
 
   getAll(): Promise<UserAttributes[]> {
     return firstValueFrom(this.http.get<UserAttributes[]>(this.baseUrl));
@@ -34,7 +35,7 @@ export class UserServiceService {
   getUserDetails(userId: number): Promise<any> {
     return firstValueFrom(this.http.get<any>(`${this.baseUrl}/${userId}/details`));
   }
-  
+
   // function to get user by Id, url no complete
   getById(id: string): Promise<UserAttributes> {
     return firstValueFrom(this.http.get<UserAttributes>(this.baseUrl))
