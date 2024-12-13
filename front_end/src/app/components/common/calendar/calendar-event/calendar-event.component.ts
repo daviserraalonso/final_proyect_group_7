@@ -54,7 +54,6 @@ export class CalendarEventComponent implements OnInit {
     this.loadSubjectsByCourse(this.data.event.courseId);
   }
 
-  //ISO format compatible with datetime local
   toLocalDateTime(date: string): string {
     return date.slice(0, 16);
   }
