@@ -8,34 +8,41 @@ import { environment } from '../../environments/environment';
 })
 export class SearchServiceService {
 
-  private baseUrl: string = environment.apiUrl;
-  private http = inject(HttpClient)
+  private baseUrl: string = this.normalizeUrl(environment.apiUrl);
+  private http = inject(HttpClient);
 
   constructor() { }
 
+  private normalizeUrl(url: string): string {
+    return url
+      .replace(/\/api\/+/g, '/api/')
+  }
+
+  private buildUrl(endpoint: string): string {
+    return this.normalizeUrl(`${this.baseUrl}/${endpoint}`);
+  }
+
   search(params: HttpParams): Promise<any> {
-    return firstValueFrom(this.http.get<any>(`${this.baseUrl}/users/search`, { params: params }))
+    return firstValueFrom(this.http.get<any>(this.buildUrl('users/search'), { params }));
   }
 
   getTeachersName(): Promise<any> {
-    return firstValueFrom(this.http.get<any>(`${this.baseUrl}/users/names`))
+    return firstValueFrom(this.http.get<any>(this.buildUrl('users/names')));
   }
 
   getCitiesName(): Promise<any> {
-    return firstValueFrom(this.http.get<any>(`${this.baseUrl}/users/cities`))
+    return firstValueFrom(this.http.get<any>(this.buildUrl('users/cities')));
   }
 
   getCityCords(city: string): Promise<any> {
-    return firstValueFrom(this.http.get<any>(`${this.baseUrl}/users/${city}`))
+    return firstValueFrom(this.http.get<any>(this.buildUrl(`users/${city}`)));
   }
 
   getAllCategories(): Promise<any> {
-    return firstValueFrom(this.http.get(`${this.baseUrl}/categories`))
+    return firstValueFrom(this.http.get<any>(this.buildUrl('categories')));
   }
 
   getAllModalities(): Promise<any> {
-    return firstValueFrom(this.http.get(`${this.baseUrl}/modalities`))
+    return firstValueFrom(this.http.get<any>(this.buildUrl('modalities')));
   }
-
-
 }
