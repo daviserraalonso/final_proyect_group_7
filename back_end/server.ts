@@ -27,7 +27,7 @@ const port = process.env['PORT'] || 10000;
 // CORS
 app.use(
   cors({
-    origin: [/*'http://localhost:4200', */'https://final-proyect-group-7-1.onrender.com'],
+    origin: ['http://localhost:4200', 'https://grupo-7-front-end.onrender.com'],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
