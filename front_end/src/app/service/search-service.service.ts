@@ -8,7 +8,7 @@ import { environment } from '../../environments/environment';
 })
 export class SearchServiceService {
 
-  private baseUrl: string = environment.apiUrl + 'api'
+  private baseUrl: string = environment.apiUrl + '/api/'
   private http = inject(HttpClient)
 
   constructor() { }

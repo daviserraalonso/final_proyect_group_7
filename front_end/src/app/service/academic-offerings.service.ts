@@ -7,7 +7,7 @@ import { environment } from '../../environments/environment';
   providedIn: 'root',
 })
 export class AcademicOfferingsService {
-  private apiUrl = environment.apiUrl + 'courses';
+  private apiUrl = environment.apiUrl + '/courses';
 
   constructor(private http: HttpClient) { }
 

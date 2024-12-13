@@ -8,9 +8,9 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class InboxService {
-  private apiUrl = environment.apiUrl + 'chats';
-  private baseUrl: string = environment.apiUrl + 'users';
-  private chatRoutes: string = environment.apiUrl + 'chats';
+  private apiUrl = environment.apiUrl + '/chats';
+  private baseUrl: string = environment.apiUrl + '/users';
+  private chatRoutes: string = environment.apiUrl + '/chats';
 
   constructor(private http: HttpClient) { }
 

@@ -13,8 +13,8 @@ import { environment } from '../../environments/environment';
 })
 export class UserServiceService {
 
-  private baseUrl: string = environment.apiUrl + 'users';
-  private apiUrl = environment.apiUrl + 'users';
+  private baseUrl: string = environment.apiUrl + '/users';
+  private apiUrl = environment.apiUrl + '/users';
 
   private http = inject(HttpClient)
 

@@ -10,7 +10,7 @@ import { environment } from '../../environments/environment';
 })
 export class ScoreService {
 
-  private baseUrl: string = environment.apiUrl + 'score'
+  private baseUrl: string = environment.apiUrl + '/score'
   private http = inject(HttpClient)
 
   insertScore(body: any): Promise<number> {

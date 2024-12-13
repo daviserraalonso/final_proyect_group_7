@@ -18,7 +18,7 @@ type TaskResponse = {
 })
 export class DashboardStudentService {
 
-  private baseUrl: string = environment.apiUrl + `tasks`;
+  private baseUrl: string = environment.apiUrl + `/tasks`;
 
   private httpClient = inject(HttpClient);
 

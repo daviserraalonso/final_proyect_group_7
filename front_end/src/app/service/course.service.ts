@@ -9,9 +9,9 @@ import { environment } from '../../environments/environment';
   providedIn: 'root',
 })
 export class CourseService {
-  private apiUrl = environment.apiUrl + 'courses';
-  private categoriesUrl = environment.apiUrl + 'categories';
-  private modalitiesUrl = environment.apiUrl + 'modalities';
+  private apiUrl = environment.apiUrl + '/courses';
+  private categoriesUrl = environment.apiUrl + '/categories';
+  private modalitiesUrl = environment.apiUrl + '/modalities';
   private coursesUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
@@ -47,7 +47,7 @@ export class CourseService {
   }
 
   getUserSubscribedCourses(userId: number): Observable<{ courses: ICourse[] }> {
-    return this.http.get<{ courses: ICourse[] }>(`${this.coursesUrl}users/${userId}/courses`);
+    return this.http.get<{ courses: ICourse[] }>(`${this.coursesUrl}/users/${userId}/courses`);
   }
 
   getTotalCourses(): Promise<any> {

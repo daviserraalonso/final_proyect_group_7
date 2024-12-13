@@ -18,7 +18,7 @@ export interface TaskUpdate {
   providedIn: 'root'
 })
 export class TaskService {
-  private apiUrl = environment.apiUrl + 'tasks'; // URL de la API
+  private apiUrl = environment.apiUrl + '/tasks'; // URL de la API
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
