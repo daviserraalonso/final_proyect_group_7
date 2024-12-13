@@ -446,7 +446,7 @@ const getFavoriteTeachers = async (req, res) => {
     try {
         const teachers = await avg_teacher_1.default.findAll({
             where: {
-                avg: { [sequelize_1.Op.gte]: 6 } // avg >= 6
+                avg: { [sequelize_1.Op.gte]: 3.5 } // avg >= 3.5
             },
             include: [
                 {
