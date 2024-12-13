@@ -44,10 +44,10 @@ export const routes: Routes = [
     { path: 'student', component: StudentProfileComponentComponent, canActivate: [loginGuard, roleGuard], data: { roles: [3] }}, // logued role student
     { path: 'inbox', component: InboxComponent, canActivate: [loginGuard], data: { roles: [2, 3] }}, // only logged
     { path: 'calendar', component: CalendarComponent, canActivate: [loginGuard], data: { roles: [2, 3] } }, // only logged
-    { path: 'courses', component: StudentCoursesComponent, canActivate: [loginGuard, roleGuard], data: { roles: [2] } }, // logued role teacher
+    { path: 'courses', component: StudentCoursesComponent, canActivate: [loginGuard, roleGuard], data: { roles: [2, 3] } }, // logued role teacher
     { path: 'all-users', component: AllUsersComponent, canActivate: [loginGuard, roleAdminGuard], data: { roles: [1] } }, // only admin
     { path: 'all-courses', component: CourseListComponent, canActivate: [loginGuard, roleAdminGuard], data: { roles: [1] } }, // only admin
-    { path: 'subjects', component: SubjectListComponent, canActivate: [loginGuard, roleGuard], data: { roles: [2] } }, // logued role teacher
+    { path: 'subjects', component: SubjectListComponent, canActivate: [loginGuard, roleGuard], data: { roles: [1, 2] } }, // logued role teacher
     { path: 'mis-alumnos', component: TeacherStudentViewComponent, canActivate: [loginGuard, roleGuard], data: { roles: [2] } }, // logued role teacher
     {
       path: 'teacher/:id',
