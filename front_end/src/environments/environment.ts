@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    apiUrl: 'http://localhost:10000/'
+    apiUrl: 'https://final-proyect-group-7-1.onrender.com/'
 };
