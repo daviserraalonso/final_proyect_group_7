@@ -29,7 +29,7 @@ export class UserServiceService {
   }
 
   getFavoriteTeachers(): Promise<any[]> {
-    return firstValueFrom(this.http.get<any[]>(`${this.baseUrl}/teachers/favorites`));
+    return firstValueFrom(this.http.get<any[]>(`${this.apiUrl}/teachers/favorites`));
   }
 
   getUserDetails(userId: number): Promise<any> {
