@@ -9,17 +9,17 @@ export const roleAdminGuard: CanActivateFn = (route, state) => {
       try {
         const user = JSON.parse(userString);
 
-        // Verificar si el usuario tiene el rol permitido
+        // check if user it authoriced
         if (user.role === 1) {
-          return true; // Permitir acceso
+          return true;
         }
       } catch (error) {
         console.error('Error al parsear el usuario:', error);
       }
     }
 
-    // Redirigir si no tiene acceso
-   router.navigate(['/access-denied']);
+    // redirect if not have access
+    alert('No tienes permiso para acceder a esta página');
     return false;
   };
 
