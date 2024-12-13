@@ -13,8 +13,8 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/front_end/",
             "index": "src/index.html",
+            "outputPath": "dist/",
             "browser": "src/main.ts",
             "baseHref": "/",
             "polyfills": [
@@ -24,7 +24,13 @@
             "assets": [
               {
                 "glob": "**/*",
-                "input": "public"
+                "input": "public",
+                "output": "./"
+              },
+              {
+                "glob": "serve.json",
+                "input": "./",
+                "output": "./"
               }
             ],
             "styles": [
@@ -37,9 +43,7 @@
             ],
             "server": "src/main.server.ts",
             "prerender": false,
-            "ssr": {
-              "entry": "server.ts"
-            }
+            "ssr": false
           },
           "configurations": {
             "production": {
