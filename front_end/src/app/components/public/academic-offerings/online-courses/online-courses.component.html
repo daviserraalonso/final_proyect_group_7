@@ -1,21 +1,21 @@
 <div class="container p-4">
-  <h2>Listado de cursos Online</h2>
+  <h2 class="text-center mb-2">Listado de cursos Online</h2>
 
   <mat-divider class="mb-4"></mat-divider>
 
   <div class="row">
-    <div class="col-md-4" *ngFor="let course of courses$ | async">
+    <div class="col-lg-4 col-md-6 col-sm-12 mb-4" *ngFor="let course of courses$ | async">
       <mat-card class="custom-card">
         <mat-card-header>
           <mat-card-title class="custom-card-title">{{ course.name }}</mat-card-title>
         </mat-card-header>
-        <img mat-card-image [src]="'https://picsum.photos/300/200?random=' + course.id" alt="Imagen del curso {{ course.name }}">
-        <mat-card-content class="custom-card-content">
+        <img mat-card-image [src]="'https://picsum.photos/300/200?random=' + course.id" alt="Imagen del curso {{ course.name }}" class="custom-img">
+        <mat-card-content>
           <p>
             Aprende más sobre {{ course.name.toLowerCase() }} con este curso especializado y profundiza en los temas claves.
           </p>
         </mat-card-content>
-        <mat-card-actions>
+        <mat-card-actions class="text-center">
           <button mat-raised-button class="btn-inscribirse" color="info" (click)="openModal(course)">
             Inscribirse
           </button>
