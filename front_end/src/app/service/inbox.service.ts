@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, firstValueFrom } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class InboxService {
-  private apiUrl = 'http://localhost:3000/api/chats';
-  private baseUrl: string = "http://localhost:3000/api/users";
-  private chatRoutes: string = "http://localhost:3000/api/chats";
+  private apiUrl = environment.apiUrl + 'chats';
+  private baseUrl: string = environment.apiUrl + 'users';
+  private chatRoutes: string = environment.apiUrl + 'chats';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getAllUsers(): Promise<any[]> {
     return firstValueFrom(this.http.get<any[]>(`${this.baseUrl}`));

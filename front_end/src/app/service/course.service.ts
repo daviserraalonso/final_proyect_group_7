@@ -2,18 +2,19 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, lastValueFrom } from 'rxjs';
 import { ICourse } from '../interfaces/iCourse';
+import { environment } from '../../environments/environment';
 
 
 @Injectable({
   providedIn: 'root',
 })
 export class CourseService {
-  private apiUrl = 'http://localhost:3000/api/courses';
-  private categoriesUrl = 'http://localhost:3000/api/categories';
-  private modalitiesUrl = 'http://localhost:3000/api/modalities';
-  private coursesUrl = 'http://localhost:3000/api/';
+  private apiUrl = environment.apiUrl + 'courses';
+  private categoriesUrl = environment.apiUrl + 'categories';
+  private modalitiesUrl = environment.apiUrl + 'modalities';
+  private coursesUrl = environment.apiUrl;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getCourses(): Observable<{ id: number; name: string }[]> {
     return this.http.get<{ id: number; name: string }[]>(this.apiUrl);

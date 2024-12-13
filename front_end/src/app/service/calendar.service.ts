@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { lastValueFrom, Observable, throwError, catchError, map, of, tap } from 'rxjs';
 import { ICourseEvent } from '../interfaces/iCourseEvent';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CalendarService {
-  private apiUrl = 'http://localhost:3000/api/course-event';
+  private apiUrl = environment.apiUrl + '/course-event';
 
   constructor(private http: HttpClient) { }
 

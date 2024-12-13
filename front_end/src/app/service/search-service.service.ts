@@ -1,19 +1,20 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SearchServiceService {
 
-  private baseUrl: string = 'http://localhost:3000/api'
+  private baseUrl: string = environment.apiUrl + 'api'
   private http = inject(HttpClient)
 
   constructor() { }
 
   search(params: HttpParams): Promise<any> {
-    return firstValueFrom(this.http.get<any>(`${this.baseUrl}/users/search`, {params: params}))
+    return firstValueFrom(this.http.get<any>(`${this.baseUrl}/users/search`, { params: params }))
   }
 
   getTeachersName(): Promise<any> {
@@ -33,7 +34,7 @@ export class SearchServiceService {
   }
 
   getAllModalities(): Promise<any> {
-  return firstValueFrom(this.http.get(`${this.baseUrl}/modalities`))
+    return firstValueFrom(this.http.get(`${this.baseUrl}/modalities`))
   }
 
 

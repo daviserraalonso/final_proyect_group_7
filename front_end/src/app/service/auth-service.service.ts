@@ -2,18 +2,19 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:3000/api/users/login';
+  private apiUrl = environment.apiUrl + '/users/login';
 
   // BehaviorSubject para el estado de autenticación
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(this.hasToken());
-  isAuthenticated$ = this.isAuthenticatedSubject.asObservable(); 
+  isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   // Método para verificar si localStorage está disponible
   private isBrowser(): boolean {
@@ -49,11 +50,11 @@ export class AuthService {
 
   // Método para establecer la sesión y actualizar el estado de autenticación
   private setSession(authResult: any): void {
-    if (this.isBrowser()) { 
+    if (this.isBrowser()) {
       localStorage.setItem('token', authResult.token);
       localStorage.setItem('user', JSON.stringify(authResult.user));
       localStorage.setItem('role', authResult.user.role);
-      this.isAuthenticatedSubject.next(true); 
+      this.isAuthenticatedSubject.next(true);
     }
   }
 
@@ -63,7 +64,7 @@ export class AuthService {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
       localStorage.removeItem('role');
-      this.isAuthenticatedSubject.next(false); 
+      this.isAuthenticatedSubject.next(false);
     }
   }
 

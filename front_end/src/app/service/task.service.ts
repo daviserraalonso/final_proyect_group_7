@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError, lastValueFrom } from 'rxjs';
 import { Task } from '../interfaces/itask';
+import { environment } from '../../environments/environment';
 
 export interface TaskUpdate {
   id?: number;
@@ -17,12 +18,12 @@ export interface TaskUpdate {
   providedIn: 'root'
 })
 export class TaskService {
-  private apiUrl = 'http://localhost:3000/api/tasks'; // URL de la API
+  private apiUrl = environment.apiUrl + 'tasks'; // URL de la API
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   // Manejo de errores
   private handleError<T>(operation = 'operation', result?: T) {

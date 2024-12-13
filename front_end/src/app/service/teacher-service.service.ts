@@ -8,12 +8,13 @@ import { ITaskDetails } from '../interfaces/itask-details'; // Asegúrate de ten
 import { ITaskCounts } from '../interfaces/itask-counts'; // Asegúrate de tener esta interfaz definida
 import { IStudentCount } from '../interfaces/istudent-count';
 import { IEarnings } from '../interfaces/iearnings';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TeacherServiceService {
-  private baseUrl: string = 'http://localhost:3000/api';
+  private baseUrl: string = environment.apiUrl;
 
   constructor(private httpClient: HttpClient) { }
 

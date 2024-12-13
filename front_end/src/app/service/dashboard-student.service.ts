@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { environment } from '../../environments/environment.development';
 import { lastValueFrom } from 'rxjs';
 import { ProgressResponse } from '../interfaces/iProgressResponse';
+import { environment } from '../../environments/environment';
 
 type TaskResponse = {
   tarea_id: number; // ID de la tarea
@@ -18,7 +18,7 @@ type TaskResponse = {
 })
 export class DashboardStudentService {
 
-  private baseUrl: string = `${environment.API_URL}tasks`;
+  private baseUrl: string = environment.apiUrl + `tasks`;
 
   private httpClient = inject(HttpClient);
 
