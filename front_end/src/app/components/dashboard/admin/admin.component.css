@@ -132,6 +132,17 @@ input[type="date"].form-control {
   font-size: 16px;
 }
 
+.chart-legend .legend-title {
+  white-space: nowrap;
+  overflow: hidden;
+  margin-left: 0px;
+  margin-bottom: 5px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  width: 73% !important;
+}
+
 @media (max-width: 768px) {
   .list-group-item {
     flex-direction: column;

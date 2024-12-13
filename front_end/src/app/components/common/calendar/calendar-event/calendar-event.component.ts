@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { CalendarService } from '../../../../service/calendar.service';
 import { ICourseEvent } from '../../../../interfaces/iCourseEvent';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-calendar-event',
@@ -14,6 +15,7 @@ import { ICourseEvent } from '../../../../interfaces/iCourseEvent';
     MatDialogModule,
     MatSnackBarModule,
     MatListModule,
+    MatButtonModule,
     MatIconModule,
     CommonModule
   ],
@@ -27,7 +29,7 @@ export class CalendarEventComponent implements OnInit {
   subjectName: string = '';
   selectedModality: string | null = null;
 
-  //manejadores de fechas convertidas
+  //handlers for converted datees
   localStartDateTime: string = '';
   localEndDateTime: string = '';
 
@@ -41,7 +43,7 @@ export class CalendarEventComponent implements OnInit {
     console.log('Fecha UTC recibida (start):', this.data.event.startDateTime);
     console.log('Fecha UTC recibida (end):', this.data.event.endDateTime);
 
-    //convertir a hora local usando zona explícita
+    //convert to local time using an explicit zone
     this.localStartDateTime = this.toLocalDateTime(this.data.event.startDateTime);
     this.localEndDateTime = this.toLocalDateTime(this.data.event.endDateTime);
 
@@ -53,7 +55,7 @@ export class CalendarEventComponent implements OnInit {
   }
 
   toLocalDateTime(date: string): string {
-    return date.slice(0, 16); //formato iso compatible con datetime-local
+    return date.slice(0, 16);
   }
 
 

@@ -523,7 +523,7 @@ export const getFavoriteTeachers = async (req: Request, res: Response) => {
   try {
     const teachers = await AvgTeacher.findAll({
       where: {
-        avg: { [Op.gte]: 6 } // avg >= 6
+        avg: { [Op.gte]: 3.5 } // avg >= 3.5
       },
       include: [
         {
