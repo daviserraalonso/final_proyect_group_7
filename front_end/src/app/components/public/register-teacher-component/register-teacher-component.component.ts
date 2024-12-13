@@ -126,7 +126,6 @@ async getdataForm() {
           imageHeight: 80,
           imageWidth: 60,
           timer: 4000
- 
         });
         this.router.navigate([''])
         this.registerTeacher.reset()

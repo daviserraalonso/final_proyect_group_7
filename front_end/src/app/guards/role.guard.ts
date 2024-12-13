@@ -1,4 +1,5 @@
 import { CanActivateFn } from '@angular/router';
+import Swal from 'sweetalert2';
 
 export const roleGuard: CanActivateFn = (route, state) => {
   const userString = localStorage.getItem('user');
@@ -18,6 +19,14 @@ export const roleGuard: CanActivateFn = (route, state) => {
   }
 
   //redirect if haven´t got access
-  alert('No tienes permiso para acceder a esta página');
+          Swal.fire({
+            text: 'No tienes permiso para acceder a esta página',
+            width: 400,
+            showConfirmButton: false,
+            icon: 'warning',
+            imageHeight: 80,
+            imageWidth: 60,
+            timer: 4000
+          });
   return false;
 };
