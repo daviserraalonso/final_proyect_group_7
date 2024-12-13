@@ -23,10 +23,10 @@ const calendarRoutes = require('./routes/calendarRoutes');
 // config dotenv
 dotenv.config();
 const app = express();
-const port = process.env['PORT'] || 3000;
+const port = process.env['PORT'] || 10000;
 // CORS
 app.use(cors({
-    origin: 'http://localhost:4200',
+    origin: ['http://localhost:4200', 'https://final-proyect-group-7-1.onrender.com'],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
