@@ -22,12 +22,12 @@ const calendarRoutes = require('./routes/calendarRoutes');
 dotenv.config();
 
 const app = express();
-const port = process.env['PORT'] || 3000;
+const port = process.env['PORT'] || 10000;
 
 // CORS
 app.use(
   cors({
-    origin: ['http://localhost:4200', 'https://<frontend-name>.onrender.com'], // Añade la URL pública de tu frontend
+    origin: ['http://localhost:4200', 'https://<frontend-name>.onrender.com'],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
