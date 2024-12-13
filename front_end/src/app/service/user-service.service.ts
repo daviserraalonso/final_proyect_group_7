@@ -42,13 +42,13 @@ export class UserServiceService {
   }
 
   delete(userId: number): Promise<void> {
-    const url = `http://localhost:3000/api/users/${userId}`;
+    const url = `${this.baseUrl}${userId}`;
     return firstValueFrom(this.http.delete<void>(url));
   }
 
   //function to update user, url no complete
   update(taskId: number, submission: string): Promise<any> {
-    const url = `http://localhost:3000/api/tasks/${taskId}`;
+    const url = `${environment.apiUrl}/tasks/${taskId}`;
     const body = { submission };
     return firstValueFrom(this.http.put<any>(url, body));
   }

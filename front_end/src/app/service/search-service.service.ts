@@ -8,33 +8,33 @@ import { environment } from '../../environments/environment';
 })
 export class SearchServiceService {
 
-  private baseUrl: string = environment.apiUrl + '/api/'
+  private baseUrl: string = environment.apiUrl;
   private http = inject(HttpClient)
 
   constructor() { }
 
   search(params: HttpParams): Promise<any> {
-    return firstValueFrom(this.http.get<any>(`${this.baseUrl}/users/search`, { params: params }))
+    return firstValueFrom(this.http.get<any>(`${this.baseUrl}users/search`, { params: params }))
   }
 
   getTeachersName(): Promise<any> {
-    return firstValueFrom(this.http.get<any>(`${this.baseUrl}/users/names`))
+    return firstValueFrom(this.http.get<any>(`${this.baseUrl}users/names`))
   }
 
   getCitiesName(): Promise<any> {
-    return firstValueFrom(this.http.get<any>(`${this.baseUrl}/users/cities`))
+    return firstValueFrom(this.http.get<any>(`${this.baseUrl}users/cities`))
   }
 
   getCityCords(city: string): Promise<any> {
-    return firstValueFrom(this.http.get<any>(`${this.baseUrl}/users/${city}`))
+    return firstValueFrom(this.http.get<any>(`${this.baseUrl}users/${city}`))
   }
 
   getAllCategories(): Promise<any> {
-    return firstValueFrom(this.http.get(`${this.baseUrl}/categories`))
+    return firstValueFrom(this.http.get(`${this.baseUrl}categories`))
   }
 
   getAllModalities(): Promise<any> {
-    return firstValueFrom(this.http.get(`${this.baseUrl}/modalities`))
+    return firstValueFrom(this.http.get(`${this.baseUrl}modalities`))
   }
 
 
