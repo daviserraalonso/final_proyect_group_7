@@ -27,13 +27,12 @@ const port = process.env['PORT'] || 3000;
 // CORS
 app.use(
   cors({
-    origin: 'http://localhost:4200',
+    origin: ['http://localhost:4200', 'https://<frontend-name>.onrender.com'], // Añade la URL pública de tu frontend
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
   })
 );
-
 // Middleware
 app.use(express.json());
 
