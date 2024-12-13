@@ -53,6 +53,7 @@ export const routes: Routes = [
       path: 'teacher/:id',
       component: TeacherViewComponent,
       canActivate: [loginGuard, roleGuard],
+      data: { roles: [1, 2, 3] },
       children: [
         {
           path: 'course/:idcourse',
