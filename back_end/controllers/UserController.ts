@@ -76,7 +76,7 @@ export const registerUser = async (req: Request, res: Response): Promise<void> =
     const { password: _, ...userWithoutPassword } = user.get({ plain: true });
 
     const token = jwt.sign({ userId: user.userId }, process.env.JWT_SECRET, { expiresIn: '1h' });
-    const confirmationLink = `${process.env.URL_FRONT}/api/users/confirm/${token}`;
+    const confirmationLink = `${process.env.URL_BACK}/api/users/confirm/${token}`;
     const subject = 'Confirma tu correo electrónico';
     const htmlContent = `
       <h1>Bienvenido, ${name}!</h1>
