@@ -7,7 +7,7 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class ContactService {
-  private apiUrl = environment.apiUrl + 'contact/send-email';
+  private apiUrl = environment.apiUrl + '/contact/send-email';
 
   constructor(private http: HttpClient) { }
 
