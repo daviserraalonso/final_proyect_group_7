@@ -76,7 +76,7 @@ export const registerUser = async (req: Request, res: Response): Promise<void> =
     const { password: _, ...userWithoutPassword } = user.get({ plain: true });
 
     const token = jwt.sign({ userId: user.userId }, process.env.JWT_SECRET, { expiresIn: '1h' });
-    const confirmationLink = `http://localhost:${process.env.PORT}/api/users/confirm/${token}`;
+    const confirmationLink = `${process.env.URL_FRONT}/api/users/confirm/${token}`;
     const subject = 'Confirma tu correo electrónico';
     const htmlContent = `
       <h1>Bienvenido, ${name}!</h1>
@@ -347,10 +347,12 @@ export const searchTeachers = async (req: Request, res: Response) => {
       '$details.lat$': { [Op.between]: [southWestLat, northEastLat] },
       '$details.lng$': { [Op.between]: [southWestLng, northEastLng] },
     }),
-    ...(score && { [Op.or] : [
-      {'$averageTeacher.avg$': {[Op.gte]: score}},
-      {'$averageTeacher.avg$': null } 
-    ]}),
+    ...(score && {
+      [Op.or]: [
+        { '$averageTeacher.avg$': { [Op.gte]: score } },
+        { '$averageTeacher.avg$': null }
+      ]
+    }),
 
   }
 
@@ -359,7 +361,7 @@ export const searchTeachers = async (req: Request, res: Response) => {
     console.log(`filtro: ${userId}`)
     const teachers = await User.findAll({
       where: filters,
-      attributes: ['id', 'name', 'email', 'roleId', 'isValidated' ],
+      attributes: ['id', 'name', 'email', 'roleId', 'isValidated'],
       include: [
         {
           model: UserDetails,
@@ -541,7 +543,7 @@ export const getFavoriteTeachers = async (req: Request, res: Response) => {
       ]
     });
 
-    
+
     res.status(200).json(teachers);
   } catch (error) {
     console.error('Error al obtener profesores favoritos:', error);
