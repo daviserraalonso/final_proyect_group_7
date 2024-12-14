@@ -83,7 +83,7 @@ export class SearchTeachersComponent {
       selectedCategory: new FormControl([], []),
       minPrice: new FormControl(360, []),
       maxPrice: new FormControl(600, []),
-      score: new FormControl(8, []),
+      score: new FormControl(2, []),
       southWestLat: new FormControl(null, []),
       southWestLng: new FormControl(null, []),
       northEastLat: new FormControl(null, []),
@@ -175,14 +175,7 @@ export class SearchTeachersComponent {
     this.teachers.emit(this.teacherFilter)
   }
 
-    // Style sliders
-    // formatLabel(value: number): string {
-    //   return `${value}`;
-    // }
-  
-    // formatLabelScore(value: number): string {
-    //   return `${value}`
-    // }
+
 
       // Change info zoom between components 
   changeRadius(event: Event) {
