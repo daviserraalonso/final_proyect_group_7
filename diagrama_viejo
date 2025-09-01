@@ -1,4 +1,4 @@
-```
+```mermaid
   erDiagram
     %% Estado ACTUAL de la base de datos - SIN claves foráneas definidas
     
